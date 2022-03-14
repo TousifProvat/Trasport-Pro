@@ -1,0 +1,10 @@
+.navbar-1{
+    margin-left: 370px;
+    margin-right: 370px;
+}
+.navLinks-shortLinks{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
