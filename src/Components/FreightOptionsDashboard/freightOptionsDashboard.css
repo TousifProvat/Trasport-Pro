@@ -1,0 +1,8 @@
+.frt-header{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.frt-drop1{
+    height: 500px;
+}

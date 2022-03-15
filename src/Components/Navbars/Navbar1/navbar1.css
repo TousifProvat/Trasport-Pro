@@ -1,10 +1,15 @@
-.navbar-1{
+/* .navbar-1{
     margin-left: 370px;
     margin-right: 370px;
-}
+} */
 .navLinks-shortLinks{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
+}
+.navbar-collapse{
+    /* border: 1px solid #000; */
+    display: flex;
+    justify-content: space-between;
 }

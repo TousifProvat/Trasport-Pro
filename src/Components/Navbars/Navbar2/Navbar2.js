@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "./navbar2.css";
 const Navbar2 = () => {
   return (
@@ -11,8 +12,8 @@ const Navbar2 = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <NavDropdown title="Load Management" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">
-                  Freight Operation Dashboard
+                <NavDropdown.Item>
+                  <Link to="/frtOpsDash">Freight Options Dashboard</Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
                   Load management Dashboard
@@ -637,10 +638,16 @@ const Navbar2 = () => {
                 </NavDropdown>
               </NavDropdown>
 
-              <NavDropdown title="Administration" id="basic-nav-dropdown">
+              <NavDropdown
+                title="Administration"
+                id="basic-nav-dropdown"
+                align={{ lg: "start" }}
+                className="me-5"
+              >
                 <NavDropdown
                   title="Manage Site Settings"
                   id="basic-nav-dropdown"
+                  
                 >
                   <NavDropdown
                     title="Manage Adjustments Codes"
@@ -654,15 +661,15 @@ const Navbar2 = () => {
                     </NavDropdown.Item>
                   </NavDropdown>
                   <NavDropdown.Item href="#aSearchction/3.1">
-                      Manage Carrier Quick Pay
-                    </NavDropdown.Item>
-                  <NavDropdown.Item href="#aSearchction/3.1">
-                      Manage Comodity Type
-                    </NavDropdown.Item>
-                  <NavDropdown.Item href="#aSearchction/3.1">
-                      Manage Lookup Tables
+                    Manage Carrier Quick Pay
                   </NavDropdown.Item>
-                  
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Manage Comodity Type
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Manage Lookup Tables
+                  </NavDropdown.Item>
+
                   <NavDropdown
                     title="Manage Bill Codes"
                     id="basic-nav-dropdown"
@@ -674,7 +681,6 @@ const Navbar2 = () => {
                       Search Line Items
                     </NavDropdown.Item>
                   </NavDropdown>
-
 
                   <NavDropdown
                     title="Manage Settlements Codes"
@@ -689,32 +695,28 @@ const Navbar2 = () => {
                   </NavDropdown>
                 </NavDropdown>
                 <NavDropdown
-                    title="Manage System Users"
-                    id="basic-nav-dropdown"
-                  >
-                    <NavDropdown.Item href="#aSearchction/3.1">
-                      Add System Users 
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="#aSearchction/3.1">
-                      Search System Users
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="#aSearchction/3.1">
-                      Use Activity
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                  title="Manage System Users"
+                  id="basic-nav-dropdown"
+                >
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Add System Users
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Search System Users
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Use Activity
+                  </NavDropdown.Item>
+                </NavDropdown>
 
-                
-                <NavDropdown
-                    title="Manage Terminals"
-                    id="basic-nav-dropdown"
-                  >
-                    <NavDropdown.Item href="#aSearchction/3.1">
-                      Add Terminals
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="#aSearchction/3.1">
-                      Search For Terminals
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                <NavDropdown title="Manage Terminals" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Add Terminals
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Search For Terminals
+                  </NavDropdown.Item>
+                </NavDropdown>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
