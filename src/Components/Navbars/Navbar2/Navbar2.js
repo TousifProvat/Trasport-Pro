@@ -367,7 +367,6 @@ const Navbar2 = () => {
                 </NavDropdown>
               </NavDropdown>
 
-
               <NavDropdown title="Accounting" id="basic-nav-dropdown">
                 <NavDropdown title="Accounting Reports" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">
@@ -383,6 +382,339 @@ const Navbar2 = () => {
                     Search Chart of Accounts
                   </NavDropdown.Item>
                 </NavDropdown>
+
+                <NavDropdown title="General Ledger" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">
+                    Search General Ledger
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">
+                    Failed Transactions Queue
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">
+                    Add Pending GL Adjustments
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">
+                    Search/Post GL Adjustments
+                  </NavDropdown.Item>
+                </NavDropdown>
+
+                <NavDropdown title="Cash Reconcilation" id="basic-nav-dropdown">
+                  <NavDropdown title="Bank Accounts" id="basic-nav-dropdown">
+                    <NavDropdown.Item href="#action/3.1">
+                      Add bank Adjustments
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.1">
+                      Search Bank Accounts Adjustments
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.1">
+                      Post Pending Bank Adjustments
+                    </NavDropdown.Item>
+                  </NavDropdown>
+
+                  <NavDropdown title="Cash Recon" id="basic-nav-dropdown">
+                    <NavDropdown.Item href="#action/3.1">
+                      Search Cash Statements
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.1">
+                      Post Cash Statements
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.1">
+                      Process Cash Statements
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </NavDropdown>
+
+                <NavDropdown title="Fixed Assets" id="basic-nav-dropdown">
+                  <NavDropdown
+                    title="Fixed Assets Categories"
+                    id="basic-nav-dropdown"
+                  >
+                    <NavDropdown.Item href="#action/3.1">
+                      Add Fixed Assets Category
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.1">
+                      Search Fixed Assets Category
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown.Item href="#action/3.1">
+                    Search Fixed Assets
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.1">
+                    Add Fixed Assets
+                  </NavDropdown.Item>
+                  <NavDropdown title="Reports" id="basic-nav-dropdown">
+                    <NavDropdown.Item href="#action/3.1">
+                      Depreciation Report
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </NavDropdown>
+
+                <NavDropdown title="Checking Accounts" id="basic-nav-dropdown">
+                  <NavDropdown
+                    title="Checking Accounts"
+                    id="basic-nav-dropdown"
+                  >
+                    <NavDropdown.Item href="#action/3.1">
+                      Add Checking Account
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.1">
+                      Search Checking Account
+                    </NavDropdown.Item>
+                  </NavDropdown>
+
+                  <NavDropdown title="Checks" id="basic-nav-dropdown">
+                    <NavDropdown.Item href="#action/3.1">
+                      Search Checks
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Add Manual Voided Checks
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Unvalidated Checks Reports
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </NavDropdown>
+
+                <NavDropdown title="Accounts Payable" id="basic-nav-dropdown">
+                  <NavDropdown title="Vouchers" id="basic-nav-dropdown">
+                    <NavDropdown.Item href="#action/3.1">
+                      Search Vouchers Requests
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Add Vouchers
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Search Vouchers
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Post Pending Vouchers
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Import Card Transactions
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Open Voucher Queue
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    AP Aging Report
+                  </NavDropdown.Item>
+
+                  <NavDropdown
+                    title="Recurring Vouchers"
+                    id="basic-nav-dropdown"
+                  >
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Add Recurring Vouchers
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Search Recurring Vouchers
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown title="Vendors" id="basic-nav-dropdown">
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Add Vendors
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Search Vendors
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    AP Check Queue
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </NavDropdown>
+
+              <NavDropdown title="Sales" id="basic-nav-dropdown">
+                <NavDropdown title="Lead & Accounts" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Add Lead
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Search Lead & Accounts
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Upload Leads
+                  </NavDropdown.Item>
+                </NavDropdown>
+
+                <NavDropdown title="Dashboards" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Sales Dashboard - Roll-up
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Sales Agent
+                  </NavDropdown.Item>
+                </NavDropdown>
+
+                <NavDropdown title="Manage Settings" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Manage Inactivity
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Manage Sales Entities
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Manage Dispositions
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </NavDropdown>
+
+              <NavDropdown title="Images" id="basic-nav-dropdown">
+                <NavDropdown.Item href="#aSearchction/3.1">
+                  Image Indexing
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#aSearchction/3.1">
+                  Search Image Files
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#aSearchction/3.1">
+                  Manage Documents Type
+                </NavDropdown.Item>
+              </NavDropdown>
+
+              <NavDropdown title="Reports" id="basic-nav-dropdown">
+                <NavDropdown title="Optional Reports" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Broker Carrier Reports
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Load Excalation Report
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Dispatch Continutity Report
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Driver Activity Report
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Driver Certification / Training Reports
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Driver Violations
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Equipments Location Reports
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Inbound Location Report
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    On-Time statices
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Safety Summary
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Tractors / Trailer Reports
+                  </NavDropdown.Item>
+                </NavDropdown>
+
+                <NavDropdown title="Sales Reports" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Customer Activity Reports
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Executive Dashboard
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Lane Analysis
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Monthly Terminal Review
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Terminal Activity Reports
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Terminal Revenue Reports
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Terminal Scorecard
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                    Terminal Settlement Summary
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </NavDropdown>
+
+              <NavDropdown title="Administration" id="basic-nav-dropdown">
+                <NavDropdown
+                  title="Manage Site Settings"
+                  id="basic-nav-dropdown"
+                >
+                  <NavDropdown
+                    title="Manage Adjustments Codes"
+                    id="basic-nav-dropdown"
+                  >
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Search Adjustments Codes
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Add Adjustments Codes
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                      Manage Carrier Quick Pay
+                    </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                      Manage Comodity Type
+                    </NavDropdown.Item>
+                  <NavDropdown.Item href="#aSearchction/3.1">
+                      Manage Lookup Tables
+                  </NavDropdown.Item>
+                  
+                  <NavDropdown
+                    title="Manage Bill Codes"
+                    id="basic-nav-dropdown"
+                  >
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Add Line Items
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Search Line Items
+                    </NavDropdown.Item>
+                  </NavDropdown>
+
+
+                  <NavDropdown
+                    title="Manage Settlements Codes"
+                    id="basic-nav-dropdown"
+                  >
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Add Settlement Codes
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Search Settlement Codes
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </NavDropdown>
+                <NavDropdown
+                    title="Manage System Users"
+                    id="basic-nav-dropdown"
+                  >
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Add System Users 
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Search System Users
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Use Activity
+                    </NavDropdown.Item>
+                  </NavDropdown>
+
+                
+                <NavDropdown
+                    title="Manage Terminals"
+                    id="basic-nav-dropdown"
+                  >
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Add Terminals
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="#aSearchction/3.1">
+                      Search For Terminals
+                    </NavDropdown.Item>
+                  </NavDropdown>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
