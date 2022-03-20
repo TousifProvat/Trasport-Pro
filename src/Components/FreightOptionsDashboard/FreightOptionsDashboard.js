@@ -9,6 +9,7 @@ import {
   Navbar,
   Table,
 } from "react-bootstrap";
+import {Link} from "react-router-dom"
 import "./freightOptionsDashboard.css";
 import Select from "react-select";
 import useContext from "../Hooks/useContext";
@@ -75,7 +76,9 @@ const FreightOptionsDashboard = () => {
           <Dropdown.Menu>
             <p className="ms-3">Freight options</p>
             <hr></hr>
-            <Dropdown.Item href="#/action-1">Add New Load</Dropdown.Item>
+            <Dropdown.Item href="#/action-1">
+              <Link to="/addNewLoad">Add New Load</Link>
+            </Dropdown.Item>
             <Dropdown.Item href="#/action-2">Add Express Load</Dropdown.Item>
             <Dropdown.Item href="#/action-3">
               Add Carrier Capacity
@@ -127,10 +130,6 @@ const FreightOptionsDashboard = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Button variant="outline-info">Print Results</Button>{" "}
-              <Button variant="outline-info" className="ms-3">
-                View Freight Map
-              </Button>{" "}
               <Button variant="outline-info" className="ms-3">
                 Filter Results
               </Button>{" "}

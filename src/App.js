@@ -4,6 +4,7 @@ import Navbar2 from "./Components/Navbars/Navbar2/Navbar2";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import FreightOptionsDashboard from "./Components/FreightOptionsDashboard/FreightOptionsDashboard";
 import AuthProvider from "./Components/Contexts/AuthProvider";
+import AddNewLoad from "./Components/FreightOptionsDashboard/AddNewLoad/AddNewLoad";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<FreightOptionsDashboard />} />
           <Route path="frtOpsDash" element={<FreightOptionsDashboard />} />
+          <Route path="addNewLoad" element={<AddNewLoad />} />
           </Routes>
       </AuthProvider>
       </BrowserRouter>

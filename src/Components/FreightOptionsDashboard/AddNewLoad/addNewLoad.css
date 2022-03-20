@@ -1,0 +1,16 @@
+.selected-div{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-gap: 50px;
+}
+.inside-modal{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-gap: 20px;
+}
+.inside-modal-inside{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
