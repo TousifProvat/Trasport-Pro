@@ -39,10 +39,12 @@ const Navbar2 = () => {
               <NavDropdown title="Drivers / Equip" id="basic-nav-dropdown">
                 <NavDropdown title="Owner" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">
-                    Add Owner
+                    <Link to="/addOwner">Add Owner</Link>
+                    
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">
-                    Search Owners
+                    <Link to="/searchOwner">Search Owners</Link>
+                    
                   </NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown title="Drivers" id="basic-nav-dropdown">
