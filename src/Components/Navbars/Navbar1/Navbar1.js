@@ -16,10 +16,11 @@ const Navbar1 = () => {
         <Container fluid>
           <div>
             <Navbar.Brand href="#home">
-              <img
+              {/* <img
                 src="https://www.transportpro.net/images/TransportProLogo.png"
                 alt="logo-img"
-              ></img>
+              ></img> */}
+              LOGO
             </Navbar.Brand>
           </div>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -27,7 +28,7 @@ const Navbar1 = () => {
             <div>
               <Nav className="navbar-1">
                 <h4 className="navbar-1-title text-nowrap">
-                  Demo Company Inc.
+                  Eagels LLC Inc.
                 </h4>
               </Nav>
             </div>

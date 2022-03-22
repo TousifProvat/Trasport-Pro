@@ -1,16 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import useContext from "../Hooks/useContext";
 import "./searchOwner.css";
 const SearchOwner = () => {
   const [value, setValue] = useState({});
   const [terminalValue, setTerminalValue] = useState({});
+  const [searchData, setSearchData] = useState([]);
+  const { terminalData } = useContext();
+
+
+  // console.log(terminalData);
+
+  const filteredArr = [];
+
+  const filtered = terminalData.filter(t => t.terminal === terminalValue);
+
+  console.log(filtered);
+
+  // setSearchData(filteredArr);
 
   const handleSelectValue = (e) => {
+    e.preventDefault();
     setValue(e.target.value);
-  }
+  };
   const handleTerminalChange = (e) => {
+    e.preventDefault();
     setTerminalValue(e.target.value);
-  }
+  };
   return (
     <div>
       <Container className="mt-5 mb-3">
@@ -28,7 +44,10 @@ const SearchOwner = () => {
                 placeholder="First name"
                 defaultValue="Mark"
               /> */}
-              <Form.Select aria-label="Default select example" onBlur={handleSelectValue}>
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleSelectValue}
+              >
                 <option>Select Status</option>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
@@ -43,9 +62,15 @@ const SearchOwner = () => {
                 placeholder="Last name"
                 defaultValue="Otto"
               /> */}
-              <Form.Select aria-label="Default select example" onBlur={handleTerminalChange}>
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={(e) => {
+                  handleTerminalChange(e);
+                }}
+              >
                 <option>Select Terminals</option>
                 <option value="EG">EG</option>
+                <option value="BG">BG</option>
                 {/* <option value="Inactive">Inactive</option> */}
               </Form.Select>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -203,11 +228,9 @@ const SearchOwner = () => {
                 Please provide a valid company name.
               </Form.Control.Feedback>
             </Form.Group>
-                  </Row>
-                  
+          </Row>
 
-
-                  <Row className="mb-4">
+          <Row className="mb-4">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Print 1099?</Form.Label>
               {/* <Form.Control
@@ -250,8 +273,17 @@ const SearchOwner = () => {
               </Form.Control.Feedback>
             </Form.Group>
           </Row>
-          <Button type="submit" className="mb-5">Search Owner</Button>
+          <Button type="submit" className="mb-5">
+            Search Owner
+          </Button>
         </Form>
+      </Container>
+      <Container className="search-result">
+        {/* {
+          terminalData.map((i) => (
+            <strong>{i.length}</strong>
+          ))
+        } */}
       </Container>
     </div>
   );
