@@ -6,6 +6,7 @@
     "company": "hasan",
     "address1": "j",
     "address2": "ttt",
+    "owner": "Egales Egales",
     "zip": "1233",
     "city": "utuu",
     "state": "dhaka",
@@ -35,12 +36,12 @@
     "billDefaultTractorPayPercent": 0,
     "billPayPerMileLoaded": 0,
     "billPayPerMileEmpty": 0,
-    "phoneNumber": "",
-    "cellphone": "",
-    "activeTractors": "",
-    "activeTrailers": "",
-    "activeDrivers": "",
-    "pay": ""
+    "phoneNumber": "123456789",
+    "cellphone": "21212121",
+    "activeTractors": "2",
+    "activeTrailers": "6",
+    "activeDrivers": "2",
+    "pay": "100"
   },
   {
     "id": 1002,
@@ -50,8 +51,9 @@
     "address1": "k",
     "address2": "yyy",
     "zip": "1256",
+    "owner": "Boeing",
     "city": "rtrt",
-    "state": "dhaka",
+    "state": "cumilla",
     "group": "science",
     "settlementDay": "",
     "print1099": true,
@@ -78,11 +80,11 @@
     "billDefaultTractorPayPercent": 0,
     "billPayPerMileLoaded": 0,
     "billPayPerMileEmpty": 0,
-    "phoneNumber": "",
-    "cellphone": "",
-    "activeTractors": "",
-    "activeTrailers": "",
-    "activeDrivers": "",
-    "pay": "100"
+    "phoneNumber": "987654321",
+    "cellphone": "12121212",
+    "activeTractors": "3",
+    "activeTrailers": "0",
+    "activeDrivers": "1",
+    "pay": "105"
   }
 ]
