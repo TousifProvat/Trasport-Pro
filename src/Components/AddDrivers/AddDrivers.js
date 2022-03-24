@@ -597,8 +597,6 @@ const AddDrivers = () => {
             </Form.Group>
           </Row>
 
-
-
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <p>TWIC Expiration Date</p>
@@ -637,6 +635,168 @@ const AddDrivers = () => {
                 placeholder="Passport Number"
                 aria-describedby="inputGroupPrepend"
                 required
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <p>EOBR Type</p>
+              <Form.Select aria-label="">
+                <option>Select EOBR Type</option>
+                <option value="Geotab">Geotab</option>
+                <option value="Keep Truncking">Keep Truncking</option>
+                <option value="M2M In Motion">M2M In Motion</option>
+                <option value="People Net">People Net</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Passport Expire Date</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              {/* <Form.Select aria-label="">
+                <option>Select State</option>
+                <option value="Alabama">Alabama</option>
+                <option value="Alaska">Alaska</option>
+                <option value="Arizona">Arizona</option>
+                <option value="California">California</option>
+                <option value="Canada">Canada</option>
+              </Form.Select> */}
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>EOBR ID</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="EOBR ID"
+                aria-describedby="inputGroupPrepend"
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <p>Occ Acc Insurance Carrier </p>
+              <Form.Control
+                type="text"
+                placeholder="Occ Acc"
+                aria-describedby="inputGroupPrepend"
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Passport Expire Date</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              {/* <Form.Select aria-label="">
+                <option>Select State</option>
+                <option value="Alabama">Alabama</option>
+                <option value="Alaska">Alaska</option>
+                <option value="Arizona">Arizona</option>
+                <option value="California">California</option>
+                <option value="Canada">Canada</option>
+              </Form.Select> */}
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>EOBR ID</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Passport Number"
+                aria-describedby="inputGroupPrepend"
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <p>Medical</p>
+              <Row>
+                <Col sm={6}>
+                  <Form.Check
+                    required
+                    label="Corrective Lenses"
+                    feedback="You must agree before submitting."
+                    feedbackType="invalid"
+                  />
+                  <Form.Check
+                    required
+                    label="Hearing Aid"
+                    feedback="You must agree before submitting."
+                    feedbackType="invalid"
+                  />
+                  <Form.Check
+                    required
+                    label="Sleep Apnea"
+                    feedback="You must agree before submitting."
+                    feedbackType="invalid"
+                  />
+                </Col>
+                <Col sm={6}>
+                  <Form.Check
+                    required
+                    label=" Diabetes"
+                    feedback="You must agree before submitting."
+                    feedbackType="invalid"
+                  />
+                  <Form.Check
+                    required
+                    label="High Blood Pressure"
+                    feedback="You must agree before submitting."
+                    feedbackType="invalid"
+                  />
+                  <Form.Check
+                    required
+                    label="Yearly Physical"
+                    feedback="You must agree before submitting."
+                    feedbackType="invalid"
+                  />
+                </Col>
+              </Row>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Occ Acc Insurance Start Date </p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <p>Occ Acc Insurance Exp Date</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
               />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
