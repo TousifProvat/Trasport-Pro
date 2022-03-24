@@ -49,7 +49,7 @@ const Navbar2 = () => {
                 </NavDropdown>
                 <NavDropdown title="Drivers" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">
-                    Add Drivers
+                    <Link to="/addDriver">Add Driver</Link>
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">
                     Search Drivers
