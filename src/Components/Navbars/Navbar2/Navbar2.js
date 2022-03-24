@@ -52,7 +52,7 @@ const Navbar2 = () => {
                     <Link to="/addDriver">Add Driver</Link>
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">
-                    Search Drivers
+                    <Link to="/searchDriver">Search Drivers</Link>
                   </NavDropdown.Item>
                 </NavDropdown>
               </NavDropdown>

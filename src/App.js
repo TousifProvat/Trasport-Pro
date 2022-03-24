@@ -8,6 +8,7 @@ import AddNewLoad from "./Components/FreightOptionsDashboard/AddNewLoad/AddNewLo
 import AddOwner from "./Components/AddOwner/AddOwner";
 import SearchOwner from "./Components/SearchOwner/SearchOwner"
 import AddDrivers from "./Components/AddDrivers/AddDrivers";
+import SearchDrivers from "./Components/SearchDrivers/SearchDrivers";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="addOwner" element={<AddOwner />} />
           <Route path="searchOwner" element={<SearchOwner />} />
           <Route path="addDriver" element={<AddDrivers/>} />
+          <Route path="searchDriver" element={<SearchDrivers/>} />
           </Routes>
       </AuthProvider>
       </BrowserRouter>

@@ -811,7 +811,9 @@ const AddDrivers = () => {
               feedbackType="invalid"
             />
           </Form.Group>
-          <Button type="submit">Submit form</Button>
+          <Button type="submit" variant="outline-primary" className="mb-5">Save Record</Button>
+          <Button type="submit" variant="outline-primary" className="ms-3 mb-5">Save and Add New</Button>
+          <Button variant="outline-danger" className="ms-3 mb-5">Cancel</Button>{' '}
         </Form>
       </Container>
     </div>
