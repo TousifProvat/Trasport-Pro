@@ -9,6 +9,7 @@ import AddOwner from "./Components/AddOwner/AddOwner";
 import SearchOwner from "./Components/SearchOwner/SearchOwner"
 import AddDrivers from "./Components/AddDrivers/AddDrivers";
 import SearchDrivers from "./Components/SearchDrivers/SearchDrivers";
+import Tractors from "./Components/Tractors/Tractors";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="searchOwner" element={<SearchOwner />} />
           <Route path="addDriver" element={<AddDrivers/>} />
           <Route path="searchDriver" element={<SearchDrivers/>} />
+          <Route path="addTractor" element={<Tractors/>} />
           </Routes>
       </AuthProvider>
       </BrowserRouter>

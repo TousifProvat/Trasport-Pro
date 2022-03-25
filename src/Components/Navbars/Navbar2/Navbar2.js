@@ -55,6 +55,22 @@ const Navbar2 = () => {
                     <Link to="/searchDriver">Search Drivers</Link>
                   </NavDropdown.Item>
                 </NavDropdown>
+                <NavDropdown title="Tractors" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">
+                    <Link to="/addTractor">Add Tractor</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2">
+                    <Link to="">Search Tractor</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <NavDropdown title="Trailers" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">
+                    <Link to="">Add Trailer</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2">
+                    <Link to="">Search Trailer</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
               </NavDropdown>
 
               <NavDropdown title="Broker Carrier" id="basic-nav-dropdown">
