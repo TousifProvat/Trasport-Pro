@@ -251,6 +251,275 @@ const SearchDrivers = () => {
               </Form.Control.Feedback>
             </Form.Group>
           </Row>
+
+
+
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Dispatcher</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Dispatcher"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Last MVR Date	</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <p>Dispatch Group</p>
+              <Form.Select aria-label="Default select example">
+                <option>Select Dispatcher Group</option>
+                {/* <option value="Yes">Yes</option>
+                <option value="No">No</option> */}
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
+
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <p>Next Review Date</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Recruiter</p>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Recruiter Name"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <p>Physical Due Date</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
+
+
+
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <p>Recruiting Source</p>
+              <Form.Select aria-label="Default select example">
+                <option>Select Recruiting Source</option>
+                <option value="Direct Call">Direact Call</option>
+                <option value="Driver Refereal">Driver Refereal</option>
+                <option value="Employee Referal">Employee Referal</option>
+                <option value="Facebook">Facebook</option>
+                <option value="Indeed">Indeed</option>
+                <option value="Other">Other</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Physical Submitted Date</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <p>Hirirng Eligibility</p>
+              <Form.Select aria-label="Default select example">
+                <option>Select Hiring Eligibility</option>
+                <option value="Eligible For Rehire">Eligible For Rehire</option>
+                <option value="Do Not Rehire">Do Not Rehire</option>
+                <option value="Deceased">Deceased</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <p>Hire Date</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Tractor ID</p>
+              <Form.Control
+                required
+                type="number"
+                placeholder="Tractor ID"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <p>Term Date	</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
+
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <p>Trailer ID</p>
+              <Form.Control
+                required
+                type="number"
+                placeholder="Trailer ID"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Resident Exp Date	</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <p>SSN(Last 4 Digits)	</p>
+              <Form.Control
+                required
+                type="number"
+                placeholder="SSN ID"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
+
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <p>No Loads in Last	</p>
+              <Form.Select aria-label="Default select example">
+                <option>Select No Loads in Last</option>
+                <option value="5 days">5 days</option>
+                <option value="10 Days">10 Days</option>
+                <option value="15 Days">15 Days</option>
+                <option value="30 Days">30 Days</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>EOBR</p>
+              <Form.Select aria-label="Default select example">
+                <option>Select EOBR</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <p>EOBR Type</p>
+              <Form.Select aria-label="Default select example">
+                <option>Select EOBR Type</option>
+                <option value="Geotab">Geotab</option>
+                <option value="M2M in Motion">M2M in Motion</option>
+                <option value="People Net">People Net</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <p>Driver Posting	</p>
+              <Form.Select aria-label="Default select example">
+                <option>Select Driver Posting</option>
+                <option value="Auto Update">Auto Update</option>
+                <option value="Expiration Date">Expiration Date</option>
+                <option value="None">None</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Has Image</p>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Has Image"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <p>Missing Image</p>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Missing Image"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
           <Form.Group className="mb-3">
             <Form.Check
               required
@@ -259,7 +528,9 @@ const SearchDrivers = () => {
               feedbackType="invalid"
             />
           </Form.Group>
-          <Button type="submit">Submit form</Button>
+          <Button variant="outline-primary" className="mb-5 me-3">Search</Button>
+          <Button variant="outline-danger" className="mb-5 me-3">Clear</Button>
+          <Button variant="outline-primary" className="mb-5 me-3">Save Search</Button>{' '}
         </Form>
       </Container>
     </div>
