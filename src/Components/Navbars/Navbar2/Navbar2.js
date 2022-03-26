@@ -65,7 +65,7 @@ const Navbar2 = () => {
                 </NavDropdown>
                 <NavDropdown title="Trailers" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">
-                    <Link to="">Add Trailer</Link>
+                    <Link to="/addTrailer">Add Trailer</Link>
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">
                     <Link to="">Search Trailer</Link>

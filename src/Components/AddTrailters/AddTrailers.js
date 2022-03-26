@@ -1,9 +1,16 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
-import "./tractors.css";
+import {
+  Button,
+  Col,
+  Container,
+  FloatingLabel,
+  Form,
+  Row,
+} from "react-bootstrap";
+import "./addTrailers.css";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
-const Tractors = () => {
+const AddTrailers = () => {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
@@ -24,8 +31,8 @@ const Tractors = () => {
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom01">
-              <Form.Label>Tractor Id</Form.Label>
-              <Form.Control required type="number" placeholder="Tractor Id" />
+              <Form.Label>Trailer Id</Form.Label>
+              <Form.Control required type="number" placeholder="Trailer Id" />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom02">
@@ -57,8 +64,8 @@ const Tractors = () => {
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <Form.Label>Weight</Form.Label>
-              <Form.Control type="number" placeholder="Weight" required />
+              <Form.Label>Length (Feet)</Form.Label>
+              <Form.Control type="number" placeholder="Length(Feet)" required />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
@@ -75,8 +82,12 @@ const Tractors = () => {
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <Form.Label>Fuel Capacity</Form.Label>
-              <Form.Control type="text" placeholder="Fuel Capacity" required />
+              <Form.Label>Width(inches)</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Width(inches)"
+                required
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid number.
               </Form.Control.Feedback>
@@ -85,15 +96,19 @@ const Tractors = () => {
 
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <Form.Label>Current Owner</Form.Label>
-              <Form.Control type="text" placeholder="Current Owner" required />
+              <Form.Label>Deck Height (inches)</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Deck Height (inches)"
+                required
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <Form.Label>Tag Number</Form.Label>
-              <Form.Control type="number" placeholder="Tag Number" required />
+              <Form.Label>Weight (lbs)</Form.Label>
+              <Form.Control type="number" placeholder="Weight (lbs)" required />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
@@ -546,6 +561,202 @@ const Tractors = () => {
               </Form.Control.Feedback>
             </Form.Group>
           </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <p>Tag Number</p>
+              <Form.Control type="number" placeholder="Tag Number" required />
+              {/* <Form.Select aria-label="Default select example">
+                <option>Select EOBR Type ID</option>
+                <option value="Geolab">Geolab</option>
+              </Form.Select> */}
+              {/* <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+          /> */}
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Last Inspection Date</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlTextarea1"
+              >
+                <Form.Label>Last Inspection Location</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Last Inspection Location"
+                  required
+                />
+              </Form.Group>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <p>Leasing Company</p>
+              {/* <Form.Control type="number" placeholder="Tag Number" required /> */}
+              <Form.Select aria-label="Default select example">
+                <option>Select Leasing Company</option>
+              </Form.Select>
+              {/* <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+          /> */}
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Next Inspection Date</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlTextarea1"
+              >
+                <p>Lease Exp Date</p>
+                <DayPickerInput
+                  onDayChange={(day) => console.log(day)}
+                  className="datePicker"
+                />
+              </Form.Group>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <p>Last Service Date</p>
+              {/* <Form.Control type="number" placeholder="Tag Number" required /> */}
+              {/* <Form.Select aria-label="Default select example">
+                <option>Select Leasing Company</option>
+              </Form.Select> */}
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Next Service Date</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlTextarea1"
+              >
+                <p>Maintenance Date</p>
+                <DayPickerInput
+                  onDayChange={(day) => console.log(day)}
+                  className="datePicker"
+                />
+              </Form.Group>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <p>Last Service Date</p>
+              {/* <Form.Control type="number" placeholder="Tag Number" required /> */}
+              {/* <Form.Select aria-label="Default select example">
+                <option>Select Leasing Company</option>
+              </Form.Select> */}
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Next Service Date</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlTextarea1"
+              >
+                <p>Trailer Owned By</p>
+                {/* <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              /> */}
+                <Form.Control
+                  type="text"
+                  placeholder="Trailer Owned By"
+                  required
+                />
+              </Form.Group>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <p>Trailer Owned By Date</p>
+              <DayPickerInput
+                onDayChange={(day) => console.log(day)}
+                className="datePicker"
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Comment</p>
+              <FloatingLabel controlId="floatingTextarea2" label="Comments">
+                <Form.Control
+                  as="textarea"
+                  placeholder="comment here"
+                  style={{ height: "100px" }}
+                />
+              </FloatingLabel>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
           <Button type="submit" variant="outline-primary" className="mb-5">
             Save Record
           </Button>
@@ -561,4 +772,4 @@ const Tractors = () => {
   );
 };
 
-export default Tractors;
+export default AddTrailers;
