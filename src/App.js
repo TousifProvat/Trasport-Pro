@@ -12,6 +12,7 @@ import SearchDrivers from "./Components/SearchDrivers/SearchDrivers";
 import Tractors from "./Components/Tractors/Tractors";
 import AddTrailers from "./Components/AddTrailters/AddTrailers";
 import SearchTractor from "./Components/SearchTractor/SearchTractor";
+import SearchTrailer from "./Components/SearchTrailer/SearchTrailer";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="addTractor" element={<Tractors/>} />
             <Route path="addTrailer" element={<AddTrailers />} />
             <Route path="searchTractor" element={<SearchTractor/>} />
+            <Route path="searchTrailer" element={<SearchTrailer/>} />
           </Routes>
       </AuthProvider>
       </BrowserRouter>
