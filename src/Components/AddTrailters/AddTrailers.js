@@ -25,7 +25,7 @@ const AddTrailers = () => {
   return (
     <div>
       <Container>
-        <h3 className="mt-5 mb-3">Tractor Information</h3>
+        <h3 className="mt-5 mb-3">Trailer Information</h3>
         <hr></hr>
 
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -448,9 +448,9 @@ const AddTrailers = () => {
               </Form.Control.Feedback>
             </Form.Group>
           </Row>
-          <Button type="submit"variant="outline-primary">Save</Button>{' '}
-          <Button type="submit" variant="outline-primary">Save And Add New</Button>{' '}
-          <Button variant="outline-danger">Cancel</Button>{' '}
+          <Button type="submit"variant="outline-primary" className="mb-5">Save</Button>{' '}
+          <Button type="submit" variant="outline-primary" className="mb-5">Save And Add New</Button>{' '}
+          <Button variant="outline-danger" className="mb-5">Cancel</Button>{' '}
         </Form>
         
       </Container>
