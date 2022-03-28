@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "status": "Active",
+    "year": "2021",
+    "make": "Blue Bird",
+    "Model": "",
+    "length": "",
+    "type": "",
+    "vin": "1212",
+    "tagNumber": "",
+    "tagState": "",
+    "tagExpiration": "",
+    "terminal": "EG",
+    "ownerId": "",
+    "Owner": "Larry Bell",
+    "driver": {
+      "firstOne": "1001 - Jhon Clerk",
+      "secondOne": "1002 - Tushif Ahmed",
+      "thirdOne": "1150 - James Smith"
+    },
+    "leaseOn": "25/03/2021",
+    "leaseOff": "",
+    "nextService": "",
+    "lastInspection": "",
+    "nextInspection": "",
+    "lastDispatchDate": "3/27/2022"
+  }
+]

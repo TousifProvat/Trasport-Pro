@@ -13,7 +13,7 @@ import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 import useContext from "../Hooks/useContext";
 const SearchTrailer = () => {
-  // const { tractorData } = useContext();
+  const { trailerDate } = useContext();
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
@@ -748,16 +748,18 @@ const SearchTrailer = () => {
       </Container>
 
       <Container fluid style={{marginBottom: "50px"}}>
-        <h3 className="mt-5 mb-3">Search Results (0)</h3>
+        <h3 className="mt-5 mb-3">Search Results (1)</h3>
         <hr></hr>
-        <strong className="seacrhTrailer-error">No trailer records matching your search criteria were found</strong>
-        {/* <Table striped bordered hover>
+        {/* <strong className="seacrhTrailer-error">No trailer records matching your search criteria were found</strong> */}
+        <Table striped bordered hover>
           <thead>
             <tr>
               <th>ID</th>
               <th>Status</th>
               <th>Year</th>
+              <th>Make</th>
               <th>Model</th>
+              <th>Length</th>
               <th>Type</th>
               <th>VIN</th>
               <th>Tag Number</th>
@@ -765,23 +767,26 @@ const SearchTrailer = () => {
               <th>Tag Expiration</th>
               <th>Terminal</th>
               <th>OwnerId</th>
-              <th>Driver(s)</th>
+              <th>Owner</th>
+              <th>Driver ID Driver</th>
               <th>Lease On</th>
+              <th>Lease Off</th>
               <th>Next Service</th>
-              <th>Last Service</th>
-              <th>Next DOT Inspection</th>
-              <th>Maintenance Date</th>
+              <th>Last Inspection</th>
+              <th>Next Inspection</th>
               <th>Last Dispatch Date</th>
             </tr>
           </thead>
 
-          {tractorData.map((i) => (
+          {trailerDate.map((i) => (
             <tbody>
               <tr>
                       <td>{i.id}</td>
                 <td>{i.status}</td>
                 <td>{i.year}</td>
+                      <td>{i.make}</td>
                       <td>{i.model}</td>
+                      <td>{i.length}</td>
                       <td>{i.type}</td>
                       <td>{i.vin}</td>
                       <td>{i.tagNumber}</td>
@@ -789,20 +794,22 @@ const SearchTrailer = () => {
                       <td>{i.tagExpiration}</td>
                       <td>{i.terminal}</td>
                       <td>{i.ownerId}</td>
+                      <td>{i.owner}</td>
                       <td>
                           <li>{i.driver.firstOne}</li>
                           <li>{i.driver.secondOne}</li>
+                          <li>{i.driver.thirdOne}</li>
                       </td>
                       <td>{i.leaseOn}</td>
+                      <td>{i.leaseOff}</td>
                       <td>{i.nextService}</td>
-                      <td>{i.lastService}</td>
-                      <td>{i.mainteinanceDate}</td>
-                      <td>{i.nextDotInspection}</td>
+                      <td>{i.lastInspection}</td>
+                      <td>{i.nextInspection}</td>
                       <td>{i.lastDispatchDate}</td>
               </tr>
             </tbody>
           ))}
-        </Table> */}
+        </Table>
       </Container>
     </div>
   );
