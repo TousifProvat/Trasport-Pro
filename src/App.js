@@ -36,6 +36,7 @@ function App() {
             <Route path="addTrailer" element={<AddTrailers />} />
             <Route path="searchTractor" element={<SearchTractor/>} />
             <Route path="searchTrailer" element={<SearchTrailer/>} />
+            {/* <Route path="addNewLoad" element={<AddNewLoad/>} /> */}
           </Routes>
       </AuthProvider>
       </BrowserRouter>

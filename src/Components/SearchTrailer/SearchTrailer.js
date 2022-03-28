@@ -747,7 +747,7 @@ const SearchTrailer = () => {
         </Form>
       </Container>
 
-      <Container fluid style={{marginBottom: "50px"}}>
+      <Container fluid style={{ marginBottom: "50px" }}>
         <h3 className="mt-5 mb-3">Search Results (1)</h3>
         <hr></hr>
         {/* <strong className="seacrhTrailer-error">No trailer records matching your search criteria were found</strong> */}
@@ -781,31 +781,31 @@ const SearchTrailer = () => {
           {trailerDate.map((i) => (
             <tbody>
               <tr>
-                      <td>{i.id}</td>
+                <td>{i.id}</td>
                 <td>{i.status}</td>
                 <td>{i.year}</td>
-                      <td>{i.make}</td>
-                      <td>{i.model}</td>
-                      <td>{i.length}</td>
-                      <td>{i.type}</td>
-                      <td>{i.vin}</td>
-                      <td>{i.tagNumber}</td>
-                      <td>{i.tagState}</td>
-                      <td>{i.tagExpiration}</td>
-                      <td>{i.terminal}</td>
-                      <td>{i.ownerId}</td>
-                      <td>{i.owner}</td>
-                      <td>
-                          <li>{i.driver.firstOne}</li>
-                          <li>{i.driver.secondOne}</li>
-                          <li>{i.driver.thirdOne}</li>
-                      </td>
-                      <td>{i.leaseOn}</td>
-                      <td>{i.leaseOff}</td>
-                      <td>{i.nextService}</td>
-                      <td>{i.lastInspection}</td>
-                      <td>{i.nextInspection}</td>
-                      <td>{i.lastDispatchDate}</td>
+                <td>{i.make}</td>
+                <td>{i.model}</td>
+                <td>{i.length}</td>
+                <td>{i.type}</td>
+                <td>{i.vin}</td>
+                <td>{i.tagNumber}</td>
+                <td>{i.tagState}</td>
+                <td>{i.tagExpiration}</td>
+                <td>{i.terminal}</td>
+                <td>{i.ownerId}</td>
+                <td>{i.owner}</td>
+                <td>
+                  <li>{i.driver.firstOne}</li>
+                  <li>{i.driver.secondOne}</li>
+                  <li>{i.driver.thirdOne}</li>
+                </td>
+                <td>{i.leaseOn}</td>
+                <td>{i.leaseOff}</td>
+                <td>{i.nextService}</td>
+                <td>{i.lastInspection}</td>
+                <td>{i.nextInspection}</td>
+                <td>{i.lastDispatchDate}</td>
               </tr>
             </tbody>
           ))}

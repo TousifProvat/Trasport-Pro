@@ -3,7 +3,7 @@
     grid-template-columns: repeat(2,1fr);
     grid-gap: 50px;
 }
-.inside-modal{
+.main-inside-modal{
     display: grid;
     grid-template-columns: repeat(3,1fr);
     grid-gap: 20px;
@@ -14,3 +14,11 @@
     align-items: center;
     flex-direction: column;
 }
+.modal-btn{
+    position: relative;
+    top: 20px;
+}
+.modal-90w{
+    width: 90%;
+}
+

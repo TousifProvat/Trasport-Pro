@@ -19,7 +19,7 @@ const Navbar2 = () => {
                   Load management Dashboard
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">
-                  Add New Load
+                  <Link to="/addNewLoad">Add New Load</Link>
                 </NavDropdown.Item>
                 {/* <NavDropdown.Divider /> */}
                 <NavDropdown.Item href="#action/3.4">
