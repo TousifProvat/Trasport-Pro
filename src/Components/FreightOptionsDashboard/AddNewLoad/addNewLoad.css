@@ -21,4 +21,16 @@
 .modal-90w{
     width: 90%;
 }
+/*  */
 
+.Consignee-Information{
+
+}
+.Consignee-Information{
+    display: flex;
+    justify-content: space-between;
+}
+.modal-header-Consignee{
+    display: flex;
+    flex-direction: column;
+}

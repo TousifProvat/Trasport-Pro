@@ -1,9 +1,21 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
-import { Modal, Button, Form, Input, Radio, Row, Select } from "antd";
+import {
+  Modal,
+  Button,
+  Form,
+  Input,
+  Radio,
+  Row,
+  Select,
+  Col,
+  DatePicker,
+  Space,
+} from "antd";
 import { Link } from "react-router-dom";
 import "./addNewLoad.css";
 import "antd/dist/antd.css";
+import { TimePicker } from 'antd';
 
 const options = [
   { value: 1, label: "1" },
@@ -19,7 +31,7 @@ const AddNewLoad = () => {
   const { TextArea } = Input;
   const [form] = Form.useForm();
   const [requiredMark, setRequiredMarkType] = useState("optional");
-
+  const [type, setType] = useState('time');
   const onRequiredTypeChange = ({ requiredMarkValue }) => {
     setRequiredMarkType(requiredMarkValue);
   };
@@ -38,19 +50,25 @@ const AddNewLoad = () => {
     "Georgia",
     "Hawaii",
   ];
-  // for (let i = 10; i < 36; i++) {
-  //   children.push(
-  //     <Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>
-  //   );
-  // }
 
-  // end ant selectors
   function handleChange(value) {
     console.log(`selected ${value}`);
   }
+  // date picker dateHandler
+  function onChange(date, dateString) {
+    console.log(date, dateString);
+  }
+
+  // Select time and date both
+
+  function PickerWithType({ type, onChange }) {
+  if (type === 'time') return <TimePicker onChange={onChange} />;
+  if (type === 'date') return <DatePicker onChange={onChange} />;
+  return <DatePicker picker={type} onChange={onChange} />;
+}
   return (
     <div>
-      <Container>
+      <Container fluid>
         <div className="modal-header">
           <h4 className="mt-5 ">Load Information</h4>
           <Button
@@ -61,7 +79,18 @@ const AddNewLoad = () => {
             Add New Location
           </Button>
         </div>
-        {/* <hr></hr> */}
+
+        <div className="">
+          <strong className="mb-3 mt-3 me-3">Number of Loads :</strong>
+          <Select placeholder="Select State" className="mt-3">
+            <Option value="1">1</Option>
+            <Option value="2">2</Option>
+            <Option value="3">3</Option>
+            <Option value="4">4</Option>
+            <Option value="5">5</Option>
+            <Option value="6">6</Option>
+          </Select>
+        </div>
 
         <Modal
           title="Load Information"
@@ -228,12 +257,295 @@ const AddNewLoad = () => {
                 </Form>
               </div>
               <div>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d174614.2910999577!2d-71.393197557926!3d46.85651774274637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cb8968a05db8893%3A0x8fc52d63f0e83a03!2sQuebec%20City%2C%20QC%2C%20Canada!5e0!3m2!1sen!2sbd!4v1648454702105!5m2!1sen!2sbd" width={600} height={800} style={{border: 0}} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="map-CA" />
-
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d174614.2910999577!2d-71.393197557926!3d46.85651774274637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cb8968a05db8893%3A0x8fc52d63f0e83a03!2sQuebec%20City%2C%20QC%2C%20Canada!5e0!3m2!1sen!2sbd!4v1648454702105!5m2!1sen!2sbd"
+                  width={600}
+                  height={800}
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="map-CA"
+                />
               </div>
             </div>
           </div>
         </Modal>
+        <Container className="ship-Consignee mb-5">
+          <Row className="mt-5 mb-5" gutter={26}>
+            <Col span={12} className="mb-5">
+              <h3>Shipper Information </h3>
+              <hr></hr>
+              <p>Search</p>
+              <Input placeholder="Search" />
+              <p className="mt-3">Company</p>
+              <Input placeholder="Company" />
+              <p className="mt-3">Address</p>
+              <Input placeholder="Address" />
+              <p className="mt-3">State</p>
+              <Select placeholder="Select State" style={{ width: "100%" }}>
+                <Option value="Alabama">Alabama</Option>
+                <Option value="Alaska">Alaska</Option>
+                <Option value="Canada">Canada</Option>
+                <Option value="Quebec">Quebec</Option>
+              </Select>
+              <p className="mt-3">Zip</p>
+              <Input placeholder="Zip" />
+              <p className="mt-3">Phone Number</p>
+              <Input placeholder="Phone Number" />
+              <p className="mt-3">Fax Number</p>
+              <Input placeholder="Fax Number" />
+              <p className="mt-3">Contact</p>
+              <Input placeholder="Contact" />
+              <p className="mt-3">Email</p>
+              <Input placeholder="Email" />
+              <p className="mt-3">Signed By</p>
+              <Input placeholder="Signed By" />
+              <p className="mt-3">Special Instructions/Directions</p>
+              <TextArea
+                rows={4}
+                placeholder="Special Instructions/Directions"
+                maxLength={6}
+              />
+            </Col>
+            <Col span={12}>
+              <div className="Consignee-Information">
+                <h3>Consignee Information </h3>
+                <Button>Add Stop</Button>
+              </div>
+              <hr></hr>
+              <p>Search</p>
+              <Input placeholder="Search" />
+              <p className="mt-3">Company</p>
+              <Input placeholder="Company" />
+              <p className="mt-3">Address</p>
+              <Input placeholder="Address" />
+              <p className="mt-3">State</p>
+              <Select placeholder="Select State" style={{ width: "100%" }}>
+                <Option value="Alabama">Alabama</Option>
+                <Option value="Alaska">Alaska</Option>
+                <Option value="Canada">Canada</Option>
+                <Option value="Quebec">Quebec</Option>
+              </Select>
+              <p className="mt-3">Zip</p>
+              <Input placeholder="Zip" />
+              <p className="mt-3">Phone Number</p>
+              <Input placeholder="Phone Number" />
+              <p className="mt-3">Fax Number</p>
+              <Input placeholder="Fax Number" />
+              <p className="mt-3">Contact</p>
+              <Input placeholder="Contact" />
+              <p className="mt-3">Email</p>
+              <Input placeholder="Email" />
+              <p className="mt-3">Signed By</p>
+              <Input placeholder="Signed By" />
+              <p className="mt-3">Special Instructions/Directions</p>
+              <TextArea
+                rows={4}
+                placeholder="Special Instructions/Directions"
+                maxLength={6}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </Container>
+      <Container>
+        {/* Add todo list functionality here */}
+
+        <div className="Consignee-Information">
+          <h3>Stop Offs</h3>
+          <Button>Add Stop</Button>
+        </div>
+        <hr></hr>
+        <Row className="mt-5 mb-5" gutter={26}>
+          <Col span={12} className="mb-5">
+            <p>Stop Type</p>
+            <Select placeholder="Select Stop Type" style={{ width: "100%" }}>
+              <Option value="SO">SO</Option>
+              <Option value="PO">PO</Option>
+            </Select>
+            <p className="mt-3">Company Name</p>
+            <Input placeholder="Company Name" />
+            {/* <p className="mt-3">State</p>
+            <Select placeholder="Select State" style={{ width: "100%" }}>
+              <Option value="Alabama">Alabama</Option>
+              <Option value="Alaska">Alaska</Option>
+              <Option value="Canada">Canada</Option>
+              <Option value="Quebec">Quebec</Option>
+            </Select> */}
+            <p className="mt-3">Zip</p>
+            <Input placeholder="Zip" />
+            <p className="mt-3">Phone Number</p>
+            <Input placeholder="Phone Number" />
+            <p className="mt-3">Fax Number</p>
+            <Input placeholder="Fax Number" />
+            <p className="mt-3">Contact</p>
+            <Input placeholder="Contact" />
+            <p className="mt-3">Email</p>
+            <Input placeholder="Email" />
+            <p className="mt-3">Pices</p>
+            <Input placeholder="Pices" />
+            <p className="mt-3">Signed By</p>
+            <Input placeholder="Signed By" />
+            <p className="mt-3">Comments</p>
+            <TextArea
+              rows={4}
+              placeholder="Comments"
+              maxLength={6}
+            />
+          </Col>
+          <Col span={12}>
+            <div className="Consignee-Information"></div>
+            <p>City</p>
+            <Input placeholder="City" />
+            <p className="mt-3">Contact</p>
+            <Input placeholder="Contact" />
+            <p className="mt-3">Address</p>
+            <Input placeholder="Address" />
+            <p className="mt-3">State</p>
+            <Select placeholder="Select State" style={{ width: "100%" }}>
+              <Option value="Alabama">Alabama</Option>
+              <Option value="Alaska">Alaska</Option>
+              <Option value="Canada">Canada</Option>
+              <Option value="Quebec">Quebec</Option>
+            </Select>
+            <p className="mt-3">Service Level</p>
+            <Select
+              placeholder="Select Service Level"
+              style={{ width: "100%" }}
+            >
+              <Option value="Firm Appointment">Firm Appointme</Option>
+              <Option value="Flexible/FCFS">Flexible/FCFS</Option>
+              <Option value="Priority/Crane">Priority/Crane</Option>
+            </Select>
+            <p className="mt-3">Earliest Appointment</p>
+            <Space direction="vertical" style={{ width: "100%" }}>
+              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+            </Space>
+            <p className="mt-3">Latest Appointment</p>
+            <Space direction="vertical" style={{ width: "100%" }}>
+              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+            </Space>
+            <p className="mt-3">Commodity</p>
+            <Select placeholder="Select State" style={{ width: "100%" }}>
+              <Option value="FAK">FAK</Option>
+            </Select>
+            <p className="mt-3">Reference</p>
+            <Input placeholder="Address" />
+            <p className="mt-3">Weight</p>
+            <Input placeholder="Weight" />
+          </Col>
+        </Row>
+      </Container>
+      <Container fluid>
+        <h3>Load Information</h3>
+        <hr></hr>
+        <Row className="mt-5 mb-5" gutter={26}>
+          <Col span={12} className="mb-5">
+            <p>Requested Pickup Date/Time</p>
+            <Space direction="vertical" style={{ width: "70%" }}>
+              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+            </Space>
+            <Space direction="vertical" style={{ width: "25%", marginLeft: "30px"}}>
+              <PickerWithType type={type} style={{ width: "100%" }} onChange={value => console.log(value)} />
+            </Space>
+
+            <p className="mt-3">Pickup Service Level</p>
+            <Select placeholder="Select State" style={{ width: "100%" }}>
+              <Option value="Firm Appointment">Firm Appointment</Option>
+              <Option value="Flexible/FCFS">Flexible/FCFS</Option>
+              <Option value="Priority/Crane">Priority/Crane</Option>
+            </Select>
+            {/* <Input placeholder="Company Name" /> */}
+            <p className="mt-3">Requested Delivery Date/Time</p>
+            <Space direction="vertical" style={{ width: "70%" }}>
+              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+            </Space>
+            <Space direction="vertical" style={{ width: "25%", marginLeft: "30px"}}>
+              <PickerWithType type={type} style={{ width: "100%" }} onChange={value => console.log(value)} />
+            </Space>
+            {/* <Select placeholder="Select State" style={{ width: "100%" }}>
+              <Option value="Alabama">Alabama</Option>
+              <Option value="Alaska">Alaska</Option>
+              <Option value="Canada">Canada</Option>
+              <Option value="Quebec">Quebec</Option>
+            </Select> */}
+            <p className="mt-3">Delivery Service Level</p>
+            {/* <Input placeholder="Zip" /> */}
+            <Select placeholder="Select Delivery Service Level" style={{ width: "100%" }}>
+              <Option value="Firm Appointment">Firm Appointment</Option>
+              <Option value="Flexible/FCFS">Flexible/FCFS</Option>
+              <Option value="Priority/Crane">Priority/Crane</Option>
+            </Select>
+            <p className="mt-3">Terminal</p>
+            <Select placeholder="Select Terminal" style={{ width: "100%" }}>
+              <Option value="EG-Egales">EG-Egales</Option>
+            </Select>
+            {/* <Input placeholder="Phone Number" /> */}
+            <p className="mt-3">Division</p>
+            <Select placeholder="Select Terminal" style={{ width: "100%" }}>
+              {/* <Option value="EG-Egales">EG-Egales</Option> */}
+            </Select>
+            {/* <Input placeholder="Fax Number" /> */}
+            <p className="mt-3">Load Entered By	</p>
+            <Input placeholder="Load Entered By" />
+            <p className="mt-3">Internal Comments
+(does not appears on the freight bill)</p>
+            <TextArea
+              rows={4}
+              placeholder="Comments"
+              maxLength={6}
+            />
+            <p className="mt-3">HOT Comments
+(appears on load summary / dispatch)</p>
+            <TextArea
+              rows={4}
+              placeholder="Comments"
+              maxLength={6}
+            />
+          </Col>
+          <Col span={12}>
+            <div className="Consignee-Information"></div>
+            <p>City</p>
+            <Input placeholder="City" />
+            <p className="mt-3">Contact</p>
+            <Input placeholder="Contact" />
+            <p className="mt-3">Address</p>
+            <Input placeholder="Address" />
+            <p className="mt-3">State</p>
+            <Select placeholder="Select State" style={{ width: "100%" }}>
+              <Option value="Alabama">Alabama</Option>
+              <Option value="Alaska">Alaska</Option>
+              <Option value="Canada">Canada</Option>
+              <Option value="Quebec">Quebec</Option>
+            </Select>
+            <p className="mt-3">Service Level</p>
+            <Select
+              placeholder="Select Service Level"
+              style={{ width: "100%" }}
+            >
+              <Option value="Firm Appointment">Firm Appointme</Option>
+              <Option value="Flexible/FCFS">Flexible/FCFS</Option>
+              <Option value="Priority/Crane">Priority/Crane</Option>
+            </Select>
+            <p className="mt-3">Earliest Appointment</p>
+            <Space direction="vertical" style={{ width: "100%" }}>
+              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+            </Space>
+            <p className="mt-3">Latest Appointment</p>
+            <Space direction="vertical" style={{ width: "100%" }}>
+              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+            </Space>
+            <p className="mt-3">Commodity</p>
+            <Select placeholder="Select State" style={{ width: "100%" }}>
+              <Option value="FAK">FAK</Option>
+            </Select>
+            <p className="mt-3">Reference</p>
+            <Input placeholder="Address" />
+            <p className="mt-3">Weight</p>
+            <Input placeholder="Weight" />
+          </Col>
+        </Row>
       </Container>
     </div>
   );
