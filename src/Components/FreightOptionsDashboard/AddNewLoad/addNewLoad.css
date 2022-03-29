@@ -34,3 +34,13 @@
     display: flex;
     flex-direction: column;
 }
+.Checkbox-para{
+    margin-right: 300px;
+}
+.Checkbox-para2{
+    margin-right: 162px;
+}
+.line-items{
+    display: flex;
+    justify-content: space-between;
+}

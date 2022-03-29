@@ -11,11 +11,13 @@ import {
   Col,
   DatePicker,
   Space,
+  Checkbox,
+  Table,
 } from "antd";
 import { Link } from "react-router-dom";
 import "./addNewLoad.css";
 import "antd/dist/antd.css";
-import { TimePicker } from 'antd';
+import { TimePicker } from "antd";
 
 const options = [
   { value: 1, label: "1" },
@@ -31,7 +33,7 @@ const AddNewLoad = () => {
   const { TextArea } = Input;
   const [form] = Form.useForm();
   const [requiredMark, setRequiredMarkType] = useState("optional");
-  const [type, setType] = useState('time');
+  const [type, setType] = useState("time");
   const onRequiredTypeChange = ({ requiredMarkValue }) => {
     setRequiredMarkType(requiredMarkValue);
   };
@@ -62,10 +64,27 @@ const AddNewLoad = () => {
   // Select time and date both
 
   function PickerWithType({ type, onChange }) {
-  if (type === 'time') return <TimePicker onChange={onChange} />;
-  if (type === 'date') return <DatePicker onChange={onChange} />;
-  return <DatePicker picker={type} onChange={onChange} />;
-}
+    if (type === "time") return <TimePicker onChange={onChange} />;
+    if (type === "date") return <DatePicker onChange={onChange} />;
+    return <DatePicker picker={type} onChange={onChange} />;
+  }
+
+  /// Fuel calc button
+
+  const handleFuelCalc = () => {
+    alert("Must Enter Bill-To Information First");
+  };
+
+  /// Check Box function here
+
+  function onChange(e) {
+    console.log(`checked = ${e.target.checked}`);
+  }
+
+  // table data table
+
+  
+
   return (
     <div>
       <Container fluid>
@@ -388,11 +407,7 @@ const AddNewLoad = () => {
             <p className="mt-3">Signed By</p>
             <Input placeholder="Signed By" />
             <p className="mt-3">Comments</p>
-            <TextArea
-              rows={4}
-              placeholder="Comments"
-              maxLength={6}
-            />
+            <TextArea rows={4} placeholder="Comments" maxLength={6} />
           </Col>
           <Col span={12}>
             <div className="Consignee-Information"></div>
@@ -420,11 +435,11 @@ const AddNewLoad = () => {
             </Select>
             <p className="mt-3">Earliest Appointment</p>
             <Space direction="vertical" style={{ width: "100%" }}>
-              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+              <DatePicker onChange={onChange} style={{ width: "100%" }} />
             </Space>
             <p className="mt-3">Latest Appointment</p>
             <Space direction="vertical" style={{ width: "100%" }}>
-              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+              <DatePicker onChange={onChange} style={{ width: "100%" }} />
             </Space>
             <p className="mt-3">Commodity</p>
             <Select placeholder="Select State" style={{ width: "100%" }}>
@@ -441,13 +456,20 @@ const AddNewLoad = () => {
         <h3>Load Information</h3>
         <hr></hr>
         <Row className="mt-5 mb-5" gutter={26}>
-          <Col span={12} className="mb-5">
+          <Col span={8} className="mb-5">
             <p>Requested Pickup Date/Time</p>
             <Space direction="vertical" style={{ width: "70%" }}>
-              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+              <DatePicker onChange={onChange} style={{ width: "100%" }} />
             </Space>
-            <Space direction="vertical" style={{ width: "25%", marginLeft: "30px"}}>
-              <PickerWithType type={type} style={{ width: "100%" }} onChange={value => console.log(value)} />
+            <Space
+              direction="vertical"
+              style={{ width: "25%", marginLeft: "30px" }}
+            >
+              <PickerWithType
+                type={type}
+                style={{ width: "100%" }}
+                onChange={(value) => console.log(value)}
+              />
             </Space>
 
             <p className="mt-3">Pickup Service Level</p>
@@ -459,10 +481,17 @@ const AddNewLoad = () => {
             {/* <Input placeholder="Company Name" /> */}
             <p className="mt-3">Requested Delivery Date/Time</p>
             <Space direction="vertical" style={{ width: "70%" }}>
-              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+              <DatePicker onChange={onChange} style={{ width: "100%" }} />
             </Space>
-            <Space direction="vertical" style={{ width: "25%", marginLeft: "30px"}}>
-              <PickerWithType type={type} style={{ width: "100%" }} onChange={value => console.log(value)} />
+            <Space
+              direction="vertical"
+              style={{ width: "25%", marginLeft: "30px" }}
+            >
+              <PickerWithType
+                type={type}
+                style={{ width: "100%" }}
+                onChange={(value) => console.log(value)}
+              />
             </Space>
             {/* <Select placeholder="Select State" style={{ width: "100%" }}>
               <Option value="Alabama">Alabama</Option>
@@ -472,7 +501,10 @@ const AddNewLoad = () => {
             </Select> */}
             <p className="mt-3">Delivery Service Level</p>
             {/* <Input placeholder="Zip" /> */}
-            <Select placeholder="Select Delivery Service Level" style={{ width: "100%" }}>
+            <Select
+              placeholder="Select Delivery Service Level"
+              style={{ width: "100%" }}
+            >
               <Option value="Firm Appointment">Firm Appointment</Option>
               <Option value="Flexible/FCFS">Flexible/FCFS</Option>
               <Option value="Priority/Crane">Priority/Crane</Option>
@@ -487,63 +519,232 @@ const AddNewLoad = () => {
               {/* <Option value="EG-Egales">EG-Egales</Option> */}
             </Select>
             {/* <Input placeholder="Fax Number" /> */}
-            <p className="mt-3">Load Entered By	</p>
+            <p className="mt-3">Load Entered By </p>
             <Input placeholder="Load Entered By" />
-            <p className="mt-3">Internal Comments
-(does not appears on the freight bill)</p>
-            <TextArea
-              rows={4}
-              placeholder="Comments"
-              maxLength={6}
-            />
-            <p className="mt-3">HOT Comments
-(appears on load summary / dispatch)</p>
-            <TextArea
-              rows={4}
-              placeholder="Comments"
-              maxLength={6}
-            />
+            <p className="mt-3">
+              Internal Comments (does not appears on the freight bill)
+            </p>
+            <TextArea rows={4} placeholder="Comments" maxLength={6} />
+            <p className="mt-3">
+              HOT Comments (appears on load summary / dispatch)
+            </p>
+            <TextArea rows={4} placeholder="Comments" maxLength={6} />
           </Col>
-          <Col span={12}>
+          <Col span={8}>
             <div className="Consignee-Information"></div>
-            <p>City</p>
-            <Input placeholder="City" />
-            <p className="mt-3">Contact</p>
-            <Input placeholder="Contact" />
-            <p className="mt-3">Address</p>
-            <Input placeholder="Address" />
-            <p className="mt-3">State</p>
-            <Select placeholder="Select State" style={{ width: "100%" }}>
-              <Option value="Alabama">Alabama</Option>
-              <Option value="Alaska">Alaska</Option>
-              <Option value="Canada">Canada</Option>
-              <Option value="Quebec">Quebec</Option>
+            <p>Commodity Type</p>
+            <Select
+              placeholder="Select Commodity Type"
+              style={{ width: "100%" }}
+            >
+              <Option value="Firm Appointment">FAK</Option>
             </Select>
-            <p className="mt-3">Service Level</p>
+            <p className="mt-3">Commodity Value</p>
+            <Input placeholder="Commodity Value" />
+            <p className="mt-3">Commodity Description</p>
+            <TextArea rows={4} placeholder="Comments" maxLength={6} />
+            <p className="mt-3">Load Size</p>
+            <Select placeholder="Select Load Size" style={{ width: "100%" }}>
+              <Option value="LTL">LTL</Option>
+              <Option value="Full">Full</Option>
+            </Select>
+            <p className="mt-3">Trailer Requirment</p>
             <Select
               placeholder="Select Service Level"
               style={{ width: "100%" }}
             >
-              <Option value="Firm Appointment">Firm Appointme</Option>
-              <Option value="Flexible/FCFS">Flexible/FCFS</Option>
-              <Option value="Priority/Crane">Priority/Crane</Option>
+              <Option value="Flatbed">Flatbed</Option>
+              <Option value="Power Only">Power Only</Option>
+              <Option value="Reefer">Reefer</Option>
+              <Option value="Van">Van</Option>
             </Select>
-            <p className="mt-3">Earliest Appointment</p>
-            <Space direction="vertical" style={{ width: "100%" }}>
-              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+            <p className="mt-3">Weight</p>
+            <Input placeholder="Weight" />
+            {/* <Space direction="vertical" style={{ width: "100%" }}>
+              <DatePicker onChange={onChange} style={{ width: "100%" }} />
             </Space>
             <p className="mt-3">Latest Appointment</p>
             <Space direction="vertical" style={{ width: "100%" }}>
-              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
-            </Space>
-            <p className="mt-3">Commodity</p>
-            <Select placeholder="Select State" style={{ width: "100%" }}>
+              <DatePicker onChange={onChange} style={{ width: "100%" }} />
+            </Space> */}
+            <p className="mt-3">Minimum Weight</p>
+            <Input placeholder="Minimum Weight" />
+            {/* <Select placeholder="Select State" style={{ width: "100%" }}>
               <Option value="FAK">FAK</Option>
+            </Select> */}
+            <p className="mt-3">Load Diamensions</p>
+            <Row gutter={26}>
+              <Col span={6}>
+                <Input placeholder="Length (ft)" />
+              </Col>
+              <Col span={6}>
+                <Input placeholder="Width (in)" />
+              </Col>
+              <Col span={6}>
+                <Input placeholder="Height (in)" />
+              </Col>
+              <Col span={6}>
+                <Input placeholder="Volume (cu ft)" />
+              </Col>
+            </Row>
+            {/* <Input placeholder="Address" /> */}
+          </Col>
+
+          <Col span={8}>
+            <div className="Consignee-Information"></div>
+            <p>Bill Of Loading</p>
+            <Input placeholder="Bill Of Loading" />
+            <p className="mt-3">Billing Equipment</p>
+            <Input placeholder="Billing Equipment" />
+            <p className="mt-3">Container Number</p>
+            <Input placeholder="Container Number" />
+            <p className="mt-3">Hazmat</p>
+            <Select placeholder="Select Hazmat" style={{ width: "100%" }}>
+              <Option value="Yes">Yes</Option>
+              <Option value="No">No</Option>
             </Select>
+            <p className="mt-3">Mainfest</p>
+            <Input placeholder="Mainfest" />
+            <p className="mt-3">Number Of Pices</p>
+            <Input placeholder="Number Of Pices" />
+            <p className="mt-3">Pick up Number</p>
+            <Input placeholder="Pick up Number" />
+            <p className="mt-3">PO Number</p>
+            <Input placeholder="PO Number" />
             <p className="mt-3">Reference</p>
+            <Input placeholder="Reference" />
+            <p className="mt-3">Seal Number</p>
+            <Input placeholder="Seal Number" />
+            <p className="mt-3">Reefer Temperature</p>
+            <Input placeholder="Reefer Temperature" />
+          </Col>
+        </Row>
+      </Container>
+      <Container fluid>
+        <Row gutter={26}>
+          <Col span={8}>
+            <h3>Bill-To Information</h3>
+            <hr></hr>
+            <p className="mt-3">Bill Action</p>
+            <Select placeholder="Select Bill Action" style={{ width: "100%" }}>
+              <Option value="Bill Shipper">Bill Shipper</Option>
+              <Option value="Bill Consignee">Bill Consignee</Option>
+              <Option value="Bill 3rd Party">Bill #rd Party</Option>
+            </Select>
+            <p className="mt-3">Company</p>
+            <Input placeholder="Company" />
+            <p className="mt-3">Hours</p>
+            <Input placeholder="Hours" />
+            <p className="mt-3">Address</p>
             <Input placeholder="Address" />
-            <p className="mt-3">Weight</p>
-            <Input placeholder="Weight" />
+            <p className="mt-3">City</p>
+            <Input placeholder="City" />
+            <p className="mt-3">State</p>
+            <Input placeholder="State" />
+            <p className="mt-3">Zip</p>
+            <Input placeholder="Zip" />
+            <p className="mt-3">Phone</p>
+            <Input placeholder="Phone" />
+            <p className="mt-3">Fax</p>
+            <Input placeholder="Fax" />
+            <p className="mt-3">Contact</p>
+            <Input placeholder="Contact" />
+            <p className="mt-3">Email</p>
+            <Input placeholder="Email" />
+          </Col>
+          <Col span={8}>
+            <h3>Freight Bill</h3>
+            <hr></hr>
+            <p className="mt-3">Billing Method</p>
+            <Select
+              placeholder="Select Billing Method"
+              style={{ width: "100%" }}
+            >
+              <Option value="Line Haul Billing">Line Haul Billing</Option>
+            </Select>
+
+            <p className="mt-3">Line Haul</p>
+            <Select placeholder="Select Per Load" style={{ width: "100%" }}>
+              <Option value="1">1</Option>
+              <Option value="2">2</Option>
+              <Option value="3">3</Option>
+            </Select>
+
+            <p className="mt-3">Rate</p>
+            <Input placeholder="Rate" />
+            <p className="mt-3">Calc. Miles</p>
+            <Input placeholder="Calc. Miles" />
+
+            <h5 className="text-center mt-4">Fuel</h5>
+            <hr></hr>
+            <Row gutter={26}>
+              <Col span={6}>
+                <p className="">Fuel Calc. Help</p>
+                <Button onClick={handleFuelCalc}>Default Button</Button>
+              </Col>
+              <Col span={6}>
+                <p>Percent of fuel</p>
+                <Input placeholder="Percent of fuel %" />
+              </Col>
+              <Col span={6}>
+                <p>Cents / Miles</p>
+                <Input placeholder="Cents / Miles" />
+              </Col>
+              <Col span={6}>
+                <p>Fuel</p>
+                <Input placeholder="Fuel" />
+              </Col>
+              <p className="mt-3 Checkbox-para">Ready To Bill</p>
+              <Checkbox onChange={onChange} className="mt-3">
+                Yes
+              </Checkbox>
+              <hr></hr>
+              <p className="mt-3 Checkbox-para2">
+                Bill Without Required Document
+              </p>
+              <Checkbox onChange={onChange} className="mt-3">
+                Yes
+              </Checkbox>
+              <p className="mt-3 Checkbox-para2">Combine Billing</p>
+              <Checkbox onChange={onChange} className="mt-3">
+                Yes
+              </Checkbox>
+              <p className="mt-3 Checkbox-para2">Block Terminal Commission </p>
+              <Checkbox onChange={onChange} className="mt-3">
+                Yes
+              </Checkbox>
+              <p className="mt-3 Checkbox-para2">Post to Broker Board</p>
+              <Checkbox onChange={onChange} className="mt-3">
+                Yes
+              </Checkbox>
+            </Row>
+            <Row gutter={26}>
+              <Col span={12}>
+                <Form.Item
+                  label="Load Board Rate?	"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Input placeholder="Load Board Rate?	" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Max Buy Per Rate?"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Input placeholder="Max Buy?" />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Col>
+          <Col span={8}>
+            <div className="line-items">
+              <h3>Line Items</h3>
+              <Button>Add Line Item</Button>
+            </div>
+            <hr></hr>
           </Col>
         </Row>
       </Container>
