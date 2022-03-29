@@ -83,8 +83,6 @@ const AddNewLoad = () => {
 
   // table data table
 
-  
-
   return (
     <div>
       <Container fluid>
@@ -680,7 +678,7 @@ const AddNewLoad = () => {
             <Row gutter={26}>
               <Col span={6}>
                 <p className="">Fuel Calc. Help</p>
-                <Button onClick={handleFuelCalc}>Default Button</Button>
+                <Button onClick={handleFuelCalc}>Use Matrix</Button>
               </Col>
               <Col span={6}>
                 <p>Percent of fuel</p>
@@ -745,9 +743,134 @@ const AddNewLoad = () => {
               <Button>Add Line Item</Button>
             </div>
             <hr></hr>
+            <Row gutter={26}>
+              <Col span={8}>
+                <Form.Item
+                  label="Bill Item"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Select
+                    placeholder="Select Bill Item"
+                    style={{ width: "100%" }}
+                  >
+                    <Option value="DA - Dead Head Milege">
+                      DA - Dead Head Milege
+                    </Option>
+                    <Option value="DET - Detention">
+                      2DET - Detention Services Fees
+                    </Option>
+                    <Option value="MSC - Misc Services Fees">
+                      MSC - Misc Services Fees
+                    </Option>
+                    <Option value="SO - Stop OFF">SO - Stop OFF</Option>
+                    <Option value="TONU - Truck Order Not Used">
+                      TONU - Truck Order Not Used
+                    </Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={4}>
+                <Form.Item
+                  label="QTY"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Input placeholder="QTY" />
+                </Form.Item>
+              </Col>
+              <Col span={4}>
+                <Form.Item
+                  label="Rate"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Input placeholder="Rate" />
+                </Form.Item>
+              </Col>
+              <Col span={4}>
+                <Form.Item
+                  label="EXT"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Input placeholder="EXT" />
+                </Form.Item>
+              </Col>
+              <Col span={4}>
+                <Form.Item
+                  label="Action"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Button>Delete</Button>
+                </Form.Item>
+              </Col>
+              <Row gutter={26}>
+                <Col span={20}>
+                  <TextArea
+                    rows={4}
+                    placeholder="maxLength is 6"
+                    maxLength={6}
+                  />
+                </Col>
+                <Col span={4}>
+                  <Checkbox onChange={onChange} className="text-nowrap">
+                    Bill /w Freight
+                  </Checkbox>
+                </Col>
+              </Row>
+            </Row>
+            <Checkbox onChange={onChange} className="text-nowrap mt-5">
+              Combine line items for billing
+            </Checkbox>
           </Col>
         </Row>
       </Container>
+      <Container>
+        <h3 className="mt-5 mb-3">Billing Total</h3>
+        <hr></hr>
+        <p>Recalculate Bill</p>
+        <Row gutter={26}>
+          <Col span={6}>
+            <Form.Item
+              label="Freight"
+              required
+              tooltip="This is a required field"
+            >
+              <Input placeholder="Freight" />
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item label="Fuel" required tooltip="This is a required field">
+              <Input placeholder="Fuel" />
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item
+              label="Other"
+              required
+              tooltip="This is a required field"
+            >
+              <Input placeholder="Other" />
+            </Form.Item>
+          </Col>
+          <Col span={6}>
+            <Form.Item
+              label="Grand Total"
+              required
+              tooltip="This is a required field"
+            >
+              <Input placeholder="Grand Total" />
+            </Form.Item>
+          </Col>
+        </Row>
+      </Container>
+      <Button className="ms-5 mt-5 mb-5">Save</Button>
+      <Button className="ms-3 mt-5 mb-5">Save And Add New</Button>
+      <Button type="primary" danger ghost className="ms-3">
+        Cancel
+      </Button>
     </div>
   );
 };
