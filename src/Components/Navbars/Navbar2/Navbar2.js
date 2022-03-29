@@ -729,7 +729,7 @@ const Navbar2 = () => {
 
                 <NavDropdown title="Manage Terminals" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#aSearchction/3.1">
-                    Add Terminals
+                    <Link to="/addTerminal">Add Terminals</Link>
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#aSearchction/3.1">
                     Search For Terminals

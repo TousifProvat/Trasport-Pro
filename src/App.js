@@ -13,6 +13,7 @@ import Tractors from "./Components/Tractors/Tractors";
 import AddTrailers from "./Components/AddTrailters/AddTrailers";
 import SearchTractor from "./Components/SearchTractor/SearchTractor";
 import SearchTrailer from "./Components/SearchTrailer/SearchTrailer";
+import AddTerminal from "./Components/AddTerminal/AddTerminal";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="addTrailer" element={<AddTrailers />} />
             <Route path="searchTractor" element={<SearchTractor/>} />
             <Route path="searchTrailer" element={<SearchTrailer/>} />
+            <Route path="addTerminal" element={<AddTerminal/>} />
             {/* <Route path="addNewLoad" element={<AddNewLoad/>} /> */}
           </Routes>
       </AuthProvider>
