@@ -732,7 +732,8 @@ const Navbar2 = () => {
                     <Link to="/addTerminal">Add Terminals</Link>
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#aSearchction/3.1">
-                    Search For Terminals
+                    <Link to="/searchTerminal">Search For Terminals</Link>
+                    
                   </NavDropdown.Item>
                 </NavDropdown>
               </NavDropdown>

@@ -1,0 +1,19 @@
+[
+    {
+        "terminalName" : "Eagles, LLC",
+        "Code" : "EG",
+        "parent": "",
+        "type" : "",
+        "address" : "PO Box 24255",
+        "city" : "Columbus",
+        "state" : "OH",
+        "zip" : "43224",
+        "phoneNumber" : "469-360-6759",
+        "faxPhoneNumber" : "",
+        "calcCommission": "No",
+        "systemTruck": 0,
+        "terminalTruck": 0,
+        "bcSplit": 0,
+        "bcCap": 0
+    }
+]

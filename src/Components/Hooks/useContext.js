@@ -7,6 +7,7 @@ const useContext = () => {
   const [driverDate, setDriverDate] = useState([]);
   const [tractorData, setTractorData] = useState([]);
   const [trailerDate, setTrailerData] = useState([]);
+  const [searchTerminalData, setSearchTerminalData] = useState([]);
   const value = 17;
 
   useEffect(() => {
@@ -35,6 +36,14 @@ const useContext = () => {
       .then((response) => response.json())
       .then(data => setTrailerData(data));
   }, []);
+
+
+
+  useEffect(() => {
+    fetch('./Terminal.json')
+      .then((response) => response.json())
+      .then(data => setSearchTerminalData(data));
+  }, []);
     
     
   return {
@@ -42,7 +51,8 @@ const useContext = () => {
     terminalData,
     driverDate,
     tractorData,
-    trailerDate
+    trailerDate,
+    searchTerminalData
   };
 };
 
