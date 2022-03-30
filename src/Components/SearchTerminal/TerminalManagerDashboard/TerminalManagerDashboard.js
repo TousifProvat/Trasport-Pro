@@ -220,6 +220,9 @@ const TerminalManagerDashboard = () => {
           </tbody>
         </Table>
       </Container>
+      <Container className="mt-5">
+        <br></br>
+      </Container>
     </div>
   );
 };
