@@ -16,6 +16,7 @@ import SearchTrailer from "./Components/SearchTrailer/SearchTrailer";
 import AddTerminal from "./Components/AddTerminal/AddTerminal";
 import SearchTerminal from "./Components/SearchTerminal/SearchTerminal";
 import TerminalManagerDashboard from "./Components/SearchTerminal/TerminalManagerDashboard/TerminalManagerDashboard";
+import AddCustomer from "./Components/AddCustomer/AddCustomer";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
             <Route path="searchTrailer" element={<SearchTrailer />} />
             <Route path="addTerminal" element={<AddTerminal />} />
             <Route path="searchTerminal" element={<SearchTerminal />} />
+            <Route path="addCustomer" element={<AddCustomer />} />
             <Route
               path="terminalManagerDashboard"
               element={<TerminalManagerDashboard />}

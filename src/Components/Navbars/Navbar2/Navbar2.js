@@ -102,7 +102,7 @@ const Navbar2 = () => {
 
               <NavDropdown title="Customers" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">
-                  Add Customer
+                  <Link to="/addCustomer">Add Customer</Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
                   Search Customer
