@@ -40,11 +40,9 @@ const Navbar2 = () => {
                 <NavDropdown title="Owner" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">
                     <Link to="/addOwner">Add Owner</Link>
-                    
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">
                     <Link to="/searchOwner">Search Owners</Link>
-                    
                   </NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown title="Drivers" id="basic-nav-dropdown">
@@ -105,7 +103,7 @@ const Navbar2 = () => {
                   <Link to="/addCustomer">Add Customer</Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
-                  Search Customer
+                  <Link to="/searchCustomer">Search Customer</Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
                   Manage Shipper Location
@@ -665,7 +663,6 @@ const Navbar2 = () => {
                 <NavDropdown
                   title="Manage Site Settings"
                   id="basic-nav-dropdown"
-                  
                 >
                   <NavDropdown
                     title="Manage Adjustments Codes"
@@ -733,7 +730,6 @@ const Navbar2 = () => {
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#aSearchction/3.1">
                     <Link to="/searchTerminal">Search For Terminals</Link>
-                    
                   </NavDropdown.Item>
                 </NavDropdown>
               </NavDropdown>
