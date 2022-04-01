@@ -885,6 +885,289 @@ const AddCustomer = () => {
         </Form>
       </Container>
 
+      <Container fluid>
+        <h3 className="mt-5 mb-3">Insurance Information</h3>
+        <hr></hr>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom01">
+              <Form.Label>Customer Contract Validated</Form.Label>
+              {/* <Form.Control
+                required
+                type="text"
+                placeholder="First name"
+                defaultValue="Mark"
+              /> */}
+              <Form.Select aria-label="Default select example">
+                <option>Select Customer Contract Validated</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Form.Select>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom02">
+              <Form.Label>COI Sent</Form.Label>
+              {/* <Form.Control
+                required
+                type="text"
+                placeholder="Last name"
+                defaultValue="Otto"
+              /> */}
+              <Form.Select aria-label="Default select example">
+                <option>Select COI Sent</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Form.Select>
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+              <Form.Label>Surety Bond Company</Form.Label>
+
+              <Form.Control
+                type="text"
+                placeholder="Surety Bond Company"
+                aria-describedby="inputGroupPrepend"
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                Please choose a username.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Cargo Addendum (Max Liability)</Form.Label>
+              {/* <Form.Control type="text" placeholder="City" required /> */}
+              <Form.Select aria-label="Default select example">
+                <option>Select COI Sent</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>COI Address</Form.Label>
+              <Form.Control type="text" placeholder="COI Address" required />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Bond Number</Form.Label>
+              <Form.Control type="text" placeholder="Bond Number" required />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Customer AL Required</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Customer AL Required"
+                required
+              />
+              {/* <Form.Select aria-label="Default select example">
+                <option>Select COI Sent</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Form.Select> */}
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>COI Zip</Form.Label>
+              <Form.Control type="text" placeholder="COI Zip" required />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Bond Contact</Form.Label>
+              <Form.Control type="text" placeholder="Bond Contact" required />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Customer GL Required</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Customer GL Required"
+                required
+              />
+              {/* <Form.Select aria-label="Default select example">
+                <option>Select COI Sent</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Form.Select> */}
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>COI City</Form.Label>
+              <Form.Control type="text" placeholder="COI City" required />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Bond Contact Phone</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Bond Contact Phone"
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Customer Cargo Required</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Customer Cargo Required"
+                required
+              />
+              {/* <Form.Select aria-label="Default select example">
+                <option>Select COI Sent</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Form.Select> */}
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>COI State</Form.Label>
+              {/* <Form.Control type="text" placeholder="COI City" required /> */}
+              <Form.Select aria-label="Default select example">
+                <option>Select COI State</option>
+                <option value="Alabama">Alabama</option>
+                <option value="Alaska">Alaska</option>
+                <option value="Canada">Canada</option>
+                <option value="California">California</option>
+                <option value="Quebec">Quebec</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Bond Contact Email</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Bond Contact Email"
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Customer Waiver of Subrogation</Form.Label>
+              {/* <Form.Control type="text" placeholder="Customer Cargo Required" required /> */}
+              <Form.Select aria-label="Default select example">
+                <option>Select COI Sent</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>COI Email</Form.Label>
+              <Form.Control type="text" placeholder="COI Email" required />
+              {/* <Form.Select aria-label="Default select example">
+                <option>Select COI State</option>
+                <option value="Alabama">Alabama</option>
+                <option value="Alaska">Alaska</option>
+                <option value="Canada">Canada</option>
+                <option value="California">California</option>
+                <option value="Quebec">Quebec</option>
+              </Form.Select> */}
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Cargo Max Liability Capped</Form.Label>
+              {/* <Form.Control type="text" placeholder="Bond Contact Email" required /> */}
+              <Form.Select aria-label="Default select example">
+                <option>Select COI Sent</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>COI Fax </Form.Label>
+              <Form.Control type="text" placeholder="COI Fax" required />
+              {/* <Form.Select aria-label="Default select example">
+                <option>Select COI Sent</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Form.Select> */}
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>COI Email</Form.Label>
+              <Form.Control type="text" placeholder="COI Email" required />
+              {/* <Form.Select aria-label="Default select example">
+                <option>Select COI State</option>
+                <option value="Alabama">Alabama</option>
+                <option value="Alaska">Alaska</option>
+                <option value="Canada">Canada</option>
+                <option value="California">California</option>
+                <option value="Quebec">Quebec</option>
+              </Form.Select> */}
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Special Cert Language</Form.Label>
+              {/* <Form.Control type="text" placeholder="Bond Contact Email" required /> */}
+              <FloatingLabel controlId="floatingTextarea2" label="Comments">
+                <Form.Control
+                  as="textarea"
+                  placeholder="Leave a comment here"
+                  style={{ height: "100px" }}
+                />
+              </FloatingLabel>
+              {/* <Form.Select aria-label="Default select example">
+                <option>Select COI Sent</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Form.Select> */}
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
 
 
 
@@ -892,19 +1175,60 @@ const AddCustomer = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Special Requirements</Form.Label>
+              {/* <Form.Control type="text" placeholder="COI Fax" required /> */}
+              <FloatingLabel controlId="floatingTextarea2" label="Special Requirements">
+                <Form.Control
+                  as="textarea"
+                  placeholder="Leave a comment here"
+                  style={{ height: "100px" }}
+                />
+              </FloatingLabel>
+              {/* <Form.Select aria-label="Default select example">
+                <option>Select COI Sent</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Form.Select> */}
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid city.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>C-TPAT</Form.Label>
+              {/* <Form.Control type="text" placeholder="COI Email" required /> */}
+              <Form.Select aria-label="Default select example">
+                <option>Select C-TPAT</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Form.Select>
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid state.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>C-TPAT SVI Number</Form.Label>
+              <Form.Control type="text" placeholder="C-TPAT SVI Number" required />
+              {/* <FloatingLabel controlId="floatingTextarea2" label="Comments">
+                <Form.Control
+                  as="textarea"
+                  placeholder="Leave a comment here"
+                  style={{ height: "100px" }}
+                />
+              </FloatingLabel> */}
+              {/* <Form.Select aria-label="Default select example">
+                <option>Select COI Sent</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Form.Select> */}
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+        </Form>
+      </Container>
 
       <Container fluid>
         <h3 className="mt-5 mb-3">Customer Credit Information</h3>
@@ -938,22 +1262,22 @@ const AddCustomer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustomUsername">
               <Form.Label>SIC Code</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="SIC Code"
-                  aria-describedby="inputGroupPrepend"
-                  required
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please choose a username.
-                </Form.Control.Feedback>
+              <Form.Control
+                type="text"
+                placeholder="SIC Code"
+                aria-describedby="inputGroupPrepend"
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                Please choose a username.
+              </Form.Control.Feedback>
             </Form.Group>
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Credit Check Rec'd Date</Form.Label>
               {/* <Form.Control type="text" placeholder="City" required /> */}
-              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+              <DatePicker onChange={onChange} style={{ width: "100%" }} />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
@@ -971,7 +1295,9 @@ const AddCustomer = () => {
               <Form.Select aria-label="Default select example">
                 <option>Select Credit Status</option>
                 <option value="Active - COD">Active - COD</option>
-                <option value="Active - Credit Approved">Active - Credit Approved</option>
+                <option value="Active - Credit Approved">
+                  Active - Credit Approved
+                </option>
                 <option value="Active - TBD">Active - TBD</option>
               </Form.Select>
               <Form.Control.Feedback type="invalid">
@@ -979,12 +1305,6 @@ const AddCustomer = () => {
               </Form.Control.Feedback>
             </Form.Group>
           </Row>
-
-
-
-
-
-
 
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
@@ -997,7 +1317,11 @@ const AddCustomer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Credit Status Change Date</Form.Label>
-              <Form.Control type="text" placeholder="Credit Status Change Date" required />
+              <Form.Control
+                type="text"
+                placeholder="Credit Status Change Date"
+                required
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
@@ -1011,18 +1335,12 @@ const AddCustomer = () => {
                 <option value="Active - Credit Approved">Active - Credit Approved</option>
                 <option value="Active - TBD">Active - TBD</option>
               </Form.Select> */}
-              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+              <DatePicker onChange={onChange} style={{ width: "100%" }} />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
             </Form.Group>
           </Row>
-
-
-
-
-
-
 
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
@@ -1041,7 +1359,11 @@ const AddCustomer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Billing Fax Number</Form.Label>
-              <Form.Control type="text" placeholder="Billing Fax Number" required />
+              <Form.Control
+                type="text"
+                placeholder="Billing Fax Number"
+                required
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
@@ -1061,12 +1383,6 @@ const AddCustomer = () => {
               </Form.Control.Feedback>
             </Form.Group>
           </Row>
-
-
-
-
-
-
 
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
@@ -1092,7 +1408,11 @@ const AddCustomer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Open Load Balance</Form.Label>
-              <Form.Control type="text" placeholder="Open Load Balance" required />
+              <Form.Control
+                type="text"
+                placeholder="Open Load Balance"
+                required
+              />
               {/* <Form.Select aria-label="Default select example">
                 <option>Select Credit Status</option>
                 <option value="Active - COD">Active - COD</option>
@@ -1105,11 +1425,6 @@ const AddCustomer = () => {
               </Form.Control.Feedback>
             </Form.Group>
           </Row>
-
-
-
-
-
 
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
@@ -1128,7 +1443,11 @@ const AddCustomer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Open Load Balance</Form.Label>
-              <Form.Control type="text" placeholder="Open Load Balance" required />
+              <Form.Control
+                type="text"
+                placeholder="Open Load Balance"
+                required
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
@@ -1137,11 +1456,11 @@ const AddCustomer = () => {
               <Form.Label>Enforce Credit/Term Limit</Form.Label>
               {/* <Form.Control type="text" placeholder="Open Load Balance" required /> */}
               <Form.Check
-              required
-              label="Yes"
-              feedback="You must agree before submitting."
-              feedbackType="invalid"
-            />
+                required
+                label="Yes"
+                feedback="You must agree before submitting."
+                feedbackType="invalid"
+              />
               {/* <Form.Select aria-label="Default select example">
                 <option>Select Credit Status</option>
                 <option value="Active - COD">Active - COD</option>
@@ -1155,11 +1474,6 @@ const AddCustomer = () => {
             </Form.Group>
           </Row>
 
-
-
-
-
-
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Billed Load Balance</Form.Label>
@@ -1169,7 +1483,11 @@ const AddCustomer = () => {
                 <option value="Bad">Bad</option>
                 <option value="Good">Good</option>
               </Form.Select> */}
-              <Form.Control type="text" placeholder="Billed Load Balance" required />
+              <Form.Control
+                type="text"
+                placeholder="Billed Load Balance"
+                required
+              />
               {/* <DatePicker onChange={onChange} style={{ width: "100%" }}/> */}
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
@@ -1191,7 +1509,11 @@ const AddCustomer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Avg Days To Pay (Load)</Form.Label>
-              <Form.Control type="text" placeholder="Avg Days To Pay (Load)" required />
+              <Form.Control
+                type="text"
+                placeholder="Avg Days To Pay (Load)"
+                required
+              />
               {/* <Form.Check
               required
               label="Yes"
@@ -1211,12 +1533,6 @@ const AddCustomer = () => {
             </Form.Group>
           </Row>
 
-
-
-
-
-
-
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Misc Invoice Balance</Form.Label>
@@ -1226,7 +1542,11 @@ const AddCustomer = () => {
                 <option value="Bad">Bad</option>
                 <option value="Good">Good</option>
               </Form.Select> */}
-              <Form.Control type="text" placeholder="Misc Invoice Balance" required />
+              <Form.Control
+                type="text"
+                placeholder="Misc Invoice Balance"
+                required
+              />
               {/* <DatePicker onChange={onChange} style={{ width: "100%" }}/> */}
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
@@ -1234,7 +1554,11 @@ const AddCustomer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Avg Days To Pay (Misc Invoice)</Form.Label>
-              <Form.Control type="text" placeholder="Avg Days To Pay (Misc Invoice)" required />
+              <Form.Control
+                type="text"
+                placeholder="Avg Days To Pay (Misc Invoice)"
+                required
+              />
               {/* <Form.Select aria-label="Default select example">
                 <option>Select Net Terms</option>
                 <option value="Net 15">Net 15</option>
@@ -1248,7 +1572,11 @@ const AddCustomer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Open Credit Balance</Form.Label>
-              <Form.Control type="text" placeholder="Open Credit Balance" required />
+              <Form.Control
+                type="text"
+                placeholder="Open Credit Balance"
+                required
+              />
               {/* <Form.Check
               required
               label="Yes"
@@ -1268,16 +1596,6 @@ const AddCustomer = () => {
             </Form.Group>
           </Row>
 
-
-
-
-
-
-
-
-
-
-
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Last Ship Date</Form.Label>
@@ -1288,7 +1606,7 @@ const AddCustomer = () => {
                 <option value="Good">Good</option>
               </Form.Select> */}
               {/* <Form.Control type="text" placeholder="Misc Invoice Balance" required /> */}
-              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+              <DatePicker onChange={onChange} style={{ width: "100%" }} />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
@@ -1296,7 +1614,7 @@ const AddCustomer = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Last Billing Date</Form.Label>
               {/* <Form.Control type="text" placeholder="Avg Days To Pay (Misc Invoice)" required /> */}
-              <DatePicker onChange={onChange} style={{ width: "100%" }}/>
+              <DatePicker onChange={onChange} style={{ width: "100%" }} />
               {/* <Form.Select aria-label="Default select example">
                 <option>Select Net Terms</option>
                 <option value="Net 15">Net 15</option>
@@ -1310,19 +1628,16 @@ const AddCustomer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Number of Rebills</Form.Label>
-              <Form.Control type="text" placeholder="Number of Rebills" required />
+              <Form.Control
+                type="text"
+                placeholder="Number of Rebills"
+                required
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
             </Form.Group>
           </Row>
-
-
-
-
-
-
-
 
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
@@ -1333,7 +1648,11 @@ const AddCustomer = () => {
                 <option value="Bad">Bad</option>
                 <option value="Good">Good</option>
               </Form.Select> */}
-              <Form.Control type="text" placeholder="Misc Invoice Balance" required />
+              <Form.Control
+                type="text"
+                placeholder="Misc Invoice Balance"
+                required
+              />
               {/* <DatePicker onChange={onChange} style={{ width: "100%" }}/> */}
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
@@ -1363,9 +1682,15 @@ const AddCustomer = () => {
               feedbackType="invalid"
             />
           </Form.Group>
-          <Button type="submit" variant="outline-primary" className="me-3 mb-5">Save</Button>
-          <Button type="submit" variant="outline-primary" className="me-3 mb-5">Save And Add New</Button>
-          <Button variant="outline-danger" className="mb-5">Cancel</Button>
+          <Button type="submit" variant="outline-primary" className="me-3 mb-5">
+            Save
+          </Button>
+          <Button type="submit" variant="outline-primary" className="me-3 mb-5">
+            Save And Add New
+          </Button>
+          <Button variant="outline-danger" className="mb-5">
+            Cancel
+          </Button>
         </Form>
       </Container>
     </div>
