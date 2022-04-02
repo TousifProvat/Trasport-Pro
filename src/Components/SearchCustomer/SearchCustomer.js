@@ -1,8 +1,18 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  InputGroup,
+  Row,
+  Table,
+} from "react-bootstrap";
 import "./searchCustomer.css";
 import { DatePicker, Space } from "antd";
+import useContext from "../Hooks/useContext";
 const SearchCustomer = () => {
+  const { customerData } = useContext();
   const { RangePicker } = DatePicker;
   const [validated, setValidated] = useState(false);
 
@@ -15,6 +25,7 @@ const SearchCustomer = () => {
 
     setValidated(true);
   };
+  console.log(customerData);
   return (
     <div>
       <Container fluid>
@@ -536,8 +547,73 @@ const SearchCustomer = () => {
               feedbackType="invalid"
             />
           </Form.Group>
-          <Button type="submit">Submit form</Button>
+          <Button type="submit" variant="outline-primary" className="me-3">
+            Save
+          </Button>
+          <Button variant="outline-danger" className="me-3">
+            Cancel
+          </Button>
+          <Button type="submit" variant="outline-primary">
+            Save Search
+          </Button>
         </Form>
+      </Container>
+
+      <Container fluid>
+        <h3 className="mt-5 mb-3">Search Results (1)</h3>
+        <hr></hr>
+        <Button variant="outline-dark" className="me-3">
+          Print Results
+        </Button>
+
+        <Table striped bordered hover className="mt-5 mb-5">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Customer Code</th>
+              <th>Type</th>
+              <th>Company</th>
+              <th>Credit Status</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Terminal</th>
+              <th>Sales Rep.</th>
+              <th>Cust. Serv. Rep.</th>
+              <th>Collector</th>
+              <th>Office Phone</th>
+              <th>Email</th>
+              <th>Date Added</th>
+              <th>Total Revenue</th>
+              <th>Total Loads</th>
+              <th>Last Loads</th>
+              <th>Load Balance</th>
+            </tr>
+          </thead>
+          {customerData.map((i) => (
+            <tbody>
+              <tr>
+                <td>{i.id}</td>
+                <td>{i.customerCode}</td>
+                <td>{i.type}</td>
+                <td>{i.company}</td>
+                <td>{i.creditStatus}</td>
+                <td>{i.city}</td>
+                <td>{i.state}</td>
+                <td>{i.terminal}</td>
+                <td>{i.SalesRep}</td>
+                <td>{i.lastServRep}</td>
+                <td>{i.collector}</td>
+                <td>{i.officePhone}</td>
+                <td>{i.email}</td>
+                <td>{i.dateAddress}</td>
+                <td>{i.totalRevenue}</td>
+                <td>{i.totalLoad}</td>
+                <td>{i.lastLoad}</td>
+                <td>{i.balance}</td>
+              </tr>
+            </tbody>
+          ))}
+        </Table>
       </Container>
     </div>
   );
