@@ -110,7 +110,7 @@ const SearchOwner = () => {
   };
   const handleBillName = (e) => {
     e.preventDefault();
-    setTrailerId(e.target.value);
+    setBillName(e.target.value);
   };
   const handleBillId = (e) => {
     e.preventDefault();
