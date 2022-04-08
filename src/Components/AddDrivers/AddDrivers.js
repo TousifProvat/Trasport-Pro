@@ -49,6 +49,22 @@ const AddDrivers = () => {
  const [flatBed, setFlatBed] = useState({});
  const [rgn, setRgn] = useState({});
  const [van, setVan] = useState({});
+ const [residentExpDate, setResidentExpDate] = useState({});
+ const [cbHandle, setCbHandle] = useState({});
+ const [twicExpDate, setTwicExpDate] = useState({});
+ const [passport, setPassport] = useState({});
+ const [eobrType, setEobrType] = useState({});
+ const [passportExpDate, setPassportExpDate] = useState({});
+ const [eobrId, setEobrId] = useState({});
+ const [accInsuranceCarrier, setAccInsuranceCarrier] = useState({});
+ const [accInsuranceStartDate, setAccInsuranceStartDate] = useState({});
+ const [accInsuranceExpDate, setAccInsuranceExpDate] = useState({});
+ const [correctiveLenses, setCorrectiveLenses] = useState({});
+ const [hearingAid, setHearingAid] = useState({});
+ const [sleepApena, setSleepApena] = useState({});
+ const [diabetes, setDiabetes] = useState({});
+ const [highBp, setHighBp] = useState({});
+ const [yearlyPhysical, setYearlyPhysical] = useState({});
  const basicInfo = {
    status: status,
    firstName: firstName,
@@ -94,6 +110,22 @@ const AddDrivers = () => {
    flatBed: flatBed,
    rgn: rgn,
    van: van,
+   residentExpDate: residentExpDate,
+   cbHandle: cbHandle,
+   twicExpDate: twicExpDate,
+   passport: passport,
+   eobrType: eobrType,
+   passportExpDate: passportExpDate,
+   eobrId: eobrId,
+   accInsuranceCarrier: accInsuranceCarrier,
+   accInsuranceStartDate: accInsuranceStartDate,
+   accInsuranceExpDate: accInsuranceExpDate,
+   correctiveLenses: correctiveLenses,
+   hearingAid: hearingAid,
+   sleepApena: sleepApena,
+   diabetes: diabetes,
+   highBp: highBp,
+   yearlyPhysical: yearlyPhysical,
  };
 
 
@@ -338,6 +370,71 @@ const AddDrivers = () => {
     e.preventDefault();
     const status = e.target.checked;
     setVan(status);
+  };
+  const handleResidentExpDate = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setResidentExpDate(status);
+  };
+  const handleCbHandle = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setCbHandle(status);
+  };
+  const handleTwicExpDate = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setTwicExpDate(status);
+  };
+  const handlePassport = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setPassport(status);
+  };
+  const handleEobrType = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setEobrType(status);
+  };
+  const handleEobrId = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setEobrId(status);
+  };
+  const handleAccIncsuranceCarrier = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setAccInsuranceCarrier(status);
+  };
+  const handleCorrectiveLenses = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setCorrectiveLenses(status);
+  };
+  const handleHearingAid = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setHearingAid(status);
+  };
+  const handleSleepApena = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setSleepApena(status);
+  };
+  const handleDiabetes = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setDiabetes(status);
+  };
+  const handleHighBp = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setHighBp(status);
+  };
+  const handleYearlyPhysical = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setYearlyPhysical(status);
   };
 
   return (
@@ -844,17 +941,9 @@ const AddDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <p>Resident Expiration Date</p>
               <DayPickerInput
-                onDayChange={(day) => console.log(day)}
+                onDayChange={(day) => setResidentExpDate(day)}
                 className="datePicker"
               />
-              {/* <Form.Select aria-label="">
-                <option>Select State</option>
-                <option value="Alabama">Alabama</option>
-                <option value="Alaska">Alaska</option>
-                <option value="Arizona">Arizona</option>
-                <option value="California">California</option>
-                <option value="Canada">Canada</option>
-              </Form.Select> */}
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
@@ -866,6 +955,7 @@ const AddDrivers = () => {
                 placeholder="Pager Phone Number"
                 aria-describedby="inputGroupPrepend"
                 required
+                onBlur={handleCbHandle}
               />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
@@ -876,7 +966,7 @@ const AddDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <p>TWIC Expiration Date</p>
               <DayPickerInput
-                onDayChange={(day) => console.log(day)}
+                onDayChange={(day) => setTwicExpDate(day)}
                 className="datePicker"
               />
               <Form.Control.Feedback type="invalid">
@@ -890,15 +980,8 @@ const AddDrivers = () => {
                 placeholder="Email Address"
                 aria-describedby="inputGroupPrepend"
                 required
+                onBlur={handleEmail}
               />
-              {/* <Form.Select aria-label="">
-                <option>Select State</option>
-                <option value="Alabama">Alabama</option>
-                <option value="Alaska">Alaska</option>
-                <option value="Arizona">Arizona</option>
-                <option value="California">California</option>
-                <option value="Canada">Canada</option>
-              </Form.Select> */}
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
@@ -910,6 +993,7 @@ const AddDrivers = () => {
                 placeholder="Passport Number"
                 aria-describedby="inputGroupPrepend"
                 required
+                onBlur={handlePassport}
               />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
@@ -919,7 +1003,7 @@ const AddDrivers = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <p>EOBR Type</p>
-              <Form.Select aria-label="">
+              <Form.Select aria-label="" onBlur={handleEobrType}>
                 <option>Select EOBR Type</option>
                 <option value="Geotab">Geotab</option>
                 <option value="Keep Truncking">Keep Truncking</option>
@@ -933,17 +1017,9 @@ const AddDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <p>Passport Expire Date</p>
               <DayPickerInput
-                onDayChange={(day) => console.log(day)}
+                onDayChange={(day) => setPassportExpDate(day)}
                 className="datePicker"
               />
-              {/* <Form.Select aria-label="">
-                <option>Select State</option>
-                <option value="Alabama">Alabama</option>
-                <option value="Alaska">Alaska</option>
-                <option value="Arizona">Arizona</option>
-                <option value="California">California</option>
-                <option value="Canada">Canada</option>
-              </Form.Select> */}
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
@@ -955,6 +1031,7 @@ const AddDrivers = () => {
                 placeholder="EOBR ID"
                 aria-describedby="inputGroupPrepend"
                 required
+                onBlur={handleEobrId}
               />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
@@ -963,45 +1040,36 @@ const AddDrivers = () => {
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>Occ Acc Insurance Carrier </p>
+              <p>Occ Acc Insurance Carrier</p>
               <Form.Control
                 type="text"
                 placeholder="Occ Acc"
                 aria-describedby="inputGroupPrepend"
                 required
+                onBlur={handleAccIncsuranceCarrier}
               />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Passport Expire Date</p>
+              <p>Occ Acc Insurance Start Date</p>
               <DayPickerInput
-                onDayChange={(day) => console.log(day)}
+                onDayChange={(day) => setAccInsuranceStartDate(day)}
                 className="datePicker"
               />
-              {/* <Form.Select aria-label="">
-                <option>Select State</option>
-                <option value="Alabama">Alabama</option>
-                <option value="Alaska">Alaska</option>
-                <option value="Arizona">Arizona</option>
-                <option value="California">California</option>
-                <option value="Canada">Canada</option>
-              </Form.Select> */}
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <Form.Label>EOBR ID</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Passport Number"
-                aria-describedby="inputGroupPrepend"
-                required
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <p>Occ Acc Insurance Exp Date</p>
+              <DayPickerInput
+                onDayChange={(day) => setAccInsuranceExpDate(day)}
+                className="datePicker"
               />
               <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
+                Please provide a valid state.
               </Form.Control.Feedback>
             </Form.Group>
           </Row>
@@ -1013,40 +1081,46 @@ const AddDrivers = () => {
                   <Form.Check
                     required
                     label="Corrective Lenses"
-                    feedback="You must agree before submitting."
+                    feedback="You"
                     feedbackType="invalid"
+                    onBlue={handleCorrectiveLenses}
                   />
                   <Form.Check
                     required
                     label="Hearing Aid"
-                    feedback="You must agree before submitting."
+                    feedback="You"
                     feedbackType="invalid"
+                    onBlue={handleHearingAid}
                   />
                   <Form.Check
                     required
                     label="Sleep Apnea"
-                    feedback="You must agree before submitting."
+                    feedback="You"
                     feedbackType="invalid"
+                    onBlur={handleSleepApena}
                   />
                 </Col>
                 <Col sm={6}>
                   <Form.Check
                     required
                     label=" Diabetes"
-                    feedback="You must agree before submitting."
+                    feedback="You"
                     feedbackType="invalid"
+                    onBlur={handleDiabetes}
                   />
                   <Form.Check
                     required
                     label="High Blood Pressure"
-                    feedback="You must agree before submitting."
+                    feedback="You"
                     feedbackType="invalid"
+                    onBlur={handleHighBp}
                   />
                   <Form.Check
                     required
                     label="Yearly Physical"
-                    feedback="You must agree before submitting."
+                    feedback="You"
                     feedbackType="invalid"
+                    onBlur={handleYearlyPhysical}
                   />
                 </Col>
               </Row>
@@ -1054,26 +1128,7 @@ const AddDrivers = () => {
                 Please provide a valid city.
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Occ Acc Insurance Start Date </p>
-              <DayPickerInput
-                onDayChange={(day) => console.log(day)}
-                className="datePicker"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <p>Occ Acc Insurance Exp Date</p>
-              <DayPickerInput
-                onDayChange={(day) => console.log(day)}
-                className="datePicker"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
-            </Form.Group>
+            
           </Row>
           <Form.Group className="mb-3">
             <Form.Check
