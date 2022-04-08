@@ -5,7 +5,6 @@ import {
   Container,
   FloatingLabel,
   Form,
-  InputGroup,
   Modal,
   Row,
   Table,
@@ -28,8 +27,424 @@ const SearchDrivers = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-
+    console.log(basicInfo);
     setValidated(true);
+  };
+
+
+  const [status, setStatus] = useState({});
+  const [firstName, setFirstName] = useState({});
+  const [id, setId] = useState({});
+  const [lastName, setLastName] = useState({});
+  const [companyDriver, setCompanyDriver] = useState({});
+  const [addressName1, setAddressName1] = useState({});
+  const [zip1, setZip1] = useState({});
+  const [city1, setCity1] = useState({});
+  const [state1, setState1] = useState({});
+  const [hireDate, setHireDate] = useState({});
+  const [driverGroup, setDriverGroup] = useState({});
+  const [reviewDate, setReviewDate] = useState({});
+  const [terminal, setTerminal] = useState({});
+  const [phoneNumber, setPhoneNumber] = useState({});
+  const [cellNumber, setCellNumber] = useState({});
+  const [state, setState] = useState({});
+  const [email, setEmail] = useState({});
+  const [dispatchGroup, setDispatchGroup] = useState({});
+  const [nextReviewDate, setNextReviewDate] = useState({});
+  const [dispatcher, setDispatcher] = useState({});
+  const [mvrDate, setMvrDate] = useState({});
+  const [recruiter, setrRecruiter] = useState({});
+  const [physicalDueDate, setPhysicalDueDate] = useState({});
+  const [recruitSource, setRecruitSource] = useState({});
+  const [physicalSubmissionDate, setPhysicalSubmissionDate] = useState({});
+  const [hiringEligibility, setHiringEligibility] = useState({});
+  const [cdlMatches, setCdlMatches] = useState({});
+  const [loadId, setLoadId] = useState({});
+  const [birthDate, setBirthDate] = useState({});
+  const [cdlNumber, setCdlNumber] = useState({});
+  const [ssn, setSsn] = useState({});
+  const [cdlState, setCdlState] = useState({});
+  const [sex, setSex] = useState({});
+  const [cdlExpDate, setCdlExpDate] = useState({});
+  const [pagerPhoneNumber, setPagerPhoneNumber] = useState({});
+  const [trailerQualification, setTrailerQualification] = useState({});
+  const [powerOnly, setPowerOnly] = useState({});
+  const [stepDeck, setStepDeck] = useState({});
+  const [dropCheck, setDropCheck] = useState({});
+  const [reefer, setReefer] = useState({});
+  const [tanker, setTanker] = useState({});
+  const [flatBed, setFlatBed] = useState({});
+  const [rgn, setRgn] = useState({});
+  const [van, setVan] = useState({});
+  const [residentExpDate, setResidentExpDate] = useState({});
+  const [cbHandle, setCbHandle] = useState({});
+  const [twicExpDate, setTwicExpDate] = useState({});
+  const [passport, setPassport] = useState({});
+  const [eobrType, setEobrType] = useState({});
+  const [passportExpDate, setPassportExpDate] = useState({});
+  const [eobrId, setEobrId] = useState({});
+  const [accInsuranceCarrier, setAccInsuranceCarrier] = useState({});
+  const [accInsuranceStartDate, setAccInsuranceStartDate] = useState({});
+  const [accInsuranceExpDate, setAccInsuranceExpDate] = useState({});
+  const [correctiveLenses, setCorrectiveLenses] = useState({});
+  const [retentionRate, setRetentionRate] = useState({});
+  const [termReason, setTermReason] = useState({});
+  const [medicalCondition, setMedicalCondition] = useState({});
+  const [workComp, setWorkComp] = useState({});
+  const [yearlyPhysical, setYearlyPhysical] = useState({});
+
+
+
+  const basicInfo = {
+    status: status,
+    firstName: firstName,
+    id: id,
+    lastName: lastName,
+    companyDriver: companyDriver,
+    addressName1: addressName1,
+    zip1: zip1,
+    city1: city1,
+    state1: state1,
+    hireDate: hireDate,
+    driverGroup: driverGroup,
+    reviewDate: reviewDate,
+    terminal: terminal,
+    phoneNumber: phoneNumber,
+    secondaryPhoneNumber: cellNumber,
+    state: state,
+    email: email,
+    dispatchGroup: dispatchGroup,
+    nextReviewDate: nextReviewDate,
+    dispatcher: dispatcher,
+    mvrDate: mvrDate,
+    recruiter: recruiter,
+    physicalDueDate: physicalDueDate,
+    recruitSource: recruitSource,
+    physicalSubmissionDate: physicalSubmissionDate,
+    hiringEligibility: hiringEligibility,
+    cdlMatches: cdlMatches,
+    loadId: loadId,
+    birthDate: birthDate,
+    cdlNumber: cdlNumber,
+    ssn: ssn,
+    cdlState: cdlState,
+    sex: sex,
+    cdlExpDate: cdlExpDate,
+    pagerPhoneNumber: pagerPhoneNumber,
+    trailerQualification: trailerQualification,
+    powerOnly: powerOnly,
+    stepDeck: stepDeck,
+    dropCheck: dropCheck,
+    reefer: reefer,
+    tanker: tanker,
+    flatBed: flatBed,
+    rgn: rgn,
+    van: van,
+    residentExpDate: residentExpDate,
+    cbHandle: cbHandle,
+    twicExpDate: twicExpDate,
+    passport: passport,
+    eobrType: eobrType,
+    passportExpDate: passportExpDate,
+    eobrId: eobrId,
+    accInsuranceCarrier: accInsuranceCarrier,
+    accInsuranceStartDate: accInsuranceStartDate,
+    accInsuranceExpDate: accInsuranceExpDate,
+    correctiveLenses: correctiveLenses,
+    retentionRate: retentionRate,
+    termReason: termReason,
+    medicalCondition: medicalCondition,
+    workComp: workComp,
+    yearlyPhysical: yearlyPhysical,
+  };
+
+
+
+
+
+  const handleSaveButton = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setStatus(status);
+  };
+
+  const handleFirstName = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setFirstName(status);
+  };
+
+  const handleId = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setId(status);
+  };
+
+  const handleLastName = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setLastName(status);
+  };
+
+  const handleCompanyDriver = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setCompanyDriver(status);
+  };
+  const handleAddressName1 = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setAddressName1(status);
+  };
+  const handleZipName1 = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setZip1(status);
+  };
+  const handleCity1 = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setCity1(status);
+  };
+  const handleState1 = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setState1(status);
+  };
+  const handleHireDate = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setHireDate(status);
+  };
+  const handleDriverGroup = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setDriverGroup(status);
+  };
+  const handleReviewDate = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setReviewDate(status);
+  };
+  const handleTerminal = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setTerminal(status);
+  };
+  const handlePhoneNumber = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setPhoneNumber(status);
+  };
+  const handleCellNumber = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setCellNumber(status);
+  };
+  const handleState = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setState(status);
+  };
+  const handleEmail = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setEmail(status);
+  };
+  const handleDispatchGroup = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setDispatchGroup(status);
+  };
+  const handleNextReviewDate = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setNextReviewDate(status);
+  };
+  const handleDispatcher = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setDispatcher(status);
+  };
+  const handleMvrDate = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setMvrDate(status);
+  };
+  const handleRecruiter = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setrRecruiter(status);
+  };
+  const handleRecruiteSource = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setRecruitSource(status);
+  };
+  const handlePhysicalSubmissionDate = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setPhysicalSubmissionDate(status);
+  };
+  const handleHiringEligibility = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setHiringEligibility(status);
+  };
+  const handleCdlMatches = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setCdlMatches(status);
+  };
+  const handleLoadId = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setLoadId(status);
+  };
+  const handleEmailCopy = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setBirthDate(status);
+  };
+  const handleCdlNumber = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setCdlNumber(status);
+  };
+  const handleSsn = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setSsn(status);
+  };
+  const handleCdlState = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setCdlState(status);
+  };
+  const handleSex = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setSex(status);
+  };
+  const handleCdlExpDate = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setCdlExpDate(status);
+  };
+  const handlePagerPhoneNumber = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setPagerPhoneNumber(status);
+  };
+  const handleTrailerQualification = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setTrailerQualification(status);
+  };
+  const handlePowerOnly = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setPowerOnly(status);
+  };
+  const handleStepDeck = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setStepDeck(status);
+  };
+  const handleDropCheck = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setDropCheck(status);
+  };
+  const handleReefer = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setReefer(status);
+  };
+  const handleTanker = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setTanker(status);
+  };
+  const handleFlatBed = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setFlatBed(status);
+  };
+  const handleRgn = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setRgn(status);
+  };
+  const handleVan = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setVan(status);
+  };
+  const handleResidentExpDate = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setResidentExpDate(status);
+  };
+  const handleCbHandle = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setCbHandle(status);
+  };
+  const handleTwicExpDate = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setTwicExpDate(status);
+  };
+  const handlePassport = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setPassport(status);
+  };
+  const handleEobrType = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setEobrType(status);
+  };
+  const handleEobrId = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setEobrId(status);
+  };
+  const handleAccIncsuranceCarrier = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setAccInsuranceCarrier(status);
+  };
+  const handleCorrectiveLenses = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setCorrectiveLenses(status);
+  };
+  const handleRetentionRate = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setRetentionRate(status);
+  };
+  const handleTermReason = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setTermReason(status);
+  };
+  const handleMedicalCondition = (e) => {
+    e.preventDefault();
+    const status = e.target.value;
+    setMedicalCondition(status);
+  };
+  const handleWorkComp = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setWorkComp(status);
+  };
+  const handleYearlyPhysical = (e) => {
+    e.preventDefault();
+    const status = e.target.checked;
+    setYearlyPhysical(status);
   };
 
   // console.log(driverDate);
@@ -44,16 +459,18 @@ const SearchDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom01">
               <Form.Label>ID</Form.Label>
               <Form.Control
-                required
                 type="number"
                 placeholder="ID Number"
-                defaultValue="Mark"
+                onBlur={handleId}
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom02">
               <Form.Label>Terminal</Form.Label>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleTerminal}
+              >
                 <option>Select Terminal</option>
                 <option value="EG Egales">EG Egales</option>
               </Form.Select>
@@ -61,7 +478,10 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustomUsername">
               <Form.Label>Status</Form.Label>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleSaveButton}
+              >
                 <option>Select Status</option>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
@@ -75,7 +495,10 @@ const SearchDrivers = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Retention Rate</Form.Label>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleRetentionRate}
+              >
                 <option>Select Retention Rate</option>
                 <option value="0-90">0-90</option>
                 <option value="91-180">91-180</option>
@@ -88,7 +511,10 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Company Driver</Form.Label>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleCompanyDriver}
+              >
                 <option>Select Company Driver</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -99,7 +525,10 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Term Reason </Form.Label>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleTermReason}
+              >
                 <option>Select Term Reason</option>
                 <option value="Don't Get Enough Loads">
                   Don't Get Enough Loads
@@ -119,21 +548,32 @@ const SearchDrivers = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>First Name</Form.Label>
-              <Form.Control required type="text" placeholder="First Name" />
+              <Form.Control
+                type="text"
+                placeholder="First Name"
+                onBlur={handleFirstName}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Last Name</Form.Label>
-              <Form.Control required type="text" placeholder="Last Name" />
+              <Form.Control
+                type="text"
+                placeholder="Last Name"
+                onBlur={handleLastName}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Medical Condition</Form.Label>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleMedicalCondition}
+              >
                 <option>Select Medical Condition</option>
                 <option value="Crrective Lenses">Crrective Lenses</option>
                 <option value="Dieabetes">Dieabetes</option>
@@ -147,7 +587,10 @@ const SearchDrivers = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Subject to Work Comp </Form.Label>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleWorkComp}
+              >
                 <option>Select Subject to Work Comp</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -158,14 +601,14 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Phone Number</Form.Label>
-              <Form.Control required type="number" placeholder="Phone Number" />
+              <Form.Control type="number" placeholder="Phone Number" onBlur={ handlePhoneNumber}/>
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>CDL # </Form.Label>
-              <Form.Control required type="text" placeholder="CDL Number" />
+              <Form.Control type="text" placeholder="CDL Number" onBlur={ handleCdlNumber}/>
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
@@ -174,7 +617,7 @@ const SearchDrivers = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>State </Form.Label>
-              <Form.Select aria-label="Default select example">
+              <Form.Select aria-label="Default select example" onBlur={handleState}>
                 <option>Select State</option>
                 <option value="Alabama">Alabama</option>
                 <option value="Alaska">Alaska</option>
@@ -188,7 +631,7 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>CDL State </Form.Label>
-              <Form.Select aria-label="Default select example">
+              <Form.Select aria-label="Default select example" onBlur={handleCdlState}>
                 <option>Select CDL State</option>
                 <option value="Alabama">Alabama</option>
                 <option value="Alaska">Alaska</option>
@@ -202,11 +645,7 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Load ID</Form.Label>
-              <Form.Control
-                required
-                type="number"
-                placeholder="Load ID Number"
-              />
+              <Form.Control type="number" placeholder="Load ID Number" onBlur={ handleLoadId}/>
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
@@ -474,7 +913,7 @@ const SearchDrivers = () => {
               feedbackType="invalid"
             />
           </Form.Group>
-          <Button variant="outline-primary" className="mb-5 me-3">
+          <Button variant="outline-primary" type="submit" className="mb-5 me-3">
             Search
           </Button>
           <Button variant="outline-danger" className="mb-5 me-3">
