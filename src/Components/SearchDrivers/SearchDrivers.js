@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -29,6 +29,8 @@ const SearchDrivers = () => {
     }
     console.log(basicInfo);
     setValidated(true);
+    
+    // console.log(allValues);
   };
 
 
@@ -69,32 +71,57 @@ const SearchDrivers = () => {
   const [pagerPhoneNumber, setPagerPhoneNumber] = useState({});
   const [trailerQualification, setTrailerQualification] = useState({});
   const [powerOnly, setPowerOnly] = useState({});
-  const [stepDeck, setStepDeck] = useState({});
+  const [missingImg, setMissingImg] = useState({});
   const [dropCheck, setDropCheck] = useState({});
-  const [reefer, setReefer] = useState({});
-  const [tanker, setTanker] = useState({});
+  const [cdlMatchesPhysical, setCdlMatchesPhysical] = useState({});
+  const [hasActive, setHasActive] = useState({});
   const [flatBed, setFlatBed] = useState({});
-  const [rgn, setRgn] = useState({});
-  const [van, setVan] = useState({});
+  const [lastMvrDate, setLastMvrDate] = useState({});
+  const [eobr, setEobr] = useState({});
   const [residentExpDate, setResidentExpDate] = useState({});
   const [cbHandle, setCbHandle] = useState({});
-  const [twicExpDate, setTwicExpDate] = useState({});
-  const [passport, setPassport] = useState({});
+  const [hasImg, setHasImg] = useState({});
+  const [driverPosting, setDriverPosting] = useState({});
   const [eobrType, setEobrType] = useState({});
   const [passportExpDate, setPassportExpDate] = useState({});
   const [eobrId, setEobrId] = useState({});
-  const [accInsuranceCarrier, setAccInsuranceCarrier] = useState({});
-  const [accInsuranceStartDate, setAccInsuranceStartDate] = useState({});
+  const [trailerId, setTrailerId] = useState({});
+  const [numberLoadLast, setNumberLoadLast] = useState({});
   const [accInsuranceExpDate, setAccInsuranceExpDate] = useState({});
-  const [correctiveLenses, setCorrectiveLenses] = useState({});
+  const [tractorId, setTractorId] = useState({});
   const [retentionRate, setRetentionRate] = useState({});
   const [termReason, setTermReason] = useState({});
   const [medicalCondition, setMedicalCondition] = useState({});
   const [workComp, setWorkComp] = useState({});
-  const [yearlyPhysical, setYearlyPhysical] = useState({});
+  const [termDate, setTermDate] = useState({});
 
 
+  
 
+  
+  const [allValues, setAllValues] = useState({
+    cdlMatchesPhysical: "",
+        hasActiveTwic: "",
+  });
+
+  const handleAllValue = (event) => {
+    setAllValues({
+      cdlMatchesPhysical: event.target.value,
+      hasActiveTwic: event.target.checked,
+      
+    });
+  }
+
+  useEffect(() => {
+    // At this point, input variable (with both props text and caret) is updated
+  }, [allValues]);
+
+  const onChange = (e) => {
+    setState((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
   const basicInfo = {
     status: status,
     firstName: firstName,
@@ -133,33 +160,39 @@ const SearchDrivers = () => {
     pagerPhoneNumber: pagerPhoneNumber,
     trailerQualification: trailerQualification,
     powerOnly: powerOnly,
-    stepDeck: stepDeck,
+    missingImg: missingImg,
     dropCheck: dropCheck,
-    reefer: reefer,
-    tanker: tanker,
+    cdlMatchesPhysical: cdlMatchesPhysical,
+    hasActive: hasActive,
     flatBed: flatBed,
-    rgn: rgn,
-    van: van,
+    lastMvrDate: lastMvrDate,
+    eobr: eobr,
     residentExpDate: residentExpDate,
     cbHandle: cbHandle,
-    twicExpDate: twicExpDate,
-    passport: passport,
+    hasImg: hasImg,
+    driverPosting: driverPosting,
     eobrType: eobrType,
     passportExpDate: passportExpDate,
     eobrId: eobrId,
-    accInsuranceCarrier: accInsuranceCarrier,
-    accInsuranceStartDate: accInsuranceStartDate,
+    trailerId: trailerId,
+    numberLoadLast: numberLoadLast,
     accInsuranceExpDate: accInsuranceExpDate,
-    correctiveLenses: correctiveLenses,
+    tractorId: tractorId,
     retentionRate: retentionRate,
     termReason: termReason,
     medicalCondition: medicalCondition,
     workComp: workComp,
-    yearlyPhysical: yearlyPhysical,
+    termDate: termDate,
   };
 
 
-
+  // const handleAllData = (e) => {
+  //   setAllValues({
+  //     cdlMatchesPhysical: e.target.value,
+  //     hasActiveTwic: e.target.checked,
+  //     cdlExpDate: e.target.day,
+  //   });
+  // };
 
 
   const handleSaveButton = (e) => {
@@ -211,11 +244,7 @@ const SearchDrivers = () => {
     const status = e.target.value;
     setState1(status);
   };
-  const handleHireDate = (e) => {
-    e.preventDefault();
-    const status = e.target.value;
-    setHireDate(status);
-  };
+  
   const handleDriverGroup = (e) => {
     e.preventDefault();
     const status = e.target.value;
@@ -346,40 +375,35 @@ const SearchDrivers = () => {
     const status = e.target.checked;
     setPowerOnly(status);
   };
-  const handleStepDeck = (e) => {
+  const handleMissingImg = (e) => {
     e.preventDefault();
-    const status = e.target.checked;
-    setStepDeck(status);
+    const status = e.target.value;
+    setMissingImg(status);
   };
   const handleDropCheck = (e) => {
     e.preventDefault();
     const status = e.target.checked;
     setDropCheck(status);
   };
-  const handleReefer = (e) => {
+  const handleCdlMatchesPhysical = (e) => {
     e.preventDefault();
-    const status = e.target.checked;
-    setReefer(status);
+    const status = e.target.Value;
+    setCdlMatchesPhysical(status);
   };
-  const handleTanker = (e) => {
+  const handleHasActive = (e) => {
     e.preventDefault();
     const status = e.target.checked;
-    setTanker(status);
+    setHasActive(status);
   };
-  const handleFlatBed = (e) => {
+  const handleNumberLoadLast = (e) => {
     e.preventDefault();
     const status = e.target.checked;
-    setFlatBed(status);
+    setNumberLoadLast(status);
   };
-  const handleRgn = (e) => {
+  const handleEobr = (e) => {
     e.preventDefault();
-    const status = e.target.checked;
-    setRgn(status);
-  };
-  const handleVan = (e) => {
-    e.preventDefault();
-    const status = e.target.checked;
-    setVan(status);
+    const status = e.target.value;
+    setEobr(status);
   };
   const handleResidentExpDate = (e) => {
     e.preventDefault();
@@ -391,35 +415,31 @@ const SearchDrivers = () => {
     const status = e.target.value;
     setCbHandle(status);
   };
-  const handleTwicExpDate = (e) => {
+  const handleHasImg = (e) => {
     e.preventDefault();
     const status = e.target.value;
-    setTwicExpDate(status);
+    setHasImg(status);
   };
-  const handlePassport = (e) => {
+  const handleDriverPosting = (e) => {
     e.preventDefault();
     const status = e.target.value;
-    setPassport(status);
+    setDriverPosting(status);
   };
   const handleEobrType = (e) => {
     e.preventDefault();
     const status = e.target.value;
     setEobrType(status);
   };
-  const handleEobrId = (e) => {
+
+  const handleTrailerId = (e) => {
     e.preventDefault();
     const status = e.target.value;
-    setEobrId(status);
+    setTrailerId(status);
   };
-  const handleAccIncsuranceCarrier = (e) => {
-    e.preventDefault();
-    const status = e.target.value;
-    setAccInsuranceCarrier(status);
-  };
-  const handleCorrectiveLenses = (e) => {
+  const handleTractorId = (e) => {
     e.preventDefault();
     const status = e.target.checked;
-    setCorrectiveLenses(status);
+    setTractorId(status);
   };
   const handleRetentionRate = (e) => {
     e.preventDefault();
@@ -441,11 +461,7 @@ const SearchDrivers = () => {
     const status = e.target.checked;
     setWorkComp(status);
   };
-  const handleYearlyPhysical = (e) => {
-    e.preventDefault();
-    const status = e.target.checked;
-    setYearlyPhysical(status);
-  };
+  
 
   // console.log(driverDate);
   return (
@@ -601,14 +617,22 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Phone Number</Form.Label>
-              <Form.Control type="number" placeholder="Phone Number" onBlur={ handlePhoneNumber}/>
+              <Form.Control
+                type="number"
+                placeholder="Phone Number"
+                onBlur={handlePhoneNumber}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>CDL # </Form.Label>
-              <Form.Control type="text" placeholder="CDL Number" onBlur={ handleCdlNumber}/>
+              <Form.Control
+                type="text"
+                placeholder="CDL Number"
+                onBlur={handleCdlNumber}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
@@ -617,7 +641,10 @@ const SearchDrivers = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>State </Form.Label>
-              <Form.Select aria-label="Default select example" onBlur={handleState}>
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleState}
+              >
                 <option>Select State</option>
                 <option value="Alabama">Alabama</option>
                 <option value="Alaska">Alaska</option>
@@ -631,7 +658,10 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>CDL State </Form.Label>
-              <Form.Select aria-label="Default select example" onBlur={handleCdlState}>
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleCdlState}
+              >
                 <option>Select CDL State</option>
                 <option value="Alabama">Alabama</option>
                 <option value="Alaska">Alaska</option>
@@ -645,7 +675,11 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Load ID</Form.Label>
-              <Form.Control type="number" placeholder="Load ID Number" onBlur={ handleLoadId}/>
+              <Form.Control
+                type="number"
+                placeholder="Load ID Number"
+                onBlur={handleLoadId}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
@@ -654,7 +688,10 @@ const SearchDrivers = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>CDL Matches Physical</Form.Label>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleCdlMatchesPhysical}
+              >
                 <option>Select CDL Matches Physical State</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -670,6 +707,7 @@ const SearchDrivers = () => {
                 label="Yes"
                 feedback="You must agree before submitting."
                 feedbackType="invalid"
+                onBlur={handleHasActive}
               />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
@@ -678,7 +716,7 @@ const SearchDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <p>CDL Exp Date</p>
               <DayPickerInput
-                onDayChange={(day) => console.log(day)}
+                onDayChange={(e) => setCdlExpDate(e)}
                 className="datePicker"
               />
               <Form.Control.Feedback type="invalid">
@@ -689,15 +727,19 @@ const SearchDrivers = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Dispatcher</Form.Label>
-              <Form.Control required type="text" placeholder="Dispatcher" />
+              <Form.Control
+                type="text"
+                placeholder="Dispatcher"
+                onBlur={handleDispatcher}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Last MVR Date </p>
+              <p>Last MVR Date</p>
               <DayPickerInput
-                onDayChange={(day) => console.log(day)}
+                onDayChange={(day) => setLastMvrDate(day)}
                 className="datePicker"
               />
               <Form.Control.Feedback type="invalid">
@@ -706,10 +748,11 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <p>Dispatch Group</p>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleDispatchGroup}
+              >
                 <option>Select Dispatcher Group</option>
-                {/* <option value="Yes">Yes</option>
-                <option value="No">No</option> */}
               </Form.Select>
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
@@ -720,7 +763,7 @@ const SearchDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <p>Next Review Date</p>
               <DayPickerInput
-                onDayChange={(day) => console.log(day)}
+                onDayChange={(day) => setNextReviewDate(day)}
                 className="datePicker"
               />
               <Form.Control.Feedback type="invalid">
@@ -729,7 +772,11 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <p>Recruiter</p>
-              <Form.Control required type="text" placeholder="Recruiter Name" />
+              <Form.Control
+                type="text"
+                placeholder="Recruiter Name"
+                onBlur={handleRecruiter}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
@@ -737,7 +784,7 @@ const SearchDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <p>Physical Due Date</p>
               <DayPickerInput
-                onDayChange={(day) => console.log(day)}
+                onDayChange={(day) => setPhysicalDueDate(day)}
                 className="datePicker"
               />
               <Form.Control.Feedback type="invalid">
@@ -748,7 +795,10 @@ const SearchDrivers = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <p>Recruiting Source</p>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleRecruiteSource}
+              >
                 <option>Select Recruiting Source</option>
                 <option value="Direct Call">Direact Call</option>
                 <option value="Driver Refereal">Driver Refereal</option>
@@ -764,7 +814,7 @@ const SearchDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <p>Physical Submitted Date</p>
               <DayPickerInput
-                onDayChange={(day) => console.log(day)}
+                onDayChange={(day) => setPhysicalSubmissionDate(day)}
                 className="datePicker"
               />
               <Form.Control.Feedback type="invalid">
@@ -773,7 +823,10 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <p>Hirirng Eligibility</p>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleHiringEligibility}
+              >
                 <option>Select Hiring Eligibility</option>
                 <option value="Eligible For Rehire">Eligible For Rehire</option>
                 <option value="Do Not Rehire">Do Not Rehire</option>
@@ -788,7 +841,7 @@ const SearchDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <p>Hire Date</p>
               <DayPickerInput
-                onDayChange={(day) => console.log(day)}
+                onDayChange={(day) => setHireDate(day)}
                 className="datePicker"
               />
               <Form.Control.Feedback type="invalid">
@@ -797,7 +850,11 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <p>Tractor ID</p>
-              <Form.Control required type="number" placeholder="Tractor ID" />
+              <Form.Control
+                type="number"
+                placeholder="Tractor ID"
+                onBlur={handleTractorId}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
@@ -805,7 +862,7 @@ const SearchDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <p>Term Date </p>
               <DayPickerInput
-                onDayChange={(day) => console.log(day)}
+                onDayChange={(day) => setTermDate(day)}
                 className="datePicker"
               />
               <Form.Control.Feedback type="invalid">
@@ -816,7 +873,11 @@ const SearchDrivers = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <p>Trailer ID</p>
-              <Form.Control required type="number" placeholder="Trailer ID" />
+              <Form.Control
+                type="number"
+                placeholder="Trailer ID"
+                onBlur={handleTrailerId}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
@@ -824,7 +885,7 @@ const SearchDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <p>Resident Exp Date </p>
               <DayPickerInput
-                onDayChange={(day) => console.log(day)}
+                onDayChange={(day) => setResidentExpDate(day)}
                 className="datePicker"
               />
               <Form.Control.Feedback type="invalid">
@@ -833,7 +894,11 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <p>SSN(Last 4 Digits) </p>
-              <Form.Control required type="number" placeholder="SSN ID" />
+              <Form.Control
+                type="number"
+                placeholder="SSN ID"
+                onBlur={handleSsn}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
@@ -842,7 +907,10 @@ const SearchDrivers = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <p>No Loads in Last </p>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleNumberLoadLast}
+              >
                 <option>Select No Loads in Last</option>
                 <option value="5 days">5 days</option>
                 <option value="10 Days">10 Days</option>
@@ -855,7 +923,10 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <p>EOBR</p>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleEobr}
+              >
                 <option>Select EOBR</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -866,7 +937,10 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <p>EOBR Type</p>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleEobrType}
+              >
                 <option>Select EOBR Type</option>
                 <option value="Geotab">Geotab</option>
                 <option value="M2M in Motion">M2M in Motion</option>
@@ -880,7 +954,10 @@ const SearchDrivers = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <p>Driver Posting </p>
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                onBlur={handleDriverPosting}
+              >
                 <option>Select Driver Posting</option>
                 <option value="Auto Update">Auto Update</option>
                 <option value="Expiration Date">Expiration Date</option>
@@ -892,14 +969,22 @@ const SearchDrivers = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <p>Has Image</p>
-              <Form.Control required type="text" placeholder="Has Image" />
+              <Form.Control
+                type="text"
+                placeholder="Has Image"
+                onBlur={handleHasImg}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <p>Missing Image</p>
-              <Form.Control required type="text" placeholder="Missing Image" />
+              <Form.Control
+                type="text"
+                placeholder="Missing Image"
+                onBlur={handleMissingImg}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
