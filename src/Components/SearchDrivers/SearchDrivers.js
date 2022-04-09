@@ -99,29 +99,29 @@ const SearchDrivers = () => {
   
 
   
-  const [allValues, setAllValues] = useState({
-    cdlMatchesPhysical: "",
-        hasActiveTwic: "",
-  });
+  // const [allValues, setAllValues] = useState({
+  //   cdlMatchesPhysical: "",
+  //       hasActiveTwic: "",
+  // });
 
-  const handleAllValue = (event) => {
-    setAllValues({
-      cdlMatchesPhysical: event.target.value,
-      hasActiveTwic: event.target.checked,
+  // const handleAllValue = (event) => {
+  //   setAllValues({
+  //     cdlMatchesPhysical: event.target.value,
+  //     hasActiveTwic: event.target.checked,
       
-    });
-  }
+  //   });
+  // }
 
-  useEffect(() => {
-    // At this point, input variable (with both props text and caret) is updated
-  }, [allValues]);
+  // useEffect(() => {
+  //   // At this point, input variable (with both props text and caret) is updated
+  // }, [allValues]);
 
-  const onChange = (e) => {
-    setState((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  // const onChange = (e) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     [e.target.name]: e.target.value,
+  //   }));
+  // };
   const basicInfo = {
     status: status,
     firstName: firstName,
