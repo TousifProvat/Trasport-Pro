@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import "./tractors.css";
-// import { DatePicker, Space } from "antd";
 import "react-day-picker/lib/style.css";
-import DayPickerInput from "react-day-picker/DayPickerInput";
+
+
 const Tractors = () => {
-  const [ntlInsuranceDate, setNtlInsuranceDate] = useState({})
+  
   const [allValues, setAllValues] = useState({
     tractorId: "",
     axleCount: "",
