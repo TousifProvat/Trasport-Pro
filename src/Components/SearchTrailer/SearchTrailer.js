@@ -12,7 +12,22 @@ import "./searchTrailer.css";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 import useContext from "../Hooks/useContext";
+
+
 const SearchTrailer = () => {
+
+
+  const [allValues, setAllValues] = useState({});
+
+  const changeHandler = (e) => {
+    setAllValues({
+      ...allValues,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+
+
   const { trailerDate } = useContext();
   const [validated, setValidated] = useState(false);
 
@@ -24,6 +39,7 @@ const SearchTrailer = () => {
     }
 
     setValidated(true);
+    console.log(allValues)
   };
   return (
     <div>
@@ -34,13 +50,19 @@ const SearchTrailer = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom01">
               <Form.Label>Trailer ID</Form.Label>
-              <Form.Control required type="number" placeholder="Trailer ID" />
+              <Form.Control
+                type="number"
+                placeholder="Trailer ID"
+                name="trailerId"
+                onChange={changeHandler}
+              />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom02">
               <Form.Label>Leasing Company</Form.Label>
               <Form.Control
-                required
+                name="leasingCompany"
+                onChange={changeHandler}
                 type="text"
                 placeholder="Leasing Company"
               />
@@ -49,7 +71,11 @@ const SearchTrailer = () => {
             <Form.Group as={Col} md="4" controlId="validationCustomUsername">
               <Form.Label>Status</Form.Label>
 
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                aria-label="Default select example"
+                name="status"
+                onChange={changeHandler}
+              >
                 <option>Open this select menu</option>
                 <option value="Active">Active</option>
                 <option value="Hold-Safely">Hold-Safely</option>
@@ -64,18 +90,22 @@ const SearchTrailer = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Owner Lease On Date</Form.Label>
-              {/* <Form.Control type="text" placeholder="Owner Lease On Date" required /> */}
+
               <Row>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="ownerLeaseOnDate"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="ownerLeaseOnDate2"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
               </Row>
@@ -85,8 +115,12 @@ const SearchTrailer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Terminal</Form.Label>
-              {/* <Form.Control type="text" placeholder="State" required /> */}
-              <Form.Select aria-label="Default select example">
+
+              <Form.Select
+                aria-label="Default select example"
+                name="terminal"
+                onChange={changeHandler}
+              >
                 <option>Select Terminal</option>
                 <option value="EG-Eagles">EG-Eagles</option>
               </Form.Select>
@@ -96,18 +130,22 @@ const SearchTrailer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Owner Lease Off Date </Form.Label>
-              {/* <Form.Control type="text" placeholder="Zip" required /> */}
+
               <Row>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="ownerLeaseOffDate"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="ownerLeaseOffDate2"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
               </Row>
@@ -120,8 +158,12 @@ const SearchTrailer = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Type</Form.Label>
-              {/* <Form.Control type="text" placeholder="City" required /> */}
-              <Form.Select aria-label="Default select example">
+
+              <Form.Select
+                aria-label="Default select example"
+                name="type"
+                onChange={changeHandler}
+              >
                 <option>Select Type</option>
               </Form.Select>
               <Form.Control.Feedback type="invalid">
@@ -130,22 +172,22 @@ const SearchTrailer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Next Service Date</Form.Label>
-              {/* <Form.Control type="text" placeholder="State" required /> */}
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Terminal</option>
-                <option value="EG-Eagles">EG-Eagles</option>
-              </Form.Select> */}
+
               <Row>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="nextServiceDate"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="nextServiceDate2"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
               </Row>
@@ -155,8 +197,12 @@ const SearchTrailer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Year</Form.Label>
-              {/* <Form.Control type="text" placeholder="Zip" required /> */}
-              <Form.Select aria-label="Default select example">
+
+              <Form.Select
+                aria-label="Default select example"
+                name="year"
+                onChange={changeHandler}
+              >
                 <option>Select Year</option>
                 <option value="2023">2023</option>
                 <option value="2022">2022</option>
@@ -171,21 +217,22 @@ const SearchTrailer = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Last Service Date</Form.Label>
-              {/* <Form.Control type="text" placeholder="City" required /> */}
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Type</option>
-              </Form.Select> */}
+
               <Row>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="lastServiceDate"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="lastServiceDate2"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
               </Row>
@@ -195,8 +242,12 @@ const SearchTrailer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Make</Form.Label>
-              {/* <Form.Control type="text" placeholder="State" required /> */}
-              <Form.Select aria-label="Default select example">
+
+              <Form.Select
+                aria-label="Default select example"
+                name="make"
+                onChange={changeHandler}
+              >
                 <option>Select Make</option>
                 <option value="Blue Bird">Blue Bird</option>
                 <option value="Ford">Ford</option>
@@ -204,44 +255,29 @@ const SearchTrailer = () => {
                 <option value="GMC">GMC</option>
                 <option value="Mack">Mack</option>
               </Form.Select>
-              {/* <Row>
-                <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
-                  />
-                </Col>
-                <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
-                  />
-                </Col>
-              </Row> */}
+
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Monthly Maintenance Date</Form.Label>
-              {/* <Form.Control type="text" placeholder="Zip" required /> */}
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Year</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
-              </Form.Select> */}
+
               <Row>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="monthlyMainainanceDate"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="monthlyMainainanceDate2"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
               </Row>
@@ -254,50 +290,35 @@ const SearchTrailer = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Model</Form.Label>
-              <Form.Control type="text" placeholder="Model" required />
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Type</option>
-              </Form.Select> */}
-              {/* <Row>
-                <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
-                  />
-                </Col>
-                <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
-                  />
-                </Col>
-              </Row> */}
+              <Form.Control
+                type="text"
+                placeholder="Model"
+                name="model"
+                onChange={changeHandler}
+              />
+
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Next Inspection Date</Form.Label>
-              {/* <Form.Control type="text" placeholder="State" required /> */}
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Make</option>
-                <option value="Blue Bird">Blue Bird</option>
-                <option value="Ford">Ford</option>
-                <option value="Hino">Hino</option>
-                <option value="GMC">GMC</option>
-                <option value="Mack">Mack</option>
-              </Form.Select> */}
+
               <Row>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="nextInspectionDate"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="nextInspectionDate2"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
               </Row>
@@ -307,27 +328,13 @@ const SearchTrailer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>VIN</Form.Label>
-              <Form.Control type="number" placeholder="VIN" required />
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Year</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
-              </Form.Select> */}
-              {/* <Row>
-                <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
-                  />
-                </Col>
-                <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
-                  />
-                </Col>
-              </Row> */}
+              <Form.Control
+                type="number"
+                placeholder="VIN"
+                name="vin"
+                onChange={changeHandler}
+              />
+
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
@@ -337,21 +344,22 @@ const SearchTrailer = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Tag Expiration</Form.Label>
-              {/* <Form.Control type="text" placeholder="Model" required /> */}
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Type</option>
-              </Form.Select> */}
+
               <Row>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="tagExp"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="tagExp2"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
               </Row>
@@ -361,37 +369,25 @@ const SearchTrailer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Tag Number</Form.Label>
-              <Form.Control type="number" placeholder="Tag Number" required />
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Make</option>
-                <option value="Blue Bird">Blue Bird</option>
-                <option value="Ford">Ford</option>
-                <option value="Hino">Hino</option>
-                <option value="GMC">GMC</option>
-                <option value="Mack">Mack</option>
-              </Form.Select> */}
-              {/* <Row>
-                <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
-                  />
-                </Col>
-                <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
-                  />
-                </Col>
-              </Row> */}
+              <Form.Control
+                type="number"
+                placeholder="Tag Number"
+                name="tagNumber"
+                onChange={changeHandler}
+              />
+
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Tag State</Form.Label>
-              {/* <Form.Control type="text" placeholder="Model" required /> */}
-              <Form.Select aria-label="Default select example">
+
+              <Form.Select
+                aria-label="Default select example"
+                name="tagState"
+                onChange={changeHandler}
+              >
                 <option>Select Tag State</option>
                 <option value="Alaska">Alaska</option>
                 <option value="Alabama">Alabama</option>
@@ -399,20 +395,7 @@ const SearchTrailer = () => {
                 <option value="California">California</option>
                 <option value="Canada">Canada</option>
               </Form.Select>
-              {/* <Row>
-                <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
-                  />
-                </Col>
-                <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
-                  />
-                </Col>
-              </Row> */}
+
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
@@ -422,26 +405,22 @@ const SearchTrailer = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Warranty Start Date</Form.Label>
-              {/* <Form.Control type="number" placeholder="Tag Number" required /> */}
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Make</option>
-                <option value="Blue Bird">Blue Bird</option>
-                <option value="Ford">Ford</option>
-                <option value="Hino">Hino</option>
-                <option value="GMC">GMC</option>
-                <option value="Mack">Mack</option>
-              </Form.Select> */}
+
               <Row>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="warrantyStartDate"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="warrantyStartDate2"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
               </Row>
@@ -454,54 +433,32 @@ const SearchTrailer = () => {
               <Form.Control
                 type="text"
                 placeholder="Owner Company Name"
-                required
+                name="ownerCompanyName"
+                onChange={changeHandler}
               />
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Year</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
-              </Form.Select> */}
-              {/* <Row>
-                <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
-                  />
-                </Col>
-                <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
-                  />
-                </Col>
-                          </Row> */}
+
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Warranty End Date</Form.Label>
-              {/* <Form.Control type="text" placeholder="Model" required /> */}
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Tag State</option>
-                <option value="Alaska">Alaska</option>
-                <option value="Alabama">Alabama</option>
-                <option value="Arizona">Arizona</option>
-                <option value="California">California</option>
-                <option value="Canada">Canada</option>
-              </Form.Select> */}
+
               <Row>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="warrantyEndDate"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
                 <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
+                  <Form.Control
+                    name="warrantyEndDate2"
+                    onChange={changeHandler}
+                    type="date"
+                    placeholder="Leasing Company"
                   />
                 </Col>
               </Row>
@@ -514,21 +471,23 @@ const SearchTrailer = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Owner</Form.Label>
-              {/* <Form.Control type="number" placeholder="Tag Number" required /> */}
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Make</option>
-                <option value="Blue Bird">Blue Bird</option>
-                <option value="Ford">Ford</option>
-                <option value="Hino">Hino</option>
-                <option value="GMC">GMC</option>
-                <option value="Mack">Mack</option>
-              </Form.Select> */}
+
               <Row>
                 <Col>
-                  <Form.Control type="text" placeholder="First name" required />
+                  <Form.Control
+                    type="text"
+                    placeholder="First name"
+                    name="ownerFirstName"
+                    onChange={changeHandler}
+                  />
                 </Col>
                 <Col>
-                  <Form.Control type="text" placeholder="Last name" required />
+                  <Form.Control
+                    type="text"
+                    placeholder="Last name"
+                    name="ownerLastName"
+                    onChange={changeHandler}
+                  />
                 </Col>
               </Row>
               <Form.Control.Feedback type="invalid">
@@ -537,49 +496,42 @@ const SearchTrailer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Warranty Provider</Form.Label>
-              {/* <Form.Control type="text" placeholder="Owner Company Name" required /> */}
-              <Form.Select aria-label="Default select example">
+
+              <Form.Select
+                aria-label="Default select example"
+                name="warrantyProvider"
+                onChange={changeHandler}
+              >
                 <option>Select Warranty Provider</option>
                 <option value="Cummins">Cummins</option>
                 <option value="NTP">NTP</option>
                 <option value="Other">Other</option>
                 <option value="Premium 2020">Premium 2020</option>
               </Form.Select>
-              {/* <Row>
-                <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
-                  />
-                </Col>
-                <Col>
-                  <DayPickerInput
-                    onDayChange={(day) => console.log(day)}
-                    className="datePicker"
-                  />
-                </Col>
-                          </Row> */}
+
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Driver</Form.Label>
-              {/* <Form.Control type="text" placeholder="Model" required /> */}
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Tag State</option>
-                <option value="Alaska">Alaska</option>
-                <option value="Alabama">Alabama</option>
-                <option value="Arizona">Arizona</option>
-                <option value="California">California</option>
-                <option value="Canada">Canada</option>
-              </Form.Select> */}
+
               <Row>
                 <Col>
-                  <Form.Control type="text" placeholder="First name" required />
+                  <Form.Control
+                    type="text"
+                    placeholder="First name"
+                    name="driverFirstName"
+                    onChange={changeHandler}
+                  />
                 </Col>
                 <Col>
-                  <Form.Control type="text" placeholder="Last name" required />
+                  <Form.Control
+                    type="text"
+                    placeholder="Last name"
+                    name="driverLastName"
+                    onChange={changeHandler}
+                  />
                 </Col>
               </Row>
               <Form.Control.Feedback type="invalid">
@@ -591,16 +543,12 @@ const SearchTrailer = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Warranty Status</Form.Label>
-              {/* <Form.Control type="number" placeholder="Tag Number" required /> */}
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Make</option>
-                <option value="Blue Bird">Blue Bird</option>
-                <option value="Ford">Ford</option>
-                <option value="Hino">Hino</option>
-                <option value="GMC">GMC</option>
-                <option value="Mack">Mack</option>
-              </Form.Select> */}
-              <Form.Select aria-label="Default select example">
+
+              <Form.Select
+                aria-label="Default select example"
+                name="warrantyStatus"
+                onChange={changeHandler}
+              >
                 <option>Select Warranty Status</option>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
@@ -612,28 +560,22 @@ const SearchTrailer = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Warranty Starting Mileage</Form.Label>
-              {/* <Form.Control type="text" placeholder="Model" required /> */}
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Tag State</option>
-                <option value="Alaska">Alaska</option>
-                <option value="Alabama">Alabama</option>
-                <option value="Arizona">Arizona</option>
-                <option value="California">California</option>
-                <option value="Canada">Canada</option>
-              </Form.Select> */}
+
               <Row>
                 <Col>
                   <Form.Control
                     type="text"
                     placeholder="Warranty Starting Mileage"
-                    required
+                    name="warrantyStartingMileage"
+                    onChange={changeHandler}
                   />
                 </Col>
                 <Col>
                   <Form.Control
                     type="text"
                     placeholder="Warranty Starting Mileage"
-                    required
+                    name="warrantyStartingMileage2"
+                    onChange={changeHandler}
                   />
                 </Col>
               </Row>
@@ -646,14 +588,10 @@ const SearchTrailer = () => {
               <Form.Control
                 type="number"
                 placeholder="Trailer Length"
-                required
+                name="trailerLength"
+                onChange={changeHandler}
               />
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select No Loads in Last</option>
-                <option value="10 Days">10 Days</option>
-                <option value="15 Days">15 Days</option>
-                <option value="30 Days">30 Days</option>
-              </Form.Select> */}
+
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
@@ -663,25 +601,22 @@ const SearchTrailer = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Warranty Ending Mileage</Form.Label>
-              {/* <Form.Control type="text" placeholder="Owner Company Name" required /> */}
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Camera Type</option>
-                <option value="Driver Supplied">Driver Supplied</option>
-                <option value="Lytx - Driver Cam">Lytx - Driver Cam</option>
-              </Form.Select> */}
+
               <Row>
                 <Col>
                   <Form.Control
                     type="text"
                     placeholder="Warranty Starting Mileage"
-                    required
+                    name="warrantyEndingMileage"
+                    onChange={changeHandler}
                   />
                 </Col>
                 <Col>
                   <Form.Control
                     type="text"
                     placeholder="Warranty Starting Mileage"
-                    required
+                    name="warrantyEndingMileage2"
+                    onChange={changeHandler}
                   />
                 </Col>
               </Row>
@@ -692,13 +627,8 @@ const SearchTrailer = () => {
 
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Axle Count</Form.Label>
-              <Form.Control type="number" placeholder="Axle Count" required />
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Is CARB Compliant?</option>
-                <option value="All">All</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </Form.Select> */}
+              <Form.Control type="number" placeholder="Axle Count" name="axleCount" onChange={changeHandler} />
+              
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
@@ -706,12 +636,8 @@ const SearchTrailer = () => {
 
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Has Image</Form.Label>
-              <Form.Control type="text" placeholder="Has Image" required />
-              {/* <Form.Select aria-label="Default select example">
-                <option>Select Camera Type</option>
-                <option value="Driver Supplied">Driver Supplied</option>
-                <option value="Lytx - Driver Cam">Lytx - Driver Cam</option>
-              </Form.Select> */}
+              <Form.Control type="text" placeholder="Has Image" name="hasImg" onChange={changeHandler}/>
+              
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
@@ -721,7 +647,7 @@ const SearchTrailer = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Missing Image</Form.Label>
-              <Form.Control type="text" placeholder="Missing Image" required />
+              <Form.Control type="text" placeholder="Missing Image" name="missingHasImage" onChange={changeHandler}/>
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
@@ -750,7 +676,7 @@ const SearchTrailer = () => {
       <Container fluid style={{ marginBottom: "50px" }}>
         <h3 className="mt-5 mb-3">Search Results (1)</h3>
         <hr></hr>
-        {/* <strong className="seacrhTrailer-error">No trailer records matching your search criteria were found</strong> */}
+        
         <Table striped bordered hover>
           <thead>
             <tr>
