@@ -9,8 +9,13 @@ import {
   Row,
 } from "react-bootstrap";
 import "./addCustomer.css";
-import { DatePicker, Space } from "antd";
+
+
+
 const AddCustomer = () => {
+
+
+
   const [allValues, setAllValues] = useState({});
 
   const changeHandler = (e) => {
@@ -34,11 +39,9 @@ const AddCustomer = () => {
     console.log(allValues);
   };
 
-  // date picker functionality
 
-  function onChange(date, dateString) {
-    console.log(date, dateString);
-  }
+
+  
 
   return (
     <div>
