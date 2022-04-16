@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
-import { DatePicker, Space } from "antd";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 
 const AddTerminal = () => {
 
@@ -25,6 +24,7 @@ const AddTerminal = () => {
     }
 
     setValidated(true);
+    console.log(allValues);
   };
 
   // date picker 1

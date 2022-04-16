@@ -12,17 +12,34 @@ import "./searchTerminal.css";
 import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
 const SearchTerminal = () => {
+
+
+
+  const [allValues, setAllValues] = useState({});
+
+  const changeHandler = (e) => {
+    setAllValues({
+      ...allValues,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+
+
   const { searchTerminalData } = useContext();
 
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
+    event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
     setValidated(true);
+
+    console.log(allValues);
   };
   //   console.log(searchTerminalData);
   return (
@@ -35,7 +52,8 @@ const SearchTerminal = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom01">
               <Form.Label>Search Terminal</Form.Label>
               <Form.Control
-                required
+                name="searchTerminal"
+                onChange={changeHandler}
                 type="text"
                 placeholder="Search Terminal"
                 // defaultValue="Mark"
@@ -45,7 +63,8 @@ const SearchTerminal = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom02">
               <Form.Label>Terminal Name</Form.Label>
               <Form.Control
-                required
+                name="terminalName"
+                onChange={changeHandler}
                 type="text"
                 placeholder="Terminal Name"
                 // defaultValue="Otto"
@@ -58,7 +77,8 @@ const SearchTerminal = () => {
                 type="text"
                 placeholder="Terminal ID"
                 aria-describedby="inputGroupPrepend"
-                required
+                name="terminalId"
+                onChange={changeHandler}
               />
               <Form.Control.Feedback type="invalid">
                 Please choose a username.
@@ -68,8 +88,8 @@ const SearchTerminal = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Terminal Type</Form.Label>
-              {/* <Form.Control type="text" placeholder="Terminal Type" required /> */}
-              <Form.Select aria-label="Default select example">
+              
+              <Form.Select aria-label="Default select example" name="terminalType" onChange={changeHandler}>
                 <option>Select Terminal Type</option>
                 <option value="Agent - Freight">Agent - Freight</option>
                 <option value="Agent - Truck">Agent - Truck</option>
@@ -81,15 +101,15 @@ const SearchTerminal = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Phone</Form.Label>
-              <Form.Control type="text" placeholder="Phone" required />
+              <Form.Control type="text" placeholder="Phone" name="phone" onChange={changeHandler} />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>State</Form.Label>
-              {/* <Form.Control type="text" placeholder="Zip" required /> */}
-              <Form.Select aria-label="Default select example">
+              
+              <Form.Select aria-label="Default select example" name="state" onChange={changeHandler}  >
                 <option>Select State</option>
                 <option value="Alabama">Alabama</option>
                 <option value="Alaska">Alaska</option>
@@ -105,8 +125,8 @@ const SearchTerminal = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Status</Form.Label>
-              {/* <Form.Control type="text" placeholder="Terminal Type" required /> */}
-              <Form.Select aria-label="Default select example">
+              
+              <Form.Select aria-label="Default select example" name="status" onChange={changeHandler}>
                 <option>Select Status</option>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
@@ -117,7 +137,7 @@ const SearchTerminal = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Pay/Bill Name</Form.Label>
-              <Form.Control type="text" placeholder="Pay/Bill Name" required />
+              <Form.Control type="text" placeholder="Pay/Bill Name" name="payName" onChange={changeHandler} />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid state.
               </Form.Control.Feedback>
@@ -127,7 +147,8 @@ const SearchTerminal = () => {
               <Form.Control
                 type="text"
                 placeholder="Pay/Bill Federal ID (last 4)"
-                required
+                name="payFederalID"
+                onChange={changeHandler}
               />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
@@ -136,7 +157,7 @@ const SearchTerminal = () => {
           </Row>
           <Form.Group className="mb-3">
             <Form.Check
-              required
+              
               label="Agree to terms and conditions"
               feedback="You must agree before submitting."
               feedbackType="invalid"
