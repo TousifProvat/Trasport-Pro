@@ -8,9 +8,14 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import useContext from "../Hooks/useContext";
 import "./searchOwner.css";
 const SearchOwner = () => {
+
+
+
+  
   const [status, setStatus] = useState({});
   const [terminalValue, setTerminalValue] = useState({});
   const [id, setId] = useState({});
@@ -30,7 +35,11 @@ const SearchOwner = () => {
   const [missImage, setMissImage] = useState({});
   const [searchData, setSearchData] = useState([]);
   const [requireData, setRequireDate] = useState("");
-  const { terminalData } = useContext();
+
+
+
+
+  const { terminalData, perDetails } = useContext();
 
 
   const allSearchInfo = {
@@ -409,7 +418,11 @@ const SearchOwner = () => {
             {searchData.map((i) => (
               <tbody key={i.id}>
                 <tr>
-                  <td>{i.id}</td>
+                  <td>
+                    <Link to={`/ownerSummary/${i.id}`}>
+                      <p onClick={() => perDetails(i.id)}>{i.id}</p>
+                    </Link>
+                  </td>
                   <td>{i.status}</td>
                   <td>{i.zip}</td>
                   <td>{i.owner}</td>

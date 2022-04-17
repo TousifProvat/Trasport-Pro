@@ -9,14 +9,28 @@ const useContext = () => {
   const [trailerDate, setTrailerData] = useState([]);
   const [searchTerminalData, setSearchTerminalData] = useState([]);
   const [customerData, setCustomerData] = useState([]);
+  const [ownerSummary, setOwnerSummary] = useState([]);
   const value = 17;
 
   useEffect(() => {
-    fetch('./owner.json')
+    fetch("http://transport-test-server.herokuapp.com/api/v1/owner")
       .then((response) => response.json())
-      .then(data => setTerminalData(data));
+      .then((data) => setTerminalData(data.owners));
+    console.log(terminalData);
   }, []);
 
+
+  const getDetail = (id) => {
+    const info = terminalData.find(i => i.id === id);
+    setOwnerSummary(info);
+    return info;
+    
+  }
+
+  const perDetails = (id) => {
+    getDetail(id);
+    return terminalData;
+  }
 
   useEffect(() => {
     fetch('./Driver.json')
@@ -63,6 +77,8 @@ const useContext = () => {
     trailerDate,
     searchTerminalData,
     customerData,
+    perDetails,
+    ownerSummary,
   };
 };
 
