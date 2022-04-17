@@ -71,7 +71,7 @@ const Navbar2 = () => {
                 </NavDropdown>
               </NavDropdown>
 
-              <NavDropdown title="Broker Carrier" id="basic-nav-dropdown">
+              {/* <NavDropdown title="Broker Carrier" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">
                   Add Broker Carrier
                 </NavDropdown.Item>
@@ -81,7 +81,7 @@ const Navbar2 = () => {
                 <NavDropdown.Item href="#action/3.3">
                   Carrier Sourcing
                 </NavDropdown.Item>
-                {/* <NavDropdown.Divider /> */}
+                
                 <NavDropdown.Item href="#action/3.4">
                   Carrier Onboarding
                 </NavDropdown.Item>
@@ -96,7 +96,7 @@ const Navbar2 = () => {
                     Manage Carrier Qualifications
                   </NavDropdown.Item>
                 </NavDropdown>
-              </NavDropdown>
+              </NavDropdown> */}
 
               <NavDropdown title="Customers" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">
@@ -542,7 +542,7 @@ const Navbar2 = () => {
                 </NavDropdown>
               </NavDropdown>
 
-              <NavDropdown title="Sales" id="basic-nav-dropdown">
+              {/* <NavDropdown title="Sales" id="basic-nav-dropdown">
                 <NavDropdown title="Lead & Accounts" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#aSearchction/3.1">
                     Add Lead
@@ -575,9 +575,9 @@ const Navbar2 = () => {
                     Manage Dispositions
                   </NavDropdown.Item>
                 </NavDropdown>
-              </NavDropdown>
+              </NavDropdown> */}
 
-              <NavDropdown title="Images" id="basic-nav-dropdown">
+              {/* <NavDropdown title="Images" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#aSearchction/3.1">
                   Image Indexing
                 </NavDropdown.Item>
@@ -587,7 +587,7 @@ const Navbar2 = () => {
                 <NavDropdown.Item href="#aSearchction/3.1">
                   Manage Documents Type
                 </NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown> */}
 
               <NavDropdown title="Reports" id="basic-nav-dropdown">
                 <NavDropdown title="Optional Reports" id="basic-nav-dropdown">
