@@ -19,6 +19,7 @@ import TerminalManagerDashboard from "./Components/SearchTerminal/TerminalManage
 import AddCustomer from "./Components/AddCustomer/AddCustomer";
 import SearchCustomer from "./Components/SearchCustomer/SearchCustomer";
 import OwnerSummary from "./Components/OwnerSummary/OwnerSummary";
+import SearchLoad from "./Components/SearchLoad/SearchLoad";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
             <Route path="searchTerminal" element={<SearchTerminal />} />
             <Route path="addCustomer" element={<AddCustomer />} />
             <Route path="searchCustomer" element={<SearchCustomer />} />
+            <Route path="searchLoad" element={<SearchLoad />} />
             <Route path=":ownerId" element={<OwnerSummary />} />
             <Route
               path="terminalManagerDashboard"

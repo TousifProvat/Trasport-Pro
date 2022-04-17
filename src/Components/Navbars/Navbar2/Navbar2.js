@@ -26,7 +26,7 @@ const Navbar2 = () => {
                   Create Quote
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.4">
-                  Search Load
+                  <Link to="/searchLoad">Search Load</Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.4">
                   Search Permits
