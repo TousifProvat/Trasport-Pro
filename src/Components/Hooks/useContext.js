@@ -13,7 +13,7 @@ const useContext = () => {
   const value = 17;
 
   useEffect(() => {
-    fetch("http://transport-test-server.herokuapp.com/api/v1/owner")
+    fetch("https://transport-test-server.herokuapp.com/api/v1/owner")
       .then((response) => response.json())
       .then((data) => setTerminalData(data.owners));
     console.log(terminalData);

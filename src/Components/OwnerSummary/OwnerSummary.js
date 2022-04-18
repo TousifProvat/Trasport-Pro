@@ -25,7 +25,7 @@ const OwnerSummary = () => {
 
   useEffect(() => {
     fetch(
-      `http://transport-test-server.herokuapp.com/api/v1/owner/summary/${ownerId}`
+      `https://transport-test-server.herokuapp.com/api/v1/owner/summary/${ownerId}`
     )
       .then((response) => response.json())
       .then((data) => setSummaryDate(data.ownerOperatorInfo));

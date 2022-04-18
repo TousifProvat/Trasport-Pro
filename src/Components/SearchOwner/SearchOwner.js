@@ -18,25 +18,7 @@ import "./searchOwner.css";
 const SearchOwner = () => {
 
 
-  // const [status, setStatus] = useState({});
-  // const [terminalValue, setTerminalValue] = useState({});
-  // const [id, setId] = useState({});
-  // const [code, setCode] = useState({});
-  // const [fullName, setFullName] = useState({});
-  // const [company, setCompany] = useState({});
-  // const [state, setState] = useState({});
-  // const [group, setGroup] = useState({});
-  // const [tractorId, setTractorId] = useState({});
-  // const [trailerId, setTrailerId] = useState({});
-  // const [billName, setBillName] = useState({});
-  // const [billId, setBillId] = useState({});
-  // const [payPercentage, setPayPercentage] = useState({});
-  // const [factored, setFactored] = useState({});
-  // const [print1099, setPrint1099] = useState({});
-  // const [hasImage, setHasImage] = useState({});
-  // const [missImage, setMissImage] = useState({});
-  // const [searchData, setSearchData] = useState([]);
-  // const [requireData, setRequireDate] = useState("");
+  
 
 
 const [allValues, setAllValues] = useState({});
@@ -54,30 +36,7 @@ const changeHandler = (e) => {
   console.log(terminalData);
 
 
-  // const allSearchInfo = {
-  //   status: status,
-  //   terminal: terminalValue,
-  //   id: id,
-  //   code: code,
-  //   fullName: fullName,
-  //   company: company,
-  //   state: state,
-  //   group: group,
-  //   tractorId: tractorId,
-  //   trailerId: trailerId,
-  //   billName: billName,
-  //   billId: billId,
-  //   defaultPayPercentage: payPercentage,
-  //   factored: factored,
-  //   print1099: print1099,
-  //   hasImage: hasImage,
-  //   missImage: missImage,
-  // }
-
-  // useEffect(() => {
-  //   setSearchData(terminalData);
-  // }, [terminalData]);
-
+  
   //form validator button
 
   const [validated, setValidated] = useState(false);
@@ -91,74 +50,7 @@ const changeHandler = (e) => {
 
   ///////////////////////////
 
-  // const handleStatus = (e) => {
-  //   e.preventDefault();
-  //   setStatus(e.target.value);
-  // };
-  // const handleTerminalChange = (e) => {
-  //   e.preventDefault();
-  //   setTerminalValue(e.target.value);
-  // };
-  // const handleId = (e) => {
-  //   e.preventDefault();
-  //   setId(e.target.value);
-  // };
-  // const handleCode = (e) => {
-  //   e.preventDefault();
-  //   setCode(e.target.value);
-  // };
-  // const handleFullName = (e) => {
-  //   e.preventDefault();
-  //   setFullName(e.target.value);
-  // };
-  // const handleCompany = (e) => {
-  //   e.preventDefault();
-  //   setCompany(e.target.value);
-  // };
-  // const handleState = (e) => {
-  //   e.preventDefault();
-  //   setState(e.target.value);
-  // };
-  // const handleGroup = (e) => {
-  //   e.preventDefault();
-  //   setGroup(e.target.value);
-  // };
-  // const handleTractorId = (e) => {
-  //   e.preventDefault();
-  //   setTractorId(e.target.value);
-  // };
-  // const handleTrailerId = (e) => {
-  //   e.preventDefault();
-  //   setTrailerId(e.target.value);
-  // };
-  // const handleBillName = (e) => {
-  //   e.preventDefault();
-  //   setBillName(e.target.value);
-  // };
-  // const handleBillId = (e) => {
-  //   e.preventDefault();
-  //   setBillId(e.target.value);
-  // };
-  // const handlePayPercentage = (e) => {
-  //   e.preventDefault();
-  //   setPayPercentage(e.target.value);
-  // };
-  // const handleFactored = (e) => {
-  //   e.preventDefault();
-  //   setFactored(e.target.value);
-  // };
-  // const handlePrint1099 = (e) => {
-  //   e.preventDefault();
-  //   setPrint1099(e.target.value);
-  // };
-  // const handleHasImage = (e) => {
-  //   e.preventDefault();
-  //   setHasImage(e.target.value);
-  // };
-  // const handleMissImage = (e) => {
-  //   e.preventDefault();
-  //   setMissImage(e.target.value);
-  // };
+  
   return (
     <>
       <div>
