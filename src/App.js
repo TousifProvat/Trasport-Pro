@@ -48,7 +48,7 @@ function App() {
             <Route path="addCustomer" element={<AddCustomer />} />
             <Route path="searchCustomer" element={<SearchCustomer />} />
             <Route path="searchLoad" element={<SearchLoad />} />
-            <Route path=":ownerId" element={<OwnerSummary />} />
+            <Route path="summary/:ownerId" element={<OwnerSummary />} />
             <Route
               path="terminalManagerDashboard"
               element={<TerminalManagerDashboard />}

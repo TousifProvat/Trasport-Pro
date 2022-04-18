@@ -33,40 +33,40 @@ const useContext = () => {
   }
 
   useEffect(() => {
-    fetch('./Driver.json')
+    fetch("http://transport-test-server.herokuapp.com/api/v1/driver")
       .then((response) => response.json())
-      .then(data => setDriverDate(data));
+      .then((data) => setDriverDate(data));
   }, []);
 
 
 
-  useEffect(() => {
-    fetch('./Tractor.json')
-      .then((response) => response.json())
-      .then(data => setTractorData(data));
-  }, []);
+  // useEffect(() => {
+  //   fetch('./Tractor.json')
+  //     .then((response) => response.json())
+  //     .then(data => setTractorData(data));
+  // }, []);
 
-  useEffect(() => {
-    fetch('./Trailer.json')
-      .then((response) => response.json())
-      .then(data => setTrailerData(data));
-  }, []);
-
-
-
-  useEffect(() => {
-    fetch('./Terminal.json')
-      .then((response) => response.json())
-      .then(data => setSearchTerminalData(data));
-  }, []);
+  // useEffect(() => {
+  //   fetch('./Trailer.json')
+  //     .then((response) => response.json())
+  //     .then(data => setTrailerData(data));
+  // }, []);
 
 
 
-  useEffect(() => {
-    fetch("./Customer.json")
-      .then((response) => response.json())
-      .then((data) => setCustomerData(data));
-  }, []);
+  // useEffect(() => {
+  //   fetch('./Terminal.json')
+  //     .then((response) => response.json())
+  //     .then(data => setSearchTerminalData(data));
+  // }, []);
+
+
+
+  // useEffect(() => {
+  //   fetch("./Customer.json")
+  //     .then((response) => response.json())
+  //     .then((data) => setCustomerData(data));
+  // }, []);
     
     
   return {
