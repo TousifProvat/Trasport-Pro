@@ -1,19 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Badge,
   Button,
+  Col,
   Container,
   Dropdown,
   Form,
+  Modal,
   Nav,
   Navbar,
+  NavDropdown,
+  OverlayTrigger,
+  Row,
   Table,
+  Tooltip,
 } from "react-bootstrap";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import "./freightOptionsDashboard.css";
 import Select from "react-select";
 import useContext from "../Hooks/useContext";
 const FreightOptionsDashboard = () => {
+  const [lgShow, setLgShow] = useState(false);
+
   const { value } = useContext();
   const options = [
     { value: "ABC - ABC Terminal", label: "ABC - ABC Terminal" },
@@ -208,7 +216,982 @@ const FreightOptionsDashboard = () => {
             <td>@fat</td>
             <td>@fat</td>
           </tr>
-          
+        </tbody>
+      </Table>
+
+      {/* active driver */}
+      <Navbar bg="light" expand="lg">
+        <Container fluid>
+          <Navbar.Brand href="#home">
+            Active Drivers
+            <Badge bg="warning" text="dark" className="ms-3">
+              22
+            </Badge>{" "}
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto">
+              <Button variant="outline-primary" onClick={() => setLgShow(true)}>
+                Filter Result
+              </Button>{" "}
+              <Modal
+                size="lg"
+                show={lgShow}
+                onHide={() => setLgShow(false)}
+                aria-labelledby="example-modal-sizes-title-lg"
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title id="example-modal-sizes-title-lg">
+                    Filter Avilable Drivers
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Row>
+                    <strong className="mb-3">Pickup Locaion</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Pickup Location Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select State</option>
+                        <option value="Alabama">Alabama</option>
+                        <option value="Alaska">Alaska</option>
+                        <option value="California">California</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Radius Length</option>
+                        <option value="0 mile">0 mile</option>
+                        <option value="100 mile">100 mile</option>
+                        <option value="250 Mile">250 Mile</option>
+                        <option value="500 Mile">500 Mile</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Zone</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Delivery Location</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Pickup Location Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select State</option>
+                        <option value="Alabama">Alabama</option>
+                        <option value="Alaska">Alaska</option>
+                        <option value="California">California</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Radius Length</option>
+                        <option value="0 mile">0 mile</option>
+                        <option value="100 mile">100 mile</option>
+                        <option value="250 Mile">250 Mile</option>
+                        <option value="500 Mile">500 Mile</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Zone</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Driver</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Driver Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">First Name</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="First Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Last Name</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Last Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Tractor</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Tractor"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Trailer</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Trailer"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Trailer</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Trailer Type</option>
+                        <option value="Dropdeck">Dropdeck</option>
+                        <option value="Flatbed">Flatbed</option>
+                        <option value="Power Only">Power Only</option>
+                        <option value="RGN">RGN</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Trailer Length</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder=""
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder=""
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Trailer Length</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select EOBR Type</option>
+                        <option value="Has EOBR">Has EOBR</option>
+                        <option value="No EOBR">No EOBR</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Tracking Enable</strong>
+                    <Col>
+                      <Form.Check
+                        required
+                        label="Yes"
+                        feedback="You must agree before submitting."
+                        feedbackType="invalid"
+                      />
+                    </Col>
+                    <strong className="mt-3 mb-2">Dispatcher</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Dispatcher Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Dispatch Group</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select dispatch group</option>
+                        {/* <option value="Has EOBR">Has EOBR</option>
+                        <option value="No EOBR">No EOBR</option> */}
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Empty Status</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Empty Status</option>
+                        <option value="Empty">Empty</option>
+                        <option value="Loaded">Loaded</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Terminal Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Result Per Page</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Result Per Page</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Button variant="outline-primary" className="mt-5">
+                    Filter
+                  </Button>{" "}
+                  <Button variant="outline-secondary" className="mt-5">
+                    Clear Filter
+                  </Button>{" "}
+                </Modal.Body>
+              </Modal>
+              <Button
+                variant="outline-secondary"
+                className="ms-3"
+                onClick={() => setLgShow(true)}
+              >
+                Show All
+              </Button>{" "}
+              <Button variant="outline-secondary" className="ms-3">
+                Print Result
+              </Button>{" "}
+              <Button variant="outline-secondary" className="ms-3">
+                <a href="https://goo.gl/maps/zx1A8CXFmURmqmxx9">Driver Map</a>
+              </Button>{" "}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Driver Name</th>
+            <th>Trailer</th>
+            <th>Tractor</th>
+            <th>Cell Phone</th>
+            <th>Dispatcher</th>
+            <th>Status</th>
+            <th>Load ID</th>
+            <th>Load Status</th>
+            <th>Per Plan</th>
+            <th>Pickup Date</th>
+            <th>Delivery Date</th>
+            <th>Last Location</th>
+            <th>Manage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1000</td>
+            <td>Mark</td>
+            <td>1</td>
+            <td>1</td>
+            <td>33333</td>
+            <td>EG</td>
+            <td></td>
+            <td>Available</td>
+            <td>Dispatched</td>
+            <td>10000</td>
+            <td>10/04/2022</td>
+            <td>30/05/2022</td>
+            <td>Note Dam - De</td>
+            <td>
+              <OverlayTrigger
+                overlay={<Tooltip id="tooltip-disabled">Manage</Tooltip>}
+              >
+                <span className="d-inline-block">
+                  <Button variant="outline-success">
+                    <i className="fa-solid fa-list-check"></i>
+                  </Button>{" "}
+                </span>
+              </OverlayTrigger>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+
+      {/* Planned Load */}
+
+      <Navbar bg="light" expand="lg">
+        <Container fluid>
+          <Navbar.Brand href="#home">
+            Planned Load
+            <Badge bg="info" text="dark" className="ms-3">
+              20
+            </Badge>{" "}
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto">
+              <Button variant="outline-primary" onClick={() => setLgShow(true)}>
+                Filter Result
+              </Button>{" "}
+              <Modal
+                size="lg"
+                show={lgShow}
+                onHide={() => setLgShow(false)}
+                aria-labelledby="example-modal-sizes-title-lg"
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title id="example-modal-sizes-title-lg">
+                    Filter Avilable Drivers
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Row>
+                    <strong className="mb-3">Pickup Locaion</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Pickup Location Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select State</option>
+                        <option value="Alabama">Alabama</option>
+                        <option value="Alaska">Alaska</option>
+                        <option value="California">California</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Radius Length</option>
+                        <option value="0 mile">0 mile</option>
+                        <option value="100 mile">100 mile</option>
+                        <option value="250 Mile">250 Mile</option>
+                        <option value="500 Mile">500 Mile</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Zone</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Delivery Location</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Pickup Location Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select State</option>
+                        <option value="Alabama">Alabama</option>
+                        <option value="Alaska">Alaska</option>
+                        <option value="California">California</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Radius Length</option>
+                        <option value="0 mile">0 mile</option>
+                        <option value="100 mile">100 mile</option>
+                        <option value="250 Mile">250 Mile</option>
+                        <option value="500 Mile">500 Mile</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Zone</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Driver</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Driver Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">First Name</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="First Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Last Name</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Last Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Tractor</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Tractor"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Trailer</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Trailer"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Trailer</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Trailer Type</option>
+                        <option value="Dropdeck">Dropdeck</option>
+                        <option value="Flatbed">Flatbed</option>
+                        <option value="Power Only">Power Only</option>
+                        <option value="RGN">RGN</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Trailer Length</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder=""
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder=""
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Trailer Length</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select EOBR Type</option>
+                        <option value="Has EOBR">Has EOBR</option>
+                        <option value="No EOBR">No EOBR</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Tracking Enable</strong>
+                    <Col>
+                      <Form.Check
+                        required
+                        label="Yes"
+                        feedback="You must agree before submitting."
+                        feedbackType="invalid"
+                      />
+                    </Col>
+                    <strong className="mt-3 mb-2">Dispatcher</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Dispatcher Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Dispatch Group</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select dispatch group</option>
+                        {/* <option value="Has EOBR">Has EOBR</option>
+                        <option value="No EOBR">No EOBR</option> */}
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Empty Status</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Empty Status</option>
+                        <option value="Empty">Empty</option>
+                        <option value="Loaded">Loaded</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Terminal Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Result Per Page</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Result Per Page</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Button variant="outline-primary" className="mt-5">
+                    Filter
+                  </Button>{" "}
+                  <Button variant="outline-secondary" className="mt-5">
+                    Clear Filter
+                  </Button>{" "}
+                </Modal.Body>
+              </Modal>
+              <Button
+                variant="outline-secondary"
+                className="ms-3"
+                onClick={() => setLgShow(true)}
+              >
+                Show All
+              </Button>{" "}
+              <Button variant="outline-secondary" className="ms-3">
+                Print Result
+              </Button>{" "}
+              {/* <Button variant="outline-secondary" className="ms-3">
+                <a href="https://goo.gl/maps/zx1A8CXFmURmqmxx9">Driver Map</a>
+              </Button>{" "} */}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Load</th>
+            <th>Status</th>
+            <th>Planned</th>
+            <th>Tractor</th>
+            <th>Trailer</th>
+            <th>Shipper</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Terminal</th>
+            <th>Pickup Date</th>
+            <th>Delivery Date</th>
+            <th>Check Date</th>
+            <th>Miles</th>
+            <th>Commodity</th>
+            <th>Last Location</th>
+            <th>Manage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>10000</td>
+            <td>Planned</td>
+            <td>Jhon Clerk</td>
+            <td>1</td>
+            <td>3</td>
+            <td>sass</td>
+            <td>srtl, Al</td>
+            <td>srtl, Al</td>
+            <td>EG</td>
+            <td>10/04/2022</td>
+            <td>30/05/2022</td>
+            <td>25/04/2022</td>
+            <td>13</td>
+            <td></td>
+
+            <td>Note Dam - De</td>
+            <td>
+              <OverlayTrigger
+                overlay={<Tooltip id="tooltip-disabled">Manage</Tooltip>}
+              >
+                <span className="d-inline-block">
+                  <Button variant="outline-success">
+                    <i className="fa-solid fa-list-check"></i>
+                  </Button>{" "}
+                </span>
+              </OverlayTrigger>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+
+      {/* Dispatched Load */}
+
+      <Navbar bg="light" expand="lg">
+        <Container fluid>
+          <Navbar.Brand href="#home">
+            Planned Load
+            <Badge bg="danger" text="dark" className="ms-3">
+              11
+            </Badge>{" "}
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto">
+              <Button variant="outline-primary" onClick={() => setLgShow(true)}>
+                Filter Result
+              </Button>{" "}
+              <Modal
+                size="lg"
+                show={lgShow}
+                onHide={() => setLgShow(false)}
+                aria-labelledby="example-modal-sizes-title-lg"
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title id="example-modal-sizes-title-lg">
+                    Filter Avilable Drivers
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Row>
+                    <strong className="mb-3">Pickup Locaion</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Pickup Location Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select State</option>
+                        <option value="Alabama">Alabama</option>
+                        <option value="Alaska">Alaska</option>
+                        <option value="California">California</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Radius Length</option>
+                        <option value="0 mile">0 mile</option>
+                        <option value="100 mile">100 mile</option>
+                        <option value="250 Mile">250 Mile</option>
+                        <option value="500 Mile">500 Mile</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Zone</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Delivery Location</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Pickup Location Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select State</option>
+                        <option value="Alabama">Alabama</option>
+                        <option value="Alaska">Alaska</option>
+                        <option value="California">California</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Radius Length</option>
+                        <option value="0 mile">0 mile</option>
+                        <option value="100 mile">100 mile</option>
+                        <option value="250 Mile">250 Mile</option>
+                        <option value="500 Mile">500 Mile</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Zone</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Driver</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Driver Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">First Name</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="First Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Last Name</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Last Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Tractor</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Tractor"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Trailer</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Trailer"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Trailer</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Trailer Type</option>
+                        <option value="Dropdeck">Dropdeck</option>
+                        <option value="Flatbed">Flatbed</option>
+                        <option value="Power Only">Power Only</option>
+                        <option value="RGN">RGN</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Trailer Length</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder=""
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder=""
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Trailer Length</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select EOBR Type</option>
+                        <option value="Has EOBR">Has EOBR</option>
+                        <option value="No EOBR">No EOBR</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Tracking Enable</strong>
+                    <Col>
+                      <Form.Check
+                        required
+                        label="Yes"
+                        feedback="You must agree before submitting."
+                        feedbackType="invalid"
+                      />
+                    </Col>
+                    <strong className="mt-3 mb-2">Dispatcher</strong>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Dispatcher Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Dispatch Group</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select dispatch group</option>
+                        {/* <option value="Has EOBR">Has EOBR</option>
+                        <option value="No EOBR">No EOBR</option> */}
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Empty Status</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Empty Status</option>
+                        <option value="Empty">Empty</option>
+                        <option value="Loaded">Loaded</option>
+                      </Form.Select>
+                    </Col>
+                    <Col>
+                      <Form.Control
+                        type="text"
+                        placeholder="Terminal Name"
+                        // defaultValue="Mark"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <strong className="mt-3 mb-2">Result Per Page</strong>
+                    <Col>
+                      <Form.Select aria-label="Default select example">
+                        <option>Select Result Per Page</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Button variant="outline-primary" className="mt-5">
+                    Filter
+                  </Button>{" "}
+                  <Button variant="outline-secondary" className="mt-5">
+                    Clear Filter
+                  </Button>{" "}
+                </Modal.Body>
+              </Modal>
+              <Button
+                variant="outline-secondary"
+                className="ms-3"
+                onClick={() => setLgShow(true)}
+              >
+                Show All
+              </Button>{" "}
+              <Button variant="outline-secondary" className="ms-3">
+                Print Result
+              </Button>{" "}
+              <Button variant="outline-secondary" className="ms-3">
+                <a href="https://goo.gl/maps/zx1A8CXFmURmqmxx9">
+                  View Freight Map
+                </a>
+              </Button>{" "}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Load</th>
+            <th>Status</th>
+            <th>Dispatched</th>
+            <th>Tractor</th>
+            <th>Trailer</th>
+            <th>Shipper</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Terminal</th>
+            <th>Pickup Date</th>
+            <th>Delivery Date</th>
+            <th>Next Action Date</th>
+            <th>Check Date</th>
+            <th>Miles</th>
+            <th>Commodity</th>
+            <th>Last Location</th>
+            <th>Manage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>10000</td>
+            <td>Planned</td>
+            <td>Jhon Clerk</td>
+            <td>1</td>
+            <td>3</td>
+            <td>sass</td>
+            <td>srtl, Al</td>
+            <td>srtl, Al</td>
+            <td>EG</td>
+            <td>10/04/2022</td>
+            <td>30/05/2022</td>
+            <td>25/04/2022</td>
+            <td>20/04/2022</td>
+            <td>13</td>
+            <td></td>
+
+            <td>Note Dam - De</td>
+            <td>
+              <OverlayTrigger
+                overlay={<Tooltip id="tooltip-disabled">Manage</Tooltip>}
+              >
+                <span className="d-inline-block">
+                  <Button variant="outline-success">
+                    <i className="fa-solid fa-list-check"></i>
+                  </Button>{" "}
+                </span>
+              </OverlayTrigger>
+            </td>
+          </tr>
         </tbody>
       </Table>
     </>
