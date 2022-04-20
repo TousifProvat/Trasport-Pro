@@ -20,6 +20,7 @@ import AddCustomer from "./Components/AddCustomer/AddCustomer";
 import SearchCustomer from "./Components/SearchCustomer/SearchCustomer";
 import OwnerSummary from "./Components/OwnerSummary/OwnerSummary";
 import SearchLoad from "./Components/SearchLoad/SearchLoad";
+import BillingDashboard from "./Components/BillingDashboard/BillingDashboard";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
             <Route path="searchCustomer" element={<SearchCustomer />} />
             <Route path="searchLoad" element={<SearchLoad />} />
             <Route path="summary/:ownerId" element={<OwnerSummary />} />
+            <Route path="billingDashboard" element={<BillingDashboard />} />
             <Route
               path="terminalManagerDashboard"
               element={<TerminalManagerDashboard />}

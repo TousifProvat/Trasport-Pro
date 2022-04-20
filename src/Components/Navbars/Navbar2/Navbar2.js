@@ -111,8 +111,8 @@ const Navbar2 = () => {
               </NavDropdown>
 
               <NavDropdown title="Billing" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">
-                  Billing Dashboard
+                <NavDropdown.Item href="">
+                  <Link to="/billingDashboard">Billing Dashboard</Link>
                 </NavDropdown.Item>
                 <NavDropdown title="Load Queues" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">

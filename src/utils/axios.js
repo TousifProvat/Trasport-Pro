@@ -1,10 +1,10 @@
-import Axios from "axios";
-import { useNavigate } from "react-router-dom";
-let baseURL = "https://transport-test-server.herokuapp.com/api/v1";
+// import Axios from "axios";
+// import { useNavigate } from "react-router-dom";
+// let baseURL = "https://transport-test-server.herokuapp.com/api/v1";
 
-const axios = Axios.create({
-  baseURL: baseURL,
-});
+// const axios = Axios.create({
+//   baseURL: baseURL,
+// });
 
 // axios.interceptors.request.use(
 //   (config) => {
@@ -32,4 +32,4 @@ const axios = Axios.create({
 //   }
 // );
 
-export default axios;
+//export default axios;
