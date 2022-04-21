@@ -23,7 +23,16 @@ const DriverSummary = () => {
     const [summaryData, setSummaryData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [smShow, setSmShow] = useState(false);
-    const { driverId } = useParams();
+  const { driverId } = useParams();
+  const [enable, setEnable] = useState(true);
+
+
+  const handleEnable = (enable) => {
+    setEnable(false);
+  }
+  const handleUpdate = (enable) => {
+    alert("update");
+  }
 
 
 
@@ -72,15 +81,15 @@ const DriverSummary = () => {
                 >
                   Change Log
                 </Button>{" "}
-                <Button
-                  variant="outline-primary"
-                  onClick={() => setSmShow(true)}
-                >
-                  <Link to="/editDriver">Edit Information</Link>
-                  {/* <Link to={`summary/driver/${driverId}/editDriver`}>
+                {enable ? (
+                  <Button variant="outline-primary" onClick={handleEnable}>
                     Edit Information
-                  </Link> */}
-                </Button>
+                  </Button>
+                ) : (
+                  <Button variant="outline-primary" onClick={handleUpdate}>
+                    Update Information
+                  </Button>
+                )}
                 {"   "}
                 <Modal
                   size="lg"
@@ -105,7 +114,7 @@ const DriverSummary = () => {
                   <Form.Label>Trailer ID </Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Trailer ID	"
                     defaultValue={summaryData._id}
                   />
@@ -114,7 +123,7 @@ const DriverSummary = () => {
                   <Form.Label>EOBR Type</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="EOBR Type"
                     defaultValue={summaryData.eobrType}
                   />
