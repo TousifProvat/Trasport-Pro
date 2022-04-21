@@ -12,6 +12,7 @@ const useContext = () => {
   const [ownerSummary, setOwnerSummary] = useState([]);
   const [tractorSummary, setTractorSummary] = useState([]);
   const [trailerSummary, setTrailerSummary] = useState([]);
+  const [billingDashboard, setBillingDashboard] = useState([]);
   const value = 17;
 
   useEffect(() => {
@@ -55,12 +56,6 @@ const useContext = () => {
     getDriverDetail(id);
     return driverDate;
   };
-
-  
-  
-
-
-  
 
   
 
@@ -108,20 +103,13 @@ const useContext = () => {
   };
 
 
+  useEffect(() => {
+    fetch("https://transport-test-server.herokuapp.com/api/v1/billing")
+      .then((response) => response.json())
+      .then((data) => setBillingDashboard(data));
+  }, []);
 
-  // useEffect(() => {
-  //   fetch('./Terminal.json')
-  //     .then((response) => response.json())
-  //     .then(data => setSearchTerminalData(data));
-  // }, []);
-
-
-
-  // useEffect(() => {
-  //   fetch("./Customer.json")
-  //     .then((response) => response.json())
-  //     .then((data) => setCustomerData(data));
-  // }, []);
+  
     
     
   return {
@@ -135,7 +123,7 @@ const useContext = () => {
     perDetails,
     ownerSummary,
     perTractorDetails,
-    // tractorSummary,
+    billingDashboard,
     perTrailerDetails,
     perDriverDetails,
   };
