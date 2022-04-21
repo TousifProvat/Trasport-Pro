@@ -25,6 +25,7 @@ import TractorSummary from "./Components/TractorSummary/TractorSummary";
 import TrailerSummary from "./Components/TrailerSummary/TrailerSummary";
 import DriverSummary from "./Components/DriverSummary/DriverSummary";
 import EditDriver from "./Components/EditDriver/EditDriver";
+import EditTractor from "./Components/EditTractor/EditTractor";
 
 function App() {
   return (
@@ -56,6 +57,10 @@ function App() {
             <Route
               path="editDriver"
               element={<EditDriver />}
+            />
+            <Route
+              path="editTractor"
+              element={<EditTractor />}
             />
             <Route path="summary/:ownerId" element={<OwnerSummary />} />
             <Route

@@ -62,8 +62,8 @@ const TractorSummary = () => {
             <Button variant="outline-primary" onClick={() => setSmShow(true)}>
               Change Log
             </Button>{" "}
-            <Button variant="outline-primary" onClick={() => setSmShow(true)}>
-              Edit Information
+            <Button variant="outline-primary">
+              <Link to="/editTractor">Edit Information</Link>
             </Button>
             {"   "}
             <Modal
