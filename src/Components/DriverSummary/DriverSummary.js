@@ -40,7 +40,7 @@ const DriverSummary = () => {
       fetchTrailerSummary();
     }, [driverId]);
 
-    console.log(summaryData);
+    //console.log(summaryData);
 
     const current = new Date();
     const date = `${current.getDate()}/${
@@ -75,7 +75,9 @@ const DriverSummary = () => {
                   variant="outline-primary"
                   onClick={() => setSmShow(true)}
                 >
-                  Edit Information
+                  <Link to={`summary/driver/${driverId}/editDriver`}>
+                    Edit Information
+                  </Link>
                 </Button>
                 {"   "}
                 <Modal

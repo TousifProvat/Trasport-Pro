@@ -24,6 +24,7 @@ import BillingDashboard from "./Components/BillingDashboard/BillingDashboard";
 import TractorSummary from "./Components/TractorSummary/TractorSummary";
 import TrailerSummary from "./Components/TrailerSummary/TrailerSummary";
 import DriverSummary from "./Components/DriverSummary/DriverSummary";
+import EditDriver from "./Components/EditDriver/EditDriver";
 
 function App() {
   return (
@@ -52,10 +53,23 @@ function App() {
             <Route path="addCustomer" element={<AddCustomer />} />
             <Route path="searchCustomer" element={<SearchCustomer />} />
             <Route path="searchLoad" element={<SearchLoad />} />
+            <Route
+              path="summary/driver/:driverId/editDriver"
+              element={<EditDriver />}
+            />
             <Route path="summary/:ownerId" element={<OwnerSummary />} />
-            <Route path="summary/tractor/:tractorId" element={<TractorSummary />} />
-            <Route path="summary/trailer/:trailerId" element={<TrailerSummary />} />
-            <Route path="summary/driver/:driverId" element={<DriverSummary />} />
+            <Route
+              path="summary/tractor/:tractorId"
+              element={<TractorSummary />}
+            />
+            <Route
+              path="summary/trailer/:trailerId"
+              element={<TrailerSummary />}
+            />
+            <Route
+              path="summary/driver/:driverId"
+              element={<DriverSummary />}
+            />
             <Route path="billingDashboard" element={<BillingDashboard />} />
             <Route
               path="terminalManagerDashboard"
