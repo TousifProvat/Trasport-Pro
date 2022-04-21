@@ -11,6 +11,7 @@ const useContext = () => {
   const [customerData, setCustomerData] = useState([]);
   const [ownerSummary, setOwnerSummary] = useState([]);
   const [tractorSummary, setTractorSummary] = useState([]);
+  const [trailerSummary, setTrailerSummary] = useState([]);
   const value = 17;
 
   useEffect(() => {
@@ -56,7 +57,7 @@ const useContext = () => {
     return info;
   };
 
-  console.log(tractorData);
+  //console.log(tractorData);
 
   const perTractorDetails = (id) => {
     getTractorDetail(id);
@@ -64,11 +65,24 @@ const useContext = () => {
   };
 
   //console.log(tractorData);
-  // useEffect(() => {
-  //   fetch('./Trailer.json')
-  //     .then((response) => response.json())
-  //     .then(data => setTrailerData(data));
-  // }, []);
+  useEffect(() => {
+    fetch("http://transport-test-server.herokuapp.com/api/v1/trailer")
+      .then((response) => response.json())
+      .then((data) => setTrailerData(data.trailers));
+  }, []);
+
+  console.log(trailerDate);
+
+  const getTrailerDetail = (id) => {
+    const info = terminalData.find((i) => i.id === id);
+    setTrailerSummary(info);
+    return info;
+  };
+
+  const perTrailerDetails = (id) => {
+    getTrailerDetail(id);
+    return trailerDate;
+  };
 
 
 
@@ -97,8 +111,9 @@ const useContext = () => {
     customerData,
     perDetails,
     ownerSummary,
-     perTractorDetails,
+    perTractorDetails,
     // tractorSummary,
+    perTrailerDetails,
   };
 };
 

@@ -4,7 +4,6 @@ import {
   Col,
   Container,
   Form,
-  InputGroup,
   Row,
   Table,
 } from "react-bootstrap";
@@ -12,6 +11,7 @@ import "./searchTrailer.css";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 import useContext from "../Hooks/useContext";
+import { Link } from "react-router-dom";
 
 
 const SearchTrailer = () => {
@@ -28,7 +28,7 @@ const SearchTrailer = () => {
 
 
 
-  const { trailerDate } = useContext();
+  const { trailerDate, perTrailerDetails } = useContext();
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
@@ -627,8 +627,13 @@ const SearchTrailer = () => {
 
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Axle Count</Form.Label>
-              <Form.Control type="number" placeholder="Axle Count" name="axleCount" onChange={changeHandler} />
-              
+              <Form.Control
+                type="number"
+                placeholder="Axle Count"
+                name="axleCount"
+                onChange={changeHandler}
+              />
+
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
@@ -636,8 +641,13 @@ const SearchTrailer = () => {
 
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Has Image</Form.Label>
-              <Form.Control type="text" placeholder="Has Image" name="hasImg" onChange={changeHandler}/>
-              
+              <Form.Control
+                type="text"
+                placeholder="Has Image"
+                name="hasImg"
+                onChange={changeHandler}
+              />
+
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
@@ -647,7 +657,12 @@ const SearchTrailer = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Missing Image</Form.Label>
-              <Form.Control type="text" placeholder="Missing Image" name="missingHasImage" onChange={changeHandler}/>
+              <Form.Control
+                type="text"
+                placeholder="Missing Image"
+                name="missingHasImage"
+                onChange={changeHandler}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
@@ -674,9 +689,9 @@ const SearchTrailer = () => {
       </Container>
 
       <Container fluid style={{ marginBottom: "50px" }}>
-        <h3 className="mt-5 mb-3">Search Results (1)</h3>
+        <h3 className="mt-5 mb-3">Search Results ({trailerDate.length})</h3>
         <hr></hr>
-        
+
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -707,30 +722,30 @@ const SearchTrailer = () => {
           {trailerDate.map((i) => (
             <tbody>
               <tr>
-                <td>{i.id}</td>
+                {/* <td>{i.id}</td> */}
+                <Link to={`/summary/trailer/${i._id}`}>
+                  <p onClick={() => perTrailerDetails(i._id)}>{i.id}</p>
+                </Link>
+
                 <td>{i.status}</td>
                 <td>{i.year}</td>
                 <td>{i.make}</td>
                 <td>{i.model}</td>
                 <td>{i.length}</td>
-                <td>{i.type}</td>
+                <td>{i.trailerType}</td>
                 <td>{i.vin}</td>
                 <td>{i.tagNumber}</td>
                 <td>{i.tagState}</td>
-                <td>{i.tagExpiration}</td>
+                <td>{i.tagExp}</td>
                 <td>{i.terminal}</td>
-                <td>{i.ownerId}</td>
+                <td>{i.eobrId}</td>
                 <td>{i.owner}</td>
-                <td>
-                  <li>{i.driver.firstOne}</li>
-                  <li>{i.driver.secondOne}</li>
-                  <li>{i.driver.thirdOne}</li>
-                </td>
-                <td>{i.leaseOn}</td>
-                <td>{i.leaseOff}</td>
-                <td>{i.nextService}</td>
-                <td>{i.lastInspection}</td>
-                <td>{i.nextInspection}</td>
+                <td>{i.driverId}</td>
+                <td>{i.leaseOnDate}</td>
+                <td>{i.nextServiceDate}</td>
+                <td>{i.lastInspectionDate}</td>
+                <td>{i.nextInspectionDate}</td>
+                <td>{i.leaseOffDate}</td>
                 <td>{i.lastDispatchDate}</td>
               </tr>
             </tbody>
