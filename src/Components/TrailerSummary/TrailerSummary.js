@@ -38,11 +38,7 @@ const TrailerSummary = () => {
         }
       };
       fetchTrailerSummary();
-      // fetch(
-      //   `https://transport-test-server.herokuapp.com/api/v1/owner/summary/${ownerId}`
-      // )
-      //   .then((response) => response.json())
-      //   .then((data) => setSummaryData(data.ownerOperatorInfo));
+      
     }, [trailerId]);
 
     console.log(summaryData);
@@ -81,11 +77,8 @@ const TrailerSummary = () => {
                 >
                   Change Log
                 </Button>{" "}
-                <Button
-                  variant="outline-primary"
-                  onClick={() => setSmShow(true)}
-                >
-                  Edit Information
+                <Button variant="outline-primary">
+                  <Link to="/editTrailer">Edit Information</Link>
                 </Button>
                 {"   "}
                 <Modal

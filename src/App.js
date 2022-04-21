@@ -26,6 +26,7 @@ import TrailerSummary from "./Components/TrailerSummary/TrailerSummary";
 import DriverSummary from "./Components/DriverSummary/DriverSummary";
 import EditDriver from "./Components/EditDriver/EditDriver";
 import EditTractor from "./Components/EditTractor/EditTractor";
+import EditTrailer from "./Components/EditTrailer/EditTrailer";
 
 function App() {
   return (
@@ -57,6 +58,10 @@ function App() {
             <Route
               path="editDriver"
               element={<EditDriver />}
+            />
+            <Route
+              path="editTrailer"
+              element={<EditTrailer />}
             />
             <Route
               path="editTractor"
