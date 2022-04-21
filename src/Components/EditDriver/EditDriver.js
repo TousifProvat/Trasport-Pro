@@ -470,10 +470,9 @@ const EditDriver = () => {
                 <Form.Label>Status</Form.Label>
                 <Form.Select
                   aria-label=""
-                  onBlur={handleSaveButton}
-                  defaultValue={summaryData.status}
+                  onBlur={handleSaveButton}                  
                 >
-                  <option>{summaryData.status}</option>
+                  <option>Select a status</option>
                   <option value="Pending Hire">Pending Hire</option>
                   <option value="Active">Active</option>
                   <option value="Inactive">Inactive</option>
@@ -486,7 +485,7 @@ const EditDriver = () => {
                 <Form.Label>Home Terminal</Form.Label>
 
                 <Form.Select aria-label="" onBlur={handleTerminal}>
-                  <option>{summaryData.terminal}</option>
+                  <option>Select a terminal</option>
                   <option value="EG, Egales">EG, Egales</option>
                 </Form.Select>
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -496,7 +495,6 @@ const EditDriver = () => {
                 <DayPickerInput
                   onDayChange={(day) => setHireDate(day)}
                   className="datePicker"
-                  value={summaryData.hireDate}
                 />
                 <Form.Control.Feedback type="invalid">
                   Please choose a username.
@@ -578,7 +576,7 @@ const EditDriver = () => {
                   type="text"
                   placeholder="First Name"
                   aria-describedby="inputGroupPrepend"
-                  defaultValue={summaryData.firstName}
+                  
                   onBlur={handleFirstName}
                 />
 
@@ -592,7 +590,7 @@ const EditDriver = () => {
                   type="text"
                   placeholder="Middle Name"
                   aria-describedby="inputGroupPrepend"
-                  defaultValue={summaryData.middleName}
+                  
                   onBlur={handleMiddleName}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -605,7 +603,7 @@ const EditDriver = () => {
                   type="text"
                   placeholder="Last Name"
                   aria-describedby="inputGroupPrepend"
-                  defaultValue={summaryData.lastName}
+                  
                   onBlur={handleLastName}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -1164,14 +1162,14 @@ const EditDriver = () => {
               />
             </Form.Group>
             <Button type="submit" variant="outline-primary" className="mb-5">
-              Save Record
+              Edit Record
             </Button>
             <Button
               type="submit"
               variant="outline-primary"
               className="ms-3 mb-5"
             >
-              Save and Add New
+              Edit and Add New
             </Button>
             <Button variant="outline-danger" className="ms-3 mb-5">
               Cancel

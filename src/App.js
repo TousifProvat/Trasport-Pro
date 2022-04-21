@@ -54,7 +54,7 @@ function App() {
             <Route path="searchCustomer" element={<SearchCustomer />} />
             <Route path="searchLoad" element={<SearchLoad />} />
             <Route
-              path="summary/driver/:driverId/editDriver"
+              path="editDriver"
               element={<EditDriver />}
             />
             <Route path="summary/:ownerId" element={<OwnerSummary />} />

@@ -13,6 +13,7 @@ import {
 } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import axios from "../../utils/axios";
+import EditDriver from "../EditDriver/EditDriver";
 
 const DriverSummary = () => {
 
@@ -75,9 +76,10 @@ const DriverSummary = () => {
                   variant="outline-primary"
                   onClick={() => setSmShow(true)}
                 >
-                  <Link to={`summary/driver/${driverId}/editDriver`}>
+                  <Link to="/editDriver">Edit Information</Link>
+                  {/* <Link to={`summary/driver/${driverId}/editDriver`}>
                     Edit Information
-                  </Link>
+                  </Link> */}
                 </Button>
                 {"   "}
                 <Modal
