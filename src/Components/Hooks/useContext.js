@@ -66,7 +66,7 @@ const useContext = () => {
 
   //console.log(tractorData);
   useEffect(() => {
-    fetch("http://transport-test-server.herokuapp.com/api/v1/trailer")
+    fetch("https://transport-test-server.herokuapp.com/api/v1/trailer")
       .then((response) => response.json())
       .then((data) => setTrailerData(data.trailers));
   }, []);
