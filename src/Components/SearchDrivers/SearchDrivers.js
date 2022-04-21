@@ -13,6 +13,7 @@ import "./searchDriver.css";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 import useContext from "../Hooks/useContext";
+import { Link } from "react-router-dom";
 const SearchDrivers = () => {
   const [show, setShow] = useState(false);
 
@@ -20,7 +21,7 @@ const SearchDrivers = () => {
   const handleShow = () => setShow(true);
 
   const [validated, setValidated] = useState(false);
-  const { driverDate } = useContext();
+  const { driverDate, perDriverDetails } = useContext();
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -1012,7 +1013,7 @@ const SearchDrivers = () => {
       </Container>
 
       <Container fluid>
-        <h3>Search Results (1)</h3>
+        <h3>Search Results ({driverDate.length})</h3>
 
         <Table striped bordered hover>
           <thead>
@@ -1043,7 +1044,10 @@ const SearchDrivers = () => {
           {driverDate.map((i) => (
             <tbody>
               <tr>
-                <td>{i.id}</td>
+                {/* <td>{i._id}</td> */}
+                <Link to={`/summary/driver/${i._id}`}>
+                  <p onClick={() => perDriverDetails(i._id)}>{i._id}</p>
+                </Link>
                 <td>{i.status}</td>
                 <td>{i.driverName}</td>
                 <td>{i.city}</td>

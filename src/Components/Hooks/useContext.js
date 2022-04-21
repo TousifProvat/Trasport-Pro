@@ -33,13 +33,36 @@ const useContext = () => {
     return terminalData;
   }
 
-//   useEffect(() => {
-//     fetch("http://transport-test-server.herokuapp.com/api/v1/driver")
-//       .then((response) => response.json())
-//       .then((data) => setDriverDate(data));
-//   }, []);
+  useEffect(() => {
+    fetch("https://transport-test-server.herokuapp.com/api/v1/driver")
+      .then((response) => response.json())
+      .then((data) => setDriverDate(data.drivers));
+  }, []);
 
-// console.log(driverDate);
+//console.log(driverDate);
+
+  const getDriverDetail = (id) => {
+    const info = driverDate.find((i) => i._id === id);
+
+    setTractorSummary(info);
+
+    return info;
+  };
+
+  //console.log(tractorData);
+
+  const perDriverDetails = (id) => {
+    getDriverDetail(id);
+    return driverDate;
+  };
+
+  
+  
+
+
+  
+
+  
 
   useEffect(() => {
     fetch("https://transport-test-server.herokuapp.com/api/v1/tractor")
@@ -71,7 +94,7 @@ const useContext = () => {
       .then((data) => setTrailerData(data.trailers));
   }, []);
 
-  console.log(trailerDate);
+  //console.log(trailerDate);
 
   const getTrailerDetail = (id) => {
     const info = terminalData.find((i) => i.id === id);
@@ -114,6 +137,7 @@ const useContext = () => {
     perTractorDetails,
     // tractorSummary,
     perTrailerDetails,
+    perDriverDetails,
   };
 };
 

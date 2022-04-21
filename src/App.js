@@ -23,6 +23,7 @@ import SearchLoad from "./Components/SearchLoad/SearchLoad";
 import BillingDashboard from "./Components/BillingDashboard/BillingDashboard";
 import TractorSummary from "./Components/TractorSummary/TractorSummary";
 import TrailerSummary from "./Components/TrailerSummary/TrailerSummary";
+import DriverSummary from "./Components/DriverSummary/DriverSummary";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
             <Route path="summary/:ownerId" element={<OwnerSummary />} />
             <Route path="summary/tractor/:tractorId" element={<TractorSummary />} />
             <Route path="summary/trailer/:trailerId" element={<TrailerSummary />} />
+            <Route path="summary/driver/:driverId" element={<DriverSummary />} />
             <Route path="billingDashboard" element={<BillingDashboard />} />
             <Route
               path="terminalManagerDashboard"
