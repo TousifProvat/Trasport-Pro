@@ -1,86 +1,64 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Col,
-  Container,
-  Form,
-  InputGroup,
-  Modal,
-  Navbar,
-  OverlayTrigger,
-  Row,
-  Table,
-  Tooltip,
-} from "react-bootstrap";
+import { Button, Col, Container, Form, Modal, Navbar, OverlayTrigger, Row, Table, Tooltip } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import useContext from "../Hooks/useContext";
 import axios from "../../utils/axios";
-import "./ownerSummary.css";
 
-const OwnerSummary = () => {
-  const [smShow, setSmShow] = useState(false);
-  const { ownerId } = useParams();
-  const [loading, setLoading] = useState(false);
+const TractorSummary = () => {
   const [summaryData, setSummaryData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [smShow, setSmShow] = useState(false);
+  const { tractorId } = useParams();
 
   useEffect(() => {
-    const fetchOwnerSummary = async () => {
+    const fetchTractorSummary = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get(`/owner/summary/${ownerId}`);
-        setSummaryData(data.ownerOperatorInfo);
+        const { data } = await axios.get(`/tractor/summary/${tractorId}`);
+        setSummaryData(data.tractorInformation);
         setLoading(false);
       } catch (err) {
         console.log(err);
       }
     };
-    fetchOwnerSummary();
-  }, [ownerId]);
+    fetchTractorSummary();
+    // fetch(
+    //   `https://transport-test-server.herokuapp.com/api/v1/owner/summary/${ownerId}`
+    // )
+    //   .then((response) => response.json())
+    //   .then((data) => setSummaryData(data.ownerOperatorInfo));
+  }, [tractorId]);
 
-  // console.log(summaryData);
+  //console.log(summaryData);
 
   const current = new Date();
   const date = `${current.getDate()}/${
     current.getMonth() + 1
   }/${current.getFullYear()}`;
 
-  //modal functionality
+
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  //form validation functionality
 
-  const [validated, setValidated] = useState(false);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    setValidated(true);
-  };
-
-  //delete driver functionality
 
   const handleDeleteDriver = (event) => {
     window.confirm("Are you sure you want to delete this driver?");
   };
 
+
+
   return (
-    <div className="mb-5">
+    <div>
       {loading && <h2>loading..</h2>}
       {!loading && (
-        <Container className="mb-5">
-          <h1 className="mt-5 mb-3">Owner summary</h1>
+        <Container>
+          <h1 className="mt-5 mb-3">Tractor Summary</h1>
           <hr></hr>
           <div className="operator-info">
-            <h5 className="mt-5 mb-3">Owner Operator Information</h5>
+            <h5 className="mt-5 mb-3">Tractor Information</h5>
             <Button variant="outline-primary" onClick={() => setSmShow(true)}>
               Change Log
             </Button>{" "}
@@ -108,21 +86,21 @@ const OwnerSummary = () => {
           </div>
           <Row>
             <Col>
-              <Form.Label>Id</Form.Label>
+              <Form.Label>Tractor Id</Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Id"
-                defaultValue={summaryData._id}
+                placeholder="Tractor Id"
+                defaultValue={summaryData.id}
               />
             </Col>
             <Col>
-              <Form.Label>Home Terminal</Form.Label>
+              <Form.Label>Axle Count</Form.Label>
               <Form.Control
                 type="text"
                 disabled
                 placeholder="Home Terminal"
-                defaultValue={summaryData.terminal}
+                defaultValue={summaryData.axieCount}
               />
             </Col>
             <Col>
@@ -136,83 +114,164 @@ const OwnerSummary = () => {
             </Col>
           </Row>
 
-          <Row className="mt-4">
+          <Row className="mt-3">
             <Col>
-              <Form.Label>Email</Form.Label>
+              <Form.Label>Weight</Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Email"
-                defaultValue={summaryData.email}
+                placeholder="Weight"
+                defaultValue={summaryData.weight}
               />
             </Col>
             <Col>
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Terminal</Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Name"
-                defaultValue={summaryData.firstName}
+                placeholder="Terminal"
+                defaultValue={summaryData.terminal}
               />
             </Col>
             <Col>
-              <Form.Label>Main Phone Number</Form.Label>
+              <Form.Label>Fuel Capacity</Form.Label>
               <Form.Control
                 type="text"
                 disabled
                 placeholder="Status"
-                defaultValue={summaryData.primaryPhoneNumber}
+                defaultValue={summaryData.fuelCapacity}
               />
             </Col>
           </Row>
 
-          <Row className="mt-4">
+          <Row className="mt-3">
             <Col>
-              <Form.Label>Address</Form.Label>
+              <Form.Label>Current Owner</Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Email"
-                defaultValue={summaryData.address1}
+                placeholder="Current Owner"
+                defaultValue={summaryData.currentOwner}
               />
             </Col>
             <Col>
-              <Form.Label>Cell Phone Number</Form.Label>
+              <Form.Label>Tag Number/State </Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Cell Phone Number"
-                defaultValue={summaryData.cellPhoneNumber}
+                placeholder="Tag Number/State"
+                defaultValue={summaryData.tagNumber}
               />
             </Col>
             <Col>
-              <Form.Label>City</Form.Label>
+              <Form.Label>Owner Since </Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="City"
-                defaultValue={summaryData.city}
+                placeholder="Owner Since"
+                defaultValue={summaryData.ownerSince}
               />
             </Col>
           </Row>
 
-          <Row className="mt-4">
+          <Row className="mt-3">
             <Col>
-              <Form.Label>Zip</Form.Label>
+              <Form.Label>Tag Expiration </Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Zip"
-                defaultValue={summaryData.zip}
+                placeholder="Tag Expiration	"
+                defaultValue={summaryData.tagExp}
               />
             </Col>
             <Col>
-              <Form.Label>Fax Phone Number</Form.Label>
+              <Form.Label>Year</Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Fax Phone Number"
-                defaultValue={summaryData.faxPhoneNumber}
+                placeholder="Year"
+                defaultValue={summaryData.year}
+              />
+            </Col>
+            <Col>
+              <Form.Label>Leasing Company</Form.Label>
+              <Form.Control
+                type="text"
+                disabled
+                placeholder="Leasing Company"
+                defaultValue={summaryData.ownerSince}
+              />
+            </Col>
+          </Row>
+
+          <Row className="mt-3">
+            <Col>
+              <Form.Label>Make</Form.Label>
+              <Form.Control
+                type="text"
+                disabled
+                placeholder="Make"
+                defaultValue={summaryData.make}
+              />
+            </Col>
+            <Col>
+              <Form.Label>Year</Form.Label>
+              <Form.Control
+                type="text"
+                disabled
+                placeholder="Year"
+                defaultValue={summaryData.year}
+              />
+            </Col>
+            <Col>
+              <Form.Label>Lease Exp Date</Form.Label>
+              <Form.Control
+                type="text"
+                disabled
+                placeholder="Lease Exp Date"
+                defaultValue={summaryData.leaseExpDate}
+              />
+            </Col>
+          </Row>
+
+          <Row className="mt-3">
+            <Col>
+              <Form.Label>Model </Form.Label>
+              <Form.Control
+                type="text"
+                disabled
+                placeholder="Model	"
+                defaultValue={summaryData.model}
+              />
+            </Col>
+            <Col>
+              <Form.Label>Physical Damage Insurance Carrier</Form.Label>
+              <Form.Control
+                type="text"
+                disabled
+                placeholder="Physical Damage Insurance Carrier"
+                defaultValue={summaryData.physicalDmgInsCarrier}
+              />
+            </Col>
+            <Col>
+              <Form.Label>Type</Form.Label>
+              <Form.Control
+                type="text"
+                disabled
+                placeholder="Type"
+                defaultValue={summaryData.type}
+              />
+            </Col>
+          </Row>
+
+          <Row className="mt-3">
+            <Col>
+              <Form.Label>Physical Damage Insurance Start Date</Form.Label>
+              <Form.Control
+                type="text"
+                disabled
+                placeholder="Physical Damage Insurance Start Date"
+                defaultValue={summaryData.physicalDmgInsStartDate}
               />
             </Col>
             <Col>
@@ -224,228 +283,106 @@ const OwnerSummary = () => {
                 defaultValue={summaryData.group}
               />
             </Col>
-          </Row>
-
-          <Row className="mt-4">
             <Col>
-              <Form.Label>Trailer Rent Percent</Form.Label>
+              <Form.Label>
+                Physical Damage Insurance Expiration Date{" "}
+              </Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Trailer Rent Percent"
-                defaultValue={summaryData.trailerRentPercent}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Preferred Settlement Day</Form.Label>
-              <Form.Control
-                type="text"
-                disabled
-                placeholder="Preferred Settlement Day"
-                defaultValue={summaryData.settlementDay}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Factor Payments</Form.Label>
-              <Form.Control
-                type="text"
-                disabled
-                placeholder="Factor Payments"
-                defaultValue={summaryData.factorPayments}
+                placeholder="Physical Damage Insurance Expiration Date"
+                defaultValue={summaryData.physicalDmgInsExpDate}
               />
             </Col>
           </Row>
 
-          <Row className="mt-4">
+          <Row className="mt-3">
             <Col>
-              <Form.Label>Print 1099</Form.Label>
+              <Form.Label>Color</Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Print 1099"
-                defaultValue={summaryData.print1099}
+                placeholder="Color"
+                defaultValue={summaryData.color}
               />
             </Col>
             <Col>
-              {/* <Form.Label>Preferred Settlement Day</Form.Label>
-            <Form.Control
-              type="text"
-              disabled
-              placeholder="Preferred Settlement Day"
-              defaultValue={summaryData.settlementDay}
-            /> */}
-            </Col>
-            <Col>
-              {/* <Form.Label>Factor Payments</Form.Label>
-            <Form.Control
-              type="text"
-              disabled
-              placeholder="Factor Payments"
-              defaultValue={summaryData.factorPayments}
-            /> */}
-            </Col>
-          </Row>
-
-          <Navbar bg="light" expand="lg" className="mt-5">
-            <Container>
-              <Navbar.Brand href="#home">
-                <h1>Payment Information</h1>
-              </Navbar.Brand>
-              <Navbar.Toggle />
-              {/* <Navbar.Collapse className="justify-content-end">
-              <Navbar.Text>
-                Signed in as: <a href="#login">Mark Otto</a>
-              </Navbar.Text>
-            </Navbar.Collapse> */}
-            </Container>
-          </Navbar>
-          <Row className="mt-4">
-            <Col>
-              <Form.Label>Pay/Bill Name</Form.Label>
+              <Form.Label>Physical Damage Insurance Value </Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Pay/Bill Name"
-                defaultValue="Eagles Eagles"
+                placeholder="Physical Damage Insurance Value	"
+                defaultValue={summaryData.physicalDmgInsValue}
               />
             </Col>
             <Col>
-              <Form.Label>Address</Form.Label>
+              <Form.Label>VIN</Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Preferred Settlement Day"
-                defaultValue={summaryData.address2}
-              />
-            </Col>
-            <Col>
-              <Form.Label>SSN or Federal ID</Form.Label>
-              <Form.Control
-                type="text"
-                disabled
-                placeholder="SSN or Federal ID"
-                // defaultValue={summaryData.factorPayments}
+                placeholder="VIN"
+                defaultValue={summaryData.vin}
               />
             </Col>
           </Row>
 
-          <Row className="mt-4">
+          <Row className="mt-3">
             <Col>
-              <Form.Label>Default Tractor Pay Pct.</Form.Label>
+              <Form.Label>NTL Insurance Carrier </Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Default Tractor Pay Pct."
-                // defaultValue="Eagles Eagles"
+                placeholder="NTL Insurance Carrier"
+                defaultValue={summaryData.ntlInsCarrier}
               />
             </Col>
             <Col>
-              <Form.Label>Zip</Form.Label>
+              <Form.Label>Carb Compliant</Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Zip"
-                defaultValue={summaryData.zip}
+                placeholder="Carb Compliant"
+                defaultValue={summaryData.carbCompliant}
               />
             </Col>
             <Col>
-              <Form.Label>Pay Per Mile</Form.Label>
+              <Form.Label>NTL Insurance Start Date </Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Pay Per Mile"
-                // defaultValue={summaryData.factorPayments}
-              />
-            </Col>
-          </Row>
-
-          <Row className="mt-4">
-            <Col>
-              <Form.Label>City</Form.Label>
-              <Form.Control
-                type="text"
-                disabled
-                placeholder="City"
-                defaultValue={summaryData.city}
-              />
-            </Col>
-            <Col>
-              <Form.Label>State</Form.Label>
-              <Form.Control
-                type="text"
-                disabled
-                placeholder="State"
-                defaultValue={summaryData.state}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control
-                type="text"
-                disabled
-                placeholder="Phone Number"
-                // defaultValue={summaryData.factorPayments}
+                placeholder="NTL Insurance Start Date	"
+                defaultValue={summaryData.ntlInsStartDate}
               />
             </Col>
           </Row>
 
-          <Row className="mt-4">
+          <Row className="mt-3">
             <Col>
-              <Form.Label>Alt Phone Number</Form.Label>
+              <Form.Label>NTL Insurance Expiration Date</Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Alt Phone Number"
-                // defaultValue={summaryData.city}
+                placeholder="NTL Insurance Expiration Date"
+                defaultValue={summaryData.ntlInsExpDate}
               />
             </Col>
             <Col>
-              <Form.Label>Fax Number</Form.Label>
+              <Form.Label>NTL Insurance Value</Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Fax Number"
-                // defaultValue={summaryData.state}
+                placeholder="NTL Insurance Value"
+                defaultValue={summaryData.ntlInsValue}
               />
             </Col>
             <Col>
-              <Form.Label>Email</Form.Label>
+              {/* <Form.Label>NTL Insurance Start Date </Form.Label>
               <Form.Control
                 type="text"
                 disabled
-                placeholder="Email"
-                // defaultValue={summaryData.factorPayments}
-              />
-            </Col>
-          </Row>
-
-          <Row className="mt-4">
-            <Col>
-              <Form.Label>Settlement Receipt</Form.Label>
-              <Form.Control
-                type="text"
-                disabled
-                placeholder="Settlement Receipt"
-                // defaultValue={summaryData.city}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Settlement Category</Form.Label>
-              <Form.Control
-                type="text"
-                disabled
-                placeholder="Settlement Category"
-                // defaultValue={summaryData.state}
-              />
-            </Col>
-            <Col>
-              {/* <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="text"
-              disabled
-              placeholder="Email"
-              // defaultValue={summaryData.factorPayments}
-            /> */}
+                placeholder="NTL Insurance Start Date	"
+                defaultValue={summaryData.ntlInsStartDate}
+              /> */}
             </Col>
           </Row>
 
@@ -478,12 +415,7 @@ const OwnerSummary = () => {
                     <Button variant="outline-primary">
                       <Link to="/addDriver">Add New Driver</Link>
                     </Button>{" "}
-                    <Form
-                      noValidate
-                      validated={validated}
-                      onSubmit={handleSubmit}
-                      className="mt-4"
-                    >
+                    <Form className="mt-4">
                       <Row className="mb-3">
                         <Form.Group
                           as={Col}
@@ -631,4 +563,4 @@ const OwnerSummary = () => {
   );
 };
 
-export default OwnerSummary;
+export default TractorSummary;

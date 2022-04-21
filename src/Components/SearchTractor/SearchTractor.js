@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -12,9 +12,16 @@ import "./searchTractor.css";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 import useContext from "../Hooks/useContext";
+import { Link } from "react-router-dom";
+
+
+
+
 const SearchTractor = () => {
 
 
+  const [updateTractorData, setUpdateTractorData] = useState([]);
+  const [finalTractorData, setFinalTractorData] = useState([]);
 
   const [allValues, setAllValues] = useState({
     tractorId: "",
@@ -77,7 +84,7 @@ const SearchTractor = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const { tractorData } = useContext();
+  const { tractorData, perTractorDetails } = useContext();
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
@@ -90,6 +97,22 @@ const SearchTractor = () => {
     setValidated(true);
     console.log(allValues);
   };
+
+  // console.log(tractorData.tractors);
+
+  // useEffect(() => {
+  //   setUpdateTractorData(tractorData.tractors);
+  //   const mapData = updateTractorData.map((i) => {
+  //     setFinalTractorData(i);
+  //   })
+  //   return mapData;
+  // }, [tractorData.tractors]);
+ 
+   console.log(tractorData);
+  
+  
+  
+  
 
   return (
     <div>
@@ -695,8 +718,12 @@ const SearchTractor = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Is CARB Compliant?</Form.Label>
-              
-              <Form.Select aria-label="Default select example" name="isCrabCompliant" onChange={changeHandler}>
+
+              <Form.Select
+                aria-label="Default select example"
+                name="isCrabCompliant"
+                onChange={changeHandler}
+              >
                 <option>Select Is CARB Compliant?</option>
                 <option value="All">All</option>
                 <option value="Yes">Yes</option>
@@ -708,8 +735,12 @@ const SearchTractor = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>No Loads in Last</Form.Label>
-              
-              <Form.Select aria-label="Default select example" name="NoLoadLast" onChange={changeHandler}>
+
+              <Form.Select
+                aria-label="Default select example"
+                name="NoLoadLast"
+                onChange={changeHandler}
+              >
                 <option>Select No Loads in Last</option>
                 <option value="10 Days">10 Days</option>
                 <option value="15 Days">15 Days</option>
@@ -721,8 +752,13 @@ const SearchTractor = () => {
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Has Image</Form.Label>
-              <Form.Control type="text" placeholder="Has Image" name="hasImg" onChange={changeHandler} />
-              
+              <Form.Control
+                type="text"
+                placeholder="Has Image"
+                name="hasImg"
+                onChange={changeHandler}
+              />
+
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
@@ -732,7 +768,12 @@ const SearchTractor = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Missing Image</Form.Label>
-              <Form.Control type="text" placeholder="Missing Image" name="missingImg" onChange={changeHandler} />
+              <Form.Control
+                type="text"
+                placeholder="Missing Image"
+                name="missingImg"
+                onChange={changeHandler}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
@@ -759,7 +800,7 @@ const SearchTractor = () => {
       </Container>
 
       <Container fluid>
-        <h3 className="mt-5 mb-3">Search Results (1)</h3>
+        <h3 className="mt-5 mb-3">Search Results ({tractorData.length})</h3>
         <hr></hr>
 
         <Table striped bordered hover>
@@ -786,33 +827,35 @@ const SearchTractor = () => {
             </tr>
           </thead>
 
-          {tractorData.map((i) => (
-            <tbody>
-              <tr>
-                <td>{i.id}</td>
-                <td>{i.status}</td>
-                <td>{i.year}</td>
-                <td>{i.model}</td>
-                <td>{i.type}</td>
-                <td>{i.vin}</td>
-                <td>{i.tagNumber}</td>
-                <td>{i.tagState}</td>
-                <td>{i.tagExpiration}</td>
-                <td>{i.terminal}</td>
-                <td>{i.ownerId}</td>
-                <td>
-                  <li>{i.driver.firstOne}</li>
-                  <li>{i.driver.secondOne}</li>
-                </td>
-                <td>{i.leaseOn}</td>
-                <td>{i.nextService}</td>
-                <td>{i.lastService}</td>
-                <td>{i.mainteinanceDate}</td>
-                <td>{i.nextDotInspection}</td>
-                <td>{i.lastDispatchDate}</td>
-              </tr>
-            </tbody>
-          ))}
+          <tbody>
+            <tr>
+              {tractorData.map((i) => (
+                <>
+                  {/* <td>{i.id}</td> */}
+                  <Link to={`/summary/tractor/${i._id}`}>
+                    <p onClick={() => perTractorDetails(i._id)}>{i.id}</p>
+                  </Link>
+                  <td>{i.status}</td>
+                  <td>{i.year}</td>
+                  <td>{i.make}</td>
+                  <td>{i.type}</td>
+                  <td>{i.vin}</td>
+                  <td>{i.tagNumber}</td>
+                  <td>{i.tagState}</td>
+                  <td>{i.tagExp}</td>
+                  <td>{i.terminal}</td>
+                  <td>{i.driver}</td>
+                  <td>{i.leaseOn}</td>
+                  <td>{i.nextService}</td>
+                  <td>{i.lastService}</td>
+                  <td>{i.nextDotIns}</td>
+                  <td>{i.maintainanceDate}</td>
+                  <td>{i.lastDispatchDate}</td>
+                  <td>{i.driver}</td>
+                </>
+              ))}
+            </tr>
+          </tbody>
         </Table>
       </Container>
     </div>
