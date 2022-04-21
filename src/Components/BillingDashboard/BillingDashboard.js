@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Col,
@@ -13,62 +13,64 @@ import {
 import useContext from "../Hooks/useContext";
 
 const BillingDashboard = () => {
-
-  const { billingDashboard } = useContext();
+  const { billingDashboard, revenueStats, loadStats, loading } = useContext();
   
 
-  //console.log(billingDashboard.invoiceStats.notInvoicedLoads);
+  // console.log(loadStats);
   return (
     <div>
       <Container fluid>
         {" "}
-        <h1 className="mt-5 mb-3">Billing/Collections dashboard.</h1>
+        <h1 className="mt-5 mb-3">Billing/Collections Dashboard.</h1>
         <hr></hr>
         <Row>
-          <Col sm={4}>
-            <Navbar bg="light" expand="lg">
-              <Container>
-                <Navbar.Brand href="#home">Load Stats</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                  <Nav className="me-auto">
-                    {/* <Nav.Link href="#home">Home</Nav.Link>
+          {loading && <h2>loading..</h2>}
+          {!loading && (
+            <Col sm={4}>
+              <Navbar bg="light" expand="lg">
+                <Container>
+                  <Navbar.Brand href="#home">Load Stats</Navbar.Brand>
+                  <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                  <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                      {/* <Nav.Link href="#home">Home</Nav.Link>
                     <Nav.Link href="#link">Link</Nav.Link> */}
-                  </Nav>
-                </Navbar.Collapse>
-              </Container>
-            </Navbar>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Load Stats</th>
-                  <th>Count</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Total</td>
-                  <td>{billingDashboard.loadStats.total}</td>
-                </tr>
-                <tr>
-                  <td>Planned</td>
-                  <td>{billingDashboard.loadStats.planned}</td>
-                </tr>
-                <tr>
-                  <td>Dispatched</td>
-                  <td>{billingDashboard.loadStats.dispatched}</td>
-                </tr>
-                <tr>
-                  <td>Delivered</td>
-                  <td>{billingDashboard.loadStats.delivered}</td>
-                </tr>
-                <tr>
-                  <td>Cancelled</td>
-                  <td>{billingDashboard.loadStats.cancelled}</td>
-                </tr>
-              </tbody>
-            </Table>
-          </Col>
+                    </Nav>
+                  </Navbar.Collapse>
+                </Container>
+              </Navbar>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Load Stats</th>
+                    <th>Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Total</td>
+                    <td>{billingDashboard.total}</td>
+                  </tr>
+                  <tr>
+                    <td>Planned</td>
+                    <td>{billingDashboard.planned}</td>
+                  </tr>
+                  <tr>
+                    <td>Dispatched</td>
+                    <td>{billingDashboard.dispatched}</td>
+                  </tr>
+                  <tr>
+                    <td>Delivered</td>
+                    <td>{billingDashboard.delivered}</td>
+                  </tr>
+                  <tr>
+                    <td>Cancelled</td>
+                    <td>{billingDashboard.cancelled}</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </Col>
+          )}
 
           <Col sm={4}>
             <Navbar bg="light" expand="lg">
@@ -93,15 +95,15 @@ const BillingDashboard = () => {
               <tbody>
                 <tr>
                   <td>Revenue</td>
-                  <td>{billingDashboard.revenueStats.revenue}</td>
+                  <td>{revenueStats.revenue}</td>
                 </tr>
                 <tr>
                   <td>Paid</td>
-                  <td>{billingDashboard.revenueStats.paid}</td>
+                  <td>{revenueStats.paid}</td>
                 </tr>
                 <tr>
                   <td>Unpaid</td>
-                  <td>{billingDashboard.revenueStats.unpaid}</td>
+                  <td>{revenueStats.unpaid}</td>
                 </tr>
               </tbody>
             </Table>
@@ -130,15 +132,15 @@ const BillingDashboard = () => {
               <tbody>
                 <tr>
                   <td>Loads Not Invoiced</td>
-                  <td>{billingDashboard.invoiceStats.notInvoicedLoads}</td>
+                  <td>{loadStats.notInvoicedLoads}</td>
                 </tr>
                 <tr>
                   <td>Load Invoiced</td>
-                  <td>{billingDashboard.invoiceStats.loadsInvoiced}</td>
+                  <td>{loadStats.loadsInvoiced}</td>
                 </tr>
                 <tr>
                   <td>Paid Loads</td>
-                  <td>{billingDashboard.invoiceStats.paidLoads}</td>
+                  <td>{loadStats.paidLoads}</td>
                 </tr>
               </tbody>
             </Table>

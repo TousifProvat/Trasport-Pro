@@ -13,6 +13,9 @@ const useContext = () => {
   const [tractorSummary, setTractorSummary] = useState([]);
   const [trailerSummary, setTrailerSummary] = useState([]);
   const [billingDashboard, setBillingDashboard] = useState([]);
+  const [revenueStats, setRevenueStats] = useState([]);
+  const [loadStats, setLoadStats] = useState([]);
+  const [loading, setLoading] = useState(false);
   const value = 17;
 
   useEffect(() => {
@@ -102,14 +105,30 @@ const useContext = () => {
     return trailerDate;
   };
 
-
   useEffect(() => {
-    fetch("https://transport-test-server.herokuapp.com/api/v1/billing")
-      .then((response) => response.json())
-      .then((data) => setBillingDashboard(data));
-  }, []);
-
+  setLoading(true);
+  fetch("https://transport-test-server.herokuapp.com/api/v1/billing")
+    .then((response) => response.json())
+      .then((data) => setBillingDashboard(data.loadStats));
+    setLoading(false);
+}, []);
   
+  
+useEffect(() => {
+  fetch("https://transport-test-server.herokuapp.com/api/v1/billing")
+    .then((response) => response.json())
+    .then((data) => setRevenueStats(data.revenueStats));
+}, []);
+  
+  
+useEffect(() => {
+  fetch("https://transport-test-server.herokuapp.com/api/v1/billing")
+    .then((response) => response.json())
+    .then((data) => setLoadStats(data.invoiceStats));
+}, []);
+  
+
+  // console.log(billingDashboard);
     
     
   return {
@@ -126,6 +145,9 @@ const useContext = () => {
     billingDashboard,
     perTrailerDetails,
     perDriverDetails,
+    revenueStats,
+    loadStats,
+    loading,
   };
 };
 
