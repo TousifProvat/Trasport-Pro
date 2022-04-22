@@ -27,6 +27,7 @@ import DriverSummary from "./Components/DriverSummary/DriverSummary";
 import EditDriver from "./Components/EditDriver/EditDriver";
 import EditTractor from "./Components/EditTractor/EditTractor";
 import EditTrailer from "./Components/EditTrailer/EditTrailer";
+import SiteSettings from "./Components/SiteSettings/SiteSettings";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
             <Route path="addCustomer" element={<AddCustomer />} />
             <Route path="searchCustomer" element={<SearchCustomer />} />
             <Route path="searchLoad" element={<SearchLoad />} />
+            <Route path="site_setting" element={<SiteSettings />} />
             <Route
               path="editDriver"
               element={<EditDriver />}

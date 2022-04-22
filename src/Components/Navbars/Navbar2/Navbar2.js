@@ -664,6 +664,9 @@ const Navbar2 = () => {
                   title="Manage Site Settings"
                   id="basic-nav-dropdown"
                 >
+                  <Nav.Link>
+                    <Link to="/site_setting">Site Settings</Link>
+                  </Nav.Link>
                   <NavDropdown
                     title="Manage Adjustments Codes"
                     id="basic-nav-dropdown"
