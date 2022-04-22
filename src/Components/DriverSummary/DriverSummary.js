@@ -45,7 +45,7 @@ const DriverSummary = () => {
     try {
       setLoading(true);
       const { data } = await axios.put(
-        `/driver/summary/${driverId}`,
+        `/driver/${driverId}`,
         allValues
       );
       setEnable(true);
@@ -59,10 +59,10 @@ const DriverSummary = () => {
 
 
     useEffect(() => {
-      const fetchTrailerSummary = async () => {
+      const fetchDriverSummary = async () => {
         try {
           setLoading(true);
-          const { data } = await axios.get(`/driver/${driverId}`);
+          const { data } = await axios.get(`/driver/summary/${driverId}`);
           setSummaryData(data.driverInfo);
           setLoading(false);
         } catch (err) {
@@ -70,7 +70,7 @@ const DriverSummary = () => {
           console.log(err);
         }
       };
-      fetchTrailerSummary();
+      fetchDriverSummary();
     }, [driverId]);
 
     //console.log(summaryData);
