@@ -78,9 +78,7 @@ const TrailerSummary = () => {
             <hr></hr>
             <div className="operator-info">
               <h5 className="mt-5 mb-3">Trailer Information</h5>
-              <Button variant="outline-primary" onClick={() => setSmShow(true)}>
-                Change Log
-              </Button>{" "}
+              
               {enable ? (
                 <Button variant="outline-primary" onClick={handleEnable}>
                   Edit Information
