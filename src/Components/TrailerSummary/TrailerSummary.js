@@ -86,9 +86,14 @@ const TrailerSummary = () => {
                   Edit Information
                 </Button>
               ) : (
-                <Button variant="outline-primary" onClick={handleUpdate}>
-                  Update Information
-                </Button>
+                <>
+                  <Button variant="outline-primary" onClick={handleUpdate}>
+                    Update Information
+                  </Button>{" "}
+                  <Button variant="outline-danger" onClick={handleUpdate}>
+                    Cancel
+                  </Button>
+                </>
               )}
               <Modal
                 size="lg"
