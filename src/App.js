@@ -56,7 +56,7 @@ function App() {
             <Route path="addCustomer" element={<AddCustomer />} />
             <Route path="searchCustomer" element={<SearchCustomer />} />
             <Route path="searchLoad" element={<SearchLoad />} />
-            <Route path="site_setting" element={<SiteSettings />} />
+            <Route path="site-setting" element={<SiteSettings />} />
             <Route
               path="editDriver"
               element={<EditDriver />}

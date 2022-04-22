@@ -660,13 +660,13 @@ const Navbar2 = () => {
                 align={{ lg: "start" }}
                 className="me-5"
               >
-                <NavDropdown
+                <Nav.Link>
+                  <Link to="/site-setting">Manage Site Settings</Link>
+                </Nav.Link>
+                {/* <NavDropdown
                   title="Manage Site Settings"
                   id="basic-nav-dropdown"
                 >
-                  <Nav.Link>
-                    <Link to="/site_setting">Site Settings</Link>
-                  </Nav.Link>
                   <NavDropdown
                     title="Manage Adjustments Codes"
                     id="basic-nav-dropdown"
@@ -711,7 +711,7 @@ const Navbar2 = () => {
                       Search Settlement Codes
                     </NavDropdown.Item>
                   </NavDropdown>
-                </NavDropdown>
+                </NavDropdown> */}
                 <NavDropdown
                   title="Manage System Users"
                   id="basic-nav-dropdown"
