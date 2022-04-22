@@ -14,6 +14,7 @@ import {
 import { Link, useParams } from "react-router-dom";
 import axios from "../../utils/axios";
 import EditDriver from "../EditDriver/EditDriver";
+import { notification } from "antd";
 
 const DriverSummary = () => {
 
@@ -30,8 +31,18 @@ const DriverSummary = () => {
   const handleEnable = (enable) => {
     setEnable(false);
   }
-  const handleUpdate = (enable) => {
-    alert("update");
+  const handleUpdate = () => {
+    setEnable(true);
+    notification.open({
+      message: "Update Successfully",
+      description:
+        "",
+      
+      onClick: () => {
+        
+        console.log("Notification Clicked!");
+      },
+    });
   }
 
 
@@ -132,7 +143,7 @@ const DriverSummary = () => {
                   <Form.Label>Status</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Status"
                     defaultValue={summaryData.status}
                   />
@@ -144,7 +155,7 @@ const DriverSummary = () => {
                   <Form.Label>EOBR ID</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="EOBR ID"
                     defaultValue={summaryData.eobrID}
                   />
@@ -153,7 +164,7 @@ const DriverSummary = () => {
                   <Form.Label>Current Owner</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Current Owner"
                     defaultValue={summaryData.owner}
                   />
@@ -162,7 +173,7 @@ const DriverSummary = () => {
                   <Form.Label>Tag Information </Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Tag Information"
                     defaultValue={summaryData.tagInfo}
                   />
@@ -174,7 +185,7 @@ const DriverSummary = () => {
                   <Form.Label>Terminal</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Terminal"
                     defaultValue={summaryData.terminal}
                   />
@@ -183,7 +194,7 @@ const DriverSummary = () => {
                   <Form.Label>Last Inspection Date</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Last Inspection Date"
                     defaultValue={summaryData.lastInspectionDate}
                   />
@@ -192,7 +203,7 @@ const DriverSummary = () => {
                   <Form.Label>VIN</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="VIN"
                     defaultValue={summaryData.vin}
                   />
@@ -204,7 +215,7 @@ const DriverSummary = () => {
                   <Form.Label>Last Inspection Location</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Last Inspection Location"
                     defaultValue={summaryData.lastInspectionLocation}
                   />
@@ -213,7 +224,7 @@ const DriverSummary = () => {
                   <Form.Label>Year</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Year"
                     defaultValue={summaryData.year}
                   />
@@ -222,7 +233,7 @@ const DriverSummary = () => {
                   <Form.Label>Next Inspection Date </Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Next Inspection Date"
                     defaultValue={summaryData.nextInspectionDate}
                   />
@@ -234,7 +245,7 @@ const DriverSummary = () => {
                   <Form.Label>Make</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Make"
                     defaultValue={summaryData.make}
                   />
@@ -243,7 +254,7 @@ const DriverSummary = () => {
                   <Form.Label>Last Service Date </Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Last Service Date"
                     defaultValue={summaryData.lastServiceDate}
                   />
@@ -252,7 +263,7 @@ const DriverSummary = () => {
                   <Form.Label>Model</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Model"
                     defaultValue={summaryData.model}
                   />
@@ -264,7 +275,7 @@ const DriverSummary = () => {
                   <Form.Label>Next Service Date </Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Next Service Date"
                     defaultValue={summaryData.nextServiceDate}
                   />
@@ -273,7 +284,7 @@ const DriverSummary = () => {
                   <Form.Label>Type</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Type"
                     defaultValue={summaryData.type}
                   />
@@ -282,7 +293,7 @@ const DriverSummary = () => {
                   <Form.Label>Monthly Maintenance</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Monthly Maintenance"
                     defaultValue={summaryData.maintenanceDate}
                   />
@@ -294,7 +305,7 @@ const DriverSummary = () => {
                   <Form.Label>Comments</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Comments"
                     defaultValue={summaryData.comments}
                   />
@@ -303,7 +314,7 @@ const DriverSummary = () => {
                   <Form.Label>Group</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Group"
                     defaultValue={summaryData.group}
                   />
@@ -312,7 +323,7 @@ const DriverSummary = () => {
                   <Form.Label>Physical Damage Insurance Carrier</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Physical Damage Insurance Carrier"
                     defaultValue={summaryData.physicalDmgInsCarrier}
                   />
@@ -324,7 +335,7 @@ const DriverSummary = () => {
                   <Form.Label>Axle Count</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Axle Count"
                     defaultValue={summaryData.axieCount}
                   />
@@ -333,7 +344,7 @@ const DriverSummary = () => {
                   <Form.Label>Physical Damage Insurance Start Date</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Physical Damage Insurance Start Date"
                     defaultValue={summaryData.physicalDmgInsStartDate}
                   />
@@ -342,7 +353,7 @@ const DriverSummary = () => {
                   <Form.Label>Length</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Length"
                     defaultValue={summaryData.length}
                   />
@@ -356,7 +367,7 @@ const DriverSummary = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Physical Damage Insurance Expiration Date"
                     defaultValue={summaryData.physicalDmgInsExpDate}
                   />
@@ -365,7 +376,7 @@ const DriverSummary = () => {
                   <Form.Label>Width</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Width"
                     defaultValue={summaryData.width}
                   />
@@ -374,7 +385,7 @@ const DriverSummary = () => {
                   <Form.Label>Physical Damage Insurance Value</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Physical Damage Insurance Value"
                     defaultValue={summaryData.physicalDmgInsValue}
                   />
@@ -386,7 +397,7 @@ const DriverSummary = () => {
                   <Form.Label>Deck Height</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Deck Height"
                     defaultValue={summaryData.deckHeight}
                   />
@@ -395,7 +406,7 @@ const DriverSummary = () => {
                   <Form.Label>Leasing Company</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Leasing Company"
                     defaultValue={summaryData.leasingCompany}
                   />
@@ -404,7 +415,7 @@ const DriverSummary = () => {
                   <Form.Label>Weight</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Weight"
                     defaultValue={summaryData.weight}
                   />
@@ -416,7 +427,7 @@ const DriverSummary = () => {
                   <Form.Label>Lease Exp Date</Form.Label>
                   <Form.Control
                     type="text"
-                    disabled
+                    disabled={enable}
                     placeholder="Lease Exp Date"
                     defaultValue={summaryData.leaseExpDate}
                   />
