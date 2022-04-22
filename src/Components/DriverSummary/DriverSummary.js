@@ -66,6 +66,7 @@ const DriverSummary = () => {
           setSummaryData(data.driverInfo);
           setLoading(false);
         } catch (err) {
+          setLoading(false);
           console.log(err);
         }
       };

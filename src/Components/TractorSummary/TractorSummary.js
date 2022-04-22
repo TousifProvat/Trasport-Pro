@@ -16,19 +16,37 @@ const TractorSummary = () => {
   const [enable, setEnable] = useState(true);
 
 
+  const [allValues, setAllValues] = useState({});
+
+  const changeHandler = (e) => {
+    setAllValues({
+      ...allValues,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+
+
 const handleEnable = (enable) => {
   setEnable(false);
 };
-  const handleUpdate = () => {
-    setEnable(true);
-    notification.open({
-      message: "Update Successfully",
-      description: "",
 
-      onClick: () => {
-        console.log("Notification Clicked!");
-      },
-    });
+
+  
+  const handleUpdate = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.put(
+        `/tractor/summary/${tractorId}`,
+        allValues
+      );
+      setEnable(true);
+      setLoading(false);
+      notification.success({ message: data.message });
+      console.log(allValues);
+    } catch (err) {
+      notification.error({ message: err.response.data.message });
+    } 
   };
 
   useEffect(() => {
@@ -39,15 +57,11 @@ const handleEnable = (enable) => {
         setSummaryData(data.tractorInformation);
         setLoading(false);
       } catch (err) {
+        setLoading(false);
         console.log(err);
       }
     };
     fetchTractorSummary();
-    // fetch(
-    //   `https://transport-test-server.herokuapp.com/api/v1/owner/summary/${ownerId}`
-    // )
-    //   .then((response) => response.json())
-    //   .then((data) => setSummaryData(data.ownerOperatorInfo));
   }, [tractorId]);
 
   //console.log(summaryData);
@@ -81,7 +95,7 @@ const handleEnable = (enable) => {
           <hr></hr>
           <div className="operator-info">
             <h5 className="mt-5 mb-3">Tractor Information</h5>
-            
+
             {enable ? (
               <Button variant="outline-primary" onClick={handleEnable}>
                 Edit Information
@@ -123,6 +137,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Tractor Id"
                 defaultValue={summaryData.id}
+                name="tractorId"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -132,6 +148,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Home Terminal"
                 defaultValue={summaryData.axieCount}
+                name="axieCount"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -141,6 +159,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Status"
                 defaultValue={summaryData.status}
+                name="status"
+                onChange={changeHandler}
               />
             </Col>
           </Row>
@@ -153,6 +173,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Weight"
                 defaultValue={summaryData.weight}
+                name="weight"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -162,6 +184,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Terminal"
                 defaultValue={summaryData.terminal}
+                name="terminal"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -171,6 +195,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Status"
                 defaultValue={summaryData.fuelCapacity}
+                name="fuelCapacity"
+                onChange={changeHandler}
               />
             </Col>
           </Row>
@@ -183,6 +209,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Current Owner"
                 defaultValue={summaryData.currentOwner}
+                name="currentOwner"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -192,6 +220,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Tag Number/State"
                 defaultValue={summaryData.tagNumber}
+                name="tagNumber"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -201,6 +231,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Owner Since"
                 defaultValue={summaryData.ownerSince}
+                name="ownerSince"
+                onChange={changeHandler}
               />
             </Col>
           </Row>
@@ -213,6 +245,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Tag Expiration	"
                 defaultValue={summaryData.tagExp}
+                name="tagExp"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -222,6 +256,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Year"
                 defaultValue={summaryData.year}
+                name="year"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -231,6 +267,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Leasing Company"
                 defaultValue={summaryData.ownerSince}
+                name="ownerSince"
+                onChange={changeHandler}
               />
             </Col>
           </Row>
@@ -243,6 +281,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Make"
                 defaultValue={summaryData.make}
+                name="make"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -252,6 +292,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Year"
                 defaultValue={summaryData.year}
+                name="year"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -261,6 +303,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Lease Exp Date"
                 defaultValue={summaryData.leaseExpDate}
+                name="leaseExpDate"
+                onChange={changeHandler}
               />
             </Col>
           </Row>
@@ -273,6 +317,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Model	"
                 defaultValue={summaryData.model}
+                name="model"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -282,6 +328,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Physical Damage Insurance Carrier"
                 defaultValue={summaryData.physicalDmgInsCarrier}
+                name="physicalDmgInsCarrier"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -291,6 +339,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Type"
                 defaultValue={summaryData.type}
+                name="type"
+                onChange={changeHandler}
               />
             </Col>
           </Row>
@@ -303,6 +353,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Physical Damage Insurance Start Date"
                 defaultValue={summaryData.physicalDmgInsStartDate}
+                name="physicalDmgInsStartDate"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -312,6 +364,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Group"
                 defaultValue={summaryData.group}
+                name="group"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -323,6 +377,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Physical Damage Insurance Expiration Date"
                 defaultValue={summaryData.physicalDmgInsExpDate}
+                name="physicalDmgInsExpDate"
+                onChange={changeHandler}
               />
             </Col>
           </Row>
@@ -335,6 +391,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Color"
                 defaultValue={summaryData.color}
+                name="color"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -344,6 +402,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Physical Damage Insurance Value	"
                 defaultValue={summaryData.physicalDmgInsValue}
+                name="physicalDmgInsValue"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -353,6 +413,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="VIN"
                 defaultValue={summaryData.vin}
+                name="vin"
+                onChange={changeHandler}
               />
             </Col>
           </Row>
@@ -365,6 +427,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="NTL Insurance Carrier"
                 defaultValue={summaryData.ntlInsCarrier}
+                name="ntlInsCarrier"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -374,6 +438,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="Carb Compliant"
                 defaultValue={summaryData.carbCompliant}
+                name="carbCompliant"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -383,6 +449,8 @@ const handleEnable = (enable) => {
                 disabled
                 placeholder="NTL Insurance Start Date	"
                 defaultValue={summaryData.ntlInsStartDate}
+                name="ntlInsStartDate"
+                onChange={changeHandler}
               />
             </Col>
           </Row>
@@ -395,6 +463,8 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="NTL Insurance Expiration Date"
                 defaultValue={summaryData.ntlInsExpDate}
+                name="ntlInsExpDate"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
@@ -404,16 +474,12 @@ const handleEnable = (enable) => {
                 disabled={enable}
                 placeholder="NTL Insurance Value"
                 defaultValue={summaryData.ntlInsValue}
+                name="ntlInsValue"
+                onChange={changeHandler}
               />
             </Col>
             <Col>
-              {/* <Form.Label>NTL Insurance Start Date </Form.Label>
-              <Form.Control
-                type="text"
-                disabled
-                placeholder="NTL Insurance Start Date	"
-                defaultValue={summaryData.ntlInsStartDate}
-              /> */}
+              
             </Col>
           </Row>
 
@@ -522,7 +588,7 @@ const handleEnable = (enable) => {
                       </Row>
                       <Form.Group className="mb-3">
                         <Form.Check
-                          rdisabled={enable}
+                          disabled={enable}
                           label="Agree to terms and conditions"
                           feedback="You must agree before submitting."
                           feedbackType="invalid"
@@ -534,11 +600,6 @@ const handleEnable = (enable) => {
                       </Button>
                     </Form>
                   </Modal.Body>
-                  {/* <Modal.Footer>
-                  <Button variant="primary" type="submit">
-                    Save Recode
-                  </Button>
-                </Modal.Footer> */}
                 </Modal>
               </Navbar.Collapse>
             </Container>

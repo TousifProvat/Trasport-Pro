@@ -37,7 +37,7 @@ const TrailerSummary = () => {
     try {
       setLoading(true);
       const { data } = await axios.put(
-        `/driver/summary/${trailerId}`,
+        `/trailer/summary/${trailerId}`,
         allValues
       );
       setEnable(true);
@@ -62,6 +62,7 @@ const TrailerSummary = () => {
         setSummaryData(data.trailerInformation);
         setLoading(false);
       } catch (err) {
+        setLoading(false);
         console.log(err);
       }
     };
