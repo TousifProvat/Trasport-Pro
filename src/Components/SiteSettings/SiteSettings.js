@@ -32,8 +32,7 @@ const SiteSettings = () => {
         <hr></hr>
         <div>
           <Row>
-            <Col sm={4}></Col>
-            <Col sm={4} className="mt-5">
+            <Col sm={4}>
               <InputGroup className="mb-3">
                 <InputGroup.Text>Name</InputGroup.Text>
                 <FormControl aria-label="First name" />
@@ -54,7 +53,9 @@ const SiteSettings = () => {
                 <InputGroup.Text>State</InputGroup.Text>
                 <FormControl aria-label="State" />
               </InputGroup>
-              <Button variant="outline-primary" className="mt-5">Update</Button>{" "}
+            </Col>
+            <Col sm={4} className="mt-5">
+              {" "}
             </Col>
             <Col sm={4}></Col>
           </Row>
