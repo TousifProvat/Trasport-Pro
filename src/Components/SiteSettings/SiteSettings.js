@@ -32,7 +32,8 @@ const SiteSettings = () => {
         <hr></hr>
         <div>
           <Row>
-            <Col sm={4}>
+            <Col sm={4}></Col>
+            <Col sm={4} className="mt-5">
               <InputGroup className="mb-3">
                 <InputGroup.Text>Name</InputGroup.Text>
                 <FormControl aria-label="First name" />
@@ -52,10 +53,7 @@ const SiteSettings = () => {
               <InputGroup className="mb-3">
                 <InputGroup.Text>State</InputGroup.Text>
                 <FormControl aria-label="State" />
-              </InputGroup>
-            </Col>
-            <Col sm={4} className="mt-5">
-              {" "}
+              </InputGroup>{" "}
             </Col>
             <Col sm={4}></Col>
           </Row>
