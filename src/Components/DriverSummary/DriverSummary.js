@@ -39,7 +39,6 @@ const DriverSummary = () => {
         "",
       
       onClick: () => {
-        
         console.log("Notification Clicked!");
       },
     });

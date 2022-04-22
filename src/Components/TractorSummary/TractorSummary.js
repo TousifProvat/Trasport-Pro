@@ -2,12 +2,34 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Modal, Navbar, OverlayTrigger, Row, Table, Tooltip } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import axios from "../../utils/axios";
+import { notification } from "antd";
+
+
+
+
 
 const TractorSummary = () => {
   const [summaryData, setSummaryData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [smShow, setSmShow] = useState(false);
   const { tractorId } = useParams();
+  const [enable, setEnable] = useState(true);
+
+
+const handleEnable = (enable) => {
+  setEnable(false);
+};
+  const handleUpdate = () => {
+    setEnable(true);
+    notification.open({
+      message: "Update Successfully",
+      description: "",
+
+      onClick: () => {
+        console.log("Notification Clicked!");
+      },
+    });
+  };
 
   useEffect(() => {
     const fetchTractorSummary = async () => {
@@ -62,9 +84,15 @@ const TractorSummary = () => {
             <Button variant="outline-primary" onClick={() => setSmShow(true)}>
               Change Log
             </Button>{" "}
-            <Button variant="outline-primary">
-              <Link to="/editTractor">Edit Information</Link>
-            </Button>
+            {enable ? (
+              <Button variant="outline-primary" onClick={handleEnable}>
+                Edit Information
+              </Button>
+            ) : (
+              <Button variant="outline-primary" onClick={handleUpdate}>
+                Update Information
+              </Button>
+            )}
             {"   "}
             <Modal
               size="lg"
@@ -89,7 +117,7 @@ const TractorSummary = () => {
               <Form.Label>Tractor Id</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Tractor Id"
                 defaultValue={summaryData.id}
               />
@@ -98,7 +126,7 @@ const TractorSummary = () => {
               <Form.Label>Axle Count</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Home Terminal"
                 defaultValue={summaryData.axieCount}
               />
@@ -107,7 +135,7 @@ const TractorSummary = () => {
               <Form.Label>Status</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Status"
                 defaultValue={summaryData.status}
               />
@@ -119,7 +147,7 @@ const TractorSummary = () => {
               <Form.Label>Weight</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Weight"
                 defaultValue={summaryData.weight}
               />
@@ -128,7 +156,7 @@ const TractorSummary = () => {
               <Form.Label>Terminal</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Terminal"
                 defaultValue={summaryData.terminal}
               />
@@ -137,7 +165,7 @@ const TractorSummary = () => {
               <Form.Label>Fuel Capacity</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Status"
                 defaultValue={summaryData.fuelCapacity}
               />
@@ -149,7 +177,7 @@ const TractorSummary = () => {
               <Form.Label>Current Owner</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Current Owner"
                 defaultValue={summaryData.currentOwner}
               />
@@ -158,7 +186,7 @@ const TractorSummary = () => {
               <Form.Label>Tag Number/State </Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Tag Number/State"
                 defaultValue={summaryData.tagNumber}
               />
@@ -167,7 +195,7 @@ const TractorSummary = () => {
               <Form.Label>Owner Since </Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Owner Since"
                 defaultValue={summaryData.ownerSince}
               />
@@ -179,7 +207,7 @@ const TractorSummary = () => {
               <Form.Label>Tag Expiration </Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Tag Expiration	"
                 defaultValue={summaryData.tagExp}
               />
@@ -188,7 +216,7 @@ const TractorSummary = () => {
               <Form.Label>Year</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Year"
                 defaultValue={summaryData.year}
               />
@@ -197,7 +225,7 @@ const TractorSummary = () => {
               <Form.Label>Leasing Company</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Leasing Company"
                 defaultValue={summaryData.ownerSince}
               />
@@ -209,7 +237,7 @@ const TractorSummary = () => {
               <Form.Label>Make</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Make"
                 defaultValue={summaryData.make}
               />
@@ -218,7 +246,7 @@ const TractorSummary = () => {
               <Form.Label>Year</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Year"
                 defaultValue={summaryData.year}
               />
@@ -227,7 +255,7 @@ const TractorSummary = () => {
               <Form.Label>Lease Exp Date</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Lease Exp Date"
                 defaultValue={summaryData.leaseExpDate}
               />
@@ -239,7 +267,7 @@ const TractorSummary = () => {
               <Form.Label>Model </Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Model	"
                 defaultValue={summaryData.model}
               />
@@ -248,7 +276,7 @@ const TractorSummary = () => {
               <Form.Label>Physical Damage Insurance Carrier</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Physical Damage Insurance Carrier"
                 defaultValue={summaryData.physicalDmgInsCarrier}
               />
@@ -257,7 +285,7 @@ const TractorSummary = () => {
               <Form.Label>Type</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Type"
                 defaultValue={summaryData.type}
               />
@@ -269,7 +297,7 @@ const TractorSummary = () => {
               <Form.Label>Physical Damage Insurance Start Date</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Physical Damage Insurance Start Date"
                 defaultValue={summaryData.physicalDmgInsStartDate}
               />
@@ -278,7 +306,7 @@ const TractorSummary = () => {
               <Form.Label>Group</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Group"
                 defaultValue={summaryData.group}
               />
@@ -289,7 +317,7 @@ const TractorSummary = () => {
               </Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Physical Damage Insurance Expiration Date"
                 defaultValue={summaryData.physicalDmgInsExpDate}
               />
@@ -301,7 +329,7 @@ const TractorSummary = () => {
               <Form.Label>Color</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Color"
                 defaultValue={summaryData.color}
               />
@@ -310,7 +338,7 @@ const TractorSummary = () => {
               <Form.Label>Physical Damage Insurance Value </Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Physical Damage Insurance Value	"
                 defaultValue={summaryData.physicalDmgInsValue}
               />
@@ -319,7 +347,7 @@ const TractorSummary = () => {
               <Form.Label>VIN</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="VIN"
                 defaultValue={summaryData.vin}
               />
@@ -331,7 +359,7 @@ const TractorSummary = () => {
               <Form.Label>NTL Insurance Carrier </Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="NTL Insurance Carrier"
                 defaultValue={summaryData.ntlInsCarrier}
               />
@@ -340,7 +368,7 @@ const TractorSummary = () => {
               <Form.Label>Carb Compliant</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="Carb Compliant"
                 defaultValue={summaryData.carbCompliant}
               />
@@ -361,7 +389,7 @@ const TractorSummary = () => {
               <Form.Label>NTL Insurance Expiration Date</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="NTL Insurance Expiration Date"
                 defaultValue={summaryData.ntlInsExpDate}
               />
@@ -370,7 +398,7 @@ const TractorSummary = () => {
               <Form.Label>NTL Insurance Value</Form.Label>
               <Form.Control
                 type="text"
-                disabled
+                disabled={enable}
                 placeholder="NTL Insurance Value"
                 defaultValue={summaryData.ntlInsValue}
               />
@@ -407,6 +435,7 @@ const TractorSummary = () => {
                   onHide={handleClose}
                   backdrop="static"
                   keyboard={false}
+                  // disabled={enable}
                 >
                   <Modal.Header closeButton>
                     <Modal.Title>Modal title</Modal.Title>
@@ -478,7 +507,7 @@ const TractorSummary = () => {
                         >
                           <Form.Label>Comment (Internal)</Form.Label>
                           <Form.Control
-                            required
+                            disabled={enable}
                             type="text"
                             placeholder="Comment (Internal)"
                             // defaultValue="Mark"
@@ -490,7 +519,7 @@ const TractorSummary = () => {
                       </Row>
                       <Form.Group className="mb-3">
                         <Form.Check
-                          required
+                          rdisabled={enable}
                           label="Agree to terms and conditions"
                           feedback="You must agree before submitting."
                           feedbackType="invalid"
