@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Col,
@@ -11,6 +11,17 @@ import {
 } from "react-bootstrap";
 
 const SiteSettings = () => {
+    const [allValues, setAllValues] = useState({});
+
+    const changeHandler = (e) => {
+      setAllValues({
+        ...allValues,
+        [e.target.name]: e.target.value,
+      });
+    };
+    const handleUpdateBtn = (e) => {
+        console.log(allValues);
+    }
   return (
     <div>
       <Container>
@@ -22,7 +33,11 @@ const SiteSettings = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="ms-auto">
-                <Button variant="outline-primary" className="mt-5">
+                <Button
+                  variant="outline-primary"
+                  className="mt-5"
+                  onClick={handleUpdateBtn}
+                >
                   Update
                 </Button>{" "}
               </Nav>
@@ -36,23 +51,43 @@ const SiteSettings = () => {
             <Col sm={4} className="mt-5">
               <InputGroup className="mb-3">
                 <InputGroup.Text>Name</InputGroup.Text>
-                <FormControl aria-label="First name" />
+                <FormControl
+                  aria-label="First name"
+                  name="firstName"
+                  onChange={changeHandler}
+                />
               </InputGroup>
               <InputGroup className="mb-3">
                 <InputGroup.Text>Street</InputGroup.Text>
-                <FormControl aria-label="Street name" />
+                <FormControl
+                  aria-label="Street name"
+                  name="street"
+                  onChange={changeHandler}
+                />
               </InputGroup>
               <InputGroup className="mb-3">
                 <InputGroup.Text>City</InputGroup.Text>
-                <FormControl aria-label="City" />
+                <FormControl
+                  aria-label="City"
+                  name="city"
+                  onChange={changeHandler}
+                />
               </InputGroup>
               <InputGroup className="mb-3">
                 <InputGroup.Text>Zip</InputGroup.Text>
-                <FormControl aria-label="Zip" />
+                <FormControl
+                  aria-label="Zip"
+                  name="zip"
+                  onChange={changeHandler}
+                />
               </InputGroup>
               <InputGroup className="mb-3">
                 <InputGroup.Text>State</InputGroup.Text>
-                <FormControl aria-label="State" />
+                <FormControl
+                  aria-label="State"
+                  name="state"
+                  onChange={changeHandler}
+                />
               </InputGroup>{" "}
             </Col>
             <Col sm={4}></Col>
