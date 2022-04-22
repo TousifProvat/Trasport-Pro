@@ -62,7 +62,7 @@ const DriverSummary = () => {
       const fetchTrailerSummary = async () => {
         try {
           setLoading(true);
-          const { data } = await axios.get(`/driver/summary/${driverId}`);
+          const { data } = await axios.get(`/driver/${driverId}`);
           setSummaryData(data.driverInfo);
           setLoading(false);
         } catch (err) {

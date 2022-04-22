@@ -37,7 +37,7 @@ const handleEnable = (enable) => {
     try {
       setLoading(true);
       const { data } = await axios.put(
-        `/tractor/summary/${tractorId}`,
+        `/tractor/${tractorId}`,
         allValues
       );
       setEnable(true);
