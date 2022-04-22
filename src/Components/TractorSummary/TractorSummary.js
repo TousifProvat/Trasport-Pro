@@ -55,7 +55,7 @@ const handleEnable = (enable) => {
         setLoading(true);
         const { data } = await axios.get(`/tractor/summary/${tractorId}`);
         setSummaryData(data.tractorInformation);
-        setLoading(false);
+        
       } catch (err) {
         setLoading(false);
         console.log(err);
