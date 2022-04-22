@@ -45,6 +45,7 @@ const TrailerSummary = () => {
       notification.success({ message: data.message });
       console.log(allValues);
     } catch (err) {
+      setLoading(false);
       notification.error({ message: err.response.data.message });
     } 
   };

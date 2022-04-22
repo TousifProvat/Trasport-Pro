@@ -52,6 +52,7 @@ const DriverSummary = () => {
       setLoading(false);
       notification.success({ message: data.message });
     } catch (err) {
+      setLoading(false);
       notification.error({ message: err.response.data.message });
     }    
   }
