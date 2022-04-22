@@ -60,7 +60,7 @@ const TrailerSummary = () => {
         setLoading(true);
         const { data } = await axios.get(`/trailer/summary/${trailerId}`);
         setSummaryData(data.trailerInformation);
-        
+        setLoading(false);
       } catch (err) {
         setLoading(false);
         console.log(err);

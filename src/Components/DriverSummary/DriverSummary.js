@@ -64,7 +64,7 @@ const DriverSummary = () => {
           setLoading(true);
           const { data } = await axios.get(`/driver/summary/${driverId}`);
           setSummaryData(data.driverInfo);
-          
+          setLoading(false);
         } catch (err) {
           setLoading(false);
           console.log(err);
