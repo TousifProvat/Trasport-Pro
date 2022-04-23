@@ -14,7 +14,7 @@ import axios from "../../utils/axios";
 import useContext from "../Hooks/useContext";
 
 const Login = () => {
-  const { authSignin } = useContext();
+  const { authSignin, loading } = useContext();
   const [validated, setValidated] = useState(false);
   const [formValues, setFormValues] = useState({
     email: "",
@@ -43,44 +43,59 @@ const Login = () => {
         <Row>
           <Col sm={4}></Col>
           <Col sm={4}>
-            <h1 className="mt-5 mb-3 text-center">LogIn Account</h1>
-            <hr className="mb-5"></hr>
             <Card className="text-center mt-3">
               <Card.Header>
                 <h1>Logo</h1>
               </Card.Header>
               <Card.Body>
-                <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                  <Row className="mb-3">
-                    <Form.Group as={Col} md="12" controlId="validationCustom01">
-                      <Form.Label className="float-start mt-5">
-                        Email Address
-                      </Form.Label>
-                      <Form.Control
-                        required
-                        type="email"
-                        placeholder="Email Address"
-                        name="email"
-                        onChange={onChange}
-                      />
-                    </Form.Group>
-                  </Row>
-                  <Row className="mb-3">
-                    <Form.Group as={Col} md="12" controlId="validationCustom01">
-                      <Form.Label className="float-start">Password</Form.Label>
-                      <Form.Control
-                        required
-                        type="password"
-                        placeholder="Password"
-                        name="password"
-                        onChange={onChange}
-                      />
-                    </Form.Group>
-                  </Row>
-                  <Button type="submit" className="mt-5 mb-5">
-                    Login
-                  </Button>
-                </Form>
+                {loading && <h2>Loading Component here...</h2>}
+                {!loading && (
+                  <Form
+                    noValidate
+                    validated={validated}
+                    onSubmit={handleSubmit}
+                  >
+                    <Row className="mb-3">
+                      <Form.Group
+                        as={Col}
+                        md="12"
+                        controlId="validationCustom01"
+                      >
+                        <Form.Label className="float-start mt-5">
+                          Email Address
+                        </Form.Label>
+                        <Form.Control
+                          required
+                          type="email"
+                          placeholder="Email Address"
+                          name="email"
+                          onChange={onChange}
+                        />
+                      </Form.Group>
+                    </Row>
+                    <Row className="mb-3">
+                      <Form.Group
+                        as={Col}
+                        md="12"
+                        controlId="validationCustom01"
+                      >
+                        <Form.Label className="float-start">
+                          Password
+                        </Form.Label>
+                        <Form.Control
+                          required
+                          type="password"
+                          placeholder="Password"
+                          name="password"
+                          onChange={onChange}
+                        />
+                      </Form.Group>
+                    </Row>
+                    <Button type="submit" className="mt-5 mb-5">
+                      Login
+                    </Button>
+                  </Form>
+                )}
               </Card.Body>
             </Card>
           </Col>
