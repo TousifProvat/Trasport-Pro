@@ -25,7 +25,7 @@ const Login = () => {
             <hr className="mb-5"></hr>
             <Card className="text-center mt-3">
               <Card.Header>
-                <h1>LogIn</h1>
+                <h1>Logo</h1>
               </Card.Header>
               <Card.Body>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
