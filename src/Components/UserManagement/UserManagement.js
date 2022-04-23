@@ -19,7 +19,19 @@ const UserManagement = () => {
   const [enable, setEnable] = useState(true);
 
     
-    const [allValues, setAllValues] = useState({});
+  const [allValues, setAllValues] = useState({
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    phoneNumber: "",
+    email: "",
+    password: "",
+    accounting: false,
+    billing: false,
+    systemAdmin: true,
+    settlements: false,
+    freightOperation: false,
+  });
 
     const changeHandler = (e) => {
       setAllValues({
