@@ -42,47 +42,42 @@ function App() {
             <Navbar2></Navbar2>
           </div>
           <Routes>
-            <Route path="/" element={<FreightOptionsDashboard />} />
-            <Route path="frtOpsDash" element={<FreightOptionsDashboard />} />
-            <Route path="addNewLoad" element={<AddNewLoad />} />
-            <Route path="addOwner" element={<AddOwner />} />
-            <Route path="searchOwner" element={<SearchOwner />} />
-            <Route path="addDriver" element={<AddDrivers />} />
-            <Route path="searchDriver" element={<SearchDrivers />} />
-            <Route path="addTractor" element={<Tractors />} />
-            <Route path="addTrailer" element={<AddTrailers />} />
-            <Route path="searchTractor" element={<SearchTractor />} />
-            <Route path="searchTrailer" element={<SearchTrailer />} />
-            <Route path="addTerminal" element={<AddTerminal />} />
-            <Route path="searchTerminal" element={<SearchTerminal />} />
-            <Route path="addCustomer" element={<AddCustomer />} />
-            <Route path="searchCustomer" element={<SearchCustomer />} />
-            <Route path="searchLoad" element={<SearchLoad />} />
-            <Route path="site-setting" element={<SiteSettings />} />
-            <Route path="login" element={<Login />} />
-            <Route path="user-management" element={<UserManagement />} />
-            <Route path="editDriver" element={<EditDriver />} />
-            <Route path="editTrailer" element={<EditTrailer />} />
-            <Route path="editTractor" element={<EditTractor />} />
-            <Route path="summary/:ownerId" element={<OwnerSummary />} />
-            <Route
-              path="summary/tractor/:tractorId"
-              element={<TractorSummary />}
-            />
-            <Route
-              path="summary/trailer/:trailerId"
-              element={<TrailerSummary />}
-            />
-            <Route
-              path="summary/driver/:driverId"
-              element={<DriverSummary />}
-            />
-            <Route path="billingDashboard" element={<BillingDashboard />} />
-            <Route
-              path="terminalManagerDashboard"
-              element={<TerminalManagerDashboard />}
-            />
-            {/* <Route path="addNewLoad" element={<AddNewLoad/>} /> */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/">
+              <Route index element={<FreightOptionsDashboard />} />
+              <Route
+                path="freight-options-dashboard"
+                element={<FreightOptionsDashboard />}
+              />
+              <Route path="add-new-load" element={<AddNewLoad />} />
+              <Route path="add-owner" element={<AddOwner />} />
+              <Route path="search-owner" element={<SearchOwner />} />
+              <Route path="add-driver" element={<AddDrivers />} />
+              <Route path="search-driver" element={<SearchDrivers />} />
+              <Route path="add-tractor" element={<Tractors />} />
+              <Route path="add-trailer" element={<AddTrailers />} />
+              <Route path="search-tractor" element={<SearchTractor />} />
+              <Route path="search-trailer" element={<SearchTrailer />} />
+              <Route path="add-terminal" element={<AddTerminal />} />
+              <Route path="search-terminal" element={<SearchTerminal />} />
+              <Route path="add-customer" element={<AddCustomer />} />
+              <Route path="search-customer" element={<SearchCustomer />} />
+              <Route path="search-load" element={<SearchLoad />} />
+              <Route path="site-setting" element={<SiteSettings />} />
+              <Route path="user-management" element={<UserManagement />} />
+              {/* <Route path="editDriver" element={<EditDriver />} />
+              <Route path="editTrailer" element={<EditTrailer />} />
+              <Route path="editTractor" element={<EditTractor />} /> */}
+              <Route path="owner/:ownerId" element={<OwnerSummary />} />
+              <Route path="tractor/:tractorId" element={<TractorSummary />} />
+              <Route path="trailer/:trailerId" element={<TrailerSummary />} />
+              <Route path="driver/:driverId" element={<DriverSummary />} />
+              <Route path="billing-dashboard" element={<BillingDashboard />} />
+              <Route
+                path="terminal-manage-dashboard"
+                element={<TerminalManagerDashboard />}
+              />
+            </Route>
           </Routes>
         </AuthProvider>
       </BrowserRouter>
