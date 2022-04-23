@@ -663,6 +663,9 @@ const Navbar2 = () => {
                 <Nav.Link>
                   <Link to="/site-setting">Manage Site Settings</Link>
                 </Nav.Link>
+                <Nav.Link>
+                  <Link to="/user-management">User Management</Link>
+                </Nav.Link>
                 {/* <NavDropdown
                   title="Manage Site Settings"
                   id="basic-nav-dropdown"
@@ -716,8 +719,8 @@ const Navbar2 = () => {
                   title="Manage System Users"
                   id="basic-nav-dropdown"
                 >
-                  <NavDropdown.Item href="#aSearchction/3.1">
-                    Add System Users
+                  <NavDropdown.Item>
+                    <Link to="">User Management</Link>
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#aSearchction/3.1">
                     Search System Users
