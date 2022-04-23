@@ -25,16 +25,15 @@ const Login = () => {
             <hr className="mb-5"></hr>
             <Card className="text-center mt-3">
               <Card.Header>
-                <h1>
-                  <span className="transport">Transport</span>{" "}
-                  <span className="pro">Pro</span>
-                </h1>
+                <h1>LogIn</h1>
               </Card.Header>
               <Card.Body>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                   <Row className="mb-3">
                     <Form.Group as={Col} md="12" controlId="validationCustom01">
-                      <Form.Label>Email Address</Form.Label>
+                      <Form.Label className="float-start mt-5">
+                        Email Address
+                      </Form.Label>
                       <Form.Control
                         required
                         type="email"
@@ -45,7 +44,7 @@ const Login = () => {
                   </Row>
                   <Row className="mb-3">
                     <Form.Group as={Col} md="12" controlId="validationCustom01">
-                      <Form.Label>Password</Form.Label>
+                      <Form.Label className="float-start">Password</Form.Label>
                       <Form.Control
                         required
                         type="email"
@@ -55,7 +54,9 @@ const Login = () => {
                     </Form.Group>
                   </Row>
 
-                  <Button type="submit">Login</Button>
+                  <Button type="submit" className="mt-5 mb-5">
+                    Login
+                  </Button>
                 </Form>
               </Card.Body>
             </Card>

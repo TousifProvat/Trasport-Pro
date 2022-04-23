@@ -34,12 +34,12 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <div className="App">
-          <Navbar1></Navbar1>
-          <hr></hr>
-          <Navbar2></Navbar2>
-        </div>
         <AuthProvider>
+          <div className="App">
+            <Navbar1></Navbar1>
+            <hr></hr>
+            <Navbar2></Navbar2>
+          </div>
           <Routes>
             <Route path="/" element={<FreightOptionsDashboard />} />
             <Route path="frtOpsDash" element={<FreightOptionsDashboard />} />
@@ -58,19 +58,10 @@ function App() {
             <Route path="searchCustomer" element={<SearchCustomer />} />
             <Route path="searchLoad" element={<SearchLoad />} />
             <Route path="site-setting" element={<SiteSettings />} />
-            <Route path="log-in" element={<Login />} />
-            <Route
-              path="editDriver"
-              element={<EditDriver />}
-            />
-            <Route
-              path="editTrailer"
-              element={<EditTrailer />}
-            />
-            <Route
-              path="editTractor"
-              element={<EditTractor />}
-            />
+            <Route path="login" element={<Login />} />
+            <Route path="editDriver" element={<EditDriver />} />
+            <Route path="editTrailer" element={<EditTrailer />} />
+            <Route path="editTractor" element={<EditTractor />} />
             <Route path="summary/:ownerId" element={<OwnerSummary />} />
             <Route
               path="summary/tractor/:tractorId"
