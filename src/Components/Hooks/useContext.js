@@ -1,6 +1,8 @@
 // import React from 'react';
 
+import { notification } from "antd";
 import { useEffect, useState } from "react";
+import axios from "../../utils/axios";
 
 const useContext = () => {
   const [terminalData, setTerminalData] = useState([]);
@@ -16,7 +18,31 @@ const useContext = () => {
   const [revenueStats, setRevenueStats] = useState([]);
   const [loadStats, setLoadStats] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [auth, setAuth] = useState({
+    isAuthenticated: false,
+    user: {},
+    token: "",
+  });
   const value = 17;
+
+  // user signin
+  const authSignin = async (credentials) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post("/auth/signin", credentials);
+      setAuth((prev) => ({
+        ...prev,
+        isAuthenticated: true,
+        user: data.user,
+        token: data.token,
+      }));
+
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({ message: err.response.data.message });
+    }
+  };
 
   useEffect(() => {
     fetch("https://transport-test-server.herokuapp.com/api/v1/owner")
@@ -24,18 +50,16 @@ const useContext = () => {
       .then((data) => setTerminalData(data.owners));
   }, []);
 
-
   const getDetail = (id) => {
-    const info = terminalData.find(i => i.id === id);
+    const info = terminalData.find((i) => i.id === id);
     setOwnerSummary(info);
     return info;
-    
-  }
+  };
 
   const perDetails = (id) => {
     getDetail(id);
     return terminalData;
-  }
+  };
 
   useEffect(() => {
     fetch("https://transport-test-server.herokuapp.com/api/v1/driver")
@@ -43,7 +67,7 @@ const useContext = () => {
       .then((data) => setDriverDate(data.drivers));
   }, []);
 
-//console.log(driverDate);
+  //console.log(driverDate);
 
   const getDriverDetail = (id) => {
     const info = driverDate.find((i) => i._id === id);
@@ -60,21 +84,17 @@ const useContext = () => {
     return driverDate;
   };
 
-  
-
   useEffect(() => {
     fetch("https://transport-test-server.herokuapp.com/api/v1/tractor")
       .then((response) => response.json())
       .then((data) => setTractorData(data.tractors));
   }, []);
 
-
-
   const getTractorDetail = (id) => {
-    const info = tractorData.find((i) => (i._id === id));
-    
+    const info = tractorData.find((i) => i._id === id);
+
     setTractorSummary(info);
-    
+
     return info;
   };
 
@@ -106,31 +126,27 @@ const useContext = () => {
   };
 
   useEffect(() => {
-  setLoading(true);
-  fetch("https://transport-test-server.herokuapp.com/api/v1/billing")
-    .then((response) => response.json())
+    setLoading(true);
+    fetch("https://transport-test-server.herokuapp.com/api/v1/billing")
+      .then((response) => response.json())
       .then((data) => setBillingDashboard(data.loadStats));
     setLoading(false);
-}, []);
-  
-  
-useEffect(() => {
-  fetch("https://transport-test-server.herokuapp.com/api/v1/billing")
-    .then((response) => response.json())
-    .then((data) => setRevenueStats(data.revenueStats));
-}, []);
-  
-  
-useEffect(() => {
-  fetch("https://transport-test-server.herokuapp.com/api/v1/billing")
-    .then((response) => response.json())
-    .then((data) => setLoadStats(data.invoiceStats));
-}, []);
-  
+  }, []);
+
+  useEffect(() => {
+    fetch("https://transport-test-server.herokuapp.com/api/v1/billing")
+      .then((response) => response.json())
+      .then((data) => setRevenueStats(data.revenueStats));
+  }, []);
+
+  useEffect(() => {
+    fetch("https://transport-test-server.herokuapp.com/api/v1/billing")
+      .then((response) => response.json())
+      .then((data) => setLoadStats(data.invoiceStats));
+  }, []);
 
   // console.log(billingDashboard);
-    
-    
+
   return {
     value,
     terminalData,
@@ -148,6 +164,7 @@ useEffect(() => {
     revenueStats,
     loadStats,
     loading,
+    authSignin,
   };
 };
 

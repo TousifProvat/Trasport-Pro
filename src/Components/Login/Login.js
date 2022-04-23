@@ -1,20 +1,42 @@
 import React, { useState } from "react";
-import { Button, Card, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
-import "./login.css"
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  InputGroup,
+  Row,
+} from "react-bootstrap";
+import { notification } from "antd";
+import "./login.css";
+import axios from "../../utils/axios";
+import useContext from "../Hooks/useContext";
 
 const Login = () => {
+  const { authSignin } = useContext();
+  const [validated, setValidated] = useState(false);
+  const [formValues, setFormValues] = useState({
+    email: "",
+    password: "",
+  });
 
-     const [validated, setValidated] = useState(false);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+    }
+    setValidated(true);
+    authSignin(formValues);
+  };
 
-     const handleSubmit = (event) => {
-       const form = event.currentTarget;
-       if (form.checkValidity() === false) {
-         event.preventDefault();
-         event.stopPropagation();
-       }
-
-       setValidated(true);
-     };
+  const onChange = (e) => {
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.value,
+    });
+  };
   return (
     <div>
       <Container>
@@ -38,8 +60,9 @@ const Login = () => {
                         required
                         type="email"
                         placeholder="Email Address"
+                        name="email"
+                        onChange={onChange}
                       />
-                      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
                   </Row>
                   <Row className="mb-3">
@@ -47,13 +70,13 @@ const Login = () => {
                       <Form.Label className="float-start">Password</Form.Label>
                       <Form.Control
                         required
-                        type="email"
+                        type="password"
                         placeholder="Password"
+                        name="password"
+                        onChange={onChange}
                       />
-                      <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
                   </Row>
-
                   <Button type="submit" className="mt-5 mb-5">
                     Login
                   </Button>
