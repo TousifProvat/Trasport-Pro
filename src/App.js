@@ -28,6 +28,7 @@ import EditDriver from "./Components/EditDriver/EditDriver";
 import EditTractor from "./Components/EditTractor/EditTractor";
 import EditTrailer from "./Components/EditTrailer/EditTrailer";
 import SiteSettings from "./Components/SiteSettings/SiteSettings";
+import Login from "./Components/Login/Login";
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
             <Route path="searchCustomer" element={<SearchCustomer />} />
             <Route path="searchLoad" element={<SearchLoad />} />
             <Route path="site-setting" element={<SiteSettings />} />
+            <Route path="log-in" element={<Login />} />
             <Route
               path="editDriver"
               element={<EditDriver />}
