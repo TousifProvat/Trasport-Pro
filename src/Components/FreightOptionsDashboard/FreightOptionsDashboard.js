@@ -21,6 +21,11 @@ import Select from "react-select";
 import useContext from "../Hooks/useContext";
 const FreightOptionsDashboard = () => {
   const [lgShow, setLgShow] = useState(false);
+  const [largeShow, setLargeShow] = useState(false);
+  const [large2Show, setLarge2Show] = useState(false);
+
+  const handleClose = () => setLargeShow(false);
+  const handleClose2 = () => setLarge2Show(false);
 
   const { value } = useContext();
   const options = [
@@ -193,28 +198,127 @@ const FreightOptionsDashboard = () => {
             <td>@mdo</td>
             <td>@mdo</td>
             <td>@mdo</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
+            <td>
+              <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Manage
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <Button variant="outline-primary">Invoice</Button>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Button
+                      variant="outline-primary"
+                      onClick={() => setLargeShow(true)}
+                    >
+                      Update Status
+                    </Button>
+
+                    <Modal
+                      size="lg"
+                      show={largeShow}
+                      onHide={() => setLargeShow(false)}
+                      aria-labelledby="example-modal-sizes-title-lg"
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title id="example-modal-sizes-title-lg">
+                          Update Status
+                        </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Row>
+                          <Col sm={6}>
+                            <Form.Label>Load Id</Form.Label>
+                            <Form.Control
+                              required
+                              type="text"
+                              placeholder="Load Id"
+                              defaultValue="1219"
+                            />
+                          </Col>
+                          <Col sm={6}>
+                            <Form.Label>Load Status</Form.Label>
+                            <Form.Select aria-label="Default select example">
+                              <option>Select Load Status</option>
+                              <option value="Active">ActiveOne</option>
+                              <option value="Inactive">Inactive</option>
+                            </Form.Select>
+                          </Col>
+                        </Row>
+                        <Row className="mt-3">
+                          <Col sm={6}>
+                            <Form.Label>Load Entered By</Form.Label>
+                            <Form.Control
+                              required
+                              type="text"
+                              placeholder="Load Entered By"
+                              // defaultValue="1219"
+                            />
+                          </Col>
+                          <Col sm={6}>
+                            <Form.Label>Dispatcher</Form.Label>
+                            <Form.Control
+                              required
+                              type="text"
+                              placeholder="Dispatcher"
+                              // defaultValue="1219"
+                            />
+                          </Col>
+                        </Row>
+                        <Row className="mt-3">
+                          <Col sm={6}>
+                            <Form.Label>Drivers</Form.Label>
+                            <Form.Select aria-label="Default select example">
+                              <option>Select Drivers</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                            </Form.Select>
+                          </Col>
+                          <Col sm={6}>
+                            <Form.Label>Tractors</Form.Label>
+                            <Form.Select aria-label="Default select example">
+                              <option>Select Tractors</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                            </Form.Select>
+                          </Col>
+                        </Row>
+                        <Row className="mt-3">
+                          <Col sm={6}>
+                            <Form.Label>Trailers</Form.Label>
+                            <Form.Select aria-label="Default select example">
+                              <option>Select Trailers</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                            </Form.Select>
+                          </Col>
+                          <Col sm={6}>
+                            {/* <Form.Label>Tractors</Form.Label>
+                            <Form.Select aria-label="Default select example">
+                              <option>Select Tractors</option>
+                              <option value="1">1</option>
+                              <option value="2">1</option>
+                            </Form.Select> */}
+                          </Col>
+                        </Row>
+                        <Button
+                          variant="outline-danger"
+                          className="mt-5 mb-5"
+                          onClick={handleClose}
+                        >
+                          cancel
+                        </Button>{" "}
+                        <Button variant="outline-primary" className="mt-5 mb-5">
+                          Update Status
+                        </Button>{" "}
+                      </Modal.Body>
+                    </Modal>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </td>
           </tr>
         </tbody>
       </Table>
@@ -525,15 +629,7 @@ const FreightOptionsDashboard = () => {
             <td>30/05/2022</td>
             <td>Note Dam - De</td>
             <td>
-              <OverlayTrigger
-                overlay={<Tooltip id="tooltip-disabled">Manage</Tooltip>}
-              >
-                <span className="d-inline-block">
-                  <Button variant="outline-success">
-                    <i className="fa-solid fa-list-check"></i>
-                  </Button>{" "}
-                </span>
-              </OverlayTrigger>
+              <Button variant="outline-success">Manage</Button>
             </td>
           </tr>
         </tbody>
@@ -851,15 +947,125 @@ const FreightOptionsDashboard = () => {
 
             <td>Note Dam - De</td>
             <td>
-              <OverlayTrigger
-                overlay={<Tooltip id="tooltip-disabled">Manage</Tooltip>}
-              >
-                <span className="d-inline-block">
-                  <Button variant="outline-success">
-                    <i className="fa-solid fa-list-check"></i>
-                  </Button>{" "}
-                </span>
-              </OverlayTrigger>
+              <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Manage
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <Button variant="outline-primary">Invoice</Button>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Button
+                      variant="outline-primary"
+                      onClick={() => setLarge2Show(true)}
+                    >
+                      Dispatch
+                    </Button>
+
+                    <Modal
+                      size="lg"
+                      show={large2Show}
+                      onHide={() => setLarge2Show(false)}
+                      aria-labelledby="example-modal-sizes-title-lg"
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title id="example-modal-sizes-title-lg">
+                          Dispatch
+                        </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Row>
+                          <Col sm={6}>
+                            <Form.Label>Load Id</Form.Label>
+                            <Form.Control
+                              required
+                              type="text"
+                              placeholder="Load Id"
+                              defaultValue="1219"
+                            />
+                          </Col>
+                          <Col sm={6}>
+                            <Form.Label>Load Status</Form.Label>
+                            <Form.Select aria-label="Default select example">
+                              <option>Select Load Status</option>
+                              <option value="Active">ActiveOne</option>
+                              <option value="Inactive">Inactive</option>
+                            </Form.Select>
+                          </Col>
+                        </Row>
+                        <Row className="mt-3">
+                          <Col sm={6}>
+                            <Form.Label>Load Entered By</Form.Label>
+                            <Form.Control
+                              required
+                              type="text"
+                              placeholder="Load Entered By"
+                              // defaultValue="1219"
+                            />
+                          </Col>
+                          <Col sm={6}>
+                            <Form.Label>Dispatcher</Form.Label>
+                            <Form.Control
+                              required
+                              type="text"
+                              placeholder="Dispatcher"
+                              // defaultValue="1219"
+                            />
+                          </Col>
+                        </Row>
+                        <Row className="mt-3">
+                          <Col sm={6}>
+                            <Form.Label>Drivers</Form.Label>
+                            <Form.Select aria-label="Default select example">
+                              <option>Select Drivers</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                            </Form.Select>
+                          </Col>
+                          <Col sm={6}>
+                            <Form.Label>Tractors</Form.Label>
+                            <Form.Select aria-label="Default select example">
+                              <option>Select Tractors</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                            </Form.Select>
+                          </Col>
+                        </Row>
+                        <Row className="mt-3">
+                          <Col sm={6}>
+                            <Form.Label>Trailers</Form.Label>
+                            <Form.Select aria-label="Default select example">
+                              <option>Select Trailers</option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                            </Form.Select>
+                          </Col>
+                          <Col sm={6}>
+                            {/* <Form.Label>Tractors</Form.Label>
+                            <Form.Select aria-label="Default select example">
+                              <option>Select Tractors</option>
+                              <option value="1">1</option>
+                              <option value="2">1</option>
+                            </Form.Select> */}
+                          </Col>
+                        </Row>
+                        <Button
+                          variant="outline-danger"
+                          className="mt-5 mb-5"
+                          onClick={handleClose2}
+                        >
+                          cancel
+                        </Button>{" "}
+                        <Button variant="outline-primary" className="mt-5 mb-5">
+                          Dispatch
+                        </Button>{" "}
+                      </Modal.Body>
+                    </Modal>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </td>
           </tr>
         </tbody>
@@ -1181,15 +1387,17 @@ const FreightOptionsDashboard = () => {
 
             <td>Note Dam - De</td>
             <td>
-              <OverlayTrigger
-                overlay={<Tooltip id="tooltip-disabled">Manage</Tooltip>}
-              >
-                <span className="d-inline-block">
-                  <Button variant="outline-success">
-                    <i className="fa-solid fa-list-check"></i>
-                  </Button>{" "}
-                </span>
-              </OverlayTrigger>
+              <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Manage
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <Button variant="outline-primary">Invoice</Button>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+                </Dropdown>
             </td>
           </tr>
         </tbody>
