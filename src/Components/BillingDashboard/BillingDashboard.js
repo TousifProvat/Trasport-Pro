@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 import useContext from "../Hooks/useContext";
 
-const loadStats = () => {
+const BillingDashboard = () => {
   const { billing } = useContext();
   const { loadStats, invoiceStats, revenueStats, loading } = billing;
 
@@ -151,4 +151,4 @@ const loadStats = () => {
   );
 };
 
-export default loadStats;
+export default BillingDashboard;
