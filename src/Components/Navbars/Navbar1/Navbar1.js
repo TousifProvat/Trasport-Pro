@@ -40,7 +40,8 @@ const Navbar1 = () => {
                 <Dropdown.Menu>
                   <Dropdown.Item>Demo X</Dropdown.Item>
                   <Dropdown.Item>
-                    <Button variant="outline-danger">SignOut</Button>{" "}
+                    <i className="fa-solid fa-right-from-bracket me-2"></i>
+                    SignOut
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
