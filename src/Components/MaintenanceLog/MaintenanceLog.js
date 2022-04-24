@@ -8,7 +8,7 @@ const MaintenanceLog = () => {
 
     
     const [allValues, setAllValues] = useState({
-      equipmentType: "Tractor",
+      equipmentType: "",
       tractor: "",
       trailer: "",
       maintenanceType: "",
@@ -177,7 +177,7 @@ const handleSaveBtn = () => {
                         className="mt-5 mb-3"
                         onClick={handleSaveBtn}
                       >
-                        Save
+                        Update
                       </Button>{" "}
                       <Button
                         variant="outline-danger"
@@ -220,7 +220,10 @@ const handleSaveBtn = () => {
                     overlay={<Tooltip id="tooltip-disabled">Edit</Tooltip>}
                   >
                     <span className="d-inline-block">
-                      <Button variant="outline-success" onClick={handleEdit}>
+                      <Button
+                        variant="outline-success"
+                        onClick={() => setLgShow(true)}
+                      >
                         <i className="fa-solid fa-pen-to-square"></i>
                       </Button>{" "}
                     </span>

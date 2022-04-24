@@ -17,7 +17,7 @@ import {
 const InspectionLog = () => {
     const [lgShow, setLgShow] = useState(false);
   const [allValues, setAllValues] = useState({
-    equipmentType: "Tractor",
+    equipmentType: "",
     tractor: "",
     trailer: "",
     inspectionType: "",
@@ -200,7 +200,7 @@ const InspectionLog = () => {
                       className="mt-5 mb-3"
                       onClick={handleSaveBtn}
                     >
-                      Save
+                      Update
                     </Button>{" "}
                     <Button
                       variant="outline-danger"
