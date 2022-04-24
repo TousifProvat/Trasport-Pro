@@ -90,7 +90,7 @@ const InspectionLog = () => {
                           <option value="Trailer">Trailer</option>
                         </Form.Select>
                       </Col>
-                      {allValues.equipType === "Trailer" ? (
+                      {allValues.equipmentType === "Trailer" ? (
                         <>
                           <Col sm={4}>
                             <Form.Label>Trailer</Form.Label>
