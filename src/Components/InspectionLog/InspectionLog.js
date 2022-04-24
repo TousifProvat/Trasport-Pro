@@ -18,13 +18,13 @@ const InspectionLog = () => {
     const [lgShow, setLgShow] = useState(false);
     const[handleEquipment, setHandleEquipment] = useState(false);
   const [allValues, setAllValues] = useState({
-    equipType: "",
+    equipmentType: "Tractor",
     tractor: "",
     trailer: "",
     inspectionType: "",
-    comment: "",
-    inspectionResult: "",
-    attachInspectionResult: "",
+    comments: "",
+    result: "pass",
+    inspectionDocument: "",
     inspectionDate: "",
     nextInspectionDate: "",
   });
@@ -82,7 +82,7 @@ const InspectionLog = () => {
                         <Form.Label>Equipment Type</Form.Label>
                         <Form.Select
                           aria-label="Default select example"
-                          name="equipType"
+                          name="equipmentType"
                           onChange={changeHandler}
                         >
                           <option>Select Equipment Type</option>
@@ -153,7 +153,7 @@ const InspectionLog = () => {
                         <Form.Label>Inspect Result</Form.Label>
                         <Form.Select
                           aria-label="Default select example"
-                          name="inspectionResult"
+                          name="result"
                           onChange={changeHandler}
                         >
                           <option>Select result</option>
@@ -167,7 +167,7 @@ const InspectionLog = () => {
                           required
                           type="file"
                           placeholder="Inspection Type"
-                          name="attachInspectionResult"
+                          name="inspectionDocument"
                           onChange={changeHandler}
                         />
                       </Col>
