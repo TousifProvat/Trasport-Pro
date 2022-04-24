@@ -306,13 +306,14 @@ const AddNewLoad = () => {
           </Col>
         </Row>
         <Row className="mt-3">
+          {/*  */}
           <Col sm={6}>
-            <Form.Label>Load Entered By</Form.Label>
+            <Form.Label>Commodity Type</Form.Label>
             <Form.Control
               required
               type="text"
-              placeholder="Load Entered By"
-              name="loadEnteredBy"
+              placeholder="Commodity Type"
+              name="commodityType"
               onChange={changeHandler}
             />
           </Col>
@@ -329,12 +330,12 @@ const AddNewLoad = () => {
         </Row>
         <Row className="mt-3">
           <Col sm={6}>
-            <Form.Label>Commodity Type</Form.Label>
+            <Form.Label>Load Entered By</Form.Label>
             <Form.Control
               required
               type="text"
-              placeholder="Commodity Type"
-              name="commodityType"
+              placeholder="Load Entered By"
+              name="loadEnteredBy"
               onChange={changeHandler}
             />
           </Col>
