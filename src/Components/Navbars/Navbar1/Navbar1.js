@@ -2,6 +2,7 @@ import React from "react";
 import {
   Button,
   Container,
+  Dropdown,
   Image,
   Nav,
   Navbar,
@@ -31,8 +32,20 @@ const Navbar1 = () => {
               </Nav>
             </div>
             <div className="navLinks-shortLinks">
-              <p className="text-nowrap fw-bold">Text Demo X</p>
-              <div className="">
+              <Dropdown drop="start">
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  <i className="fa-solid fa-gear"></i>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item>Demo X</Dropdown.Item>
+                  <Dropdown.Item>
+                    <Button variant="outline-danger">SignOut</Button>{" "}
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              {/* <p className="text-nowrap fw-bold">Text Demo X</p> */}
+              {/* <div className="">
                 <OverlayTrigger
                   placement="bottom"
                   overlay={<Tooltip id="button-tooltip-2">Log out</Tooltip>}
@@ -43,17 +56,10 @@ const Navbar1 = () => {
                       {...triggerHandler}
                       className="d-inline-flex align-items-center"
                     >
-                      {/* <Image
-                        ref={ref}
-                        roundedCircle
-                        src="https://demo.transportpro.net/images/icons/xsmall/logout.png"
-                      /> */}
-                      <i className="fa-solid fa-right-from-bracket"></i>
-                      {/* <span className="ms-1">Hover to see</span> */}
                     </Button>
                   )}
                 </OverlayTrigger>
-              </div>
+              </div> */}
             </div>
           </Navbar.Collapse>
         </Container>
