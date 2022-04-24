@@ -1,46 +1,12 @@
-.selected-div{
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    grid-gap: 50px;
-}
-.main-inside-modal{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-gap: 20px;
-}
-.inside-modal-inside{
+.all_colors{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    flex-direction: row;
 }
-.modal-btn{
+.color_p{
+    padding: 5px;
+    border: 1px solid #000;
     position: relative;
-    top: 20px;
-}
-.modal-90w{
-    width: 90%;
-}
-/*  */
-
-.Consignee-Information{
-
-}
-.Consignee-Information{
-    display: flex;
-    justify-content: space-between;
-}
-.modal-header-Consignee{
-    display: flex;
-    flex-direction: column;
-}
-.Checkbox-para{
-    margin-right: 300px;
-}
-.Checkbox-para2{
-    margin-right: 162px;
-}
-.line-items{
-    display: flex;
-    justify-content: space-between;
+    bottom: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
