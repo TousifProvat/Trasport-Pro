@@ -27,6 +27,30 @@ const FreightOptionsDashboard = () => {
   const handleClose = () => setLargeShow(false);
   const handleClose2 = () => setLarge2Show(false);
 
+const [allValues, setAllValues] = useState({
+  loadId: "",
+  status: "",
+  dispatcher: "",
+  driver: "",
+  tractor: "",
+  trailer: "",
+  loadBy: "",
+});
+const changeHandler = (e) => {
+  setAllValues({
+    ...allValues,
+    [e.target.name]: e.target.value,
+  });
+};
+
+  const handleUpdateStatus = () => {
+    console.log(allValues);
+  };
+  const handleDispatcher = () => {
+    console.log(allValues);
+  };
+  
+
   const { value } = useContext();
   const options = [
     { value: "ABC - ABC Terminal", label: "ABC - ABC Terminal" },
@@ -236,11 +260,17 @@ const FreightOptionsDashboard = () => {
                               type="text"
                               placeholder="Load Id"
                               defaultValue="1219"
+                              name="loadId"
+                              onChange={changeHandler}
                             />
                           </Col>
                           <Col sm={6}>
                             <Form.Label>Load Status</Form.Label>
-                            <Form.Select aria-label="Default select example">
+                            <Form.Select
+                              aria-label="Default select example"
+                              name="status"
+                              onChange={changeHandler}
+                            >
                               <option>Select Load Status</option>
                               <option value="Active">ActiveOne</option>
                               <option value="Inactive">Inactive</option>
@@ -254,6 +284,8 @@ const FreightOptionsDashboard = () => {
                               required
                               type="text"
                               placeholder="Load Entered By"
+                              name="loadBy"
+                              onChange={changeHandler}
                               // defaultValue="1219"
                             />
                           </Col>
@@ -263,6 +295,9 @@ const FreightOptionsDashboard = () => {
                               required
                               type="text"
                               placeholder="Dispatcher"
+                              name="dispatcher"
+                              onChange={changeHandler}
+
                               // defaultValue="1219"
                             />
                           </Col>
@@ -270,7 +305,11 @@ const FreightOptionsDashboard = () => {
                         <Row className="mt-3">
                           <Col sm={6}>
                             <Form.Label>Drivers</Form.Label>
-                            <Form.Select aria-label="Default select example">
+                            <Form.Select
+                              aria-label="Default select example"
+                              name="driver"
+                              onChange={changeHandler}
+                            >
                               <option>Select Drivers</option>
                               <option value="1">1</option>
                               <option value="2">2</option>
@@ -278,7 +317,11 @@ const FreightOptionsDashboard = () => {
                           </Col>
                           <Col sm={6}>
                             <Form.Label>Tractors</Form.Label>
-                            <Form.Select aria-label="Default select example">
+                            <Form.Select
+                              aria-label="Default select example"
+                              name="tractor"
+                              onChange={changeHandler}
+                            >
                               <option>Select Tractors</option>
                               <option value="1">1</option>
                               <option value="2">2</option>
@@ -288,7 +331,11 @@ const FreightOptionsDashboard = () => {
                         <Row className="mt-3">
                           <Col sm={6}>
                             <Form.Label>Trailers</Form.Label>
-                            <Form.Select aria-label="Default select example">
+                            <Form.Select
+                              aria-label="Default select example"
+                              name="trailer"
+                              onChange={changeHandler}
+                            >
                               <option>Select Trailers</option>
                               <option value="1">1</option>
                               <option value="2">2</option>
@@ -310,7 +357,11 @@ const FreightOptionsDashboard = () => {
                         >
                           cancel
                         </Button>{" "}
-                        <Button variant="outline-primary" className="mt-5 mb-5">
+                        <Button
+                          variant="outline-primary"
+                          className="mt-5 mb-5"
+                          onClick={handleUpdateStatus}
+                        >
                           Update Status
                         </Button>{" "}
                       </Modal.Body>
@@ -984,11 +1035,17 @@ const FreightOptionsDashboard = () => {
                               type="text"
                               placeholder="Load Id"
                               defaultValue="1219"
+                              name="loadId"
+                              onChange={changeHandler}
                             />
                           </Col>
                           <Col sm={6}>
                             <Form.Label>Load Status</Form.Label>
-                            <Form.Select aria-label="Default select example">
+                            <Form.Select
+                              aria-label="Default select example"
+                              name="status"
+                              onChange={changeHandler}
+                            >
                               <option>Select Load Status</option>
                               <option value="Active">ActiveOne</option>
                               <option value="Inactive">Inactive</option>
@@ -1002,6 +1059,8 @@ const FreightOptionsDashboard = () => {
                               required
                               type="text"
                               placeholder="Load Entered By"
+                              name="loadBy"
+                              onChange={changeHandler}
                               // defaultValue="1219"
                             />
                           </Col>
@@ -1011,6 +1070,8 @@ const FreightOptionsDashboard = () => {
                               required
                               type="text"
                               placeholder="Dispatcher"
+                              name="dispatcher"
+                              onChange={changeHandler}
                               // defaultValue="1219"
                             />
                           </Col>
@@ -1018,7 +1079,11 @@ const FreightOptionsDashboard = () => {
                         <Row className="mt-3">
                           <Col sm={6}>
                             <Form.Label>Drivers</Form.Label>
-                            <Form.Select aria-label="Default select example">
+                            <Form.Select
+                              aria-label="Default select example"
+                              name="driver"
+                              onChange={changeHandler}
+                            >
                               <option>Select Drivers</option>
                               <option value="1">1</option>
                               <option value="2">2</option>
@@ -1026,7 +1091,11 @@ const FreightOptionsDashboard = () => {
                           </Col>
                           <Col sm={6}>
                             <Form.Label>Tractors</Form.Label>
-                            <Form.Select aria-label="Default select example">
+                            <Form.Select
+                              aria-label="Default select example"
+                              name="tractor"
+                              onChange={changeHandler}
+                            >
                               <option>Select Tractors</option>
                               <option value="1">1</option>
                               <option value="2">2</option>
@@ -1036,7 +1105,11 @@ const FreightOptionsDashboard = () => {
                         <Row className="mt-3">
                           <Col sm={6}>
                             <Form.Label>Trailers</Form.Label>
-                            <Form.Select aria-label="Default select example">
+                            <Form.Select
+                              aria-label="Default select example"
+                              name="trailer"
+                              onChange={changeHandler}
+                            >
                               <option>Select Trailers</option>
                               <option value="1">1</option>
                               <option value="2">2</option>
@@ -1058,7 +1131,7 @@ const FreightOptionsDashboard = () => {
                         >
                           cancel
                         </Button>{" "}
-                        <Button variant="outline-primary" className="mt-5 mb-5">
+                        <Button variant="outline-primary" className="mt-5 mb-5" onClick={handleDispatcher}>
                           Dispatch
                         </Button>{" "}
                       </Modal.Body>
@@ -1397,7 +1470,7 @@ const FreightOptionsDashboard = () => {
                     <Button variant="outline-primary">Invoice</Button>
                   </Dropdown.Item>
                 </Dropdown.Menu>
-                </Dropdown>
+              </Dropdown>
             </td>
           </tr>
         </tbody>
