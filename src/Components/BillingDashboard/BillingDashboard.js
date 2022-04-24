@@ -12,16 +12,16 @@ import {
 } from "react-bootstrap";
 import useContext from "../Hooks/useContext";
 
-const BillingDashboard = () => {
-  const { billingDashboard, revenueStats, loadStats, loading } = useContext();
-  
+const loadStats = () => {
+  const { billing } = useContext();
+  const { loadStats, invoiceStats, revenueStats, loading } = billing;
 
   // console.log(loadStats);
   return (
     <div>
       <Container fluid>
         {" "}
-        <h1 className="mt-5 mb-3">Billing/Collections Dashboard.</h1>
+        <h3 className="mt-5 mb-3">Billing Dashboard</h3>
         <hr></hr>
         <Row>
           {loading && <h2>loading..</h2>}
@@ -49,23 +49,23 @@ const BillingDashboard = () => {
                 <tbody>
                   <tr>
                     <td>Total</td>
-                    <td>{billingDashboard.total}</td>
+                    <td>{loadStats.total}</td>
                   </tr>
                   <tr>
                     <td>Planned</td>
-                    <td>{billingDashboard.planned}</td>
+                    <td>{loadStats.planned}</td>
                   </tr>
                   <tr>
                     <td>Dispatched</td>
-                    <td>{billingDashboard.dispatched}</td>
+                    <td>{loadStats.dispatched}</td>
                   </tr>
                   <tr>
                     <td>Delivered</td>
-                    <td>{billingDashboard.delivered}</td>
+                    <td>{loadStats.delivered}</td>
                   </tr>
                   <tr>
                     <td>Cancelled</td>
-                    <td>{billingDashboard.cancelled}</td>
+                    <td>{loadStats.cancelled}</td>
                   </tr>
                 </tbody>
               </Table>
@@ -132,15 +132,15 @@ const BillingDashboard = () => {
               <tbody>
                 <tr>
                   <td>Loads Not Invoiced</td>
-                  <td>{loadStats.notInvoicedLoads}</td>
+                  <td>{invoiceStats.notInvoicedLoads}</td>
                 </tr>
                 <tr>
                   <td>Load Invoiced</td>
-                  <td>{loadStats.loadsInvoiced}</td>
+                  <td>{invoiceStats.loadsInvoiced}</td>
                 </tr>
                 <tr>
                   <td>Paid Loads</td>
-                  <td>{loadStats.paidLoads}</td>
+                  <td>{invoiceStats.paidLoads}</td>
                 </tr>
               </tbody>
             </Table>
@@ -151,4 +151,4 @@ const BillingDashboard = () => {
   );
 };
 
-export default BillingDashboard;
+export default loadStats;

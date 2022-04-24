@@ -8,35 +8,19 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import useContext from "../Hooks/useContext";
-import OwnerSummary from "../OwnerSummary/OwnerSummary";
 import "./searchOwner.css";
 
-
-
 const SearchOwner = () => {
+  const [allValues, setAllValues] = useState({});
 
+  const changeHandler = (e) => {
+    setAllValues({
+      ...allValues,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  
-
-
-const [allValues, setAllValues] = useState({});
-
-const changeHandler = (e) => {
-  setAllValues({
-    ...allValues,
-    [e.target.name]: e.target.value,
-  });
-};
-
-
-  const { terminalData, perDetails } = useContext();
-
-  console.log(terminalData);
-
-
-  
   //form validator button
 
   const [validated, setValidated] = useState(false);
@@ -50,7 +34,6 @@ const changeHandler = (e) => {
 
   ///////////////////////////
 
-  
   return (
     <>
       <div>
@@ -281,7 +264,6 @@ const changeHandler = (e) => {
                 <Form.Select
                   aria-label="Default select example"
                   name="hasImage"
-
                   onChange={changeHandler}
                 >
                   <option>Select Options</option>
@@ -336,31 +318,6 @@ const changeHandler = (e) => {
                 <th>Pay%</th>
               </tr>
             </thead>
-
-            {terminalData.map((i) => (
-              <tbody key={i._id}>
-                <tr>
-                  <td>
-                    <Link to={`/summary/${i._id}`}>
-                      <p onClick={() => perDetails(i._id)}>{i._id}</p>
-                    </Link>
-                  </td>
-                  <td>{i.status}</td>
-                  <td>{i.zip}</td>
-                  <td>{i.owner}</td>
-                  <td>{i.company}</td>
-                  <td>{i.group}</td>
-                  <td>{i.phoneNumber}</td>
-                  <td>{i.cellphone}</td>
-                  <td>{i.city}</td>
-                  <td>{i.state}</td>
-                  <td>{i.activeTractors}</td>
-                  <td>{i.activeTrailers}</td>
-                  <td>{i.activeDrivers}</td>
-                  <td>{i.pay}</td>
-                </tr>
-              </tbody>
-            ))}
           </Table>
         </Container>
       </div>
