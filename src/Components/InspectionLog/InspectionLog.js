@@ -86,7 +86,6 @@ const InspectionLog = () => {
                           name="equipmentType"
                           onChange={changeHandler}
                         >
-                          <option>Select Equipment Type</option>
                           <option value="Tractor">Tractor</option>
                           <option value="Trailer">Trailer</option>
                         </Form.Select>
