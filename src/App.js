@@ -29,6 +29,7 @@ import EditTrailer from "./Components/EditTrailer/EditTrailer";
 import SiteSettings from "./Components/SiteSettings/SiteSettings";
 import Login from "./Components/Login/Login";
 import UserManagement from "./Components/UserManagement/UserManagement";
+import InspectionLog from "./Components/InspectionLog/InspectionLog";
 
 function App() {
   return (
@@ -71,6 +72,7 @@ function App() {
             <Route path="trailer/:trailerId" element={<TrailerSummary />} />
             <Route path="driver/:driverId" element={<DriverSummary />} />
             <Route path="billing-dashboard" element={<BillingDashboard />} />
+            <Route path="inspection-log" element={<InspectionLog />} />
             <Route
               path="terminal-manage-dashboard"
               element={<TerminalManagerDashboard />}
