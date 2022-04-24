@@ -18,17 +18,15 @@ const InspectionLog = () => {
     const [lgShow, setLgShow] = useState(false);
     const[handleEquipment, setHandleEquipment] = useState(false);
   const [allValues, setAllValues] = useState({
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    phoneNumber: "",
-    email: "",
-    password: "",
-    accounting: false,
-    billing: false,
-    systemAdmin: true,
-    settlements: false,
-    freightOperation: false,
+    equipType: "",
+    tractor: "",
+    trailer: "",
+    inspectionType: "",
+    comment: "",
+    inspectionResult: "",
+    attachInspectionResult: "",
+    inspectionDate: "",
+    nextInspectionDate: "",
   });
 
   const changeHandler = (e) => {
@@ -37,7 +35,7 @@ const InspectionLog = () => {
       [e.target.name]: e.target.value,
     });
       
-      setHandleEquipment({ [e.target.name]: e.target.value === "Trailer" });
+    //   setHandleEquipment({ [e.target.name]: e.target.value === "Trailer" });
     };
     
     // console.log(handleEquipment.equipType);
@@ -92,11 +90,15 @@ const InspectionLog = () => {
                           <option value="Trailer">Trailer</option>
                         </Form.Select>
                       </Col>
-                      {handleEquipment.equipType ? (
+                      {allValues.equipType === "Trailer" ? (
                         <>
                           <Col sm={4}>
                             <Form.Label>Trailer</Form.Label>
-                            <Form.Select aria-label="Default select example">
+                            <Form.Select
+                              aria-label="Default select example"
+                              name="trailer"
+                              onChange={changeHandler}
+                            >
                               <option>Trailer</option>
                               {/* <option value="Tractor1">Tractor1</option>
                               <option value="Tractor2">Tractor2</option> */}
@@ -107,7 +109,11 @@ const InspectionLog = () => {
                         <>
                           <Col sm={4}>
                             <Form.Label>Tractor</Form.Label>
-                            <Form.Select aria-label="Default select example">
+                            <Form.Select
+                              aria-label="Default select example"
+                              name="tractor"
+                              onChange={changeHandler}
+                            >
                               <option>Tractor</option>
                               {/* <option value="Tractor1">Tractor1</option>
                               <option value="Tractor2">Tractor2</option> */}
@@ -122,6 +128,8 @@ const InspectionLog = () => {
                           required
                           type="text"
                           placeholder="Inspection Type"
+                          name="inspectionType"
+                          onChange={changeHandler}
                         />
                       </Col>
                     </Row>
@@ -135,13 +143,19 @@ const InspectionLog = () => {
                           as="textarea"
                           placeholder="Comment"
                           style={{ height: "100px" }}
+                          name="comment"
+                          onChange={changeHandler}
                         />
                       </FloatingLabel>
                     </Row>
                     <Row className="mt-3">
                       <Col sm={6}>
                         <Form.Label>Inspect Result</Form.Label>
-                        <Form.Select aria-label="Default select example">
+                        <Form.Select
+                          aria-label="Default select example"
+                          name="inspectResult"
+                          onChange={changeHandler}
+                        >
                           <option>Select result</option>
                           {/* <option value="Tractor1">Tractor1</option>
                           <option value="Tractor2">Tractor2</option> */}
@@ -153,6 +167,8 @@ const InspectionLog = () => {
                           required
                           type="file"
                           placeholder="Inspection Type"
+                          name="attachInspectResult"
+                          onChange={changeHandler}
                         />
                       </Col>
                     </Row>
@@ -163,6 +179,8 @@ const InspectionLog = () => {
                           required
                           type="date"
                           placeholder="Inspection Type"
+                          name="inspectDate"
+                          onChange={changeHandler}
                         />
                       </Col>
                       <Col sm={6}>
@@ -171,6 +189,8 @@ const InspectionLog = () => {
                           required
                           type="date"
                           placeholder="Inspection Type"
+                          name="nextInspectDate"
+                          onChange={changeHandler}
                         />
                       </Col>
                     </Row>
