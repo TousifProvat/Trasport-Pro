@@ -73,8 +73,8 @@ function App() {
             <Route path="trailer/:trailerId" element={<TrailerSummary />} />
             <Route path="driver/:driverId" element={<DriverSummary />} />
             <Route path="billing-dashboard" element={<BillingDashboard />} />
-            <Route path="inspectionLog" element={<InspectionLog />} />
-            <Route path="maintenanceLog" element={<MaintenanceLog />} />
+            <Route path="inspection" element={<InspectionLog />} />
+            <Route path="maintenance" element={<MaintenanceLog />} />
             <Route
               path="terminal-manage-dashboard"
               element={<TerminalManagerDashboard />}
