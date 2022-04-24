@@ -153,7 +153,7 @@ const InspectionLog = () => {
                         <Form.Label>Inspect Result</Form.Label>
                         <Form.Select
                           aria-label="Default select example"
-                          name="inspectResult"
+                          name="inspectionResult"
                           onChange={changeHandler}
                         >
                           <option>Select result</option>
@@ -167,7 +167,7 @@ const InspectionLog = () => {
                           required
                           type="file"
                           placeholder="Inspection Type"
-                          name="attachInspectResult"
+                          name="attachInspectionResult"
                           onChange={changeHandler}
                         />
                       </Col>
@@ -179,7 +179,7 @@ const InspectionLog = () => {
                           required
                           type="date"
                           placeholder="Inspection Type"
-                          name="inspectDate"
+                          name="inspectionDate"
                           onChange={changeHandler}
                         />
                       </Col>
@@ -189,7 +189,7 @@ const InspectionLog = () => {
                           required
                           type="date"
                           placeholder="Inspection Type"
-                          name="nextInspectDate"
+                          name="nextInspectionDate"
                           onChange={changeHandler}
                         />
                       </Col>
