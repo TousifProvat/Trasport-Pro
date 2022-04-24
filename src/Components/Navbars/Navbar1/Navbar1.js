@@ -43,11 +43,12 @@ const Navbar1 = () => {
                       {...triggerHandler}
                       className="d-inline-flex align-items-center"
                     >
-                      <Image
+                      {/* <Image
                         ref={ref}
                         roundedCircle
                         src="https://demo.transportpro.net/images/icons/xsmall/logout.png"
-                      />
+                      /> */}
+                      <i className="fa-solid fa-right-from-bracket"></i>
                       {/* <span className="ms-1">Hover to see</span> */}
                     </Button>
                   )}

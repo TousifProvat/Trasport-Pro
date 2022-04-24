@@ -16,7 +16,6 @@ import {
 
 const InspectionLog = () => {
     const [lgShow, setLgShow] = useState(false);
-    const[handleEquipment, setHandleEquipment] = useState(false);
   const [allValues, setAllValues] = useState({
     equipmentType: "Tractor",
     tractor: "",
@@ -42,12 +41,14 @@ const InspectionLog = () => {
 
   const handleEdit = () => {
     alert("edited");
-    };
+  };
+  
     const handleClose = () => setLgShow(false);
 
     const handleSaveBtn = () => {
         console.log(allValues);
-    }
+  }
+  
   return (
     <div>
       <Container>

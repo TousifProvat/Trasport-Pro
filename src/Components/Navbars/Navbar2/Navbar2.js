@@ -61,6 +61,7 @@ const Navbar2 = () => {
                   </NavDropdown.Item>
                 </NavDropdown>
                 <Nav.Link href="/inspection-log">Inspection</Nav.Link>
+                <Nav.Link href="/maintenance-log">Maintenance</Nav.Link>
               </NavDropdown>
 
               <NavDropdown title="Customers" id="basic-nav-dropdown">

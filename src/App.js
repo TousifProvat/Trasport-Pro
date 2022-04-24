@@ -30,6 +30,7 @@ import SiteSettings from "./Components/SiteSettings/SiteSettings";
 import Login from "./Components/Login/Login";
 import UserManagement from "./Components/UserManagement/UserManagement";
 import InspectionLog from "./Components/InspectionLog/InspectionLog";
+import MaintenanceLog from "./Components/MaintenanceLog/MaintenanceLog";
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function App() {
             <Route path="driver/:driverId" element={<DriverSummary />} />
             <Route path="billing-dashboard" element={<BillingDashboard />} />
             <Route path="inspection-log" element={<InspectionLog />} />
+            <Route path="maintenance-log" element={<MaintenanceLog />} />
             <Route
               path="terminal-manage-dashboard"
               element={<TerminalManagerDashboard />}
