@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  InputGroup,
+  Nav,
+  Navbar,
+  Row,
+  Table,
+} from "react-bootstrap";
 import useContext from "../Hooks/useContext";
 
 const SearchLoad = () => {
@@ -38,35 +48,87 @@ const SearchLoad = () => {
 
   return (
     <div>
-      <Container className="mt-5 mb-3">
-        <h2>Search load</h2>
+      <Container fluid className="mt-5 mb-3">
+        <h2>Search Loads And Dispatches</h2>
         <hr></hr>
-        <Form onSubmit={handleSubmit} onReset={handleReset}>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4">
-              <Form.Label>Status</Form.Label>
-              <Form.Select
-                aria-label="Default select example"
-                name="status"
-                value={status}
-                onChange={onChange}
-              >
-                <option>Select Status</option>
-                <option value="planned">Planned</option>
-                <option value="dispatched">Dispatched</option>
-                <option value="picked">Picked</option>
-                <option value="delivered">Delivered</option>
-                <option value="cancelled">Cancelled</option>
-              </Form.Select>
-            </Form.Group>
-          </Row>
-          <Button type="submit" variant="outline-primary">
-            Filter
-          </Button>{" "}
-          <Button type="reset" variant="outline-danger">
-            Clear
-          </Button>{" "}
-        </Form>
+        <Navbar bg="light" expand="lg">
+          <Container fluid>
+            <Navbar.Brand href="#home">Search Loads</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="ms-auto">
+                <Button variant="outline-primary">Print Results</Button>{" "}
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Load</th>
+              <th>Dispatch Status</th>
+              <th>Bill To</th>
+              <th>Shipper</th>
+              <th>Origin</th>
+              <th>Consignee</th>
+              <th>Destination</th>
+              <th>BOL</th>
+              <th>Terminal</th>
+              <th>Drivers</th>
+              <th>Order Taken</th>
+              <th>Pickup Date</th>
+              <th>Delivery Date</th>
+              <th>Billing Date</th>
+              <th>Total Bill</th>
+              <th>Date Created</th>
+              <th>BOL Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1001</td>
+              <td>Dispatched</td>
+              <td>sass</td>
+              <td>sass</td>
+              <td>stre, Al</td>
+              <td>sass</td>
+              <td>stre, Al</td>
+              <td></td>
+              <td>EG</td>
+              <td>Jhone Clerk</td>
+              <td>abcd</td>
+              <td>4/25/2022</td>
+              <td>4/25/2022</td>
+              <td></td>
+              <td>171.76</td>
+              <td>4/25/2022</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Current</td>
+
+              <td colSpan={13}></td>
+              <td>171.76</td>
+              <td colSpan={2}></td>
+            </tr>
+            <tr>
+              <td>Page</td>
+
+              <td colSpan={13}></td>
+              <td></td>
+              <td colSpan={2}></td>
+            </tr>
+          </tbody>
+          <thead>
+            <tr>
+              <td>Total</td>
+
+              <td colSpan={13}></td>
+              <td>171.76</td>
+              <td colSpan={2}></td>
+            </tr>
+          </thead>
+        </Table>
       </Container>
     </div>
   );

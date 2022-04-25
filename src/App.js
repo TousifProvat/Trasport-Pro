@@ -32,6 +32,7 @@ import UserManagement from "./Components/UserManagement/UserManagement";
 import InspectionLog from "./Components/InspectionLog/InspectionLog";
 import MaintenanceLog from "./Components/MaintenanceLog/MaintenanceLog";
 import AccidentLog from "./Components/AccidentLog/AccidentLog";
+import Invoice from "./Components/Invoice/Invoice";
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
             <Route path="search-customer" element={<SearchCustomer />} />
             <Route path="search-load" element={<SearchLoad />} />
             <Route path="site-setting" element={<SiteSettings />} />
+            <Route path="invoice" element={<Invoice />} />
             <Route path="user-management" element={<UserManagement />} />
             {/* <Route path="editDriver" element={<EditDriver />} />
               <Route path="editTrailer" element={<EditTrailer />} />
