@@ -9,6 +9,8 @@ const useContext = () => {
   const [loading, setLoading] = useState(false);
 
   //global state
+  // load
+  const [load, setLoad] = useState([]);
   // terminal
   // const [terminalData, setTerminalData] = useState([]);
   // owner
@@ -41,6 +43,40 @@ const useContext = () => {
     user: {},
     token: "",
   });
+
+  //commodity
+  const [commodity, setCommodity] = useState([]);
+
+  //load
+
+  const getLoads = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/load");
+      setLoad(data.loads);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
+
+  const addLoad = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post("/load", values);
+      if (res.status === 201) {
+        notification.success({ message: res.data.message });
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
 
   // user signin
   const authSignin = async (credentials) => {
@@ -146,17 +182,37 @@ const useContext = () => {
     }
   };
 
+  //commodity
+  const getCommodities = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/commodity");
+      setCommodity(data.commodities);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
+
   //call
   useEffect(() => {
     // use every call in one use effect until they have different dependencies
+    getLoads();
     getOwners();
+    getCustomers();
     getDrivers();
     getTractors();
     getTrailers();
     getBilling();
+    getCommodities();
   }, []);
 
   return {
+    //load
+    load,
+    addLoad,
     // driver
     driverData,
     // tractor
@@ -172,6 +228,8 @@ const useContext = () => {
     // auth
     auth,
     authSignin,
+    //commodity
+    commodity,
     // loading state
     loading,
   };
