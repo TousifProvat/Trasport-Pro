@@ -1,9 +1,46 @@
 import React, { useState } from 'react';
-import { Button, Col, Container, Form, Modal, Nav, Navbar, OverlayTrigger, Row, Table, Tooltip } from 'react-bootstrap';
+import { Button, Col, Container, Form, InputGroup, Modal, Nav, Navbar, OverlayTrigger, Row, Table, Tooltip } from 'react-bootstrap';
 
 const AccidentLog = () => {
     const [lgShow, setLgShow] = useState(false);
     const handleClose = () => setLgShow(false);
+
+
+    const [allValues, setAllValues] = useState({
+      tractor: "",
+      incidentDate: "",
+      incidentTime: "",
+      damagedArea: "",
+      street: "",
+      city: "",
+      state: "",
+      zip: "",
+      driver: "",
+      fatalities: "",
+      injuries: "",
+      notes: "",
+      accidentDocument: "",
+    });
+
+    const changeHandler = (e) => {
+      setAllValues({
+        ...allValues,
+        [e.target.name]: e.target.value,
+      });
+    };
+
+    const [validated, setValidated] = useState(false);
+
+    const handleSubmit = (event) => {
+      const form = event.currentTarget;
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+        setValidated(true);
+        console.log(allValues);
+    };
     return (
       <div>
         <Container>
@@ -30,104 +67,197 @@ const AccidentLog = () => {
                   >
                     <Modal.Header closeButton>
                       <Modal.Title id="example-modal-sizes-title-lg">
-                        Add Accident Record
+                        Large Modal
                       </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <Row>
-                        <Col sm={4}>
-                          <Form.Label>Tractor</Form.Label>
-                          <Form.Select aria-label="Default select example">
-                            <option>Select Tractor</option>
-                            <option value="Tractor1">Tractor1</option>
-                            <option value="Tractor2">Tractor2</option>
-                            <option value="Tractor3">Tractor3</option>
-                          </Form.Select>
-                        </Col>
-                        <Col sm={4}>
-                          <Form.Label>Date Occured</Form.Label>
-                          <Form.Control
-                            required
-                            type="text"
-                            placeholder="Date Occured"
-                          />
-                        </Col>
-                        <Col sm={4}>
-                          <Form.Label>Time</Form.Label>
-                          <Form.Control
-                            required
-                            type="text"
-                            placeholder="Time"
-                          />
-                        </Col>
-                      </Row>
-                      <Row className="mt-3">
-                        <Col sm={4}>
-                          <Form.Label>Street</Form.Label>
-                          <Form.Control
-                            required
-                            type="text"
-                            placeholder="Street"
-                          />
-                        </Col>
-                        <Col sm={4}>
-                          <Form.Label>City</Form.Label>
-                          <Form.Control
-                            required
-                            type="text"
-                            placeholder="City"
-                          />
-                        </Col>
-                        <Col sm={4}>
-                          <Form.Label>State</Form.Label>
-                          <Form.Select aria-label="Default select example">
-                            <option>Select State</option>
-                            <option value="Alaska">Alaska</option>
-                            <option value="Alabama">Alabama</option>
-                            <option value="Canada">Canada</option>
-                          </Form.Select>
-                        </Col>
-                      </Row>
-                      <Row className="mt-3">
-                        <Col sm={4}>
-                          <Form.Label>Drivers</Form.Label>
-                          <Form.Select aria-label="Default select example">
-                            <option>Select Driver</option>
-                            <option value="Driver1">Driver1</option>
-                            <option value="Driver2">Driver2</option>
-                            <option value="Driver3">Driver3</option>
-                          </Form.Select>
-                        </Col>
-                        <Col sm={4}>
-                          <Form.Label>Note</Form.Label>
-                          <Form.Control
-                            required
-                            type="text"
-                            placeholder="Note"
-                          />
-                        </Col>
-                        <Col sm={4}></Col>
-                      </Row>
-                      <Row className="mt-3">
-                        <Col sm={12}>
-                          <Form.Label>Accident Document</Form.Label>
-                          <Form.Control
-                            required
-                            type="file"
-                            placeholder="Note"
-                          />
-                        </Col>
-                      </Row>
-                      <Button
-                        variant="outline-danger"
-                        className="mt-5 mb-5"
-                        onClick={handleClose}
+                      <Form
+                        noValidate
+                        validated={validated}
+                        onSubmit={handleSubmit}
                       >
-                        Cancel
-                      </Button>{" "}
-                      <Button variant="outline-primary" className="mt-5 mb-5">
-                        Save
-                      </Button>{" "}
+                        <Row className="mb-3">
+                          <Form.Group
+                            as={Col}
+                            md="4"
+                            controlId="validationCustom01"
+                          >
+                            <Form.Label>Tractor</Form.Label>
+                            <Form.Select
+                              aria-label="Default select example"
+                              name="tractor"
+                              value={allValues.tractor}
+                              onChange={changeHandler}
+                            >
+                              <option>Select Tractor</option>
+                              <option value="Tractor1">Tractor1</option>
+                              <option value="Tractor2">Tractor2</option>
+                              <option value="Tractor3">Tractor3</option>
+                            </Form.Select>
+                            <Form.Control.Feedback>
+                              Looks good!
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                          <Form.Group
+                            as={Col}
+                            md="4"
+                            controlId="validationCustom02"
+                          >
+                            <Form.Label>Date Occured</Form.Label>
+                            <Form.Control
+                              required
+                              type="date"
+                              name="incidentDate"
+                              value={allValues.incidentDate}
+                              onChange={changeHandler}
+                            />
+                            <Form.Control.Feedback>
+                              Looks good!
+                            </Form.Control.Feedback>
+                          </Form.Group>
+
+                          <Form.Group
+                            as={Col}
+                            md="4"
+                            controlId="validationCustomUsername"
+                          >
+                            <Form.Label>Time</Form.Label>
+
+                            <Form.Control
+                              required
+                              type="time"
+                              name="incidentTime"
+                              value={allValues.incidentTime}
+                              onChange={changeHandler}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              Please choose a username.
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </Row>
+                        <Row className="mb-3">
+                          <Form.Group
+                            as={Col}
+                            md="4"
+                            controlId="validationCustom03"
+                          >
+                            <Form.Label>Damage Area</Form.Label>
+                            <Form.Control
+                              type="text"
+                              placeholder="Damage Area"
+                              required
+                              name="damagedArea"
+                              value={allValues.damagedArea}
+                              onChange={changeHandler}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              Please provide a valid city.
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                          <Form.Group
+                            as={Col}
+                            md="4"
+                            controlId="validationCustom04"
+                          >
+                            <Form.Label>Street</Form.Label>
+                            <Form.Control
+                              type="text"
+                              placeholder="Street"
+                              required
+                              name="street"
+                              value={allValues.street}
+                              onChange={changeHandler}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              Please provide a valid state.
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                          <Form.Group
+                            as={Col}
+                            md="4"
+                            controlId="validationCustom05"
+                          >
+                            <Form.Label>City</Form.Label>
+                            <Form.Control
+                              type="text"
+                              placeholder="City"
+                              required
+                              name="city"
+                              value={allValues.city}
+                              onChange={changeHandler}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              Please provide a valid zip.
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </Row>
+
+                        <Row className="mb-3">
+                          <Form.Group
+                            as={Col}
+                            md="4"
+                            controlId="validationCustom03"
+                          >
+                            <Form.Label>State</Form.Label>
+                            <Form.Select
+                              aria-label="Default select example"
+                              name="state"
+                              value={allValues.state}
+                              onChange={changeHandler}
+                            >
+                              <option>Open this select menu</option>
+                              <option value="Alaska">Alaska</option>
+                              <option value="Alabama">Alabama</option>
+                              <option value="Canada">Canada</option>
+                            </Form.Select>
+                            <Form.Control.Feedback type="invalid">
+                              Please provide a valid city.
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                          <Form.Group
+                            as={Col}
+                            md="4"
+                            controlId="validationCustom04"
+                          >
+                            <Form.Label>Driver</Form.Label>
+                            <Form.Select
+                              aria-label="Default select example"
+                              name="driver"
+                              value={allValues.driver}
+                              onChange={changeHandler}
+                            >
+                              <option>Open this select menu</option>
+                              <option value="Driver1">Driver1</option>
+                              <option value="Driver2">Driver2</option>
+                              <option value="Driver3">Driver3</option>
+                            </Form.Select>
+                            <Form.Control.Feedback type="invalid">
+                              Please provide a valid state.
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                          <Form.Group
+                            as={Col}
+                            md="4"
+                            controlId="validationCustom05"
+                          >
+                            <Form.Label>Notes</Form.Label>
+                            <Form.Control
+                              type="text"
+                              placeholder="Notes"
+                              required
+                              name="notes"
+                              value={allValues.notes}
+                              onChange={changeHandler}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              Please provide a valid zip.
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </Row>
+
+                        <Button type="submit">Save</Button>{" "}
+                        <Button variant="danger" onClick={handleClose}>Cancel</Button>
+                      </Form>
                     </Modal.Body>
                   </Modal>
                 </Nav>
