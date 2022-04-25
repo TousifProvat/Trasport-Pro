@@ -135,6 +135,16 @@ const SearchOwner = () => {
                   <td></td> */}
                 </tr>
               ))}
+              {owners.length < 1 && (
+                <td
+                  colSpan={8}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  No Data Found
+                </td>
+              )}
             </tbody>
           </Table>
         </Container>
