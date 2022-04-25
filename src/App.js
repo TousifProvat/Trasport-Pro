@@ -31,6 +31,7 @@ import Login from "./Components/Login/Login";
 import UserManagement from "./Components/UserManagement/UserManagement";
 import InspectionLog from "./Components/InspectionLog/InspectionLog";
 import MaintenanceLog from "./Components/MaintenanceLog/MaintenanceLog";
+import AccidentLog from "./Components/AccidentLog/AccidentLog";
 
 function App() {
   return (
@@ -75,6 +76,7 @@ function App() {
             <Route path="billing-dashboard" element={<BillingDashboard />} />
             <Route path="inspection" element={<InspectionLog />} />
             <Route path="maintenance" element={<MaintenanceLog />} />
+            <Route path="accident-log" element={<AccidentLog />} />
             <Route
               path="terminal-manage-dashboard"
               element={<TerminalManagerDashboard />}
