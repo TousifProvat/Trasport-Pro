@@ -139,6 +139,21 @@ const useContext = () => {
   };
 
   //driver
+
+  const addDriver = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post("/driver", values);
+      if (res.status === 201) {
+        notification.success({ message: res.data.message });
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({ message: err.response.data.message });
+    }
+  };
+
   const getDrivers = async () => {
     try {
       setLoading(true);
@@ -228,6 +243,7 @@ const useContext = () => {
     addLoad,
     // driver
     driverData,
+    addDriver,
     // tractor
     tractorData,
     //trailer

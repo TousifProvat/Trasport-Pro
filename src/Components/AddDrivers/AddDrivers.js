@@ -1,13 +1,50 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import useContext from "../Hooks/useContext";
 import "./addDrivers.css";
-import DayPickerInput from "react-day-picker/DayPickerInput";
-import "react-day-picker/lib/style.css";
-
-
 
 const AddDrivers = () => {
-  const [allValues, setAllValues] = useState({});
+  const { loading, addDriver } = useContext();
+  const initValue = {
+    driverNumber: 1,
+    status: "Pending Hire",
+    salutation: "Mr",
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    email: "",
+    address: "",
+    zip: "",
+    city: "",
+    state: "",
+    primaryPhoneNumber: "",
+    secondaryPhoneNumber: "",
+    faxPhoneNumber: "",
+    cbHandle: "",
+    eobrType: "",
+    eobrId: "",
+    correctiveLenses: false,
+    diabetes: false,
+    hearingAid: false,
+    highBp: false,
+    sleepApnea: false,
+    birthDate: "",
+    SSN: "",
+    sex: "",
+    race: "",
+    hireDate: "",
+    terminationDate: "",
+    cdlNumber: 0,
+    cdlState: "",
+    cdlExpDate: "",
+    medicalTestDate: "",
+    certificateExpiryDate: "",
+    drugTestDate: "",
+    testResult: "fail",
+    mvrRunDate: "",
+  };
+
+  const [allValues, setAllValues] = useState(initValue);
 
   const changeHandler = (e) => {
     setAllValues({
@@ -16,18 +53,22 @@ const AddDrivers = () => {
     });
   };
 
-
   const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    setValidated(true);
-    console.log(allValues);
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
+    addDriver(allValues);
+    setTimeout(() => {
+      setValidated(false);
+      setAllValues(initValue);
+    }, 1000);
   };
 
   return (
@@ -38,9 +79,25 @@ const AddDrivers = () => {
 
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom02">
+              <Form.Label>Driver Number</Form.Label>
+              <Form.Control
+                required
+                type="number"
+                placeholder="Driver Number"
+                onChange={changeHandler}
+                name="driverNumber"
+                value={allValues.driverNumber}
+              />
+            </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom01">
               <Form.Label>Status</Form.Label>
-              <Form.Select aria-label="" onChange={changeHandler} name="status">
+              <Form.Select
+                required
+                onChange={changeHandler}
+                name="status"
+                value={allValues.status}
+              >
                 <option>Select Status</option>
                 <option value="Pending Hire">Pending Hire</option>
                 <option value="Active">Active</option>
@@ -48,82 +105,54 @@ const AddDrivers = () => {
                 <option value="Declined">Declined</option>
                 <option value="Terminated">Terminated</option>
               </Form.Select>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom02">
-              <Form.Label>Home Terminal</Form.Label>
-
-              <Form.Select
-                aria-label=""
-                onChange={changeHandler}
-                name="homeTerminal"
-              >
-                <option>Select Home Terminal</option>
-                <option value="EG, Egales">EG, Egales</option>
-              </Form.Select>
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-              <p>Hire Date</p>
-              {/* <DayPickerInput
-                onDayChange={(day) => setHireDate(day)}
-                className="datePicker"
-              /> */}
+              <Form.Label>Email</Form.Label>
               <Form.Control
-                type="date"
-                placeholder="Hire Date"
-                aria-describedby="inputGroupPrepend"
+                required
+                type="text"
+                placeholder="Email"
                 onChange={changeHandler}
-                name="hireDate"
+                name="email"
+                value={allValues.email}
               />
-              <Form.Control.Feedback type="invalid">
-                Please choose a username.
-              </Form.Control.Feedback>
             </Form.Group>
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <Form.Label>Company Driver</Form.Label>
-              <Form.Select
-                aria-label=""
-                onChange={changeHandler}
-                name="companyDriver"
-              >
-                <option>Select Company Driver</option>
-                <option value="yes">Yes</option>
-                <option value="No">No</option>
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <Form.Label>Driver Group</Form.Label>
-              <Form.Select
-                aria-label=""
-                onChange={changeHandler}
-                name="driverGroup"
-              >
-                <option>Select Driver Group</option>
-                <option value="Group A">Group A</option>
-                <option value="Group B">Group B</option>
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <p>Review Date</p>
+              <Form.Label>First Name</Form.Label>
               <Form.Control
-                type="date"
-                placeholder="Hire Date"
+                required
+                type="text"
+                placeholder="First Name"
                 aria-describedby="inputGroupPrepend"
                 onChange={changeHandler}
-                name="reviewDate"
+                name="firstName"
+                value={allValues.firstName}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Middle Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Middle Name"
+                aria-describedby="inputGroupPrepend"
+                onChange={changeHandler}
+                name="middleName"
+                value={allValues.middleName}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Last Name"
+                aria-describedby="inputGroupPrepend"
+                onChange={changeHandler}
+                name="lastName"
+                value={allValues.lastName}
+              />
             </Form.Group>
           </Row>
           <Row className="mb-3">
@@ -133,6 +162,7 @@ const AddDrivers = () => {
                 aria-label=""
                 onChange={changeHandler}
                 name="salutation"
+                value={allValues.salutation}
               >
                 <option>Select Salutation</option>
                 <option value="Dr">Dr</option>
@@ -144,313 +174,164 @@ const AddDrivers = () => {
                 Please provide a valid city.
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <Form.Label>Dispatch Group</Form.Label>
-              <Form.Select
-                aria-label=""
-                onChange={changeHandler}
-                name="dispatchGroup"
-              >
-                <option>Select Dispatch Group</option>
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <p>Next Review Date</p>
+            <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+              <Form.Label>Hiring Date</Form.Label>
               <Form.Control
+                required
                 type="date"
                 placeholder="Hire Date"
-                aria-describedby="inputGroupPrepend"
                 onChange={changeHandler}
-                name="nextReviewDate"
+                name="hireDate"
+                value={allValues.hireDate}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
             </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="First Name"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="firstName"
-              />
-
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <Form.Label>Middle Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Middle Name"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="middleName"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Last Name"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="lastName"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <Form.Label>Dispatcher</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Dispatcher Name"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="dispatcher"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>MVR Date</p>
+            <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+              <Form.Label>Termination Date</Form.Label>
               <Form.Control
                 type="date"
-                placeholder="MVR Date"
-                aria-describedby="inputGroupPrepend"
+                placeholder="Termination Date"
                 onChange={changeHandler}
-                name="mvrDate"
+                name="terminationDate"
+                value={allValues.terminationDate}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
+          </Row>
+          <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Address</Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="Address Name"
-                aria-describedby="inputGroupPrepend"
                 onChange={changeHandler}
                 name="address"
+                value={allValues.address}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <Form.Label>Recruiter</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Recruiter Name"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="recruiter"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Physical Due Date</p>
-              <Form.Control
-                type="date"
-                placeholder="Recruiter Name"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="physicalDueDate"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Zip</Form.Label>
               <Form.Control
+                required
                 type="text"
-                placeholder="Zip address"
-                aria-describedby="inputGroupPrepend"
+                placeholder="Zip Code"
                 onChange={changeHandler}
                 name="zip"
+                value={allValues.zip}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <Form.Label>Recruiting Source</Form.Label>
-              <Form.Select
-                aria-label=""
-                onChange={changeHandler}
-                name="recruitingSource"
-              >
-                <option>Select Recruiting</option>
-                <option value="Direct Call">Direct Call</option>
-                <option value="Driver Referal">Driver Referal</option>
-                <option value="Employee Referal">Employee Referal</option>
-                <option value="Facebook">Facebook</option>
-                <option value="Indeed">Indeed</option>
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Physical Submitted Date</p>
-              <Form.Control
-                type="date"
-                placeholder="Physical Submitted Date"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="physicalSubmittedDate"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>City</Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="City Name"
-                aria-describedby="inputGroupPrepend"
                 onChange={changeHandler}
                 name="city"
+                value={allValues.city}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <Form.Label>Hiring Eligibility</Form.Label>
-              <Form.Select
-                aria-label=""
-                onChange={changeHandler}
-                name="hiringEligibility"
-              >
-                <option>Select Hiring Eligibility</option>
-                <option value="Decrased">Decrased</option>
-                <option value="Do Not Rehire">Do Not Rehire</option>
-                <option value="Eiligible For Rehire">
-                  Eiligible For Rehire
-                </option>
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>CDL Matches Physical</p>
-              <Form.Check
-                label="Agree to terms and conditions"
-                feedback="You must agree before submitting."
-                feedbackType="invalid"
-                onChange={changeHandler}
-                name="cdlMatchesPhysical"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>State</Form.Label>
-              <Form.Select aria-label="" onChange={changeHandler} name="state">
-                <option>Select State</option>
+              <Form.Select
+                required
+                onChange={changeHandler}
+                name="state"
+                value={allValues.state}
+              >
+                <option value="">Select State</option>
                 <option value="Alabama">Alabama</option>
                 <option value="Alaska">Alaska</option>
                 <option value="Arizona">Arizona</option>
                 <option value="California">California</option>
                 <option value="Canada">Canada</option>
               </Form.Select>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Birth Date</Form.Label>
+              <Form.Control
+                required
+                type="date"
+                placeholder="City Name"
+                onChange={changeHandler}
+                name="birthDate"
+                value={allValues.birthDate}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>SSN</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="SSN Number"
+                onChange={changeHandler}
+                name="SSN"
+                value={allValues.SSN}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Phone Number"
+                onChange={changeHandler}
+                name="primaryPhoneNumber"
+                value={allValues.primaryPhoneNumber}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Alt Phone Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Alt Phone Number"
+                aria-describedby="inputGroupPrepend"
+                onChange={changeHandler}
+                name="secondaryPhoneNumber"
+                value={allValues.secondaryPhoneNumber}
+              />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid zip.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Fax Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Fax Number"
+                onChange={changeHandler}
+                name="faxPhoneNumber"
+                value={allValues.faxPhoneNumber}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>Birth Date</p>
-              <Form.Control
-                type="date"
-                placeholder="City Name"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="birthDate"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>CDL Number</p>
+              <Form.Label>CDL Number</Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="CDL Number"
                 aria-describedby="inputGroupPrepend"
                 onChange={changeHandler}
                 name="cdlNumber"
+                value={allValues.cdlNumber}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <Form.Label>Home Phone Number</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Home Phone Number"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="homePhoneNumber"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>SSN</p>
-              <Form.Control
-                type="text"
-                placeholder="SSN Number"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="ssn"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>CDL State</p>
+              <Form.Label>CDL State</Form.Label>
               <Form.Select
-                aria-label=""
                 onChange={changeHandler}
                 name="cdlState"
+                value={allValues.cdlState}
               >
-                <option>Select State</option>
+                <option value="">Select State</option>
                 <option value="Alabama">Alabama</option>
                 <option value="Alaska">Alaska</option>
                 <option value="Arizona">Arizona</option>
@@ -461,364 +342,131 @@ const AddDrivers = () => {
                 Please provide a valid state.
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <Form.Label>Cell Phone Number</Form.Label>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>CDL Expire Date</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Cell Phone Number"
-                aria-describedby="inputGroupPrepend"
+                type="date"
+                placeholder="CDL Expire Date"
                 onChange={changeHandler}
-                name="cellPhoneNumber"
+                name="cdlExpDate"
+                value={allValues.cdlExpDate}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
             </Form.Group>
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>Sex</p>
-              <Form.Select aria-label="" onChange={changeHandler} name="sex">
-                <option>Select Sex</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+              <Form.Label>Gender</Form.Label>
+              <Form.Select
+                onChange={changeHandler}
+                name="sex"
+                value={allValues.sex}
+              >
+                <option>Select Gender</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+                <option value="O">Other</option>
               </Form.Select>
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>CDL Expire Date</p>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Medical Test Date</Form.Label>
               <Form.Control
                 type="date"
-                placeholder="Cell Phone Number"
-                aria-describedby="inputGroupPrepend"
+                placeholder="Medical Test Date"
                 onChange={changeHandler}
-                name="cdlExpireDate"
+                name="medicalTestDate"
+                value={allValues.medicalTestDate}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <Form.Label>Pager Phone Number</Form.Label>
+              <Form.Label>Certificate Expiry Date</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Pager Phone Number"
-                aria-describedby="inputGroupPrepend"
+                type="date"
+                placeholder="Certificate Expiry Date"
                 onChange={changeHandler}
-                name="pagerPhoneNumber"
+                name="certificateExpiryDate"
+                value={allValues.certificateExpiryDate}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>Trailer Qualification</p>
-              <Row>
-                <Col sm={4}>
-                  <Form.Check
-                    label="Conestoga"
-                    feedback="You must agree before submitting."
-                    feedbackType="invalid"
-                    onChange={changeHandler}
-                    name="trailerQualification"
-                  />
-                  <Form.Check
-                    label="Power Only"
-                    feedback="You must"
-                    feedbackType="invalid"
-                    onChange={changeHandler}
-                    name="powerOnly"
-                  />
-                  <Form.Check
-                    onChange={changeHandler}
-                    name="stepDeck"
-                    label="Step Deck"
-                    feedback="You must agree before submitting."
-                    feedbackType="invalid"
-                  />
-                </Col>
-                <Col sm={4}>
-                  <Form.Check
-                    label="Drop Check"
-                    feedback="You must agree before submitting."
-                    feedbackType="invalid"
-                    onChange={changeHandler}
-                    name="dropCheck"
-                  />
-                  <Form.Check
-                    label="Reefer"
-                    feedback="You"
-                    feedbackType="invalid"
-                    onChange={changeHandler}
-                    name="reefer"
-                  />
-                  <Form.Check
-                    label="Tanker"
-                    feedback="You"
-                    feedbackType="invalid"
-                    onChange={changeHandler}
-                    name="tanker"
-                  />
-                </Col>
-                <Col sm={4}>
-                  <Form.Check
-                    label="Flat Bed"
-                    feedback="You must agree before submitting."
-                    feedbackType="invalid"
-                    onChange={changeHandler}
-                    name="flatBed"
-                  />
-                  <Form.Check
-                    label="RGN"
-                    feedback="You must agree before submitting."
-                    feedbackType="invalid"
-                    onChange={changeHandler}
-                    name="rgn"
-                  />
-                  <Form.Check
-                    label="Van"
-                    feedback="You must agree before submitting."
-                    feedbackType="invalid"
-                    onChange={changeHandler}
-                    name="van"
-                  />
-                </Col>
-              </Row>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Resident Expiration Date</p>
-              <Form.Control
-                type="date"
-                placeholder="Resident Expiration Date"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="residentExpirationDate"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>CB Handle</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Pager Phone Number"
-                aria-describedby="inputGroupPrepend"
+                placeholder="CB Handle"
                 onChange={changeHandler}
-                name="cdHandle"
+                name="cbHandle"
+                value={allValues.cbHandle}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
             </Form.Group>
-          </Row>
-          <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>TWIC Expiration Date</p>
-              <Form.Control
-                type="date"
-                placeholder="Pager Phone Number"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="twicExpirationDate"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Email</p>
-              <Form.Control
-                type="email"
-                placeholder="Email Address"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="email"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <Form.Label>Passport</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Passport Number"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="passport"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>EOBR Type</p>
+              <Form.Label>EOBR Type</Form.Label>
               <Form.Select
                 aria-label=""
                 onChange={changeHandler}
                 name="eobrType"
+                value={allValues.eobrType}
               >
-                <option>Select EOBR Type</option>
+                <option value="">Select EOBR Type</option>
                 <option value="Geotab">Geotab</option>
                 <option value="Keep Truncking">Keep Truncking</option>
                 <option value="M2M In Motion">M2M In Motion</option>
                 <option value="People Net">People Net</option>
               </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Passport Expire Date</p>
-              <Form.Control
-                type="date"
-                placeholder="Passport Number"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="passportExpireDate"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>EOBR ID</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="EOBR ID"
-                aria-describedby="inputGroupPrepend"
                 onChange={changeHandler}
-                name="eobrID"
+                name="eobrId"
+                value={allValues.eobrId}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>Occ Acc Insurance Carrier</p>
-              <Form.Control
-                type="text"
-                placeholder="Occ Acc"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
-                name="occAccInsuranceCarrier"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Occ Acc Insurance Start Date</p>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Drug Test Date</Form.Label>
               <Form.Control
                 type="date"
-                placeholder="Occ Acc"
-                aria-describedby="inputGroupPrepend"
+                placeholder="Drug Test Date"
                 onChange={changeHandler}
-                name="occAccInsuranceStartDate"
+                name="drugTestDate"
+                value={allValues.drugTestDate}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Occ Acc Insurance Exp Date</p>
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Test Result</Form.Label>
+              <Form.Select
+                onChange={changeHandler}
+                name="testResult"
+                value={allValues.testResult}
+              >
+                <option value="pass">Pass</option>
+                <option value="fail">Fail</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>MVR Run Date</Form.Label>
               <Form.Control
                 type="date"
-                placeholder="Occ Acc"
-                aria-describedby="inputGroupPrepend"
+                placeholder="MVR Run Date"
                 onChange={changeHandler}
-                name="occAccInsuranceExpDate"
+                name="mvrRunDate"
+                value={allValues.mvrRunDate}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
           </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>Medical</p>
-              <Row>
-                <Col sm={6}>
-                  <Form.Check
-                    label="Corrective Lenses"
-                    feedback="You"
-                    feedbackType="invalid"
-                    onChange={changeHandler}
-                    name="correctiveLenses"
-                  />
-                  <Form.Check
-                    label="Hearing Aid"
-                    feedback="You"
-                    feedbackType="invalid"
-                    onChange={changeHandler}
-                    name="hearingAid"
-                  />
-                  <Form.Check
-                    label="Sleep Apnea"
-                    feedback="You"
-                    feedbackType="invalid"
-                    onChange={changeHandler}
-                    name="sleepApnea"
-                  />
-                </Col>
-                <Col sm={6}>
-                  <Form.Check
-                    label="Diabetes"
-                    feedback="You"
-                    feedbackType="invalid"
-                    onChange={changeHandler}
-                    name="diabetes"
-                  />
-                  <Form.Check
-                    label="High Blood Pressure"
-                    feedback="You"
-                    feedbackType="invalid"
-                    onChange={changeHandler}
-                    name="highBloodPressure"
-                  />
-                  <Form.Check
-                    label="Yearly Physical"
-                    feedback="You"
-                    feedbackType="invalid"
-                    onChange={changeHandler}
-                    name="yearlyPhysical"
-                  />
-                </Col>
-              </Row>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Form.Group className="mb-3">
-            <Form.Check
-              
-              label="Agree to terms and conditions"
-              feedback="You must agree before submitting."
-              feedbackType="invalid"
-            />
-          </Form.Group>
           <Button type="submit" variant="outline-primary" className="mb-5">
-            Save Record
-          </Button>
-          <Button type="submit" variant="outline-primary" className="ms-3 mb-5">
-            Save and Add New
+            Save
           </Button>
           <Button variant="outline-danger" className="ms-3 mb-5">
             Cancel
-          </Button>{" "}
+          </Button>
         </Form>
       </Container>
     </div>

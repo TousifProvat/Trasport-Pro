@@ -77,7 +77,7 @@ const AddOwner = () => {
   };
   return (
     <div>
-      <Container fluid>
+      <Container>
         <h3 className="mt-5 mb-3">Owner Information</h3>
         <hr></hr>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -270,9 +270,7 @@ const AddOwner = () => {
         </Form>
       </Container>
 
-      {/* Payment info start */}
-
-      <Container fluid className="payment-info">
+      <Container className="payment-info">
         <h3 className="mt-5 mb-3">Payment Information</h3>
         <hr></hr>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>

@@ -58,6 +58,16 @@ const SearchOwner = () => {
           <hr></hr>
           <Form onSubmit={handleSubmit}>
             <Row className="mb-4">
+              <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+                <Form.Label>Owner ID</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Owner ID Number"
+                  name="ownerId"
+                  onChange={onChange}
+                  value={filter.ownerId}
+                />
+              </Form.Group>
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <Form.Label>Status</Form.Label>
                 <Form.Select
@@ -69,16 +79,6 @@ const SearchOwner = () => {
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
                 </Form.Select>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                <Form.Label>Owner Id</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Owner Id Number"
-                  name="ownerId"
-                  onChange={onChange}
-                  value={filter.ownerId}
-                />
               </Form.Group>
             </Row>
             <Button
@@ -99,6 +99,7 @@ const SearchOwner = () => {
           </Form>
         </Container>
         <Container fluid className="search-result ">
+          <h3>Search Results ({owners.length})</h3>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -110,9 +111,6 @@ const SearchOwner = () => {
                 <th>Cell Phone Number</th>
                 <th>City</th>
                 <th>State</th>
-                {/* <th>Active Tractors</th>
-                <th>Active Trailers</th>
-                <th>Active Drivers</th> */}
               </tr>
             </thead>
             <tbody>
@@ -130,9 +128,6 @@ const SearchOwner = () => {
                   <td>{owner.secondaryPhoneNumber}</td>
                   <td>{owner.city}</td>
                   <td>{owner.state}</td>
-                  {/* <td></td>
-                  <td></td>
-                  <td></td> */}
                 </tr>
               ))}
               {owners.length < 1 && (
