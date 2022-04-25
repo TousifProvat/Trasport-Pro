@@ -19,10 +19,12 @@ import { Link } from "react-router-dom";
 import "./freightOptionsDashboard.css";
 import Select from "react-select";
 import useContext from "../Hooks/useContext";
+import InvoiceModal from "../InvoiceModal/InvoiceModal";
 const FreightOptionsDashboard = () => {
   const [lgShow, setLgShow] = useState(false);
   const [largeShow, setLargeShow] = useState(false);
   const [large2Show, setLarge2Show] = useState(false);
+  const [largeInvoiceShow, setLargeInvoiceShow] = useState(false);
 
   const handleClose = () => setLargeShow(false);
   const handleClose2 = () => setLarge2Show(false);
@@ -230,7 +232,27 @@ const changeHandler = (e) => {
 
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <Button variant="outline-primary">Invoice</Button>
+                    <Button
+                      variant="outline-primary"
+                      onClick={() => setLargeInvoiceShow(true)}
+                    >
+                      Invoice
+                    </Button>
+                    <Modal
+                      size="lg"
+                      show={largeInvoiceShow}
+                      onHide={() => setLargeInvoiceShow(false)}
+                      aria-labelledby="example-modal-sizes-title-lg"
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title id="example-modal-sizes-title-lg">
+                          Large Modal
+                        </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <InvoiceModal></InvoiceModal>
+                      </Modal.Body>
+                    </Modal>
                   </Dropdown.Item>
                   <Dropdown.Item>
                     <Button
@@ -1005,7 +1027,27 @@ const changeHandler = (e) => {
 
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <Button variant="outline-primary">Invoice</Button>
+                    <Button
+                      variant="outline-primary"
+                      onClick={() => setLargeInvoiceShow(true)}
+                    >
+                      Invoice
+                    </Button>
+                    <Modal
+                      size="lg"
+                      show={largeInvoiceShow}
+                      onHide={() => setLargeInvoiceShow(false)}
+                      aria-labelledby="example-modal-sizes-title-lg"
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title id="example-modal-sizes-title-lg">
+                          Large Modal
+                        </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <InvoiceModal></InvoiceModal>
+                      </Modal.Body>
+                    </Modal>
                   </Dropdown.Item>
                   <Dropdown.Item>
                     <Button
@@ -1131,7 +1173,11 @@ const changeHandler = (e) => {
                         >
                           cancel
                         </Button>{" "}
-                        <Button variant="outline-primary" className="mt-5 mb-5" onClick={handleDispatcher}>
+                        <Button
+                          variant="outline-primary"
+                          className="mt-5 mb-5"
+                          onClick={handleDispatcher}
+                        >
                           Dispatch
                         </Button>{" "}
                       </Modal.Body>
@@ -1149,7 +1195,7 @@ const changeHandler = (e) => {
       <Navbar bg="light" expand="lg">
         <Container fluid>
           <Navbar.Brand href="#home">
-            Planned Load
+            Canceled Load
             <Badge bg="danger" text="dark" className="ms-3">
               11
             </Badge>{" "}
@@ -1467,7 +1513,27 @@ const changeHandler = (e) => {
 
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <Button variant="outline-primary">Invoice</Button>
+                    <Button
+                      variant="outline-primary"
+                      onClick={() => setLargeInvoiceShow(true)}
+                    >
+                      Invoice
+                    </Button>
+                    <Modal
+                      size="lg"
+                      show={largeInvoiceShow}
+                      onHide={() => setLargeInvoiceShow(false)}
+                      aria-labelledby="example-modal-sizes-title-lg"
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title id="example-modal-sizes-title-lg">
+                          Large Modal
+                        </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <InvoiceModal></InvoiceModal>
+                      </Modal.Body>
+                    </Modal>
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
