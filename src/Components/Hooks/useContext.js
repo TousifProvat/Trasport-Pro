@@ -44,6 +44,8 @@ const useContext = () => {
     token: "",
   });
 
+  //console.log(auth.isAuthenticated);
+
   //commodity
   const [commodity, setCommodity] = useState([]);
 
