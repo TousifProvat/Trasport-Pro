@@ -8,9 +8,7 @@ import {
   InputGroup,
   Row,
 } from "react-bootstrap";
-import { notification } from "antd";
 import "./login.css";
-import axios from "../../utils/axios";
 import useContext from "../Hooks/useContext";
 
 const Login = () => {
