@@ -8,31 +8,47 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import useContext from "../Hooks/useContext";
 import "./searchOwner.css";
 
 const SearchOwner = () => {
-  const [allValues, setAllValues] = useState({});
+  const { ownerData, loading } = useContext();
+  const [owners, setOwners] = useState([]);
 
-  const changeHandler = (e) => {
-    setAllValues({
-      ...allValues,
-      [e.target.name]: e.target.value,
-    });
-  };
+  useEffect(() => {
+    setOwners(ownerData);
+  }, [ownerData]);
 
-  //form validator button
-
-  const [validated, setValidated] = useState(false);
-
+  const [filter, setFilter] = useState({
+    status: "",
+    ownerId: "",
+  });
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(allValues);
-
-    setValidated(true);
   };
 
-  ///////////////////////////
+  const onChange = (e) => {
+    setFilter({ ...filter, [e.target.name]: e.target.value });
+  };
+
+  //filter
+  const onFilter = () => {
+    let newOwners = ownerData;
+    if (filter.status !== "") {
+      newOwners = ownerData.filter((owner) => owner.status === filter.status);
+    }
+    if (filter.ownerId !== "") {
+      newOwners = newOwners.filter((owner) => owner._id === filter.ownerId);
+    }
+
+    setOwners(newOwners);
+  };
+
+  const onReset = () => {
+    setOwners(ownerData);
+    setFilter({ status: "", ownerId: "" });
+  };
 
   return (
     <>
@@ -40,284 +56,86 @@ const SearchOwner = () => {
         <Container className="mt-5 mb-3">
           <h4>Search Owner</h4>
           <hr></hr>
-          <p className="text-center lead">Search For Owners</p>
-
-          <Form validated={validated} onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit}>
             <Row className="mb-4">
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <Form.Label>Status</Form.Label>
                 <Form.Select
-                  aria-label="Default select example"
                   name="status"
-                  onBlur={changeHandler}
+                  onChange={onChange}
+                  value={filter.status}
                 >
-                  <option>Select Status</option>
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
+                  <option value="">Select Status</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
                 </Form.Select>
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom02">
-                <Form.Label>Terminals</Form.Label>
-                <Form.Select
-                  aria-label="Default select example"
-                  name="terminals"
-                  onChange={changeHandler}
-                >
-                  <option>Select Terminals</option>
-                  <option value="EG">EG</option>
-                  <option value="BG">BG</option>
-                </Form.Select>
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
               <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                <Form.Label>ID</Form.Label>
-                <InputGroup hasValidation>
-                  <Form.Control
-                    type="number"
-                    placeholder="ID number"
-                    aria-describedby="inputGroupPrepend"
-                    name="id"
-                    onChange={changeHandler}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    Please choose a username.
-                  </Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
-            </Row>
-            <Row className="mb-4">
-              <Form.Group as={Col} md="4" controlId="validationCustom03">
-                <Form.Label>Code</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Code"
-                  name="code"
-                  onChange={changeHandler}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid city.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom04">
-                <Form.Label>Full Name</Form.Label>
+                <Form.Label>Owner Id</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Full Name"
-                  name="fullName"
-                  onChange={changeHandler}
+                  placeholder="Owner Id Number"
+                  name="ownerId"
+                  onChange={onChange}
+                  value={filter.ownerId}
                 />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid name.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom05">
-                <Form.Label>Company</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Company Name"
-                  name="companyName"
-                  onChange={changeHandler}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid company name.
-                </Form.Control.Feedback>
               </Form.Group>
             </Row>
-            <Row className="mb-4">
-              <Form.Group as={Col} md="4" controlId="validationCustom03">
-                <Form.Label>State</Form.Label>
-                <Form.Select
-                  aria-label="Default select example"
-                  name="state"
-                  onChange={changeHandler}
-                >
-                  <option>Select State</option>
-                  <option value="Alaska">Alaska</option>
-                  <option value="Canada">Canada</option>
-                  <option value="Quebec">Quebec</option>
-                </Form.Select>
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid city.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom04">
-                <Form.Label>Group</Form.Label>
-                <Form.Select
-                  aria-label="Default select example"
-                  name="group"
-                  onChange={changeHandler}
-                >
-                  <option>Select Group</option>
-                </Form.Select>
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid name.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom05">
-                <Form.Label>Tractor ID</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Tracktor ID"
-                  name="tracktorID"
-                  onChange={changeHandler}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid company name.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-            <Row className="mb-4">
-              <Form.Group as={Col} md="4" controlId="validationCustom03">
-                <Form.Label>Trailor ID</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Trailor ID"
-                  name="trailorId"
-                  onChange={changeHandler}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid city.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom04">
-                <Form.Label>Pay/Bill Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Bill Name"
-                  name="billName"
-                  onChange={changeHandler}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid name.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom05">
-                <Form.Label>Bill ID</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Bill ID"
-                  name="billID"
-                  onChange={changeHandler}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid company name.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-            <Row className="mb-4">
-              <Form.Group as={Col} md="4" controlId="validationCustom03">
-                <Form.Label>Default Pay Percentage</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Pay Percentage"
-                  name="defaultPayPercentage"
-                  onChange={changeHandler}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid city.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom04">
-                <Form.Label>Factored</Form.Label>
-                <Form.Select
-                  aria-label="Default select example"
-                  name="factored"
-                  onChange={changeHandler}
-                >
-                  <option>Select Factored</option>
-                  <option value="Yes">Alaska</option>
-                  <option value="No">Canada</option>
-                </Form.Select>
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid name.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom05">
-                <Form.Label>Factor Payment to</Form.Label>
-                <Form.Select aria-label="Default select example">
-                  <option>Select Factor Payments</option>
-                </Form.Select>
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid company name.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-            <Row className="mb-4">
-              <Form.Group as={Col} md="4" controlId="validationCustom03">
-                <Form.Label>Print 1099?</Form.Label>
-                <Form.Select
-                  aria-label="Default select example"
-                  name="print1099"
-                  onChange={changeHandler}
-                >
-                  <option>Select Option</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </Form.Select>
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid city.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom04">
-                <Form.Label>Has Image</Form.Label>
-                <Form.Select
-                  aria-label="Default select example"
-                  name="hasImage"
-                  onChange={changeHandler}
-                >
-                  <option>Select Options</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </Form.Select>
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid name.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom05">
-                <Form.Label>Missing Image</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Missing Image"
-                  name="missingImg"
-                  onChange={changeHandler}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid company name.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Row>
-            <Button variant="outline-primary" type="submit" className="mb-5">
-              Search Owner
+            <Button
+              variant="outline-primary"
+              type="submit"
+              className="mb-5"
+              onClick={onFilter}
+            >
+              Filter
             </Button>
-            <Button variant="outline-danger" className="mb-5 ms-3">
-              Clear
-            </Button>{" "}
-            <Button variant="outline-primary" className="mb-5 ms-3">
-              Save Search
-            </Button>{" "}
+            <Button
+              variant="outline-danger"
+              className="mb-5 ms-3"
+              onClick={onReset}
+            >
+              Reset
+            </Button>
           </Form>
         </Container>
-        <Container fluid className="search-result">
+        <Container fluid className="search-result ">
           <Table striped bordered hover>
             <thead>
               <tr>
                 <th>ID</th>
+                <th>Name</th>
                 <th>Status</th>
-                <th>Code</th>
-                <th>Owner</th>
                 <th>Company</th>
-                <th>Group</th>
                 <th>Phone Number</th>
                 <th>Cell Phone Number</th>
                 <th>City</th>
                 <th>State</th>
-                <th>Active Tractors</th>
+                {/* <th>Active Tractors</th>
                 <th>Active Trailers</th>
-                <th>Active Drivers</th>
-                <th>Pay%</th>
+                <th>Active Drivers</th> */}
               </tr>
             </thead>
+            <tbody>
+              {owners.map((owner, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={`/owner/${owner._id}`}>{owner._id}</Link>
+                  </td>
+                  <td>
+                    {owner.firstName} {owner.lastName}
+                  </td>
+                  <td>{owner.status}</td>
+                  <td>{owner.company}</td>
+                  <td>{owner.primaryPhoneNumber}</td>
+                  <td>{owner.secondaryPhoneNumber}</td>
+                  <td>{owner.city}</td>
+                  <td>{owner.state}</td>
+                  {/* <td></td>
+                  <td></td>
+                  <td></td> */}
+                </tr>
+              ))}
+            </tbody>
           </Table>
         </Container>
       </div>

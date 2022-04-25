@@ -98,6 +98,19 @@ const useContext = () => {
   };
 
   //owner
+  const addOwner = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post("/owner", values);
+      if (res.status === 201) {
+        notification.success({ message: res.data.message });
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({ message: err.response.data.message });
+    }
+  };
   const getOwners = async () => {
     try {
       setLoading(true);
@@ -223,6 +236,7 @@ const useContext = () => {
     customerData,
     // owner
     ownerData,
+    addOwner,
     // billing
     billing,
     // auth
