@@ -16,13 +16,7 @@ const Navbar1 = () => {
       <Navbar bg="light" expand="lg">
         <Container fluid>
           <div>
-            <Navbar.Brand href="/">
-              {/* <img
-                src="https://www.transportpro.net/images/TransportProLogo.png"
-                alt="logo-img"
-              ></img> */}
-              LOGO
-            </Navbar.Brand>
+            <Navbar.Brand href="/">LOGO</Navbar.Brand>
           </div>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="navbar-collapse">
@@ -45,22 +39,6 @@ const Navbar1 = () => {
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              {/* <p className="text-nowrap fw-bold">Text Demo X</p> */}
-              {/* <div className="">
-                <OverlayTrigger
-                  placement="bottom"
-                  overlay={<Tooltip id="button-tooltip-2">Log out</Tooltip>}
-                >
-                  {({ ref, ...triggerHandler }) => (
-                    <Button
-                      variant="light"
-                      {...triggerHandler}
-                      className="d-inline-flex align-items-center"
-                    >
-                    </Button>
-                  )}
-                </OverlayTrigger>
-              </div> */}
             </div>
           </Navbar.Collapse>
         </Container>

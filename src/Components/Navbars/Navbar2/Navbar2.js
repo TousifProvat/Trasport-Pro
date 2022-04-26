@@ -60,8 +60,6 @@ const Navbar2 = () => {
                     Search Trailer
                   </NavDropdown.Item>
                 </NavDropdown>
-                <Nav.Link href="/inspection">Inspection</Nav.Link>
-                <Nav.Link href="/maintenance">Maintenance</Nav.Link>
               </NavDropdown>
 
               <NavDropdown title="Customers" id="basic-nav-dropdown">

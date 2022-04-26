@@ -430,18 +430,16 @@ const AddOwner = () => {
               />
             </Form.Group>
           </Row>
-          <Button type="submit" className="me-3" variant="outline-primary">
+          <Button type="submit" className="mb-5 me-3" variant="outline-primary">
             Save
           </Button>
           <Button
             type="reset"
-            variant="outline-primary"
-            onClick={() => {
-              setValidated(false);
-              setAllValues(initValue);
-            }}
+            variant="outline-danger"
+            className="mb-5"
+            href="/search-owner"
           >
-            Reset
+            Cancel
           </Button>
         </Form>
       </Container>

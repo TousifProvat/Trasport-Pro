@@ -530,7 +530,11 @@ const Tractors = () => {
           <Button type="submit" variant="outline-primary" className="mb-5">
             Save
           </Button>
-          <Button variant="outline-danger" className="ms-3 mb-5">
+          <Button
+            variant="outline-danger"
+            className="ms-3 mb-5"
+            href="/search-tractor"
+          >
             Cancel
           </Button>
         </Form>
