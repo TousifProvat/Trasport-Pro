@@ -77,7 +77,7 @@ function App() {
             <Route path="tractor/:tractorId" element={<TractorSummary />} />
             <Route path="trailer/:trailerId" element={<TrailerSummary />} />
             <Route path="driver/:driverId" element={<DriverSummary />} />
-            <Route path="customer/summary" element={<CustomerSummary />} />
+            <Route path="customer/summary/customerId" element={<CustomerSummary />} />
             {/* <Route path="billing-dashboard" element={} /> */}
             <Route path="billing-dashboard" element={<PrivateRoute><BillingDashboard /></PrivateRoute>} />
             <Route path="inspection" element={<InspectionLog />} />

@@ -88,6 +88,7 @@ const CustomerSummary = () => {
         <Container>
           <h3 className="mt-5 mb-3">Customer Summary</h3>
           <hr></hr>
+          <Button variant="outline-primary" className="mb-3">Update Information</Button>{" "}
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Row className="mb-3">
               <Form.Group as={Col} md="4" controlId="validationCustom01">
