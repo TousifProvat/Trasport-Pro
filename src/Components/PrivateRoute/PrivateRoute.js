@@ -1,14 +1,9 @@
-import React from 'react';
-import { Navigate, Route, useLocation } from 'react-router-dom';
-import useContext from '../Hooks/useContext';
+import React from "react";
+import { Navigate, Outlet } from "react-router-dom";
 
 const PrivateRoute = ({ children, ...rest }) => {
-    const { auth } = useContext();
-    let location = useLocation();
-    if (auth.isAuthenticated) {
-        return children;
-    }
-    return <Navigate to="/login" state={{from: location}}></Navigate>
+  const isAuthenticated = localStorage.getItem("transport-token");
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

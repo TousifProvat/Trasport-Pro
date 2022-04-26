@@ -1,31 +1,35 @@
-import React, { useState } from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Form,
-  InputGroup,
-  Row,
-} from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import "./login.css";
 import useContext from "../Hooks/useContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { authSignin, loading } = useContext();
+  const { authSignin, loading, auth } = useContext();
+
+  //navigate
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      navigate("/");
+    }
+  }, [auth.isAuthenticated]);
+
   const [validated, setValidated] = useState(false);
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
     if (form.checkValidity() === false) {
-      event.stopPropagation();
+      e.stopPropagation();
+      setValidated(true);
+      return;
     }
-    setValidated(true);
     authSignin(formValues);
   };
 
@@ -68,6 +72,7 @@ const Login = () => {
                           placeholder="Email Address"
                           name="email"
                           onChange={onChange}
+                          value={formValues.email}
                         />
                       </Form.Group>
                     </Row>
@@ -86,6 +91,7 @@ const Login = () => {
                           placeholder="Password"
                           name="password"
                           onChange={onChange}
+                          value={formValues.password}
                         />
                       </Form.Group>
                     </Row>

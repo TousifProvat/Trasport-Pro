@@ -47,7 +47,7 @@ function App() {
         </div>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/">
+          <Route path="/" element={<PrivateRoute />}>
             <Route index element={<FreightOptionsDashboard />} />
             <Route
               path="freight-options-dashboard"
