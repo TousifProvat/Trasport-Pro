@@ -14,16 +14,65 @@ import {
 import { Link, useParams } from "react-router-dom";
 import axios from "../../utils/axios";
 import { notification } from "antd";
+import useContext from "../Hooks/useContext";
 
 const TrailerSummary = () => {
+  const { ownerData, eobr } = useContext();
   const [enable, setEnable] = useState(true);
   const { trailerId } = useParams();
+
+  const initValue = {
+    id: "",
+    status: "Active",
+    owner: "",
+    ownerSince: "",
+    onBoardingDate: "",
+    terminationDate: "",
+    year: "",
+    make: "",
+    model: "",
+    trailerType: "",
+    group: "",
+    vin: "",
+    tagNumber: "",
+    tagState: "",
+    tagExp: "",
+    lastInspectionDate: "",
+    nextInspectionDate: "",
+    lastServiceDate: "",
+    nextServiceDate: "",
+    maintenanceDate: "",
+    axieCount: 0,
+    length: 0,
+    width: 0,
+    deckHeight: 0,
+    weight: 0,
+    eobrType: "",
+    eobrId: "",
+    physicalDmgInsCarrier: "",
+    physicalDmgInsStartDate: "",
+    physicalDmgInsExpDate: "",
+    physicalDmgInsValue: "",
+    comments: "",
+  };
 
   const handleEnable = (enable) => {
     setEnable(false);
   };
 
   const [allValues, setAllValues] = useState({});
+  const [validated, setValidated] = useState(false);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
+    //addTrailers();
+  };
+
 
   const changeHandler = (e) => {
     setAllValues({
@@ -88,602 +137,392 @@ const TrailerSummary = () => {
 
   return (
     <div>
-      <div>
-        {loading && <h2>loading..</h2>}
-        {!loading && (
-          <Container>
-            <h1 className="mt-5 mb-3">Trailer Summary</h1>
-            <hr></hr>
-            <div className="operator-info">
-              <h5 className="mt-5 mb-3">Trailer Information</h5>
-
-              {enable ? (
-                <Button variant="outline-primary" onClick={handleEnable}>
-                  Edit Information
-                </Button>
-              ) : (
-                <>
-                  <Button variant="outline-primary" onClick={handleUpdate}>
-                    Update Information
-                  </Button>{" "}
-                  <Button variant="outline-danger" onClick={handleUpdate}>
-                    Cancel
-                  </Button>
-                </>
-              )}
-              <Modal
-                size="lg"
-                show={smShow}
-                onHide={() => setSmShow(false)}
-                aria-labelledby="example-modal-sizes-title-sm"
+      <Container>
+        <h3 className="mt-5 mb-3">Trailer Summary</h3>
+        <hr></hr>
+        <Button variant="outline-primary" className="mb-3">Update Information</Button>{" "}
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom01">
+              <Form.Label>Trailer Id</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Trailer Id"
+                name="id"
+                onChange={changeHandler}
+                value={allValues.id}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+              <Form.Label>Status</Form.Label>
+              <Form.Select
+                name="status"
+                onChange={changeHandler}
+                value={allValues.status}
               >
-                <Modal.Header closeButton>
-                  <Modal.Body id="example-modal-sizes-title-sm">
-                    <Row>
-                      <Col>Transport Pro Administrator</Col>
-                      <Col>{date}</Col>
-                    </Row>
-                  </Modal.Body>
-                </Modal.Header>
-                {/* <Modal.Body>...</Modal.Body> */}
-              </Modal>
-              <hr></hr>
-            </div>
-            <Row>
-              <Col>
-                <Form.Label>Trailer ID </Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Trailer ID	"
-                  defaultValue={summaryData.id}
-                  name="trailerId"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>EOBR Type</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="EOBR Type"
-                  name="eobrType"
-                  onChange={changeHandler}
-                  defaultValue={summaryData.eobrType}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Status</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Status"
-                  defaultValue={summaryData.status}
-                  name="status"
-                  onChange={changeHandler}
-                />
-              </Col>
-            </Row>
+                <option value="">Select Status</option>
+                <option value="Active">Active</option>
+                <option value="Hold Safely">Hold Safely</option>
+                <option value="Hold Shop">Hold Shop</option>
+                <option value="Inactive">Inactive</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Model</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Model Name"
+                name="model"
+                onChange={changeHandler}
+                value={allValues.model}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Owner</Form.Label>
+              <Form.Select
+                required
+                name="owner"
+                onChange={changeHandler}
+                value={allValues.owner}
+              >
+                <option value=""> Select Owner </option>
+                {ownerData.map((owner, index) => (
+                  <option value={owner._id} key={index}>
+                    {owner.firstName} {owner.lastName}-{owner.email}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Owner Since</Form.Label>
+              <Form.Control
+                required
+                type="date"
+                placeholder="Owner Since"
+                name="ownerSince"
+                onChange={changeHandler}
+                value={allValues.ownerSince}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>On Boarding Date</Form.Label>
+              <Form.Control
+                required
+                type="date"
+                name="onBoardingDate"
+                onChange={changeHandler}
+                value={allValues.onBoardingDate}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Termination Date</Form.Label>
+              <Form.Control
+                required
+                type="date"
+                placeholder="Termination Date"
+                name="terminationDate"
+                onChange={changeHandler}
+                value={allValues.terminationDate}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Year</Form.Label>
+              <Form.Control
+                required
+                placeholder="Year"
+                name="year"
+                onChange={changeHandler}
+                value={allValues.year}
+              />
+            </Form.Group>
 
-            <Row className="mt-3">
-              <Col>
-                <Form.Label>EOBR ID</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="EOBR ID"
-                  defaultValue={summaryData.eobrID}
-                  name="eobrID"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Current Owner</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Current Owner"
-                  defaultValue={summaryData.owner}
-                  name="owner"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Tag Information </Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Tag Information"
-                  defaultValue={summaryData.tagInfo}
-                  name="tagInfo"
-                  onChange={changeHandler}
-                />
-              </Col>
-            </Row>
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Make</Form.Label>
+              <Form.Control
+                required
+                placeholder="Make"
+                name="make"
+                onChange={changeHandler}
+                value={allValues.make}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>VIN</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="VIN number"
+                name="vin"
+                onChange={changeHandler}
+                value={allValues.vin}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom02">
+              <Form.Label>Axie Count</Form.Label>
+              <Form.Control
+                name="axieCount"
+                onChange={changeHandler}
+                type="number"
+                placeholder="Axie Count"
+                value={allValues.axieCount}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Deck Height (inches)</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Deck Height (inches)"
+                name="deckHeight"
+                onChange={changeHandler}
+                value={allValues.deckHeight}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Trailer Type</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Trailer Type"
+                name="trailerType"
+                onChange={changeHandler}
+                value={allValues.trailerType}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Weight (lbs)</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Weight (lbs)"
+                name="weight"
+                onChange={changeHandler}
+                value={allValues.weight}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Length (Feet)</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Length(Feet)"
+                name="length"
+                onChange={changeHandler}
+                value={allValues.length}
+              />
+            </Form.Group>
 
-            <Row className="mt-3">
-              <Col>
-                <Form.Label>Terminal</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Terminal"
-                  defaultValue={summaryData.terminal}
-                  name="terminal"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Last Inspection Date</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Last Inspection Date"
-                  defaultValue={summaryData.lastInspectionDate}
-                  name="lastInspectionDate"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>VIN</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="VIN"
-                  defaultValue={summaryData.vin}
-                  name="vin"
-                  onChange={changeHandler}
-                />
-              </Col>
-            </Row>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Width(inches)</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Width(inches)"
+                name="width"
+                onChange={changeHandler}
+                value={allValues.width}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Group</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Group Name"
+                name="group"
+                onChange={changeHandler}
+                value={allValues.group}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>EOBR Type</Form.Label>
+              <Form.Select
+                name="eobrType"
+                onChange={changeHandler}
+                value={allValues.eobrType}
+              >
+                <option value="">Select EOBR Type</option>
+                {eobr.map((eobr) => (
+                  <option value={eobr._id}>{eobr.name}</option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>EOBR ID</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="EOBR ID"
+                name="eobrId"
+                onChange={changeHandler}
+                value={allValues.eobrId}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Tag Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Tag Number"
+                name="tagNumber"
+                onChange={changeHandler}
+                value={allValues.tagNumber}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Tag State</Form.Label>
+              <Form.Select
+                name="tagState"
+                onChange={changeHandler}
+                value={allValues.tagState}
+              >
+                <option value="">Select Tag State</option>
+                <option value="Alaska">Alaska</option>
+                <option value="Alabama">Alabama</option>
+                <option value="Arizona">Arizona</option>
+                <option value="California">California</option>
+                <option value="Canada">Canada</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Tag Expiration Date</Form.Label>
+              <Form.Control
+                type="date"
+                placeholder="Tag Expire Date"
+                name="tagExp"
+                onChange={changeHandler}
+                value={allValues.tagExp}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Physical Damage Insurance Carrier</Form.Label>
+              <Form.Control
+                placeholder="Physical Damage Insurance Carrier"
+                name="physicalDmgInsCarrier"
+                onChange={changeHandler}
+                value={allValues.physicalDmgInsCarrier}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Physical Damage Insurance Start Date </Form.Label>
+              <Form.Control
+                type="date"
+                name="physicalDmgInsStartDate"
+                onChange={changeHandler}
+                value={allValues.physicalDmgInsStartDate}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Physical Damage Insurance Expiration Date</Form.Label>
+              <Form.Control
+                type="date"
+                placeholder="Expire Date"
+                name="physicalDmgInsExpDate"
+                onChange={changeHandler}
+                value={allValues.physicalDmgInsExpDate}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Physical Damage Insurance Value</Form.Label>
+              <Form.Control
+                type="text"
+                name="physicalDmgInsValue"
+                onChange={changeHandler}
+                placeholder="Physical Damage Insurance Value"
+                value={allValues.physicalDmgInsValue}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Last Inspection Date</Form.Label>
+              <Form.Control
+                type="date"
+                placeholder="Tag Number"
+                name="lastInspectionDate"
+                onChange={changeHandler}
+                value={allValues.lastInspectionDate}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Next Inspection Date</Form.Label>
+              <Form.Control
+                type="text"
+                name="nextInspectionDate"
+                onChange={changeHandler}
+                placeholder="Next Inspection Date"
+                value={allValues.nextInspectionDate}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3"></Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Last Service Date</Form.Label>
+              <Form.Control
+                type="text"
+                name="lastServiceDate"
+                onChange={changeHandler}
+                placeholder="Last Service Date"
+                value={allValues.lastServiceDate}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Next Service Date</Form.Label>
+              <Form.Control
+                type="text"
+                name="nextServiceDate"
+                onChange={changeHandler}
+                placeholder="Next Service Date"
+                value={allValues.nextServiceDate}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Maintenance Date</Form.Label>
+              <Form.Control
+                type="text"
+                name="maintenanceDate"
+                onChange={changeHandler}
+                placeholder="Maintenance Date"
+                value={allValues.maintenanceDate}
+              />
+            </Form.Group>
+          </Row>
 
-            <Row className="mt-3">
-              <Col>
-                <Form.Label>Last Inspection Location</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Last Inspection Location"
-                  defaultValue={summaryData.lastInspectionLocation}
-                  name="lastInspectionLocation"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Year</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Year"
-                  defaultValue={summaryData.year}
-                  name="year"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Next Inspection Date </Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Next Inspection Date"
-                  defaultValue={summaryData.nextInspectionDate}
-                  name="nextInspectionDate"
-                  onChange={changeHandler}
-                />
-              </Col>
-            </Row>
-
-            <Row className="mt-3">
-              <Col>
-                <Form.Label>Make</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Make"
-                  defaultValue={summaryData.make}
-                  name="make"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Last Service Date </Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Last Service Date"
-                  defaultValue={summaryData.lastServiceDate}
-                  name="lastServiceDate"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Model</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Model"
-                  defaultValue={summaryData.model}
-                  name="model"
-                  onChange={changeHandler}
-                />
-              </Col>
-            </Row>
-
-            <Row className="mt-3">
-              <Col>
-                <Form.Label>Next Service Date </Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Next Service Date"
-                  defaultValue={summaryData.nextServiceDate}
-                  name="nextServiceDate"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Type</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Type"
-                  defaultValue={summaryData.type}
-                  name="type"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Monthly Maintenance</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Monthly Maintenance"
-                  defaultValue={summaryData.maintenanceDate}
-                  name="maintenanceDate"
-                  onChange={changeHandler}
-                />
-              </Col>
-            </Row>
-
-            <Row className="mt-3">
-              <Col>
-                <Form.Label>Comments</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Comments"
-                  defaultValue={summaryData.comments}
-                  name="comments"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Group</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Group"
-                  defaultValue={summaryData.group}
-                  name="group"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Physical Damage Insurance Carrier</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Physical Damage Insurance Carrier"
-                  defaultValue={summaryData.physicalDmgInsCarrier}
-                  name="physicalDmgInsCarrier"
-                  onChange={changeHandler}
-                />
-              </Col>
-            </Row>
-
-            <Row className="mt-3">
-              <Col>
-                <Form.Label>Axle Count</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Axle Count"
-                  defaultValue={summaryData.axieCount}
-                  name="axieCount"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Physical Damage Insurance Start Date</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Physical Damage Insurance Start Date"
-                  defaultValue={summaryData.physicalDmgInsStartDate}
-                  name="physicalDmgInsStartDate"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Length</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Length"
-                  defaultValue={summaryData.length}
-                  name="length"
-                  onChange={changeHandler}
-                />
-              </Col>
-            </Row>
-
-            <Row className="mt-3">
-              <Col>
-                <Form.Label>
-                  Physical Damage Insurance Expiration Date{" "}
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Physical Damage Insurance Expiration Date"
-                  defaultValue={summaryData.physicalDmgInsExpDate}
-                  name="physicalDmgInsExpDate"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Width</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Width"
-                  defaultValue={summaryData.width}
-                  name="width"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Physical Damage Insurance Value</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Physical Damage Insurance Value"
-                  defaultValue={summaryData.physicalDmgInsValue}
-                  name="physicalDmgInsValue"
-                  onChange={changeHandler}
-                />
-              </Col>
-            </Row>
-
-            <Row className="mt-3">
-              <Col>
-                <Form.Label>Deck Height</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Deck Height"
-                  defaultValue={summaryData.deckHeight}
-                  name="deckHeight"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Leasing Company</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Leasing Company"
-                  defaultValue={summaryData.leasingCompany}
-                  name="leasingCompany"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                <Form.Label>Weight</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Weight"
-                  defaultValue={summaryData.weight}
-                  name="weight"
-                  onChange={changeHandler}
-                />
-              </Col>
-            </Row>
-
-            <Row className="mt-3">
-              <Col>
-                <Form.Label>Lease Exp Date</Form.Label>
-                <Form.Control
-                  type="text"
-                  disabled={enable}
-                  placeholder="Lease Exp Date"
-                  defaultValue={summaryData.leaseExpDate}
-                  name="leaseExpDate"
-                  onChange={changeHandler}
-                />
-              </Col>
-              <Col>
-                
-              </Col>
-            </Row>
-
-            <Navbar bg="light" expand="lg" className="mt-5">
-              <Container>
-                <Navbar.Brand href="#home">
-                  <h1>Assigned Drivers</h1>
-                </Navbar.Brand>
-                <Navbar.Toggle />
-                <Navbar.Collapse className="justify-content-end">
-                  <OverlayTrigger
-                    overlay={
-                      <Tooltip id="tooltip-disabled">Add Drivers</Tooltip>
-                    }
-                  >
-                    <span className="d-inline-block">
-                      <Button variant="outline-primary" onClick={handleShow}>
-                        <i className="fa-solid fa-plus"></i>
-                      </Button>{" "}
-                    </span>
-                  </OverlayTrigger>
-                  <Modal
-                    show={show}
-                    onHide={handleClose}
-                    backdrop="static"
-                    keyboard={false}
-                  >
-                    <Modal.Header closeButton>
-                      <Modal.Title>Modal title</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <Button variant="outline-primary">
-                        <Link to="/addDriver">Add New Driver</Link>
-                      </Button>{" "}
-                      <Form className="mt-4">
-                        <Row className="mb-3">
-                          <Form.Group
-                            as={Col}
-                            md="12"
-                            controlId="validationCustom01"
-                          >
-                            <Form.Label>Driver</Form.Label>
-                            <Form.Control
-                              disabled={enable}
-                              type="text"
-                              placeholder="Driver"
-                              // defaultValue="Mark"
-                            />
-                            <Form.Control.Feedback>
-                              Looks good!
-                            </Form.Control.Feedback>
-                          </Form.Group>
-                        </Row>
-                        <Row className="mb-3">
-                          <Form.Group
-                            as={Col}
-                            md="12"
-                            controlId="validationCustom01"
-                          >
-                            <Form.Label>Driver Assigned</Form.Label>
-                            <Form.Control
-                              disabled={enable}
-                              type="date"
-                              placeholder="Driver"
-                              // defaultValue="Mark"
-                            />
-                            <Form.Control.Feedback>
-                              Looks good!
-                            </Form.Control.Feedback>
-                          </Form.Group>
-                        </Row>
-                        <Row className="mb-3">
-                          <Form.Group
-                            as={Col}
-                            md="12"
-                            controlId="validationCustom01"
-                          >
-                            <Form.Label>Driver Removed</Form.Label>
-                            <Form.Control
-                              disabled={enable}
-                              type="date"
-                              placeholder="Driver"
-                              // defaultValue="Mark"
-                            />
-                            <Form.Control.Feedback>
-                              Looks good!
-                            </Form.Control.Feedback>
-                          </Form.Group>
-                        </Row>
-                        <Row className="mb-3">
-                          <Form.Group
-                            as={Col}
-                            md="12"
-                            controlId="validationCustom01"
-                          >
-                            <Form.Label>Comment (Internal)</Form.Label>
-                            <Form.Control
-                              disabled={enable}
-                              type="text"
-                              placeholder="Comment (Internal)"
-                              // defaultValue="Mark"
-                            />
-                            <Form.Control.Feedback>
-                              Looks good!
-                            </Form.Control.Feedback>
-                          </Form.Group>
-                        </Row>
-                        <Form.Group className="mb-3">
-                          <Form.Check
-                            disabled={enable}
-                            label="Agree to terms and conditions"
-                            feedback="You must agree before submitting."
-                            feedbackType="invalid"
-                          />
-                        </Form.Group>
-                        <Button type="submit">Save Recode</Button>{" "}
-                        <Button variant="danger" onClick={handleClose}>
-                          Close
-                        </Button>
-                      </Form>
-                    </Modal.Body>
-                    {/* <Modal.Footer>
-                  <Button variant="primary" type="submit">
-                    Save Recode
-                  </Button>
-                </Modal.Footer> */}
-                  </Modal>
-                </Navbar.Collapse>
-              </Container>
-            </Navbar>
-            <Table striped bordered hover className="mb-5">
-              <thead>
-                <tr>
-                  <th>Driver</th>
-                  <th>Date Assigned </th>
-                  <th>Date Removed </th>
-                  <th>Comments (Internal)</th>
-                  <th>Manage</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Jhone Clerk</td>
-                  <td>03/20/2022</td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <OverlayTrigger
-                      overlay={
-                        <Tooltip id="tooltip-disabled">Edit Drivers</Tooltip>
-                      }
-                    >
-                      <span className="d-inline-block">
-                        <Button variant="outline-primary" onClick={handleShow}>
-                          <i className="fa-solid fa-pen-to-square"></i>
-                        </Button>{" "}
-                      </span>
-                    </OverlayTrigger>{" "}
-                    <OverlayTrigger
-                      overlay={
-                        <Tooltip id="tooltip-disabled">Delete Drivers</Tooltip>
-                      }
-                    >
-                      <span className="d-inline-block">
-                        <Button
-                          variant="outline-danger"
-                          onClick={handleDeleteDriver}
-                        >
-                          <i className="fa-solid fa-trash-can"></i>
-                        </Button>{" "}
-                      </span>
-                    </OverlayTrigger>
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
-          </Container>
-        )}
-      </div>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Comment</Form.Label>
+              <Form.Control
+                as="textarea"
+                placeholder="comment "
+                rows={3}
+                name="comments"
+                onChange={changeHandler}
+                value={allValues.comments}
+              />
+            </Form.Group>
+          </Row>
+          <Button type="submit" variant="outline-primary" className="mb-5 me-3">
+            Save
+          </Button>
+          <Button
+            variant="outline-danger"
+            className="mb-5"
+            href="/search-trailer"
+          >
+            Cancel
+          </Button>
+        </Form>
+      </Container>
     </div>
   );
 };

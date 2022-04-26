@@ -13,3 +13,10 @@
     display: flex;
     justify-content: space-between;
 }
+.users{
+    display: flex;
+    flex-direction: row;
+}
+.fa-user-tie{
+    font-size: 30px;
+}

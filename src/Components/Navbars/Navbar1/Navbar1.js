@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Container,
@@ -6,11 +6,16 @@ import {
   Image,
   Nav,
   Navbar,
+  Offcanvas,
   OverlayTrigger,
   Tooltip,
 } from "react-bootstrap";
 import "./navbar1.css";
 const Navbar1 = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <div>
       <Navbar bg="light" expand="lg">
@@ -26,7 +31,7 @@ const Navbar1 = () => {
               </Nav>
             </div>
             <div className="navLinks-shortLinks">
-              <Dropdown drop="start">
+              {/* <Dropdown drop="start">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   <i className="fa-solid fa-gear"></i>
                 </Dropdown.Toggle>
@@ -38,7 +43,22 @@ const Navbar1 = () => {
                     SignOut
                   </Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <Button variant="primary" onClick={handleShow} className="me-2">
+                Login
+              </Button>
+              <Offcanvas show={show} onHide={handleClose} placement="end">
+                <Offcanvas.Header closeButton>
+                  <Offcanvas.Title>Account</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                  <div className="users">
+                    <i className="fa-solid fa-user-tie me-3"></i>
+                    <p className="mt-2 fw-bold">Demo X</p>
+                  </div>
+                  <Button variant="outline-danger" className="mt-5">Sign Out</Button>{" "}
+                </Offcanvas.Body>
+              </Offcanvas>
             </div>
           </Navbar.Collapse>
         </Container>
