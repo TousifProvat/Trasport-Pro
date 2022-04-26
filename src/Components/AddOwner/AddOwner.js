@@ -427,6 +427,7 @@ const AddOwner = () => {
                 required
                 name="billSSN"
                 onChange={onChange}
+                value={allValues.billSSN}
               />
             </Form.Group>
           </Row>
