@@ -595,7 +595,7 @@ const SearchCustomer = () => {
           {customerData.map((i) => (
             <tbody>
               <tr>
-                <td>{i.id}</td>
+                <td>{i._id}</td>
                 <td>{i.customerCode}</td>
                 <td>{i.type}</td>
                 <td>{i.company}</td>
