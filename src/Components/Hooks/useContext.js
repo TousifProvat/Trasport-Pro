@@ -47,6 +47,9 @@ const useContext = () => {
   //commodity
   const [commodity, setCommodity] = useState([]);
 
+  //eobr
+  const [eobr, setEobr] = useState([]);
+
   //load
 
   const getLoads = async () => {
@@ -168,6 +171,19 @@ const useContext = () => {
   };
 
   // tractor
+  const addTractor = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post("/tractor", values);
+      if (res.status === 201) {
+        notification.success({ message: res.data.message });
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({ message: err.response.data.message });
+    }
+  };
   const getTractors = async () => {
     try {
       setLoading(true);
@@ -224,6 +240,20 @@ const useContext = () => {
     }
   };
 
+  //eobr
+  const getEobr = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/eobr");
+      setEobr(data.eobrs);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
+
   //call
   useEffect(() => {
     // use every call in one use effect until they have different dependencies
@@ -235,6 +265,7 @@ const useContext = () => {
     getTrailers();
     getBilling();
     getCommodities();
+    getEobr();
   }, []);
 
   return {
@@ -246,6 +277,7 @@ const useContext = () => {
     addDriver,
     // tractor
     tractorData,
+    addTractor,
     //trailer
     trailerData,
     // customer
@@ -260,6 +292,8 @@ const useContext = () => {
     authSignin,
     //commodity
     commodity,
+    //eobr
+    eobr,
     // loading state
     loading,
   };
