@@ -1,21 +1,46 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Col,
-  Container,
-  FloatingLabel,
-  Form,
-  Row,
-} from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { notification } from "antd";
+import axios from "../../utils/axios";
+import useContext from "../Hooks/useContext";
 import "./addTrailers.css";
-import DayPickerInput from "react-day-picker/DayPickerInput";
-import "react-day-picker/lib/style.css";
 const AddTrailers = () => {
-
-
-
-  const [allValues, setAllValues] = useState({});
-
+  const { ownerData, eobr } = useContext();
+  const initValue = {
+    id: "",
+    status: "Active",
+    owner: "",
+    ownerSince: "",
+    onBoardingDate: "",
+    terminationDate: "",
+    year: "",
+    make: "",
+    model: "",
+    trailerType: "",
+    group: "",
+    vin: "",
+    tagNumber: "",
+    tagState: "",
+    tagExp: "",
+    lastInspectionDate: "",
+    nextInspectionDate: "",
+    lastServiceDate: "",
+    nextServiceDate: "",
+    maintenanceDate: "",
+    axieCount: 0,
+    length: 0,
+    width: 0,
+    deckHeight: 0,
+    weight: 0,
+    eobrType: "",
+    eobrId: "",
+    physicalDmgInsCarrier: "",
+    physicalDmgInsStartDate: "",
+    physicalDmgInsExpDate: "",
+    physicalDmgInsValue: "",
+    comments: "",
+  };
+  const [allValues, setAllValues] = useState(initValue);
 
   const changeHandler = (e) => {
     setAllValues({
@@ -24,19 +49,39 @@ const AddTrailers = () => {
     });
   };
 
-
   const [validated, setValidated] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+  const addTrailers = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.post("/trailer", allValues);
+
+      if (res.status === 201) {
+        notification.success({ message: res.data.message });
+        setTimeout(() => {
+          setValidated(false);
+          setAllValues(initValue);
+        }, 1000);
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({ message: err.response.data.message });
     }
-
-    setValidated(true);
-    console.log(allValues);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
+    addTrailers();
+  };
+
   return (
     <div>
       <Container>
@@ -49,128 +94,154 @@ const AddTrailers = () => {
               <Form.Label>Trailer Id</Form.Label>
               <Form.Control
                 required
-                type="number"
+                type="text"
                 placeholder="Trailer Id"
-                name="trailerId"
+                name="id"
                 onChange={changeHandler}
+                value={allValues.id}
               />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom02">
-              <Form.Label>Axle Count</Form.Label>
-              <Form.Control
-                name="axleCount"
-                onChange={changeHandler}
-                type="number"
-                placeholder="Axle Count"
-              />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustomUsername">
               <Form.Label>Status</Form.Label>
               <Form.Select
-                aria-label="Default select example"
                 name="status"
                 onChange={changeHandler}
+                value={allValues.status}
               >
-                <option>Select Status</option>
+                <option value="">Select Status</option>
                 <option value="Active">Active</option>
                 <option value="Hold Safely">Hold Safely</option>
                 <option value="Hold Shop">Hold Shop</option>
                 <option value="Inactive">Inactive</option>
               </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please choose a username.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <Form.Label>Length (Feet)</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Length(Feet)"
-                name="length"
-                onChange={changeHandler}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              {/*  */}
-              <p>Year</p>
-              <Form.Select
-                aria-label="Default select example"
-                name="year"
-                onChange={changeHandler}
-              >
-                <option>Select Year</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <Form.Label>Width(inches)</Form.Label>
+              <Form.Label>Model</Form.Label>
               <Form.Control
-                type="number"
-                placeholder="Width(inches)"
-                name="width"
+                type="text"
+                placeholder="Model Name"
+                name="model"
                 onChange={changeHandler}
+                value={allValues.model}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid number.
-              </Form.Control.Feedback>
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              {/* */}
-              <p>Make</p>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Owner</Form.Label>
               <Form.Select
-                aria-label="Default select example"
-                name="make"
+                required
+                name="owner"
                 onChange={changeHandler}
+                value={allValues.owner}
               >
-                <option>Select Make</option>
-                <option value="Blue Bird">Blue Bird</option>
-                <option value="CaterPiller">CaterPiller</option>
-                <option value="Ford">Ford</option>
-                <option value="GMC">GMC</option>
+                <option value=""> Select Owner </option>
+                {ownerData.map((owner, index) => (
+                  <option value={owner._id} key={index}>
+                    {owner.firstName} {owner.lastName}-{owner.email}
+                  </option>
+                ))}
               </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
-              {/*  */}
+              <Form.Label>Owner Since</Form.Label>
+              <Form.Control
+                required
+                type="date"
+                placeholder="Owner Since"
+                name="ownerSince"
+                onChange={changeHandler}
+                value={allValues.ownerSince}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>On Boarding Date</Form.Label>
+              <Form.Control
+                required
+                type="date"
+                name="onBoardingDate"
+                onChange={changeHandler}
+                value={allValues.onBoardingDate}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Termination Date</Form.Label>
+              <Form.Control
+                required
+                type="date"
+                placeholder="Termination Date"
+                name="terminationDate"
+                onChange={changeHandler}
+                value={allValues.terminationDate}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Year</Form.Label>
+              <Form.Control
+                required
+                placeholder="Year"
+                name="year"
+                onChange={changeHandler}
+                value={allValues.year}
+              />
+            </Form.Group>
+
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Make</Form.Label>
+              <Form.Control
+                required
+                placeholder="Make"
+                name="make"
+                onChange={changeHandler}
+                value={allValues.make}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>VIN</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="VIN number"
+                name="vin"
+                onChange={changeHandler}
+                value={allValues.vin}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom02">
+              <Form.Label>Axie Count</Form.Label>
+              <Form.Control
+                name="axieCount"
+                onChange={changeHandler}
+                type="number"
+                placeholder="Axie Count"
+                value={allValues.axieCount}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Deck Height (inches)</Form.Label>
               <Form.Control
                 type="number"
                 placeholder="Deck Height (inches)"
                 name="deckHeight"
                 onChange={changeHandler}
+                value={allValues.deckHeight}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
-              {/*  */}
-              <p>Model</p>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Trailer Type</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Model Name"
-                name="model"
+                placeholder="Trailer Type"
+                name="trailerType"
                 onChange={changeHandler}
+                value={allValues.trailerType}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid number.
-              </Form.Control.Feedback>
             </Form.Group>
           </Row>
           <Row className="mb-3">
@@ -179,347 +250,224 @@ const AddTrailers = () => {
               <Form.Control
                 type="number"
                 placeholder="Weight (lbs)"
-                name="weights"
+                name="weight"
                 onChange={changeHandler}
+                value={allValues.weight}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              {/*  */}
-              <p>Type</p>
-              <Form.Select aria-label="Default select example">
-                <option>Select Type</option>
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <Form.Label>Terminal</Form.Label>
-              <Form.Select
-                aria-label="Default select example"
-                name="terminal"
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Length (Feet)</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Length(Feet)"
+                name="length"
                 onChange={changeHandler}
-              >
-                <option>Select Terminal</option>
-                <option value="EG Egales">EG Egales</option>
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid number.
-              </Form.Control.Feedback>
+                value={allValues.length}
+              />
+            </Form.Group>
+
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Width(inches)</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Width(inches)"
+                name="width"
+                onChange={changeHandler}
+                value={allValues.width}
+              />
             </Form.Group>
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>Group</p>
-              <Form.Select aria-label="Default select example">
-                <option>Select Group</option>
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
+              <Form.Label>Group</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Group Name"
+                name="group"
+                onChange={changeHandler}
+                value={allValues.group}
+              />
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <Form.Label>EOBR Type ID</Form.Label>
+              <Form.Label>EOBR Type</Form.Label>
               <Form.Select
-                aria-label="Default select example"
-                name="eorbTypeId"
+                name="eobrType"
                 onChange={changeHandler}
+                value={allValues.eobrType}
               >
-                <option>Select EOBR Type ID</option>
-                <option value="Geolab">Geolab</option>
+                <option value="">Select EOBR Type</option>
+                {eobr.map((eobr) => (
+                  <option value={eobr._id}>{eobr.name}</option>
+                ))}
               </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <p>VIN</p>
-
-              <Form.Control
-                type="number"
-                placeholder="VIN number"
-                name="vin"
-                onChange={changeHandler}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid number.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>EOBR ID</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 placeholder="EOBR ID"
                 name="eobrId"
                 onChange={changeHandler}
+                value={allValues.eobrId}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <Form.Label>Tag Number</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Tag Number"
-                name="tagNumber"
-                onChange={changeHandler}
-              />
-
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <p>Physical Damage Insurance Carrier</p>
-              <Form.Select
-                aria-label="Default select example"
-                name="physicalDamageInsuranceCarrier"
-                onChange={changeHandler}
-              >
-                <option>Select Make</option>
-                <option value="Blue Bird">Blue Bird</option>
-                <option value="CaterPiller">CaterPiller</option>
-                <option value="Ford">Ford</option>
-                <option value="GMC">GMC</option>
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid number.
-              </Form.Control.Feedback>
             </Form.Group>
           </Row>
           <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Tag Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Tag Number"
+                name="tagNumber"
+                onChange={changeHandler}
+                value={allValues.tagNumber}
+              />
+            </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Tag State</Form.Label>
               <Form.Select
-                aria-label="Default select example"
                 name="tagState"
                 onChange={changeHandler}
+                value={allValues.tagState}
               >
-                <option>Select Tag State</option>
+                <option value="">Select Tag State</option>
                 <option value="Alaska">Alaska</option>
                 <option value="Alabama">Alabama</option>
                 <option value="Arizona">Arizona</option>
                 <option value="California">California</option>
                 <option value="Canada">Canada</option>
               </Form.Select>
-
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Physical Damage Insurance Start Date </p>
-              <Form.Select
-                aria-label="Default select example"
-                name="physicalDamageInsuranceStartDate"
-                onChange={changeHandler}
-              >
-                <option>Select Leasing Company</option>
-              </Form.Select>
-
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <p>Tag Expiration Date</p>
+              <Form.Label>Tag Expiration Date</Form.Label>
               <Form.Control
                 type="date"
-                placeholder="Tag Number"
-                name="tagExpDate"
+                placeholder="Tag Expire Date"
+                name="tagExp"
                 onChange={changeHandler}
+                value={allValues.tagExp}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid number.
-              </Form.Control.Feedback>
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>Physical Damage Insurance Expiration Date</p>
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Physical Damage Insurance Carrier</Form.Label>
               <Form.Control
-                type="date"
-                placeholder="Tag Number"
-                name="physicalDamageInsuranceExpirationDate"
+                placeholder="Physical Damage Insurance Carrier"
+                name="physicalDmgInsCarrier"
                 onChange={changeHandler}
+                value={allValues.physicalDmgInsCarrier}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Last Inspection Date</p>
+              <Form.Label>Physical Damage Insurance Start Date </Form.Label>
+              <Form.Control
+                type="date"
+                name="physicalDmgInsStartDate"
+                onChange={changeHandler}
+                value={allValues.physicalDmgInsStartDate}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom03">
+              <Form.Label>Physical Damage Insurance Expiration Date</Form.Label>
+              <Form.Control
+                type="date"
+                placeholder="Expire Date"
+                name="physicalDmgInsExpDate"
+                onChange={changeHandler}
+                value={allValues.physicalDmgInsExpDate}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4" controlId="validationCustom05">
+              <Form.Label>Physical Damage Insurance Value</Form.Label>
+              <Form.Control
+                type="text"
+                name="physicalDmgInsValue"
+                onChange={changeHandler}
+                placeholder="Physical Damage Insurance Value"
+                value={allValues.physicalDmgInsValue}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Label>Last Inspection Date</Form.Label>
               <Form.Control
                 type="date"
                 placeholder="Tag Number"
                 name="lastInspectionDate"
                 onChange={changeHandler}
+                value={allValues.lastInspectionDate}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <p>Physical Damage Insurance Value</p>
-              <Form.Control
-                type="number"
-                name="physicalDamageInsuranceValue"
-                onChange={changeHandler}
-                placeholder="Physical Damage Insurance Value"
-                
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid number.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>Last Inspection Location</p>
-              <Form.Control
-                type="text"
-                name="lastInspectionLocation"
-                onChange={changeHandler}
-                placeholder="Last Inspection Location"
-                
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Leasing Company</p>
-              <Form.Select aria-label="Default select example">
-                <option>Select Leasing Company</option>
-              </Form.Select>
-              {/* */}
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <p>Next Inspection Date</p>
+              <Form.Label>Next Inspection Date</Form.Label>
               <Form.Control
                 type="text"
                 name="nextInspectionDate"
                 onChange={changeHandler}
-                placeholder="Last Inspection Location"
-                
+                placeholder="Next Inspection Date"
+                value={allValues.nextInspectionDate}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid number.
-              </Form.Control.Feedback>
             </Form.Group>
           </Row>
+          <Row className="mb-3"></Row>
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>Lease Exp Date</p>
-              <Form.Control
-                type="text"
-                name="leaseExpDate"
-                onChange={changeHandler}
-                placeholder="Last Inspection Location"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Last Service Date</p>
+              <Form.Label>Last Service Date</Form.Label>
               <Form.Control
                 type="text"
                 name="lastServiceDate"
                 onChange={changeHandler}
-                placeholder="Last Inspection Location"
+                placeholder="Last Service Date"
+                value={allValues.lastServiceDate}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Next Service Date</p>
+              <Form.Label>Next Service Date</Form.Label>
               <Form.Control
                 type="text"
                 name="nextServiceDate"
                 onChange={changeHandler}
-                placeholder="Last Inspection Location"
-                
+                placeholder="Next Service Date"
+                value={allValues.nextServiceDate}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
-          </Row>
-          <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>Maintenance Date</p>
+              <Form.Label>Maintenance Date</Form.Label>
               <Form.Control
                 type="text"
                 name="maintenanceDate"
                 onChange={changeHandler}
-                placeholder="Last Inspection Location"
+                placeholder="Maintenance Date"
+                value={allValues.maintenanceDate}
               />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Trailer Owned By</p>
-              <Form.Control
-                name="trailerOwnedBy"
-                onChange={changeHandler}
-                type="text"
-                placeholder="Trailer Owned By"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
-              <p>Trailer Owned By Date</p>
-              <Form.Control
-                name="trailerOwnedByDate"
-                onChange={changeHandler}
-                type="date"
-                placeholder="Trailer Owned By"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
             </Form.Group>
           </Row>
+
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
-              <p>Comment</p>
-              <FloatingLabel controlId="floatingTextarea2" label="Comments">
-                <Form.Control
-                  as="textarea"
-                  placeholder="comment here"
-                  style={{ height: "100px" }}
-                  name="comment"
-                  onChange={changeHandler}
-                />
-              </FloatingLabel>
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
+              <Form.Label>Comment</Form.Label>
+              <Form.Control
+                as="textarea"
+                placeholder="comment "
+                rows={3}
+                name="comments"
+                onChange={changeHandler}
+                value={allValues.comments}
+              />
             </Form.Group>
           </Row>
-          <Button type="submit" variant="outline-primary" className="mb-5">
+          <Button type="submit" variant="outline-primary" className="mb-5 me-3">
             Save
-          </Button>{" "}
-          <Button type="submit" variant="outline-primary" className="mb-5">
-            Save And Add New
-          </Button>{" "}
-          <Button variant="outline-danger" className="mb-5">
+          </Button>
+          <Button
+            variant="outline-danger"
+            className="mb-5"
+            href="/search-trailer"
+          >
             Cancel
-          </Button>{" "}
+          </Button>
         </Form>
       </Container>
     </div>
