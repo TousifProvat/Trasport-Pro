@@ -45,7 +45,7 @@ const Navbar1 = () => {
                 </Dropdown.Menu>
               </Dropdown> */}
               <Button variant="primary" onClick={handleShow} className="me-2">
-                Login
+                <i className="fa-solid fa-gear"></i>
               </Button>
               <Offcanvas show={show} onHide={handleClose} placement="end">
                 <Offcanvas.Header closeButton>
@@ -56,7 +56,9 @@ const Navbar1 = () => {
                     <i className="fa-solid fa-user-tie me-3"></i>
                     <p className="mt-2 fw-bold">Demo X</p>
                   </div>
-                  <Button variant="outline-danger" className="mt-5">Sign Out</Button>{" "}
+                  <Button variant="outline-danger" className="mt-5">
+                    Sign Out
+                  </Button>{" "}
                 </Offcanvas.Body>
               </Offcanvas>
             </div>
