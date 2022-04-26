@@ -70,16 +70,12 @@ function App() {
             <Route path="site-setting" element={<SiteSettings />} />
             <Route path="invoice" element={<Invoice />} />
             <Route path="user-management" element={<UserManagement />} />
-            {/* <Route path="editDriver" element={<EditDriver />} />
-              <Route path="editTrailer" element={<EditTrailer />} />
-              <Route path="editTractor" element={<EditTractor />} /> */}
             <Route path="owner/:ownerId" element={<OwnerSummary />} />
             <Route path="tractor/:tractorId" element={<TractorSummary />} />
             <Route path="trailer/:trailerId" element={<TrailerSummary />} />
             <Route path="driver/:driverId" element={<DriverSummary />} />
-            <Route path="customer/summary/customerId" element={<CustomerSummary />} />
-            {/* <Route path="billing-dashboard" element={} /> */}
-            <Route path="billing-dashboard" element={<PrivateRoute><BillingDashboard /></PrivateRoute>} />
+            <Route path="customer/:customerId" element={<CustomerSummary />} />
+            <Route path="billing-dashboard" element={<BillingDashboard />} />
             <Route path="inspection" element={<InspectionLog />} />
             <Route path="maintenance" element={<MaintenanceLog />} />
             <Route path="accident-log" element={<AccidentLog />} />
