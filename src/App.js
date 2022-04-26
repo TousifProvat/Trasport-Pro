@@ -33,6 +33,7 @@ import InspectionLog from "./Components/InspectionLog/InspectionLog";
 import MaintenanceLog from "./Components/MaintenanceLog/MaintenanceLog";
 import AccidentLog from "./Components/AccidentLog/AccidentLog";
 import Invoice from "./Components/Invoice/Invoice";
+import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 
 function App() {
   return (
@@ -75,7 +76,8 @@ function App() {
             <Route path="tractor/:tractorId" element={<TractorSummary />} />
             <Route path="trailer/:trailerId" element={<TrailerSummary />} />
             <Route path="driver/:driverId" element={<DriverSummary />} />
-            <Route path="billing-dashboard" element={<BillingDashboard />} />
+            {/* <Route path="billing-dashboard" element={} /> */}
+            <Route path="billing-dashboard" element={<PrivateRoute><BillingDashboard /></PrivateRoute>} />
             <Route path="inspection" element={<InspectionLog />} />
             <Route path="maintenance" element={<MaintenanceLog />} />
             <Route path="accident-log" element={<AccidentLog />} />
