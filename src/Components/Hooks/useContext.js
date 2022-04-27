@@ -161,7 +161,43 @@ const useContext = () => {
       });
     }
   };
+  //site settings
+  const [settings, setSettings] = useState({
+    _id: "",
+    name: "",
+    street: "",
+    city: "",
+    zip: "",
+    state: "",
+  });
+  const getSiteSettings = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/company");
+      setSettings(data.company);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
 
+  const updateSettings = async (id, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/company/${id}`, values);
+      notification.success({ message: res.data.message });
+      console.log(values);
+      setSettings({ ...values });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
   //commodity
   const [commodity, setCommodity] = useState([]);
 
@@ -398,6 +434,7 @@ const useContext = () => {
     // use every call in one use effect until they have different dependencies
     isUserAutheticated();
     if (auth.isAuthenticated) {
+      getSiteSettings();
       getLoads();
       getOwners();
       getCustomers();
@@ -448,6 +485,9 @@ const useContext = () => {
     addInspection,
     updateInspection,
     removeInspection,
+    //settings
+    settings,
+    updateSettings,
     // loading state
     loading,
   };
