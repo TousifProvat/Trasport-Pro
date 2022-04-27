@@ -1,6 +1,7 @@
 // import React from 'react';
 
 import { message, notification } from "antd";
+import { ar } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import axios from "../../utils/axios";
 
@@ -44,7 +45,65 @@ const useContext = () => {
     token: "",
   });
 
-  //console.log(auth.isAuthenticated);
+  //maintenance
+  const [maintenance, setMaintenance] = useState([]);
+  const getMaintenance = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/maintenance");
+      setMaintenance(data.maintenances);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
+  const updateMaintenance = async (id, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/maintenance/${id}`, values);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const addMaintenance = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post(`/maintenance`, values);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+
+  const removeMaintenance = async (id) => {
+    try {
+      setLoading(true);
+      const res = await axios.delete(`/maintenance/${id}`);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+      const newMaintenance = maintenance.filter(
+        (maintenance) => maintenance._id !== id
+      );
+      setMaintenance(newMaintenance);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
 
   //commodity
   const [commodity, setCommodity] = useState([]);
@@ -291,6 +350,7 @@ const useContext = () => {
       getBilling();
       getCommodities();
       getEobr();
+      getMaintenance();
     }
   }, [auth.isAuthenticated]);
 
@@ -320,6 +380,12 @@ const useContext = () => {
     commodity,
     //eobr
     eobr,
+    // maintenance
+
+    maintenance,
+    addMaintenance,
+    updateMaintenance,
+    removeMaintenance,
     // loading state
     loading,
   };
