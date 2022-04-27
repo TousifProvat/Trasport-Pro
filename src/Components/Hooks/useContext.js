@@ -182,7 +182,6 @@ const useContext = () => {
       console.log({ err });
     }
   };
-
   const updateSettings = async (id, values) => {
     try {
       setLoading(true);
@@ -198,6 +197,22 @@ const useContext = () => {
       });
     }
   };
+
+  //users
+  const [user, setUser] = useState([]);
+  const getUsers = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/user");
+      setUser(data.users);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
+
   //commodity
   const [commodity, setCommodity] = useState([]);
 
@@ -488,6 +503,8 @@ const useContext = () => {
     //settings
     settings,
     updateSettings,
+    //user
+    user,
     // loading state
     loading,
   };
