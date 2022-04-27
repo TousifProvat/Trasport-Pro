@@ -1,32 +1,32 @@
+import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
 import { message } from "antd";
 import axios from "../../../utils/axios";
 import useContext from "../../Hooks/useContext";
 
-const MaintenanceModal = (props) => {
-  const { tractorData, trailerData, updateMaintenance, addMaintenance } =
+const InspectionModal = (props) => {
+  const { tractorData, trailerData, addInspection, updateInspection } =
     useContext();
   const { visible, setVisible, Id, action } = props;
 
   const [loading, setLoading] = useState(false);
   const [allValues, setAllValues] = useState({
-    equipmentType: "Tractor",
+    equipmentType: "Trailer",
     tractor: "",
     trailer: "",
-    maintenanceType: "",
-    cost: 0,
-    maintenanceDate: "",
-    nextMaintenanceDate: "",
-    receipt: "",
+    inspectionType: "",
     comments: "",
+    result: "pass",
+    inspectionDocument: "",
+    inspectionDate: "",
+    nextInspectionDate: "",
   });
 
-  const getMaintenanceById = async (Id) => {
+  const getInspectionById = async (Id) => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/maintenance/${Id}`);
-      setAllValues({ ...data.maintenance });
+      const { data } = await axios.get(`/inspection/${Id}`);
+      setAllValues({ ...data.inspection });
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -37,7 +37,7 @@ const MaintenanceModal = (props) => {
 
   useEffect(() => {
     if (Id) {
-      getMaintenanceById(Id);
+      getInspectionById(Id);
     }
   }, [Id]);
 
@@ -51,7 +51,7 @@ const MaintenanceModal = (props) => {
   const [validated, setValidated] = useState(false);
 
   const onUpdate = () => {
-    updateMaintenance(Id, allValues);
+    updateInspection(Id, allValues);
     setTimeout(() => {
       setVisible(false);
     }, 300);
@@ -61,7 +61,8 @@ const MaintenanceModal = (props) => {
     allValues.equipmentType === "Trailer"
       ? (allValues.tractor = undefined)
       : (allValues.trailer = undefined);
-    addMaintenance(allValues);
+
+    addInspection(allValues);
     setTimeout(() => {
       setVisible(false);
     }, 300);
@@ -81,7 +82,7 @@ const MaintenanceModal = (props) => {
     <Modal size="lg" show={visible} onHide={() => setVisible(false)}>
       <Modal.Header closeButton>
         <Modal.Title id="example-modal-sizes-title-lg">
-          Maintenance Record
+          Inspection Record
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -91,6 +92,7 @@ const MaintenanceModal = (props) => {
               <Form.Label>Equipment Type</Form.Label>
               <Form.Select
                 required
+                aria-label="Default select example"
                 name="equipmentType"
                 onChange={onChange}
                 value={allValues.equipmentType}
@@ -129,83 +131,83 @@ const MaintenanceModal = (props) => {
                     ))}
               </Form.Select>
             </Col>
-
             <Col sm={4}>
-              <Form.Label>Type of Maintenance</Form.Label>
+              <Form.Label>Inspection Type</Form.Label>
               <Form.Control
                 required
                 type="text"
-                placeholder="Type of Maintenance"
-                name="maintenanceType"
+                placeholder="Inspection Type"
+                name="inspectionType"
                 onChange={onChange}
-                value={allValues.maintenanceType}
+                value={allValues.inspectionType}
+              />
+            </Col>
+          </Row>
+          <Row className="m-0 mt-3">
+            <Form.Label>Comments</Form.Label>
+            <Form.Control
+              as="textarea"
+              placeholder="Comment"
+              row={3}
+              name="comments"
+              onChange={onChange}
+              value={allValues.comments}
+            />
+          </Row>
+          <Row className="mt-3">
+            <Col sm={6}>
+              <Form.Label>Inspection Result</Form.Label>
+              <Form.Select
+                required
+                aria-label="Default select example"
+                name="result"
+                onChange={onChange}
+                value={allValues.result}
+              >
+                <option value="pass">Pass</option>
+                <option value="fail">Fail</option>
+              </Form.Select>
+            </Col>
+            <Col sm={6}>
+              <Form.Label>Attach Inspection Result</Form.Label>
+              <Form.Control
+                type="file"
+                placeholder="Inspection Type"
+                name="inspectionDocument"
+                onChange={onChange}
               />
             </Col>
           </Row>
           <Row className="mt-3">
-            <Col sm={3}>
-              <Form.Label>Cost</Form.Label>
-              <Form.Control
-                required
-                type="number"
-                min={1}
-                placeholder="Cost"
-                name="cost"
-                onChange={onChange}
-                value={allValues.cost}
-              />
-            </Col>
-            <Col sm={3}>
-              <Form.Label>Maintenance Date</Form.Label>
+            <Col sm={6}>
+              <Form.Label>Inspection Date</Form.Label>
               <Form.Control
                 required
                 type="date"
-                name="maintenanceDate"
+                placeholder="Inspection Type"
+                name="inspectionDate"
                 onChange={onChange}
-                value={allValues.maintenanceDate}
-                // value={formatDate(allValues.maintenanceDate)}
+                value={allValues.inspectionDate}
               />
             </Col>
-            <Col sm={3}>
-              <Form.Label>Next Maintenance Date</Form.Label>
+            <Col sm={6}>
+              <Form.Label>Next Inspection Date</Form.Label>
               <Form.Control
                 required
                 type="date"
-                name="nextMaintenanceDate"
+                placeholder="Inspection Type"
+                name="nextInspectionDate"
                 onChange={onChange}
-                value={allValues.nextMaintenanceDate}
-                // value={formatDate(allValues.nextMaintenanceDate)}
+                value={allValues.nextInspectionDate}
               />
             </Col>
-            {/* <Col sm={3}>
-            <Form.Label>Attach Receipts</Form.Label>
-            <Form.Control
-              required
-              type="file"
-              placeholder="Inspection Type"
-              name="receipt"
-              onChange={onChange}
-              value={allValues.receipt}
-            />
-          </Col> */}
           </Row>
-          {/* <Row className="m-1">
-          <Form.Label>Comments</Form.Label>
-          <Form.Control
-            as="textarea"
-            placeholder="Comment"
-            rows={3}
-            name="comments"
-            onChange={onChange}
-          />
-        </Row> */}
-          <Button type="submit" className="mt-5 mb-3">
+          <Button type="submit" variant="outline-primary" className="mt-5 mb-3">
             {action === "add" ? "Save" : "Update"}
           </Button>
-
           <Button
             variant="outline-danger"
-            className="mt-5 mb-3 m-2"
+            className="mt-5 mb-3 m-3"
             onClick={() => setVisible(false)}
           >
             cancel
@@ -216,4 +218,4 @@ const MaintenanceModal = (props) => {
   );
 };
 
-export default MaintenanceModal;
+export default InspectionModal;

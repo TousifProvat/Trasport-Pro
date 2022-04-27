@@ -86,7 +86,6 @@ const useContext = () => {
       });
     }
   };
-
   const removeMaintenance = async (id) => {
     try {
       setLoading(true);
@@ -97,6 +96,64 @@ const useContext = () => {
         (maintenance) => maintenance._id !== id
       );
       setMaintenance(newMaintenance);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  //inspection
+  const [inspection, setInspection] = useState([]);
+  const getInspection = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/inspection");
+      setInspection(data.inspections);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
+  const updateInspection = async (id, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/inspection/${id}`, values);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const addInspection = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post(`/inspection`, values);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const removeInspection = async (id) => {
+    try {
+      setLoading(true);
+      const res = await axios.delete(`/inspection/${id}`);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+      const newInspection = inspection.filter(
+        (inspection) => inspection._id !== id
+      );
+      setInspection(newInspection);
     } catch (err) {
       setLoading(false);
       notification.error({
@@ -351,6 +408,7 @@ const useContext = () => {
       getCommodities();
       getEobr();
       getMaintenance();
+      getInspection();
     }
   }, [auth.isAuthenticated]);
 
@@ -381,11 +439,15 @@ const useContext = () => {
     //eobr
     eobr,
     // maintenance
-
     maintenance,
     addMaintenance,
     updateMaintenance,
     removeMaintenance,
+    // maintenance
+    inspection,
+    addInspection,
+    updateInspection,
+    removeInspection,
     // loading state
     loading,
   };

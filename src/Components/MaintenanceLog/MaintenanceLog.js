@@ -52,7 +52,7 @@ const MaintenanceLog = () => {
             <tr>
               <th>Date</th>
               <th>Equipment Type</th>
-              <th>Equipment Number</th>
+              <th>Equipment ID</th>
               <th>Maintenance Type</th>
               <th>Cost</th>
               <th>Next Maintenance Date</th>
@@ -66,8 +66,8 @@ const MaintenanceLog = () => {
                 <td>{maintenance.equipmentType}</td>
                 <td>
                   {maintenance.equipmentType === "Tractor"
-                    ? maintenance.tractor.id
-                    : maintenance.trailer.id}
+                    ? maintenance.tractor._id
+                    : maintenance.trailer._id}
                 </td>
                 <td>{maintenance.maintenanceType}</td>
                 <td>{maintenance.cost} $</td>
@@ -100,6 +100,16 @@ const MaintenanceLog = () => {
                 </td>
               </tr>
             ))}
+            {maintenance.length < 1 && (
+              <td
+                colSpan={8}
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                No Data Found
+              </td>
+            )}
           </tbody>
         </Table>
       </Container>
