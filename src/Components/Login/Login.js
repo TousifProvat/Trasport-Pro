@@ -12,7 +12,9 @@ const Login = () => {
 
   useEffect(() => {
     if (auth.isAuthenticated) {
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 300);
     }
   }, [auth.isAuthenticated]);
 

@@ -71,30 +71,19 @@ const InspectionLog = () => {
                 <td>{inspection.nextInspectionDate}</td>
                 <td>{inspection.result}</td>
                 <td>
-                  <OverlayTrigger
-                    overlay={<Tooltip id="tooltip-disabled">Edit</Tooltip>}
+                  <Button
+                    className="m-2"
+                    variant="outline-primary"
+                    onClick={() => showUpdateModal(inspection._id)}
                   >
-                    <span className="d-inline-block">
-                      <Button
-                        variant="outline-success"
-                        onClick={() => showUpdateModal(inspection._id)}
-                      >
-                        <i className="fa-solid fa-pen-to-square"></i>
-                      </Button>{" "}
-                    </span>
-                  </OverlayTrigger>{" "}
-                  <OverlayTrigger
-                    overlay={<Tooltip id="tooltip-disabled">Delete</Tooltip>}
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outline-danger"
+                    onClick={() => removeInspection(inspection._id)}
                   >
-                    <span className="d-inline-block">
-                      <Button
-                        variant="outline-danger"
-                        onClick={() => removeInspection(inspection._id)}
-                      >
-                        <i className="fa-solid fa-scissors"></i>
-                      </Button>{" "}
-                    </span>
-                  </OverlayTrigger>
+                    Delete
+                  </Button>{" "}
                 </td>
               </tr>
             ))}

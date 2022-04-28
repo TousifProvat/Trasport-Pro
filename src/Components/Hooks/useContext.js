@@ -48,15 +48,14 @@ const useContext = () => {
     try {
       setLoading(true);
       const { data } = await axios.post("/auth/signin", credentials);
+      localStorage.setItem("transport-token", data.token);
+      localStorage.setItem("transport-user", JSON.stringify(data.user));
       setAuth((prev) => ({
         ...prev,
         isAuthenticated: true,
         user: data.user,
         token: data.token,
       }));
-
-      localStorage.setItem("transport-token", data.token);
-      localStorage.setItem("transport-user", JSON.stringify(data.user));
       setLoading(false);
     } catch (err) {
       setLoading(false);

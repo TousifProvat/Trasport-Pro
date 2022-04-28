@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useContext from "../../Hooks/useContext";
 import "./navbar1.css";
 const Navbar1 = () => {
-  const { settings, authSignOut } = useContext();
+  const { settings, authSignOut, auth } = useContext();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -14,9 +14,7 @@ const Navbar1 = () => {
   const onSignOut = () => {
     navigate("/login");
     authSignOut();
-    setTimeout(() => {
-      setShow(false);
-    }, 500);
+    setShow(false);
   };
 
   return (
@@ -43,7 +41,9 @@ const Navbar1 = () => {
               <Offcanvas.Body>
                 <div className="users">
                   <i className="fa-solid fa-user-tie me-3"></i>
-                  <p className="mt-2 fw-bold">Demo X</p>
+                  <p className="mt-2 fw-bold">
+                    {auth.user?.firstName} {auth.user?.lastName}
+                  </p>
                 </div>
                 <Button
                   variant="outline-danger"
