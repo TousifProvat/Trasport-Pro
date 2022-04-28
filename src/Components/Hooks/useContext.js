@@ -490,6 +490,20 @@ const useContext = () => {
     }
   };
 
+  //accident
+  const [incident, seIncident] = useState([]);
+  const getIncidents = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/incident");
+      seIncident(data.incidents);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
   //call
   useEffect(() => {
     // use every call in one use effect until they have different dependencies
@@ -508,6 +522,7 @@ const useContext = () => {
       getMaintenance();
       getInspection();
       getUsers();
+      getIncidents();
     }
   }, [auth.isAuthenticated]);
 

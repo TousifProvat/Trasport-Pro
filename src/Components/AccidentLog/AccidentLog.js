@@ -1,60 +1,28 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Col,
-  Container,
-  Form,
-  InputGroup,
-  Modal,
-  Nav,
-  Navbar,
-  OverlayTrigger,
-  Row,
-  Table,
-  Tooltip,
-} from "react-bootstrap";
+import { Button, Container, Nav, Navbar, Table } from "react-bootstrap";
+import useContext from "../Hooks/useContext";
+import AccidentModal from "./AccidentModal";
 
 const AccidentLog = () => {
-  const [lgShow, setLgShow] = useState(false);
-  const handleClose = () => setLgShow(false);
+  const { loading, accident } = useContext();
 
-  const [allValues, setAllValues] = useState({
-    tractor: "",
-    incidentDate: "",
-    incidentTime: "",
-    damagedArea: "",
-    street: "",
-    city: "",
-    state: "",
-    zip: "",
-    driver: "",
-    fatalities: "",
-    injuries: "",
-    notes: "",
-    accidentDocument: "",
-  });
+  const [accidentId, setAccidentId] = useState(null);
+  const [addModal, setAddModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
 
-  const changeHandler = (e) => {
-    setAllValues({
-      ...allValues,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const [validated, setValidated] = useState(false);
-
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    setValidated(true);
-    console.log(allValues);
+  const showUpdateModal = (id) => {
+    setAccidentId(id);
+    setUpdateModal(true);
   };
   return (
     <div>
+      <AccidentModal visible={addModal} setVisible={setAddModal} action="add" />
+      <AccidentModal
+        visible={updateModal}
+        setVisible={setUpdateModal}
+        action="update"
+        Id={accidentId}
+      />
       <Container fluid>
         <Navbar bg="" expand="lg">
           <Container>
@@ -64,211 +32,10 @@ const AccidentLog = () => {
               <Button
                 variant="outline-primary"
                 className="mt-4"
-                onClick={() => setLgShow(true)}
+                onClick={() => setAddModal(true)}
               >
                 Add Accident Record
-              </Button>{" "}
-              <Modal
-                size="lg"
-                show={lgShow}
-                onHide={() => setLgShow(false)}
-                aria-labelledby="example-modal-sizes-title-lg"
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title id="example-modal-sizes-title-lg">
-                    Large Modal
-                  </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <Form
-                    noValidate
-                    validated={validated}
-                    onSubmit={handleSubmit}
-                  >
-                    <Row className="mb-3">
-                      <Form.Group
-                        as={Col}
-                        md="4"
-                        controlId="validationCustom01"
-                      >
-                        <Form.Label>Tractor</Form.Label>
-                        <Form.Select
-                          aria-label="Default select example"
-                          name="tractor"
-                          value={allValues.tractor}
-                          onChange={changeHandler}
-                        >
-                          <option>Select Tractor</option>
-                          <option value="Tractor1">Tractor1</option>
-                          <option value="Tractor2">Tractor2</option>
-                          <option value="Tractor3">Tractor3</option>
-                        </Form.Select>
-                        <Form.Control.Feedback>
-                          Looks good!
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                      <Form.Group
-                        as={Col}
-                        md="4"
-                        controlId="validationCustom02"
-                      >
-                        <Form.Label>Date Occured</Form.Label>
-                        <Form.Control
-                          required
-                          type="date"
-                          name="incidentDate"
-                          value={allValues.incidentDate}
-                          onChange={changeHandler}
-                        />
-                        <Form.Control.Feedback>
-                          Looks good!
-                        </Form.Control.Feedback>
-                      </Form.Group>
-
-                      <Form.Group
-                        as={Col}
-                        md="4"
-                        controlId="validationCustomUsername"
-                      >
-                        <Form.Label>Time</Form.Label>
-
-                        <Form.Control
-                          required
-                          type="time"
-                          name="incidentTime"
-                          value={allValues.incidentTime}
-                          onChange={changeHandler}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Please choose a username.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </Row>
-                    <Row className="mb-3">
-                      <Form.Group
-                        as={Col}
-                        md="4"
-                        controlId="validationCustom03"
-                      >
-                        <Form.Label>Damage Area</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Damage Area"
-                          required
-                          name="damagedArea"
-                          value={allValues.damagedArea}
-                          onChange={changeHandler}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Please provide a valid city.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                      <Form.Group
-                        as={Col}
-                        md="4"
-                        controlId="validationCustom04"
-                      >
-                        <Form.Label>Street</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Street"
-                          required
-                          name="street"
-                          value={allValues.street}
-                          onChange={changeHandler}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Please provide a valid state.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                      <Form.Group
-                        as={Col}
-                        md="4"
-                        controlId="validationCustom05"
-                      >
-                        <Form.Label>City</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="City"
-                          required
-                          name="city"
-                          value={allValues.city}
-                          onChange={changeHandler}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Please provide a valid zip.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </Row>
-                    <Row className="mb-3">
-                      <Form.Group
-                        as={Col}
-                        md="4"
-                        controlId="validationCustom03"
-                      >
-                        <Form.Label>State</Form.Label>
-                        <Form.Select
-                          aria-label="Default select example"
-                          name="state"
-                          value={allValues.state}
-                          onChange={changeHandler}
-                        >
-                          <option>Open this select menu</option>
-                          <option value="Alaska">Alaska</option>
-                          <option value="Alabama">Alabama</option>
-                          <option value="Canada">Canada</option>
-                        </Form.Select>
-                        <Form.Control.Feedback type="invalid">
-                          Please provide a valid city.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                      <Form.Group
-                        as={Col}
-                        md="4"
-                        controlId="validationCustom04"
-                      >
-                        <Form.Label>Driver</Form.Label>
-                        <Form.Select
-                          aria-label="Default select example"
-                          name="driver"
-                          value={allValues.driver}
-                          onChange={changeHandler}
-                        >
-                          <option>Open this select menu</option>
-                          <option value="Driver1">Driver1</option>
-                          <option value="Driver2">Driver2</option>
-                          <option value="Driver3">Driver3</option>
-                        </Form.Select>
-                        <Form.Control.Feedback type="invalid">
-                          Please provide a valid state.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                      <Form.Group
-                        as={Col}
-                        md="4"
-                        controlId="validationCustom05"
-                      >
-                        <Form.Label>Notes</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Notes"
-                          required
-                          name="notes"
-                          value={allValues.notes}
-                          onChange={changeHandler}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Please provide a valid zip.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </Row>
-                    <Button type="submit">Save</Button>{" "}
-                    <Button variant="danger" onClick={handleClose}>
-                      Cancel
-                    </Button>
-                  </Form>
-                </Modal.Body>
-              </Modal>
+              </Button>
             </Nav>
           </Container>
         </Navbar>
@@ -301,7 +68,7 @@ const AccidentLog = () => {
                 <Button
                   className="m-1"
                   variant="outline-primary"
-                  onClick={() => setLgShow(true)}
+                  onClick={() => showUpdateModal(accident._id)}
                 >
                   Edit
                 </Button>
