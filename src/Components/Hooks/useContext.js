@@ -212,6 +212,48 @@ const useContext = () => {
       console.log({ err });
     }
   };
+  const updateUser = async (id, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/user/${id}`, values);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const addUser = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post(`/user`, values);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const removeUser = async (id) => {
+    try {
+      setLoading(true);
+      const res = await axios.delete(`/user/${id}`);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+      const newUsers = user.filter((user) => user._id !== id);
+      setUser(newUsers);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
 
   //commodity
   const [commodity, setCommodity] = useState([]);
@@ -461,6 +503,7 @@ const useContext = () => {
       getEobr();
       getMaintenance();
       getInspection();
+      getUsers();
     }
   }, [auth.isAuthenticated]);
 
@@ -505,6 +548,9 @@ const useContext = () => {
     updateSettings,
     //user
     user,
+    addUser,
+    updateUser,
+    removeUser,
     // loading state
     loading,
   };
