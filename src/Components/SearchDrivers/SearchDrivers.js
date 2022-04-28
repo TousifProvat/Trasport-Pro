@@ -141,14 +141,16 @@ const SearchDrivers = () => {
               </tr>
             ))}
             {drivers.length < 1 && (
-              <td
-                colSpan={8}
-                style={{
-                  textAlign: "center",
-                }}
-              >
-                No Data Found
-              </td>
+              <tr>
+                <td
+                  colSpan={8}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  No Data Found
+                </td>
+              </tr>
             )}
           </tbody>
         </Table>

@@ -133,6 +133,11 @@ const SearchCustomer = () => {
                 <td>{customer.fax}</td>
               </tr>
             ))}
+            {customerData.length < 1 && (
+              <tr>
+                <td colSpan={10}>No Data Found</td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </Container>

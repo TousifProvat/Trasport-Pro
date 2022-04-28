@@ -1,6 +1,6 @@
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
-import { message } from "antd";
+import { message, notification } from "antd";
 import axios from "../../../utils/axios";
 import useContext from "../../Hooks/useContext";
 
@@ -16,6 +16,7 @@ const UserManagementModal = (props) => {
     phoneNumber: "",
     email: "",
     password: "",
+    suspended: false,
     accounting: false,
     billing: false,
     systemAdmin: true,
@@ -81,6 +82,23 @@ const UserManagementModal = (props) => {
       return;
     }
     action === "add" ? onSave() : onUpdate();
+  };
+
+  const toggleSuspendUser = async () => {
+    try {
+      await axios.put(`/user/${Id}`, {
+        suspended: allValues.suspended ? false : true,
+      });
+      notification.info({
+        message: allValues.suspended
+          ? "User suspension removed"
+          : "User suspended",
+      });
+      setVisible(false);
+    } catch (err) {
+      console.log({ err });
+      notification.error({ message: err.response.data.message });
+    }
   };
 
   return (
@@ -210,8 +228,12 @@ const UserManagementModal = (props) => {
             {action === "add" ? "Save" : "Update"}
           </Button>
           {action === "update" && (
-            <Button variant="outline-danger" className="mt-3 m-2">
-              Suspend
+            <Button
+              variant="outline-danger"
+              className="mt-3 m-2"
+              onClick={toggleSuspendUser}
+            >
+              {allValues.suspended ? "Unsuspend" : "Suspend"}
             </Button>
           )}
           <Button
