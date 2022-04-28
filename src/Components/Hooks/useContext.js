@@ -44,7 +44,52 @@ const useContext = () => {
     user: {},
     token: "",
   });
+  const authSignin = async (credentials) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post("/auth/signin", credentials);
+      setAuth((prev) => ({
+        ...prev,
+        isAuthenticated: true,
+        user: data.user,
+        token: data.token,
+      }));
 
+      localStorage.setItem("transport-token", data.token);
+      localStorage.setItem("transport-user", JSON.stringify(data.user));
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({ message: err.response.data.message });
+    }
+  };
+  const isUserAutheticated = () => {
+    let token = localStorage.getItem("transport-token");
+    let user = localStorage.getItem("transport-user");
+
+    if (token && user) {
+      setAuth({
+        ...auth,
+        isAuthenticated: true,
+        user: JSON.parse(user),
+      });
+    } else {
+      setAuth({
+        ...auth,
+        isAuthenticated: false,
+        user: {},
+      });
+    }
+  };
+  const authSignOut = () => {
+    localStorage.removeItem("transport-token");
+    localStorage.removeItem("transport-user");
+    setAuth({
+      isAuthenticated: false,
+      user: {},
+      token: "",
+    });
+  };
   //maintenance
   const [maintenance, setMaintenance] = useState([]);
   const getMaintenance = async () => {
@@ -292,46 +337,6 @@ const useContext = () => {
     }
   };
 
-  // auth & user
-  const isUserAutheticated = () => {
-    let token = localStorage.getItem("transport-token");
-    let user = localStorage.getItem("transport-user");
-
-    if (token && user) {
-      setAuth({
-        ...auth,
-        isAuthenticated: true,
-        user: JSON.parse(user),
-      });
-    } else {
-      setAuth({
-        ...auth,
-        isAuthenticated: false,
-        user: {},
-      });
-    }
-  };
-
-  const authSignin = async (credentials) => {
-    try {
-      setLoading(true);
-      const { data } = await axios.post("/auth/signin", credentials);
-      setAuth((prev) => ({
-        ...prev,
-        isAuthenticated: true,
-        user: data.user,
-        token: data.token,
-      }));
-
-      localStorage.setItem("transport-token", data.token);
-      localStorage.setItem("transport-user", JSON.stringify(data.user));
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      notification.error({ message: err.response.data.message });
-    }
-  };
-
   //owner
   const addOwner = async (values) => {
     try {
@@ -529,6 +534,7 @@ const useContext = () => {
     // auth
     auth,
     authSignin,
+    authSignOut,
     //commodity
     commodity,
     //eobr

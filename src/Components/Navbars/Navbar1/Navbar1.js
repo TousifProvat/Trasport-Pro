@@ -1,13 +1,24 @@
 import React, { useState } from "react";
 import { Button, Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import useContext from "../../Hooks/useContext";
 import "./navbar1.css";
 const Navbar1 = () => {
-  const { settings } = useContext();
+  const { settings, authSignOut } = useContext();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const navigate = useNavigate();
+  const onSignOut = () => {
+    navigate("/login");
+    authSignOut();
+    setTimeout(() => {
+      setShow(false);
+    }, 500);
+  };
+
   return (
     <div>
       <Navbar bg="light" expand="lg">
@@ -34,9 +45,13 @@ const Navbar1 = () => {
                   <i className="fa-solid fa-user-tie me-3"></i>
                   <p className="mt-2 fw-bold">Demo X</p>
                 </div>
-                <Button variant="outline-danger" className="mt-5">
+                <Button
+                  variant="outline-danger"
+                  className="mt-5"
+                  onClick={onSignOut}
+                >
                   Sign Out
-                </Button>{" "}
+                </Button>
               </Offcanvas.Body>
             </Offcanvas>
           </div>
