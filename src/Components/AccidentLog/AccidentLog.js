@@ -4,7 +4,7 @@ import useContext from "../Hooks/useContext";
 import AccidentModal from "./AccidentModal";
 
 const AccidentLog = () => {
-  const { loading, accident } = useContext();
+  const { loading, incident, removeIncident } = useContext();
 
   const [accidentId, setAccidentId] = useState(null);
   const [addModal, setAddModal] = useState(false);
@@ -44,39 +44,54 @@ const AccidentLog = () => {
           <thead>
             <tr>
               <th>Date</th>
-              <th>Truck</th>
-              <th>Drivers</th>
-              <th>Date</th>
+              <th>Tractor ID</th>
+              <th>Driver</th>
               <th>Time</th>
-              <th>Location of A.</th>
+              <th>Location of Accident</th>
               <th>Facilities</th>
               <th>Injuries</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>12/14/2022</td>
-              <td>22</td>
-              <td>20</td>
-              <td>12/05/2022</td>
-              <td>10:28 AM</td>
-              <td>Alaska</td>
-              <td>Good</td>
-              <td>No</td>
-              <td>
-                <Button
-                  className="m-1"
-                  variant="outline-primary"
-                  onClick={() => showUpdateModal(accident._id)}
-                >
-                  Edit
-                </Button>
-                <Button variant="outline-danger" className="m-1">
-                  Delete
-                </Button>{" "}
-              </td>
-            </tr>
+            {incident.map((incident, index) => (
+              <tr key={index}>
+                <td>{incident.incidentDate}</td>
+                <td>{incident.tractor}</td>
+                <td>{incident.driver}</td>
+                <td>{incident.incidentTime}</td>
+                <td>
+                  {incident.street}, {incident.city}, {incident.state}
+                </td>
+                <td>{incident.fatalities}</td>
+                <td>{incident.injuries}</td>
+                <td>
+                  <Button
+                    className="m-1"
+                    variant="outline-primary"
+                    onClick={() => showUpdateModal(incident._id)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outline-danger"
+                    className="m-1"
+                    onClick={() => removeIncident(incident._id)}
+                  >
+                    Delete
+                  </Button>{" "}
+                </td>
+              </tr>
+            ))}
+            {incident.length < 1 && (
+              <tr
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                <td colSpan={10}>No Data Found</td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </Container>

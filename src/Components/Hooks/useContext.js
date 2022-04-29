@@ -1,7 +1,6 @@
 // import React from 'react';
 
 import { message, notification } from "antd";
-import { ar } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import axios from "../../utils/axios";
 
@@ -491,12 +490,12 @@ const useContext = () => {
   };
 
   //accident
-  const [incident, seIncident] = useState([]);
+  const [incident, setIncident] = useState([]);
   const getIncidents = async () => {
     try {
       setLoading(true);
       const { data } = await axios.get("/incident");
-      seIncident(data.incidents);
+      setIncident(data.incidents);
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -504,6 +503,49 @@ const useContext = () => {
       console.log({ err });
     }
   };
+  const updateIncident = async (id, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/incident/${id}`, values);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const addIncident = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post(`/incident`, values);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const removeIncident = async (id) => {
+    try {
+      setLoading(true);
+      const res = await axios.delete(`/incident/${id}`);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+      const newIncidents = incident.filter((incident) => incident._id !== id);
+      setIncident(newIncidents);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+
   //call
   useEffect(() => {
     // use every call in one use effect until they have different dependencies
@@ -571,6 +613,11 @@ const useContext = () => {
     addUser,
     updateUser,
     removeUser,
+    // incident
+    incident,
+    addIncident,
+    updateIncident,
+    removeIncident,
     // loading state
     loading,
   };

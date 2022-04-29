@@ -5,7 +5,7 @@ import axios from "../../../utils/axios";
 import useContext from "../../Hooks/useContext";
 
 const AccidentModal = (props) => {
-  const { tractorData, driverData } = useContext();
+  const { tractorData, driverData, addIncident, updateIncident } = useContext();
   const { visible, setVisible, Id, action } = props;
 
   const [loading, setLoading] = useState(false);
@@ -24,11 +24,11 @@ const AccidentModal = (props) => {
     notes: "",
     accidentDocument: "",
   });
-  const getInspectionById = async (Id) => {
+  const getIncidentById = async (Id) => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/inspection/${Id}`);
-      setAllValues({ ...data.inspection });
+      const { data } = await axios.get(`/incident/${Id}`);
+      setAllValues({ ...data.incident });
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -39,7 +39,7 @@ const AccidentModal = (props) => {
 
   useEffect(() => {
     if (Id) {
-      getInspectionById(Id);
+      getIncidentById(Id);
     }
   }, [Id]);
 
@@ -53,18 +53,14 @@ const AccidentModal = (props) => {
   const [validated, setValidated] = useState(false);
 
   const onUpdate = () => {
-    updateInspection(Id, allValues);
+    updateIncident(Id, allValues);
     setTimeout(() => {
       setVisible(false);
     }, 300);
   };
 
   const onSave = () => {
-    allValues.equipmentType === "Trailer"
-      ? (allValues.tractor = undefined)
-      : (allValues.trailer = undefined);
-
-    addInspection(allValues);
+    addIncident(allValues);
     setTimeout(() => {
       setVisible(false);
     }, 300);
@@ -164,7 +160,7 @@ const AccidentModal = (props) => {
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
+            <Form.Group as={Col} md="4" controlId="validationCustom06">
               <Form.Label>State</Form.Label>
               <Form.Select
                 required
@@ -178,7 +174,17 @@ const AccidentModal = (props) => {
                 <option value="Canada">Canada</option>
               </Form.Select>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
+            <Form.Group as={Col} md="4" controlId="validationCustom07">
+              <Form.Label>Zip</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Zip Code"
+                name="zip"
+                value={allValues.zip}
+                onChange={onChange}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom08">
               <Form.Label>Driver</Form.Label>
               <Form.Select
                 required
@@ -194,19 +200,9 @@ const AccidentModal = (props) => {
                 ))}
               </Form.Select>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <Form.Label>Notes</Form.Label>
-              <Form.Control
-                as="textArea"
-                placeholder="Notes"
-                name="notes"
-                value={allValues.notes}
-                onChange={onChange}
-              />
-            </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
+            <Form.Group as={Col} md="4" controlId="validationCustom09">
               <Form.Label>Fatalities</Form.Label>
               <Form.Control
                 type="number"
@@ -216,7 +212,7 @@ const AccidentModal = (props) => {
                 onChange={onChange}
               />
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
+            <Form.Group as={Col} md="4" controlId="validationCustom10">
               <Form.Label>Injuries</Form.Label>
               <Form.Control
                 type="number"
@@ -226,12 +222,25 @@ const AccidentModal = (props) => {
                 onChange={onChange}
               />
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
+            <Form.Group as={Col} md="4" controlId="validationCustom11">
               <Form.Label>Accident Document</Form.Label>
               <Form.Control
                 type="file"
                 name="accidentDocument"
                 value={allValues.accidentDocument}
+                onChange={onChange}
+              />
+            </Form.Group>
+          </Row>
+          <Row>
+            <Form.Group as={Col} md="4" controlId="validationCustom12">
+              <Form.Label>Notes</Form.Label>
+              <Form.Control
+                as="textarea"
+                placeholder="Notes"
+                name="notes"
+                defaultValue={allValues.notes}
+                value={allValues.notes}
                 onChange={onChange}
               />
             </Form.Group>
