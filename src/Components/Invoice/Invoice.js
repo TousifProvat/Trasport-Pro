@@ -12,7 +12,7 @@ import {
   Table,
   Tooltip,
 } from "react-bootstrap";
-import InvoiceModal from "../InvoiceModal/InvoiceModal";
+import InvoiceModal from "../InvoiceModal";
 
 const Invoice = () => {
   const [lgShow, setLgShow] = useState(false);
