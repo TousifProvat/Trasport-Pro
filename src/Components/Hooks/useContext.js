@@ -40,6 +40,18 @@ const useContext = () => {
   };
   //owner
   const [ownerData, setOwnerData] = useState([]);
+  const getOwners = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/owner");
+      setOwnerData(data.owners);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
   const addOwner = async (values) => {
     try {
       setLoading(true);
@@ -53,20 +65,54 @@ const useContext = () => {
       notification.error({ message: err.response.data.message });
     }
   };
-  const getOwners = async () => {
+  const updateOwner = async (id, values) => {
     try {
       setLoading(true);
-      const { data } = await axios.get("/owner");
-      setOwnerData(data.owners);
+      const res = await axios.put(`/owner/${id}`, values);
+      notification.success({ message: res.data.message });
       setLoading(false);
     } catch (err) {
       setLoading(false);
-      message.error(err.response.data.message);
-      console.log({ err });
+      notification.error({
+        message: err.response.data.message,
+      });
     }
   };
   //driver
   const [driverData, setDriverData] = useState([]);
+
+  const assignDriverToOwner = async (driverId, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(
+        `/driver/toggle-owner/${driverId}?action=assign`,
+        values
+      );
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const unassignDriverFromOwner = async (driverId, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(
+        `/driver/toggle-owner/${driverId}?action=unassign`,
+        values
+      );
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
   //tractor
   const [tractorData, setTractorData] = useState([]);
   //trailer
@@ -610,6 +656,8 @@ const useContext = () => {
     // driver
     driverData,
     addDriver,
+    assignDriverToOwner,
+    unassignDriverFromOwner,
     // tractor
     tractorData,
     addTractor,
@@ -619,6 +667,7 @@ const useContext = () => {
     customerData,
     // owner
     ownerData,
+    updateOwner,
     addOwner,
     // billing
     billing,
