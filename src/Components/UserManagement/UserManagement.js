@@ -32,20 +32,14 @@ const UserManagement = () => {
         <Navbar bg="" expand="lg" className="mt-5">
           <Container>
             <Navbar.Brand>User Management</Navbar.Brand>
-
-            <Nav className="ms-auto">
-              <Button
-                variant="outline-primary"
-                onClick={() => setAddModal(true)}
-              >
-                Add User
-              </Button>{" "}
-            </Nav>
+            <Button variant="outline-primary" onClick={() => setAddModal(true)}>
+              Add User
+            </Button>
           </Container>
         </Navbar>
         <hr></hr>
       </Container>
-      <Container fluid>
+      <Container>
         <Table striped bordered hover>
           <thead>
             <tr>

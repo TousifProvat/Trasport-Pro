@@ -35,7 +35,7 @@ const InspectionLog = () => {
         action="update"
         Id={inspectionId}
       />
-      <Container fluid>
+      <Container>
         <Navbar bg="" expand="lg" className="mt-5">
           <Container>
             <Navbar.Brand>Inspection Log</Navbar.Brand>
@@ -45,6 +45,8 @@ const InspectionLog = () => {
           </Container>
         </Navbar>
         <hr></hr>
+      </Container>
+      <Container fluid>
         <Table striped bordered hover>
           <thead>
             <tr>
