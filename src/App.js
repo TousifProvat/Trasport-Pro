@@ -35,6 +35,8 @@ import AccidentLog from "./Components/AccidentLog/AccidentLog";
 import Invoice from "./Components/Invoice/Invoice";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import CustomerSummary from "./Components/CustomerSummary/CustomerSummary";
+import LoginLayOut from "./Layout/LoginLayOut";
+
 
 function App() {
   return (
@@ -46,13 +48,16 @@ function App() {
           <Navbar2></Navbar2>
         </div>
         <Routes>
-          <Route path="/login" element={<Login />} />
           <Route path="/">
             <Route index element={<FreightOptionsDashboard />} />
             <Route
               path="freight-options-dashboard"
               element={<FreightOptionsDashboard />}
             />
+            <Route path="/login" element={<Login />} />
+            {/* <LoginLayOut>
+              <Route path="/login" element={<Login />} />
+            </LoginLayOut> */}
             <Route path="add-new-load" element={<AddNewLoad />} />
             <Route path="add-owner" element={<AddOwner />} />
             <Route path="search-owner" element={<SearchOwner />} />
@@ -77,9 +82,19 @@ function App() {
             <Route path="tractor/:tractorId" element={<TractorSummary />} />
             <Route path="trailer/:trailerId" element={<TrailerSummary />} />
             <Route path="driver/:driverId" element={<DriverSummary />} />
-            <Route path="customer/summary/customerId" element={<CustomerSummary />} />
+            <Route
+              path="customer/summary/customerId"
+              element={<CustomerSummary />}
+            />
             {/* <Route path="billing-dashboard" element={} /> */}
-            <Route path="billing-dashboard" element={<PrivateRoute><BillingDashboard /></PrivateRoute>} />
+            <Route
+              path="billing-dashboard"
+              element={
+                <PrivateRoute>
+                  <BillingDashboard />
+                </PrivateRoute>
+              }
+            />
             <Route path="inspection" element={<InspectionLog />} />
             <Route path="maintenance" element={<MaintenanceLog />} />
             <Route path="accident-log" element={<AccidentLog />} />
