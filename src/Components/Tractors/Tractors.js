@@ -401,7 +401,6 @@ const Tractors = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom02">
               <Form.Label>PrePass ID</Form.Label>
               <Form.Control
-                required
                 type="text"
                 placeholder="Pre Pass ID"
                 name="prePassId"
@@ -451,7 +450,6 @@ const Tractors = () => {
               <Form.Control
                 type="text"
                 placeholder="EOBR ID"
-                required
                 name="eobrId"
                 onChange={changeHandler}
                 value={allValues.eobrId}

@@ -113,6 +113,38 @@ const useContext = () => {
       });
     }
   };
+  const assignDriverToTractor = async (driverId, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(
+        `/driver/toggle-tractor/${driverId}?action=assign`,
+        values
+      );
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const unassignDriverFromTractor = async (driverId, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(
+        `/driver/toggle-tractor/${driverId}?action=unassign`,
+        values
+      );
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
   //tractor
   const [tractorData, setTractorData] = useState([]);
   //trailer
@@ -658,6 +690,8 @@ const useContext = () => {
     addDriver,
     assignDriverToOwner,
     unassignDriverFromOwner,
+    assignDriverToTractor,
+    unassignDriverFromTractor,
     // tractor
     tractorData,
     addTractor,

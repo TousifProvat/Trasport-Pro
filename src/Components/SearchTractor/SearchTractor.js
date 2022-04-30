@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Col,
-  Container,
-  Form,
-  InputGroup,
-  Row,
-  Table,
-} from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
 import "./searchTractor.css";
-import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
@@ -113,13 +104,13 @@ const SearchTractor = () => {
           </thead>
 
           <tbody>
-            {tractors.map((tractor) => (
-              <tr>
+            {tractors.map((tractor, index) => (
+              <tr key={index}>
                 <td>
                   <Link to={`/tractor/${tractor._id}`}>{tractor._id}</Link>
                 </td>
                 <td>
-                  {tractor?.owner.firstName} {tractor?.owner.lastName}
+                  {tractor.owner?.firstName} {tractor.owner?.lastName}
                 </td>
                 <td>{tractor.make}</td>
                 <td>{tractor.model}</td>
