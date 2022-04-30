@@ -122,8 +122,8 @@ const SearchDrivers = () => {
             </tr>
           </thead>
           <tbody>
-            {drivers.map((driver) => (
-              <tr>
+            {drivers.map((driver, index) => (
+              <tr key={index}>
                 <td>
                   <Link to={`/driver/${driver._id}`}>{driver._id}</Link>
                 </td>

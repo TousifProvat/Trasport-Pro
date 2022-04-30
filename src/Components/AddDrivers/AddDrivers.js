@@ -4,7 +4,7 @@ import useContext from "../Hooks/useContext";
 import "./addDrivers.css";
 
 const AddDrivers = () => {
-  const { loading, addDriver } = useContext();
+  const { loading, addDriver, eobr } = useContext();
   const initValue = {
     driverNumber: 1,
     status: "Pending Hire",
@@ -188,6 +188,7 @@ const AddDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustomUsername">
               <Form.Label>Termination Date</Form.Label>
               <Form.Control
+                required
                 type="date"
                 placeholder="Termination Date"
                 onChange={changeHandler}
@@ -411,10 +412,11 @@ const AddDrivers = () => {
                 value={allValues.eobrType}
               >
                 <option value="">Select EOBR Type</option>
-                <option value="Geotab">Geotab</option>
-                <option value="Keep Truncking">Keep Truncking</option>
-                <option value="M2M In Motion">M2M In Motion</option>
-                <option value="People Net">People Net</option>
+                {eobr.map((eobr, index) => (
+                  <option value={eobr._id} key={index}>
+                    {eobr.name}
+                  </option>
+                ))}
               </Form.Select>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">

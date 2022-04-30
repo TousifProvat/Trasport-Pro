@@ -1,22 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Col,
-  Container,
-  Form,
-  Modal,
-  Navbar,
-  OverlayTrigger,
-  Row,
-  Table,
-  Tooltip,
-} from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Button, Col, Container, Form, Navbar, Row } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import axios from "../../utils/axios";
-import EditDriver from "../EditDriver/EditDriver";
 import { notification } from "antd";
+import useContext from "../Hooks/useContext";
 
 const DriverSummary = () => {
+  const { eobr } = useContext();
+  const { driverId } = useParams();
 
   const initValue = {
     driverNumber: 1,
@@ -58,81 +49,39 @@ const DriverSummary = () => {
   };
 
   const [allValues, setAllValues] = useState(initValue);
-
+  useEffect(() => {
+    const fetchDriverSummary = async () => {
+      try {
+        setLoading(true);
+        const { data } = await axios.get(`/driver/summary/${driverId}`);
+        setAllValues(data.driver);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+        console.log(err);
+      }
+    };
+    fetchDriverSummary();
+  }, [driverId]);
   const changeHandler = (e) => {
     setAllValues({
       ...allValues,
       [e.target.name]: e.target.value,
     });
   };
-
-
-
-    const [summaryData, setSummaryData] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [smShow, setSmShow] = useState(false);
-  const { driverId } = useParams();
-  const [enable, setEnable] = useState(true);
-
-
-  const handleEnable = (enable) => {
-    setEnable(false);
-  }
-
-
-
+  const [loading, setLoading] = useState(false);
+  const [validated, setValidated] = useState(false);
   const handleUpdate = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.put(
-        `/driver/${driverId}`,
-        allValues
-      );
-      setEnable(true);
+      const { data } = await axios.put(`/driver/${driverId}`, allValues);
       setLoading(false);
       notification.success({ message: data.message });
     } catch (err) {
       setLoading(false);
       notification.error({ message: err.response.data.message });
-    }    
-  }
-
-
-
-    useEffect(() => {
-      const fetchDriverSummary = async () => {
-        try {
-          setLoading(true);
-          const { data } = await axios.get(`/driver/summary/${driverId}`);
-          setSummaryData(data.driverInfo);
-          setLoading(false);
-        } catch (err) {
-          setLoading(false);
-          console.log(err);
-        }
-      };
-      fetchDriverSummary();
-    }, [driverId]);
-
-    //console.log(summaryData);
-
-    const current = new Date();
-    const date = `${current.getDate()}/${
-      current.getMonth() + 1
-    }/${current.getFullYear()}`;
-
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    const handleDeleteDriver = (event) => {
-      window.confirm("Are you sure you want to delete this driver?");
+    }
   };
-  
-
-  const [validated, setValidated] = useState(false);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -142,33 +91,22 @@ const DriverSummary = () => {
       setValidated(true);
       return;
     }
-    // addDriver(allValues);
-    // setTimeout(() => {
-    //   setValidated(false);
-    //   setAllValues(initValue);
-    // }, 1000);
+    handleUpdate();
   };
 
-
-
-
-  // const handleSubmit = (event) => {
-  //   EventTarget.preventDefault();
-  //   const form = event.currentTarget;
-  //   if (form.checkValidity() === false) {
-  //     event.preventDefault();
-  //     event.stopPropagation();
-  //   }
-
-  //   console.log("data submitted successfully");
-    
-  // };
-    return (
-      <div>
+  return (
+    <div>
+      {loading && <h2>loading..</h2>}
+      {!loading && (
         <Container>
-          <h3 className="mt-5 mb-3">Driver Summary</h3>
-          <hr></hr>
-          <Button variant="outline-primary" className="mb-3">Update Information</Button>{" "}
+          <Navbar bg="light" expand="lg" className="mt-5">
+            <Container>
+              <Navbar.Brand>
+                <h4>Driver Information</h4>
+                <hr></hr>
+              </Navbar.Brand>
+            </Container>
+          </Navbar>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Row className="mb-3">
               <Form.Group as={Col} md="4" controlId="validationCustom02">
@@ -280,6 +218,7 @@ const DriverSummary = () => {
               <Form.Group as={Col} md="4" controlId="validationCustomUsername">
                 <Form.Label>Termination Date</Form.Label>
                 <Form.Control
+                  required
                   type="date"
                   placeholder="Termination Date"
                   onChange={changeHandler}
@@ -503,10 +442,11 @@ const DriverSummary = () => {
                   value={allValues.eobrType}
                 >
                   <option value="">Select EOBR Type</option>
-                  <option value="Geotab">Geotab</option>
-                  <option value="Keep Truncking">Keep Truncking</option>
-                  <option value="M2M In Motion">M2M In Motion</option>
-                  <option value="People Net">People Net</option>
+                  {eobr.map((eobr, index) => (
+                    <option value={eobr._id} key={index}>
+                      {eobr.name}
+                    </option>
+                  ))}
                 </Form.Select>
               </Form.Group>
               <Form.Group as={Col} md="4" controlId="validationCustom05">
@@ -554,19 +494,13 @@ const DriverSummary = () => {
               </Form.Group>
             </Row>
             <Button type="submit" variant="outline-primary" className="mb-5">
-              Save
-            </Button>
-            <Button
-              variant="outline-danger"
-              className="ms-3 mb-5"
-              href="search-driver"
-            >
-              Cancel
+              Update
             </Button>
           </Form>
         </Container>
-      </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default DriverSummary;
