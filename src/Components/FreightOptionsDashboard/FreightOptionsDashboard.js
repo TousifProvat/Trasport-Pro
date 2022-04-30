@@ -49,9 +49,11 @@ const FreightOptionsDashboard = () => {
   //
 
   const [invoiceModal, setInvoiceModal] = useState(false);
+  const [invoiceId, setInvoiceId] = useState(null);
 
-  const invoiceLoad = (id) => {
+  const invoiceLoad = (id, invoiceId) => {
     setLoadId(id);
+    setInvoiceId(invoiceId);
     setInvoiceModal(true);
   };
 
@@ -61,6 +63,7 @@ const FreightOptionsDashboard = () => {
         visible={invoiceModal}
         setVisible={setInvoiceModal}
         Id={loadId}
+        invoice={invoiceId}
       />
       <LoadStatusModal
         visible={loadStatusModal}
@@ -114,7 +117,9 @@ const FreightOptionsDashboard = () => {
           <tbody>
             {load.map((load, index) => (
               <tr key={index}>
-                <td>{load._id}</td>
+                <td>
+                  <Link to={`/load/${load._id}`}>{load._id}</Link>
+                </td>
                 <td>{load.loadNumber}</td>
                 <td>{load.customer.name}</td>
                 <td>{load.pickupDate}</td>
@@ -133,8 +138,10 @@ const FreightOptionsDashboard = () => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item onClick={() => invoiceLoad(load._id)}>
-                        Invoice
+                      <Dropdown.Item
+                        onClick={() => invoiceLoad(load._id, load.invoice)}
+                      >
+                        {load.invoice ? "Update Invoice" : "Invoice"}
                       </Dropdown.Item>
                       {load.status !== "cancelled" && (
                         <Dropdown.Item onClick={() => dispatchLoad(load._id)}>
@@ -256,7 +263,9 @@ const FreightOptionsDashboard = () => {
           <tbody>
             {plannedLoads.map((load, index) => (
               <tr key={index}>
-                <td>{load._id}</td>
+                <td>
+                  <Link to={`/load/${load._id}`}>{load._id}</Link>
+                </td>
                 <td>{load.loadNumber}</td>
                 <td>{load.customer.name}</td>
                 <td>{load.pickupDate}</td>
@@ -275,8 +284,10 @@ const FreightOptionsDashboard = () => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item onClick={() => invoiceLoad(load._id)}>
-                        Invoice
+                      <Dropdown.Item
+                        onClick={() => invoiceLoad(load._id, load.invoice)}
+                      >
+                        {load.invoice ? "Update Invoice" : "Invoice"}
                       </Dropdown.Item>
                       {load.status !== "cancelled" && (
                         <Dropdown.Item onClick={() => dispatchLoad(load._id)}>
@@ -336,7 +347,9 @@ const FreightOptionsDashboard = () => {
           <tbody>
             {cancelledLoads.map((load, index) => (
               <tr key={index}>
-                <td>{load._id}</td>
+                <td>
+                  <Link to={`/load/${load._id}`}>{load._id}</Link>
+                </td>
                 <td>{load.loadNumber}</td>
                 <td>{load.customer.name}</td>
                 <td>{load.pickupDate}</td>
@@ -355,8 +368,10 @@ const FreightOptionsDashboard = () => {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item onClick={() => invoiceLoad(load._id)}>
-                        Invoice
+                      <Dropdown.Item
+                        onClick={() => invoiceLoad(load._id, load.invoice)}
+                      >
+                        {load.invoice ? "Update Invoice" : "Invoice"}
                       </Dropdown.Item>
                       {load.status !== "cancelled" && (
                         <Dropdown.Item onClick={() => dispatchLoad(load._id)}>

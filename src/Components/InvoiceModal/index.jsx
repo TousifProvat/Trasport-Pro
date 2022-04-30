@@ -15,8 +15,8 @@ import axios from "../../utils/axios";
 import useContext from "../Hooks/useContext";
 
 const InvoiceModal = (props) => {
-  const { settings } = useContext();
-  const { visible, setVisible, Id } = props;
+  const { settings, addInvoice, updateInvoice } = useContext();
+  const { visible, setVisible, Id, invoice } = props;
 
   const [loading, setLoading] = useState(false);
   const [customer, setCustomer] = useState({});
@@ -54,9 +54,37 @@ const InvoiceModal = (props) => {
       console.log({ err });
     }
   };
+
+  const getInvoiceById = async (Id) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`/invoice/${Id}`);
+      setCustomer(data.invoice.customer);
+      const other = data.invoice.other.reduce(function (res, item) {
+        return Number(res) + Number(item.price);
+      }, 0);
+      setAllValues({
+        ...allValues,
+        customer: data.invoice.customer._id,
+        load: data.invoice.load._id,
+        amount: data.invoice.load.loadRate,
+        notes: data.invoice.notes,
+        other: other,
+      });
+      setOthers(data.invoice.other);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
   useEffect(() => {
     if (Id) {
       getLoadById(Id);
+    }
+    if (invoice) {
+      getInvoiceById(invoice);
     }
   }, [Id]);
 
@@ -67,6 +95,11 @@ const InvoiceModal = (props) => {
   };
 
   const removeCharge = (index) => {
+    const other = others[index];
+    setAllValues({
+      ...allValues,
+      other: allValues.other - other.price,
+    });
     setOthers([
       ...others.slice(0, index),
       ...others.slice(index + 1, others.length),
@@ -82,19 +115,33 @@ const InvoiceModal = (props) => {
       ...others.slice(index + 1, others.length),
     ]);
     if (e.target.name === "price") {
+      const other = others.reduce(function (res, item) {
+        return Number(res) + Number(item.price);
+      }, 0);
       setAllValues({
         ...allValues,
-        other: Number(e.target.value),
+        other: other,
       });
     }
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    invoice
+      ? updateInvoice(invoice, { ...allValues, other: others })
+      : addInvoice({ ...allValues, other: others });
+    setTimeout(() => {
+      setVisible(false);
+    }, 300);
+  };
+
   return (
     <Modal size="lg" show={visible} onHide={() => setVisible(false)}>
       <Modal.Header closeButton>
         <Modal.Title id="example-modal-sizes-title-lg">Invoice</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Row>
             <Col sm={6}>
               <h4>LOGO HERE</h4>
@@ -139,9 +186,9 @@ const InvoiceModal = (props) => {
             </Col>
           </Row>
           <hr></hr>
-          <Row>
-            <Col sm={6}>
-              <h3>Notes: </h3>
+          <Row className="mb-2">
+            <Col sm={12}>
+              <Form.Label>Notes: </Form.Label>
               <Form.Control
                 as="textarea"
                 placeholder="Notes"
@@ -151,7 +198,9 @@ const InvoiceModal = (props) => {
                 onChange={onChange}
               />
             </Col>
-            <Col sm={6}>
+          </Row>
+          <Row>
+            <Col>
               <Navbar bg="light" expand="lg">
                 <Container>
                   <Navbar.Brand>Other Charges</Navbar.Brand>
@@ -176,6 +225,7 @@ const InvoiceModal = (props) => {
                       <td>
                         <Form.Control
                           type="text"
+                          placeholder="Name of the charge"
                           name="name"
                           value={other.name}
                           onChange={(e) => otherChargeChange(e, index)}
@@ -202,7 +252,12 @@ const InvoiceModal = (props) => {
           </Row>
           <hr></hr>
           <Row>
-            <Col sm={12}>
+            <Col
+              sm={12}
+              style={{
+                textAlign: "right",
+              }}
+            >
               <strong>Sub-Total: </strong>
               <span>{allValues.amount}</span>
               <br></br>
@@ -213,6 +268,12 @@ const InvoiceModal = (props) => {
               <span>{allValues.amount + allValues.other}</span>
             </Col>
           </Row>
+          <Button type="submit" variant="outline-primary" className="m-2">
+            Save
+          </Button>
+          <Button variant="outline-danger" onClick={() => setVisible(false)}>
+            Cancel
+          </Button>
         </Form>
       </Modal.Body>
     </Modal>

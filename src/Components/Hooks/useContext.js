@@ -11,10 +11,60 @@ const useContext = () => {
   //global state
   // load
   const [load, setLoad] = useState([]);
-  // terminal
-  // const [terminalData, setTerminalData] = useState([]);
-  // owner
+  const getLoads = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/load");
+      setLoad(data.loads);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
+  const addLoad = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post("/load", values);
+      if (res.status === 201) {
+        notification.success({ message: res.data.message });
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  //owner
   const [ownerData, setOwnerData] = useState([]);
+  const addOwner = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post("/owner", values);
+      if (res.status === 201) {
+        notification.success({ message: res.data.message });
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({ message: err.response.data.message });
+    }
+  };
+  const getOwners = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/owner");
+      setOwnerData(data.owners);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
   //driver
   const [driverData, setDriverData] = useState([]);
   //tractor
@@ -119,6 +169,7 @@ const useContext = () => {
     try {
       setLoading(true);
       const res = await axios.post(`/maintenance`, values);
+
       notification.success({ message: res.data.message });
       setLoading(false);
     } catch (err) {
@@ -304,64 +355,6 @@ const useContext = () => {
   //eobr
   const [eobr, setEobr] = useState([]);
 
-  //load
-
-  const getLoads = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get("/load");
-      setLoad(data.loads);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      message.error(err.response.data.message);
-      console.log({ err });
-    }
-  };
-
-  const addLoad = async (values) => {
-    try {
-      setLoading(true);
-      const res = await axios.post("/load", values);
-      if (res.status === 201) {
-        notification.success({ message: res.data.message });
-      }
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      notification.error({
-        message: err.response.data.message,
-      });
-    }
-  };
-
-  //owner
-  const addOwner = async (values) => {
-    try {
-      setLoading(true);
-      const res = await axios.post("/owner", values);
-      if (res.status === 201) {
-        notification.success({ message: res.data.message });
-      }
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      notification.error({ message: err.response.data.message });
-    }
-  };
-  const getOwners = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get("/owner");
-      setOwnerData(data.owners);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      message.error(err.response.data.message);
-      console.log({ err });
-    }
-  };
-
   //customer
   const getCustomers = async () => {
     try {
@@ -546,6 +539,35 @@ const useContext = () => {
     }
   };
 
+  //invoice
+  const [invoice, setInvoice] = useState([]);
+  const addInvoice = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post(`/invoice`, values);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const updateInvoice = async (id, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/invoice/${id}`, values);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
   //call
   useEffect(() => {
     // use every call in one use effect until they have different dependencies
@@ -618,6 +640,10 @@ const useContext = () => {
     addIncident,
     updateIncident,
     removeIncident,
+    //invoice
+    invoice,
+    addInvoice,
+    updateInvoice,
     // loading state
     loading,
   };
