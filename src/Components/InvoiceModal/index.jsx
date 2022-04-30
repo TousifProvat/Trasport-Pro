@@ -258,14 +258,14 @@ const InvoiceModal = (props) => {
                 textAlign: "right",
               }}
             >
-              <strong>Sub-Total: </strong>
-              <span>{allValues.amount}</span>
+              <strong>Load Charge: </strong>
+              <span>{allValues.amount}$</span>
               <br></br>
-              <strong>Other Charges: </strong>
-              <span>{allValues.other}</span>
+              <strong>Other's Charge: </strong>
+              <span>{allValues.other}$</span>
               <br></br>
               <strong>Total: </strong>
-              <span>{allValues.amount + allValues.other}</span>
+              <span>{allValues.amount + allValues.other}$</span>
             </Col>
           </Row>
           <Button type="submit" variant="outline-primary" className="m-2">
