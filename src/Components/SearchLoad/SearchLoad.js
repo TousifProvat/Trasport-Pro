@@ -102,6 +102,7 @@ const SearchLoad = () => {
         </Form>
       </Container>
       <Container fluid>
+        <h3>Search Results ({loads.length})</h3>
         <Table striped bordered hover>
           <thead>
             <tr>

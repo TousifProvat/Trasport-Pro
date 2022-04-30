@@ -126,9 +126,9 @@ const FreightOptionsDashboard = () => {
                 <td>{load.deliveryDate}</td>
                 <td>{load.pickupCity}</td>
                 <td>{load.deliveryCity}</td>
-                <td>{load.tractor._id}</td>
+                <td>{load.tractor?._id}</td>
                 <td>
-                  {load.driver.firstName} {load.driver.lastName}
+                  {load.driver?.firstName} {load.driver?.lastName}
                 </td>
                 <td>{load.status}</td>
                 <td>
@@ -272,9 +272,9 @@ const FreightOptionsDashboard = () => {
                 <td>{load.deliveryDate}</td>
                 <td>{load.pickupCity}</td>
                 <td>{load.deliveryCity}</td>
-                <td>{load.tractor._id}</td>
+                <td>{load.tractor?._id}</td>
                 <td>
-                  {load.driver.firstName} {load.driver.lastName}
+                  {load.driver?.firstName} {load.driver?.lastName}
                 </td>
                 <td>{load.status}</td>
                 <td>
@@ -356,9 +356,9 @@ const FreightOptionsDashboard = () => {
                 <td>{load.deliveryDate}</td>
                 <td>{load.pickupCity}</td>
                 <td>{load.deliveryCity}</td>
-                <td>{load.tractor._id}</td>
+                <td>{load.tractor?._id}</td>
                 <td>
-                  {load.driver.firstName} {load.driver.lastName}
+                  {load.driver?.firstName} {load.driver?.lastName}
                 </td>
                 <td>{load.status}</td>
                 <td>

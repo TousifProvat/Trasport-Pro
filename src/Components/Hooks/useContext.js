@@ -541,6 +541,18 @@ const useContext = () => {
 
   //invoice
   const [invoice, setInvoice] = useState([]);
+  const getInvoices = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/invoice");
+      setInvoice(data.invoices);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
   const addInvoice = async (values) => {
     try {
       setLoading(true);
@@ -587,6 +599,7 @@ const useContext = () => {
       getInspection();
       getUsers();
       getIncidents();
+      getInvoices();
     }
   }, [auth.isAuthenticated]);
 
