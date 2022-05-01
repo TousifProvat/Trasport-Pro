@@ -1,7 +1,5 @@
-import "./App.css";
-import Navbar1 from "./Components/Navbars/Navbar1/Navbar1";
-import Navbar2 from "./Components/Navbars/Navbar2/Navbar2";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
 import FreightOptionsDashboard from "./Components/FreightOptionsDashboard/FreightOptionsDashboard";
 import AddNewLoad from "./Components/FreightOptionsDashboard/AddNewLoad/AddNewLoad";
 import AddOwner from "./Components/AddOwner/AddOwner";
@@ -9,7 +7,7 @@ import SearchOwner from "./Components/SearchOwner/SearchOwner";
 import AddDrivers from "./Components/AddDrivers/AddDrivers";
 import SearchDrivers from "./Components/SearchDrivers/SearchDrivers";
 import Tractors from "./Components/Tractors/Tractors";
-import AddTrailers from "./Components/AddTrailters/AddTrailers";
+import AddTrailers from "./Components/AddTrailers/AddTrailers";
 import SearchTractor from "./Components/SearchTractor/SearchTractor";
 import SearchTrailer from "./Components/SearchTrailer/SearchTrailer";
 import AddTerminal from "./Components/AddTerminal/AddTerminal";
@@ -30,18 +28,13 @@ import InspectionLog from "./Components/InspectionLog/InspectionLog";
 import MaintenanceLog from "./Components/MaintenanceLog/MaintenanceLog";
 import AccidentLog from "./Components/AccidentLog/AccidentLog";
 import Invoice from "./Components/Invoice/Invoice";
-import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
+import PrivateRoute from "./Components/PrivateRoute";
 import CustomerSummary from "./Components/CustomerSummary/CustomerSummary";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <div className="App">
-          <Navbar1></Navbar1>
-          <hr></hr>
-          <Navbar2></Navbar2>
-        </div>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<PrivateRoute />}>

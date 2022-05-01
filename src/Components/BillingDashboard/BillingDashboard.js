@@ -20,7 +20,6 @@ const BillingDashboard = () => {
   return (
     <div>
       <Container fluid>
-        {" "}
         <h3 className="mt-5 mb-3">Billing Dashboard</h3>
         <hr></hr>
         <Row>

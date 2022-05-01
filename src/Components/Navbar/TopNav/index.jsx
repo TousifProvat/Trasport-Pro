@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import useContext from "../../Hooks/useContext";
+import { ReactComponent as Avatar } from "../../../assets/avatar.svg";
 import "./navbar1.css";
 const Navbar1 = () => {
   const { settings, authSignOut, auth } = useContext();
@@ -40,7 +41,14 @@ const Navbar1 = () => {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <div className="users">
-                  <i className="fa-solid fa-user-tie me-3"></i>
+                  <Avatar
+                    style={{
+                      fill: "#e4e4e4",
+                      width: "40px",
+                      height: "40px",
+                      marginRight: ".5rem",
+                    }}
+                  />
                   <p className="mt-2 fw-bold">
                     {auth.user?.firstName} {auth.user?.lastName}
                   </p>
