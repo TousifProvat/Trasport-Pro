@@ -66,8 +66,8 @@ const MaintenanceLog = () => {
                 <td>{maintenance.equipmentType}</td>
                 <td>
                   {maintenance.equipmentType === "Tractor"
-                    ? maintenance.tractor._id
-                    : maintenance.trailer._id}
+                    ? maintenance.tractor?._id
+                    : maintenance.trailer?._id}
                 </td>
                 <td>{maintenance.maintenanceType}</td>
                 <td>{maintenance.cost} $</td>

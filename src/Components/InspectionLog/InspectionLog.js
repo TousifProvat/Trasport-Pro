@@ -66,8 +66,8 @@ const InspectionLog = () => {
                 <td>{inspection.equipmentType}</td>
                 <td>
                   {inspection.equipmentType === "Tractor"
-                    ? inspection.tractor._id
-                    : inspection.trailer._id}
+                    ? inspection.tractor?._id
+                    : inspection.trailer?._id}
                 </td>
                 <td>{inspection.inspectionType}</td>
                 <td>{inspection.nextInspectionDate}</td>

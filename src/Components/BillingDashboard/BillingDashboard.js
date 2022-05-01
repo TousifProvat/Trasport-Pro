@@ -31,13 +31,6 @@ const BillingDashboard = () => {
                 <Navbar bg="light" expand="lg">
                   <Container>
                     <Navbar.Brand href="#home">Load Stats</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                      <Nav className="me-auto">
-                        {/* <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#link">Link</Nav.Link> */}
-                      </Nav>
-                    </Navbar.Collapse>
                   </Container>
                 </Navbar>
                 <Table striped bordered hover>
@@ -75,13 +68,6 @@ const BillingDashboard = () => {
                 <Navbar bg="light" expand="lg">
                   <Container>
                     <Navbar.Brand href="#home">Revenue Stats</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                      <Nav className="me-auto">
-                        {/* <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#link">Link</Nav.Link> */}
-                      </Nav>
-                    </Navbar.Collapse>
                   </Container>
                 </Navbar>
                 <Table striped bordered hover>
@@ -111,13 +97,6 @@ const BillingDashboard = () => {
                 <Navbar bg="light" expand="lg">
                   <Container>
                     <Navbar.Brand href="#home">Invoices Stats</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                      <Nav className="me-auto">
-                        {/* <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#link">Link</Nav.Link> */}
-                      </Nav>
-                    </Navbar.Collapse>
                   </Container>
                 </Navbar>
                 <Table striped bordered hover>
