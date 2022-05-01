@@ -1,18 +1,74 @@
+import { message, notification } from "antd";
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Container,
-  Nav,
-  Navbar,
-  Spinner,
-  Table,
-} from "react-bootstrap";
-import useContext from "../Hooks/useContext";
+import { Button, Container, Navbar, Spinner, Table } from "react-bootstrap";
+import axios from "../../utils/axios";
 import "./userManagement.css";
 import UserManagementModal from "./UserManagementModal";
 
 const UserManagement = () => {
-  const { loading, user, removeUser, getUsers } = useContext();
+  const [user, setUser] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getUsers = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/user");
+      setUser(data.users);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
+  const updateUser = async (id, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/user/${id}`, values);
+      notification.success({ message: res.data.message });
+      const index = user.findIndex((obj) => obj._id === id);
+      let arr = user;
+      arr[index] = values;
+      setUser(arr);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const addUser = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post(`/user`, values);
+      notification.success({ message: res.data.message });
+      getUsers();
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const removeUser = async (id) => {
+    try {
+      setLoading(true);
+      const res = await axios.delete(`/user/${id}`);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+      const newUsers = user.filter((user) => user._id !== id);
+      setUser(newUsers);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+
   useEffect(() => {
     getUsers();
   }, []);
@@ -30,12 +86,16 @@ const UserManagement = () => {
         visible={addModal}
         setVisible={setAddModal}
         action="add"
+        addUser={addUser}
       />
       <UserManagementModal
         visible={updateModal}
         setVisible={setUpdateModal}
         action="update"
         Id={userId}
+        setId={setUserId}
+        updateUser={updateUser}
+        getUsers={getUsers}
       />
       <Container>
         <Navbar bg="" expand="lg" className="mt-5">

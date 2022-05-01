@@ -8,22 +8,33 @@ import {
   Spinner,
   Table,
 } from "react-bootstrap";
+import { message } from "antd";
 import "./searchTrailer.css";
-import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
+import axios from "../../utils/axios";
 
 const SearchTrailer = () => {
-  const { trailerData, loading, getTrailers } = useContext();
+  const [allTrailer, setAllTrailer] = useState([]);
+  const [trailers, setTrailers] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getTrailers = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/trailer");
+      setTrailers(data.trailers);
+      setAllTrailer(data.trailers);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
 
   useEffect(() => {
     getTrailers();
   }, []);
-
-  const [trailers, setTrailers] = useState([]);
-
-  useEffect(() => {
-    setTrailers(trailerData);
-  }, [trailerData]);
 
   //filter
   const [filter, setFilter] = useState({
@@ -36,9 +47,9 @@ const SearchTrailer = () => {
   };
 
   const onFilter = (e) => {
-    let newTrailers = trailerData;
+    let newTrailers = allTrailer;
     if (filter.status !== "") {
-      newTrailers = trailerData.filter(
+      newTrailers = newTrailers.filter(
         (trailer) => trailer.status === filter.status
       );
     }
@@ -52,7 +63,7 @@ const SearchTrailer = () => {
   };
 
   const onReset = () => {
-    setTrailers(trailerData);
+    setTrailers(allTrailer);
     setFilter({ status: "", trailerId: "" });
   };
 

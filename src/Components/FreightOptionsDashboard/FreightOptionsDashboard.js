@@ -14,10 +14,11 @@ import InvoiceModal from "../InvoiceModal";
 import LoadStatusModal from "./LoadStatusModal";
 import { Link } from "react-router-dom";
 const FreightOptionsDashboard = () => {
-  const { loading, load, driverData, getLoads } = useContext();
+  const { loading, load, driverData, getDrivers, getLoads } = useContext();
 
   useEffect(() => {
     getLoads();
+    getDrivers();
   }, []);
 
   //load status modal
@@ -93,7 +94,7 @@ const FreightOptionsDashboard = () => {
       </div>
       <hr></hr>
 
-      <div className="availableLoads">
+      <div>
         <Navbar bg="light" expand="lg">
           <Container fluid>
             <Navbar.Brand>
@@ -102,7 +103,7 @@ const FreightOptionsDashboard = () => {
           </Container>
         </Navbar>
 
-        <Table striped bordered hover responsive>
+        <Table striped bordered hover responsive="lg">
           <thead>
             <tr>
               <th>ID</th>
@@ -135,7 +136,17 @@ const FreightOptionsDashboard = () => {
             )}
             {!loading &&
               load.map((load, index) => (
-                <tr key={index}>
+                <tr
+                  key={index}
+                  style={{
+                    background: `rgba(
+                      ${load.color},
+                      ${load.color},
+                      ${load.color},
+                      ${0.5}
+                    )`,
+                  }}
+                >
                   <td>
                     <Link to={`/load/${load._id}`}>{load._id}</Link>
                   </td>
@@ -191,9 +202,10 @@ const FreightOptionsDashboard = () => {
       </div>
 
       {/* active driver */}
-      <div className="activeDrivers">
+
+      <div>
         <Navbar bg="light" expand="lg">
-          <Container fluid>
+          <Container>
             <Navbar.Brand>
               Active Drivers
               <Badge bg="warning" text="dark" className="ms-3">
@@ -202,7 +214,7 @@ const FreightOptionsDashboard = () => {
             </Navbar.Brand>
           </Container>
         </Navbar>
-        <Table striped bordered hover responsive>
+        <Table striped bordered hover responsive="lg">
           <thead>
             <tr>
               <th>ID</th>
@@ -271,12 +283,12 @@ const FreightOptionsDashboard = () => {
         <Navbar bg="light" expand="lg">
           <Container fluid>
             <Navbar.Brand>
-              Planned Loads <Badge bg="yellow">{plannedLoads.length}</Badge>
+              Planned Loads <Badge bg="success">{plannedLoads.length}</Badge>
             </Navbar.Brand>
           </Container>
         </Navbar>
 
-        <Table striped bordered hover responsive>
+        <Table striped bordered hover responsive="lg">
           <thead>
             <tr>
               <th>ID</th>
@@ -374,7 +386,7 @@ const FreightOptionsDashboard = () => {
           </Container>
         </Navbar>
 
-        <Table striped bordered hover responsive>
+        <Table striped bordered hover responsive="lg">
           <thead>
             <tr>
               <th>ID</th>

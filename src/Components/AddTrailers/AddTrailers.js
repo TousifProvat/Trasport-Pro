@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { notification } from "antd";
 import axios from "../../utils/axios";
 import useContext from "../Hooks/useContext";
 import "./addTrailers.css";
 const AddTrailers = () => {
-  const { ownerData, eobr } = useContext();
+  const { ownerData, getOwners, eobr, getEobr } = useContext();
+  useEffect(() => {
+    getOwners();
+    getEobr();
+  }, []);
   const initValue = {
     id: "",
     status: "Active",
@@ -42,7 +46,7 @@ const AddTrailers = () => {
   };
   const [allValues, setAllValues] = useState(initValue);
 
-  const changeHandler = (e) => {
+  const onChange = (e) => {
     setAllValues({
       ...allValues,
       [e.target.name]: e.target.value,
@@ -62,7 +66,7 @@ const AddTrailers = () => {
         setTimeout(() => {
           setValidated(false);
           setAllValues(initValue);
-        }, 1000);
+        }, 300);
       }
       setLoading(false);
     } catch (err) {
@@ -97,7 +101,7 @@ const AddTrailers = () => {
                 type="text"
                 placeholder="Trailer Id"
                 name="id"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.id}
               />
             </Form.Group>
@@ -105,7 +109,7 @@ const AddTrailers = () => {
               <Form.Label>Status</Form.Label>
               <Form.Select
                 name="status"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.status}
               >
                 <option value="">Select Status</option>
@@ -121,7 +125,7 @@ const AddTrailers = () => {
                 type="text"
                 placeholder="Model Name"
                 name="model"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.model}
               />
             </Form.Group>
@@ -132,7 +136,7 @@ const AddTrailers = () => {
               <Form.Select
                 required
                 name="owner"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.owner}
               >
                 <option value=""> Select Owner </option>
@@ -150,7 +154,7 @@ const AddTrailers = () => {
                 type="date"
                 placeholder="Owner Since"
                 name="ownerSince"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.ownerSince}
               />
             </Form.Group>
@@ -162,7 +166,7 @@ const AddTrailers = () => {
                 required
                 type="date"
                 name="onBoardingDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.onBoardingDate}
               />
             </Form.Group>
@@ -173,7 +177,7 @@ const AddTrailers = () => {
                 type="date"
                 placeholder="Termination Date"
                 name="terminationDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.terminationDate}
               />
             </Form.Group>
@@ -185,7 +189,7 @@ const AddTrailers = () => {
                 required
                 placeholder="Year"
                 name="year"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.year}
               />
             </Form.Group>
@@ -196,7 +200,7 @@ const AddTrailers = () => {
                 required
                 placeholder="Make"
                 name="make"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.make}
               />
             </Form.Group>
@@ -207,7 +211,7 @@ const AddTrailers = () => {
                 type="text"
                 placeholder="VIN number"
                 name="vin"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.vin}
               />
             </Form.Group>
@@ -217,7 +221,7 @@ const AddTrailers = () => {
               <Form.Label>Axie Count</Form.Label>
               <Form.Control
                 name="axieCount"
-                onChange={changeHandler}
+                onChange={onChange}
                 type="number"
                 placeholder="Axie Count"
                 value={allValues.axieCount}
@@ -229,7 +233,7 @@ const AddTrailers = () => {
                 type="number"
                 placeholder="Deck Height (inches)"
                 name="deckHeight"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.deckHeight}
               />
             </Form.Group>
@@ -239,7 +243,7 @@ const AddTrailers = () => {
                 type="text"
                 placeholder="Trailer Type"
                 name="trailerType"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.trailerType}
               />
             </Form.Group>
@@ -251,7 +255,7 @@ const AddTrailers = () => {
                 type="number"
                 placeholder="Weight (lbs)"
                 name="weight"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.weight}
               />
             </Form.Group>
@@ -261,7 +265,7 @@ const AddTrailers = () => {
                 type="number"
                 placeholder="Length(Feet)"
                 name="length"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.length}
               />
             </Form.Group>
@@ -272,7 +276,7 @@ const AddTrailers = () => {
                 type="number"
                 placeholder="Width(inches)"
                 name="width"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.width}
               />
             </Form.Group>
@@ -284,7 +288,7 @@ const AddTrailers = () => {
                 type="text"
                 placeholder="Group Name"
                 name="group"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.group}
               />
             </Form.Group>
@@ -292,7 +296,7 @@ const AddTrailers = () => {
               <Form.Label>EOBR Type</Form.Label>
               <Form.Select
                 name="eobrType"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.eobrType}
               >
                 <option value="">Select EOBR Type</option>
@@ -309,7 +313,7 @@ const AddTrailers = () => {
                 type="text"
                 placeholder="EOBR ID"
                 name="eobrId"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.eobrId}
               />
             </Form.Group>
@@ -321,7 +325,7 @@ const AddTrailers = () => {
                 type="text"
                 placeholder="Tag Number"
                 name="tagNumber"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.tagNumber}
               />
             </Form.Group>
@@ -329,7 +333,7 @@ const AddTrailers = () => {
               <Form.Label>Tag State</Form.Label>
               <Form.Select
                 name="tagState"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.tagState}
               >
                 <option value="">Select Tag State</option>
@@ -346,7 +350,7 @@ const AddTrailers = () => {
                 type="date"
                 placeholder="Tag Expire Date"
                 name="tagExp"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.tagExp}
               />
             </Form.Group>
@@ -357,7 +361,7 @@ const AddTrailers = () => {
               <Form.Control
                 placeholder="Physical Damage Insurance Carrier"
                 name="physicalDmgInsCarrier"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.physicalDmgInsCarrier}
               />
             </Form.Group>
@@ -366,7 +370,7 @@ const AddTrailers = () => {
               <Form.Control
                 type="date"
                 name="physicalDmgInsStartDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.physicalDmgInsStartDate}
               />
             </Form.Group>
@@ -376,7 +380,7 @@ const AddTrailers = () => {
                 type="date"
                 placeholder="Expire Date"
                 name="physicalDmgInsExpDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.physicalDmgInsExpDate}
               />
             </Form.Group>
@@ -387,7 +391,7 @@ const AddTrailers = () => {
               <Form.Control
                 type="text"
                 name="physicalDmgInsValue"
-                onChange={changeHandler}
+                onChange={onChange}
                 placeholder="Physical Damage Insurance Value"
                 value={allValues.physicalDmgInsValue}
               />
@@ -398,7 +402,7 @@ const AddTrailers = () => {
                 type="date"
                 placeholder="Tag Number"
                 name="lastInspectionDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.lastInspectionDate}
               />
             </Form.Group>
@@ -407,7 +411,7 @@ const AddTrailers = () => {
               <Form.Control
                 type="text"
                 name="nextInspectionDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 placeholder="Next Inspection Date"
                 value={allValues.nextInspectionDate}
               />
@@ -420,7 +424,7 @@ const AddTrailers = () => {
               <Form.Control
                 type="text"
                 name="lastServiceDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 placeholder="Last Service Date"
                 value={allValues.lastServiceDate}
               />
@@ -430,7 +434,7 @@ const AddTrailers = () => {
               <Form.Control
                 type="text"
                 name="nextServiceDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 placeholder="Next Service Date"
                 value={allValues.nextServiceDate}
               />
@@ -440,7 +444,7 @@ const AddTrailers = () => {
               <Form.Control
                 type="text"
                 name="maintenanceDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 placeholder="Maintenance Date"
                 value={allValues.maintenanceDate}
               />
@@ -455,7 +459,7 @@ const AddTrailers = () => {
                 placeholder="comment "
                 rows={3}
                 name="comments"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.comments}
               />
             </Form.Group>

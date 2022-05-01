@@ -9,23 +9,31 @@ import {
   Table,
 } from "react-bootstrap";
 import "./searchDriver.css";
-import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
+import axios from "../../utils/axios";
+import { message } from "antd";
 const SearchDrivers = () => {
-  const { driverData, loading, getDrivers } = useContext();
+  const [allDrivers, setAllDrivers] = useState([]);
+  const [drivers, setDrivers] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getDrivers = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/driver");
+      setAllDrivers(data.drivers);
+      setDrivers(data.drivers);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
 
   useEffect(() => {
     getDrivers();
   }, []);
-  const [drivers, setDrivers] = useState([]);
-
-  useEffect(() => {
-    setDrivers(driverData);
-  }, [driverData]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
 
   //filter
   const [filter, setFilter] = useState({
@@ -38,9 +46,9 @@ const SearchDrivers = () => {
   };
 
   const onFilter = () => {
-    let newDrivers = driverData;
+    let newDrivers = allDrivers;
     if (filter.driverId !== "") {
-      newDrivers = driverData.filter(
+      newDrivers = newDrivers.filter(
         (driver) => driver._id === filter.driverId
       );
     }
@@ -53,7 +61,7 @@ const SearchDrivers = () => {
     setDrivers(newDrivers);
   };
   const onReset = () => {
-    setDrivers(driverData);
+    setDrivers(allDrivers);
     setFilter({ driverId: "", status: "" });
   };
   return (
@@ -62,7 +70,7 @@ const SearchDrivers = () => {
         <h3 className="mt-5 mb-3">Search Drivers</h3>
         <hr></hr>
 
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom01">
               <Form.Label>Driver ID</Form.Label>
@@ -90,7 +98,6 @@ const SearchDrivers = () => {
           </Row>
           <Button
             variant="outline-primary"
-            type="submit"
             className="mb-5 me-3"
             onClick={onFilter}
           >
@@ -99,7 +106,6 @@ const SearchDrivers = () => {
           <Button
             variant="outline-danger"
             className="mb-5 me-3"
-            type="reset"
             onClick={onReset}
           >
             Reset

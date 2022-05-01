@@ -5,8 +5,14 @@ import axios from "../../../utils/axios";
 import useContext from "../../Hooks/useContext";
 
 const AccidentModal = (props) => {
-  const { tractorData, driverData, addIncident, updateIncident } = useContext();
-  const { visible, setVisible, Id, action } = props;
+  const { tractorData, getTractors, driverData, getDrivers } = useContext();
+  const { visible, setVisible, Id, action, addIncident, updateIncident } =
+    props;
+
+  useEffect(() => {
+    getTractors();
+    getDrivers();
+  }, []);
 
   const [loading, setLoading] = useState(false);
   const [allValues, setAllValues] = useState({

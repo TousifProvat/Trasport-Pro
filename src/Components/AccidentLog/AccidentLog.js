@@ -1,3 +1,4 @@
+import { message, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -7,11 +8,72 @@ import {
   Spinner,
   Table,
 } from "react-bootstrap";
-import useContext from "../Hooks/useContext";
+import axios from "../../utils/axios";
 import AccidentModal from "./AccidentModal";
 
 const AccidentLog = () => {
-  const { loading, incident, removeIncident, getIncidents } = useContext();
+  const [incident, setIncident] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getIncidents = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/incident");
+      setIncident(data.incidents);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
+  const updateIncident = async (id, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/incident/${id}`, values);
+      notification.success({ message: res.data.message });
+      const index = incident.findIndex((obj) => obj._id === id);
+      let arr = incident;
+      arr[index] = values;
+      setIncident(arr);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const addIncident = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post(`/incident`, values);
+      notification.success({ message: res.data.message });
+      getIncidents();
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const removeIncident = async (id) => {
+    try {
+      setLoading(true);
+      const res = await axios.delete(`/incident/${id}`);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+      const newIncidents = incident.filter((incident) => incident._id !== id);
+      setIncident(newIncidents);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
 
   useEffect(() => {
     getIncidents();
@@ -27,12 +89,18 @@ const AccidentLog = () => {
   };
   return (
     <div>
-      <AccidentModal visible={addModal} setVisible={setAddModal} action="add" />
+      <AccidentModal
+        visible={addModal}
+        setVisible={setAddModal}
+        action="add"
+        addIncident={addIncident}
+      />
       <AccidentModal
         visible={updateModal}
         setVisible={setUpdateModal}
         action="update"
         Id={accidentId}
+        updateIncident={updateIncident}
       />
       <Container>
         <Navbar bg="" expand="lg">

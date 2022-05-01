@@ -11,17 +11,31 @@ import {
 import "./searchTractor.css";
 import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
+import axios from "../../utils/axios";
+import { message } from "antd";
 
 const SearchTractor = () => {
-  const { tractorData, loading, getTractors } = useContext();
+  const [allTractors, setAllTractors] = useState([]);
+  const [tractors, setTractors] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getTractors = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/tractor");
+      setTractors(data.tractors);
+      setAllTractors(data.tractors);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
+
   useEffect(() => {
     getTractors();
   }, []);
-  const [tractors, setTractors] = useState([]);
-
-  useEffect(() => {
-    setTractors(tractorData);
-  }, [tractorData]);
 
   //filter
   const [filter, setFilter] = useState({
@@ -34,9 +48,9 @@ const SearchTractor = () => {
   };
 
   const onFilter = () => {
-    let newTractors = tractorData;
+    let newTractors = allTractors;
     if (filter.status !== "") {
-      newTractors = tractorData.filter(
+      newTractors = newTractors.filter(
         (tractor) => tractor.status === filter.status
       );
     }
@@ -50,7 +64,7 @@ const SearchTractor = () => {
   };
 
   const onReset = () => {
-    setTractors(tractorData);
+    setTractors(allTractors);
     setFilter({ status: "", tractorId: "" });
   };
 
@@ -97,7 +111,7 @@ const SearchTractor = () => {
       </Container>
 
       <Container>
-        <h3 className="mt-5 mb-3">Search Results ({tractorData.length})</h3>
+        <h3 className="mt-5 mb-3">Search Results ({tractors.length})</h3>
         <hr></hr>
 
         <Table striped bordered hover responsive>
