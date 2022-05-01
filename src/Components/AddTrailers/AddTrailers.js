@@ -296,8 +296,10 @@ const AddTrailers = () => {
                 value={allValues.eobrType}
               >
                 <option value="">Select EOBR Type</option>
-                {eobr.map((eobr) => (
-                  <option value={eobr._id}>{eobr.name}</option>
+                {eobr.map((eobr, index) => (
+                  <option value={eobr._id} key={index}>
+                    {eobr.name}
+                  </option>
                 ))}
               </Form.Select>
             </Form.Group>

@@ -1,7 +1,5 @@
-import "./App.css";
-import Navbar1 from "./Components/Navbars/Navbar1/Navbar1";
-import Navbar2 from "./Components/Navbars/Navbar2/Navbar2";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
 import FreightOptionsDashboard from "./Components/FreightOptionsDashboard/FreightOptionsDashboard";
 import AddNewLoad from "./Components/FreightOptionsDashboard/AddNewLoad/AddNewLoad";
 import AddOwner from "./Components/AddOwner/AddOwner";
@@ -9,7 +7,7 @@ import SearchOwner from "./Components/SearchOwner/SearchOwner";
 import AddDrivers from "./Components/AddDrivers/AddDrivers";
 import SearchDrivers from "./Components/SearchDrivers/SearchDrivers";
 import Tractors from "./Components/Tractors/Tractors";
-import AddTrailers from "./Components/AddTrailters/AddTrailers";
+import AddTrailers from "./Components/AddTrailers/AddTrailers";
 import SearchTractor from "./Components/SearchTractor/SearchTractor";
 import SearchTrailer from "./Components/SearchTrailer/SearchTrailer";
 import AddTerminal from "./Components/AddTerminal/AddTerminal";
@@ -23,9 +21,6 @@ import BillingDashboard from "./Components/BillingDashboard/BillingDashboard";
 import TractorSummary from "./Components/TractorSummary/TractorSummary";
 import TrailerSummary from "./Components/TrailerSummary/TrailerSummary";
 import DriverSummary from "./Components/DriverSummary/DriverSummary";
-import EditDriver from "./Components/EditDriver/EditDriver";
-import EditTractor from "./Components/EditTractor/EditTractor";
-import EditTrailer from "./Components/EditTrailer/EditTrailer";
 import SiteSettings from "./Components/SiteSettings/SiteSettings";
 import Login from "./Components/Login/Login";
 import UserManagement from "./Components/UserManagement/UserManagement";
@@ -33,31 +28,23 @@ import InspectionLog from "./Components/InspectionLog/InspectionLog";
 import MaintenanceLog from "./Components/MaintenanceLog/MaintenanceLog";
 import AccidentLog from "./Components/AccidentLog/AccidentLog";
 import Invoice from "./Components/Invoice/Invoice";
-import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
+import PrivateRoute from "./Components/PrivateRoute";
 import CustomerSummary from "./Components/CustomerSummary/CustomerSummary";
-import LoginLayOut from "./Layout/LoginLayOut";
-
+import useContext from "./Components/Hooks/useContext";
+import { useEffect } from "react";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <div className="App">
-          <Navbar1></Navbar1>
-          <hr></hr>
-          <Navbar2></Navbar2>
-        </div>
         <Routes>
-          <Route path="/">
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<PrivateRoute />}>
             <Route index element={<FreightOptionsDashboard />} />
             <Route
               path="freight-options-dashboard"
               element={<FreightOptionsDashboard />}
             />
-            <Route path="/login" element={<Login />} />
-            {/* <LoginLayOut>
-              <Route path="/login" element={<Login />} />
-            </LoginLayOut> */}
             <Route path="add-new-load" element={<AddNewLoad />} />
             <Route path="add-owner" element={<AddOwner />} />
             <Route path="search-owner" element={<SearchOwner />} />
@@ -75,26 +62,12 @@ function App() {
             <Route path="site-setting" element={<SiteSettings />} />
             <Route path="invoice" element={<Invoice />} />
             <Route path="user-management" element={<UserManagement />} />
-            {/* <Route path="editDriver" element={<EditDriver />} />
-              <Route path="editTrailer" element={<EditTrailer />} />
-              <Route path="editTractor" element={<EditTractor />} /> */}
             <Route path="owner/:ownerId" element={<OwnerSummary />} />
             <Route path="tractor/:tractorId" element={<TractorSummary />} />
             <Route path="trailer/:trailerId" element={<TrailerSummary />} />
             <Route path="driver/:driverId" element={<DriverSummary />} />
-            <Route
-              path="customer/summary/customerId"
-              element={<CustomerSummary />}
-            />
-            {/* <Route path="billing-dashboard" element={} /> */}
-            <Route
-              path="billing-dashboard"
-              element={
-                <PrivateRoute>
-                  <BillingDashboard />
-                </PrivateRoute>
-              }
-            />
+            <Route path="customer/:customerId" element={<CustomerSummary />} />
+            <Route path="billing-dashboard" element={<BillingDashboard />} />
             <Route path="inspection" element={<InspectionLog />} />
             <Route path="maintenance" element={<MaintenanceLog />} />
             <Route path="accident-log" element={<AccidentLog />} />

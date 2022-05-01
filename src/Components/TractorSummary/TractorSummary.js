@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Modal, Navbar, OverlayTrigger, Row, Table, Tooltip } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Modal,
+  Navbar,
+  OverlayTrigger,
+  Row,
+  Table,
+  Tooltip,
+} from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import axios from "../../utils/axios";
 import { notification } from "antd";
 import useContext from "../Hooks/useContext";
-
-
-
-
+import AssignDriverModal from "./AssignDriverModal";
 
 const TractorSummary = () => {
-  const { ownerData, eobr } = useContext();
-  const [summaryData, setSummaryData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [smShow, setSmShow] = useState(false);
+  const { ownerData, eobr, unassignDriverFromTractor } = useContext();
   const { tractorId } = useParams();
-  const [enable, setEnable] = useState(true);
-  const [validated, setValidated] = useState(false);
-
-
-  
-
 
   const initValue = {
     id: "",
@@ -63,59 +62,16 @@ const TractorSummary = () => {
     comments: "",
   };
 
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.stopPropagation();
-      setValidated(true);
-      return;
-    }
-
-    console.log(initValue);
-  };
-
-  const [allValues, setAllValues] = useState({});
-
-  const changeHandler = (e) => {
-    setAllValues({
-      ...allValues,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-
-
-const handleEnable = (enable) => {
-  setEnable(false);
-};
-
-
-  
-  const handleUpdate = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.put(
-        `/tractor/${tractorId}`,
-        allValues
-      );
-      setEnable(true);
-      setLoading(false);
-      notification.success({ message: data.message });
-      console.log(allValues);
-    } catch (err) {
-      setLoading(false);
-      notification.error({ message: err.response.data.message });
-    } 
-  };
+  const [allValues, setAllValues] = useState(initValue);
+  const [drivers, setDrivers] = useState([]);
 
   useEffect(() => {
     const fetchTractorSummary = async () => {
       try {
         setLoading(true);
         const { data } = await axios.get(`/tractor/summary/${tractorId}`);
-        setSummaryData(data.tractorInformation);
+        setAllValues(data.tractor);
+        setDrivers(data.assignedDrivers);
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -125,34 +81,66 @@ const handleEnable = (enable) => {
     fetchTractorSummary();
   }, [tractorId]);
 
-  //console.log(summaryData);
+  const [loading, setLoading] = useState(false);
+  const [validated, setValidated] = useState(false);
 
-  const current = new Date();
-  const date = `${current.getDate()}/${
-    current.getMonth() + 1
-  }/${current.getFullYear()}`;
-
-
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-
-
-  const handleDeleteDriver = (event) => {
-    window.confirm("Are you sure you want to delete this driver?");
+  const handleUpdate = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.put(`/tractor/${tractorId}`, allValues);
+      setLoading(false);
+      notification.success({ message: data.message });
+    } catch (err) {
+      setLoading(false);
+      notification.error({ message: err.response.data.message });
+    }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
+    handleUpdate();
+  };
 
+  const onChange = (e) => {
+    if (e.target.type === "checkbox") {
+      setAllValues({
+        ...allValues,
+        [e.target.name]: allValues[e.target.name] ? false : true,
+      });
+      return;
+    }
+    setAllValues({
+      ...allValues,
+      [e.target.name]: e.target.value,
+    });
+  };
 
+  //assign/unassign Driver
+  const [show, setShow] = useState(false);
+  const unassignDriver = (driverId, index) => {
+    unassignDriverFromTractor(driverId);
+    setDrivers([
+      ...drivers.slice(0, index),
+      ...drivers.slice(index + 1, drivers.length),
+    ]);
+  };
   return (
     <div>
       <Container>
-        <h3 className="mt-5 mb-3">Tractor Summary</h3>
-        <hr></hr>
-        <Button variant="outline-primary">Update Information</Button>{" "}
+        <Navbar bg="light" expand="lg" className="mt-5">
+          <Container>
+            <Navbar.Brand>
+              <h4>Tractor Information</h4>
+              <hr></hr>
+            </Navbar.Brand>
+          </Container>
+        </Navbar>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom01">
@@ -162,7 +150,7 @@ const handleEnable = (enable) => {
                 type="text"
                 placeholder="Tractor Id"
                 name="id"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.id}
               />
             </Form.Group>
@@ -170,7 +158,7 @@ const handleEnable = (enable) => {
               <Form.Label>Axle Count</Form.Label>
               <Form.Control
                 name="axieCount"
-                onChange={changeHandler}
+                onChange={onChange}
                 type="number"
                 placeholder="Axie Count"
                 value={allValues.axieCount}
@@ -181,7 +169,7 @@ const handleEnable = (enable) => {
 
               <Form.Select
                 name="status"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.status}
               >
                 <option value="Active">Active</option>
@@ -198,7 +186,7 @@ const handleEnable = (enable) => {
                 type="number"
                 placeholder="Weight"
                 name="weight"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.weight}
               />
             </Form.Group>
@@ -209,19 +197,18 @@ const handleEnable = (enable) => {
                 type="number"
                 placeholder="Fuel Capacity"
                 name="fuelCapacity"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.fuelCapacity}
               />
             </Form.Group>
           </Row>
-
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Current Owner</Form.Label>
               <Form.Select
                 required
                 name="owner"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.owner}
               >
                 <option value="">Select Owner</option>
@@ -238,19 +225,18 @@ const handleEnable = (enable) => {
                 type="text"
                 placeholder="Tag Number"
                 name="tagNumber"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.tagNumber}
               />
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
               <Form.Label>Tag State</Form.Label>
               <Form.Select
-                aria-label="Default select example"
                 name="tagState"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.tagState}
               >
-                <option>Select Tag State</option>
+                <option value="">Select Tag State</option>
                 <option value="Alaska">Alaska</option>
                 <option value="Alabama">Alabama</option>
                 <option value="Arizona">Arizona</option>
@@ -268,7 +254,7 @@ const handleEnable = (enable) => {
                 type="date"
                 placeholder="Owner Since"
                 name="ownerSince"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.ownerSince}
               />
             </Form.Group>
@@ -278,7 +264,7 @@ const handleEnable = (enable) => {
                 type="date"
                 placeholder="Tag Expiration Date"
                 name="tagExp"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.tagExp}
               />
             </Form.Group>
@@ -289,7 +275,7 @@ const handleEnable = (enable) => {
                 type="number"
                 placeholder="Tractor Model Year"
                 name="year"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.year}
               />
             </Form.Group>
@@ -303,7 +289,7 @@ const handleEnable = (enable) => {
                 placeholder="Tractor Make"
                 required
                 name="make"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.make}
               />
             </Form.Group>
@@ -316,7 +302,7 @@ const handleEnable = (enable) => {
                 type="text"
                 placeholder="Model Name"
                 name="model"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.model}
               />
             </Form.Group>
@@ -326,7 +312,7 @@ const handleEnable = (enable) => {
                 type="text"
                 placeholder="Damage Carrier"
                 name="physicalDmgInsCarrier"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.physicalDmgInsCarrier}
               />
             </Form.Group>
@@ -337,9 +323,9 @@ const handleEnable = (enable) => {
               <Form.Label>Physical Damage Insurance Start Date </Form.Label>
               <Form.Control
                 type="date"
-                placeholder=""
+                placeholder="Physical Damage Insurance Start Date"
                 name="physicalDmgInsStartDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.physicalDmgInsStartDate}
               />
             </Form.Group>
@@ -348,7 +334,7 @@ const handleEnable = (enable) => {
               <Form.Control
                 type="text"
                 name="group"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.group}
               />
             </Form.Group>
@@ -358,7 +344,7 @@ const handleEnable = (enable) => {
                 type="date"
                 placeholder="Expiration Date"
                 name="physicalDmgInsExpDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.physicalDmgInsExpDate}
               />
             </Form.Group>
@@ -371,7 +357,7 @@ const handleEnable = (enable) => {
                 type="text"
                 placeholder="Tractor Color"
                 name="color"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.color}
               />
             </Form.Group>
@@ -382,7 +368,7 @@ const handleEnable = (enable) => {
                 type="text"
                 placeholder="Physical Damage Insurance Value"
                 name="physicalDmgInsValue"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.physicalDmgInsValue}
               />
             </Form.Group>
@@ -394,18 +380,17 @@ const handleEnable = (enable) => {
                 placeholder="VIN number"
                 required
                 name="vin"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.vin}
               />
             </Form.Group>
           </Row>
-
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Check
                 label="Carb Compliant"
                 name="crabCompliant"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.carbCompliant}
               />
             </Form.Group>
@@ -416,7 +401,7 @@ const handleEnable = (enable) => {
                 type="text"
                 placeholder="NTL Insurance Carrier"
                 name="ntlInsCarrier"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.ntlInsCarrier}
               />
             </Form.Group>
@@ -424,14 +409,13 @@ const handleEnable = (enable) => {
               <Form.Label>NTL Insurance Start Date</Form.Label>
               <Form.Control
                 type="date"
-                placeholder=""
+                placeholder="NTL Insurance Start Date"
                 name="ntlInsStartDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.ntlInsStartDate}
               />
             </Form.Group>
           </Row>
-
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>NTL Insurance Expiration Date</Form.Label>
@@ -440,7 +424,7 @@ const handleEnable = (enable) => {
                 type="date"
                 placeholder="NTL Insurance Expiration Date"
                 name="ntlInsExpDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.ntlInsExpDate}
               />
             </Form.Group>
@@ -450,17 +434,22 @@ const handleEnable = (enable) => {
                 type="text"
                 placeholder="NTL Insurance Value"
                 name="ntlInsValue"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.ntlInsValue}
               />
             </Form.Group>
           </Row>
         </Form>
       </Container>
-
       <Container>
-        <h3 className="mt-5 mb-3">Safety Information</h3>
-        <hr></hr>
+        <Navbar bg="light" expand="lg" className="mt-5">
+          <Container>
+            <Navbar.Brand>
+              <h4>Safety Information</h4>
+              <hr></hr>
+            </Navbar.Brand>
+          </Container>
+        </Navbar>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom01">
@@ -469,18 +458,17 @@ const handleEnable = (enable) => {
                 type="date"
                 placeholder="Last Inspection Date"
                 name="lastInspectionDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.lastInspectionDate}
               />
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom02">
               <Form.Label>PrePass ID</Form.Label>
               <Form.Control
-                required
                 type="text"
                 placeholder="Pre Pass ID"
                 name="prePassId"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.prePassId}
               />
             </Form.Group>
@@ -490,7 +478,7 @@ const handleEnable = (enable) => {
                 type="text"
                 placeholder="Last Inspection Location"
                 name="lastInspectionLocation"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.lastInspectionDate}
               />
             </Form.Group>
@@ -500,7 +488,7 @@ const handleEnable = (enable) => {
               <Form.Label>EOBR Type</Form.Label>
               <Form.Select
                 name="eobrType"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.eobrType}
               >
                 <option value="">Select EOBR Type ID</option>
@@ -517,7 +505,7 @@ const handleEnable = (enable) => {
                 type="date"
                 placeholder="Next Inspection Date"
                 name="nextInspectionDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.nextInspectionDate}
               />
             </Form.Group>
@@ -526,9 +514,8 @@ const handleEnable = (enable) => {
               <Form.Control
                 type="text"
                 placeholder="EOBR ID"
-                required
                 name="eobrId"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.eobrId}
               />
             </Form.Group>
@@ -540,7 +527,7 @@ const handleEnable = (enable) => {
                 type="date"
                 placeholder="Last Service Date"
                 name="lastServiceDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.lastServiceDate}
               />
             </Form.Group>
@@ -550,7 +537,7 @@ const handleEnable = (enable) => {
               <Form.Control
                 name="cameraType"
                 placeholder="Camera Type"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.cameraType}
               />
             </Form.Group>
@@ -560,7 +547,7 @@ const handleEnable = (enable) => {
                 type="date"
                 placeholder="Next Service Date"
                 name="nextServiceDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.nextServiceDate}
               />
             </Form.Group>
@@ -572,7 +559,7 @@ const handleEnable = (enable) => {
                 type="number"
                 placeholder="Camera ID"
                 name="cameraID"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.cameraId}
               />
             </Form.Group>
@@ -582,7 +569,7 @@ const handleEnable = (enable) => {
                 type="date"
                 placeholder="Maintenance Date"
                 name="maintenanceDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.maintenanceDate}
               />
             </Form.Group>
@@ -596,23 +583,70 @@ const handleEnable = (enable) => {
                   as="textarea"
                   rows={3}
                   name="comments"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.comments}
                 />
               </Form.Group>
             </Form.Group>
           </Row>
           <Button type="submit" variant="outline-primary" className="mb-5">
-            Save
-          </Button>
-          <Button
-            variant="outline-danger"
-            className="ms-3 mb-5"
-            href="/search-tractor"
-          >
-            Cancel
+            Update
           </Button>
         </Form>
+      </Container>
+      <Container>
+        <AssignDriverModal
+          visible={show}
+          setVisible={setShow}
+          tractor={tractorId}
+        />
+        <Navbar bg="light" expand="lg" className="mt-5">
+          <Container>
+            <Navbar.Brand href="#home">
+              <h1>Assigned Drivers</h1>
+            </Navbar.Brand>
+
+            <Button variant="outline-primary" onClick={() => setShow(true)}>
+              <i className="fa-solid fa-plus"></i>
+            </Button>
+          </Container>
+        </Navbar>
+        <Table striped bordered hover className="mb-5">
+          <thead>
+            <tr>
+              <th>Driver</th>
+              <th>Date Assigned </th>
+              <th>Comments (Internal)</th>
+              <th>Manage</th>
+            </tr>
+          </thead>
+          <tbody>
+            {drivers.map((driver, index) => (
+              <tr key={index}>
+                <td>
+                  {driver.firstName} {driver.lastName}
+                </td>
+                <td>{driver.tractorAssigningDate}</td>
+                <td>{driver.tractorComments}</td>
+                <td>
+                  <Button
+                    variant="outline-danger"
+                    onClick={() => unassignDriver(driver._id, index)}
+                  >
+                    <i className="fa-solid fa-scissors"></i>{" "}
+                  </Button>
+                </td>
+              </tr>
+            ))}
+            {drivers.length < 1 && (
+              <tr>
+                <td colSpan={5} style={{ textAlign: "center" }}>
+                  No Driver Assigned
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
       </Container>
     </div>
   );

@@ -1,13 +1,11 @@
 import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import "./navbar2.css";
 const Navbar2 = () => {
   return (
     <div>
       <Navbar bg="light" expand="lg">
-        <Container fluid>
-          {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
+        <Container>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -15,9 +13,9 @@ const Navbar2 = () => {
                 <NavDropdown.Item href="/freight-options-dashboard">
                   Freight Options Dashboard
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
+                {/* <NavDropdown.Item href="#action/3.2">
                   Load management Dashboard
-                </NavDropdown.Item>
+                </NavDropdown.Item> */}
                 <NavDropdown.Item href="/add-new-load">
                   Add New Load
                 </NavDropdown.Item>
@@ -84,11 +82,11 @@ const Navbar2 = () => {
                 </NavDropdown.Item>
               </NavDropdown>
 
-              <NavDropdown title="Accounting" id="basic-nav-dropdown">
+              {/* <NavDropdown title="Accounting" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/settlements">
                   Settlements
                 </NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown> */}
               <Nav.Link href="maintenance">Maintenance </Nav.Link>
               <Nav.Link href="inspection">Inspection </Nav.Link>
               <NavDropdown

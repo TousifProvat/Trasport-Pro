@@ -3,18 +3,20 @@ import {
   Button,
   Col,
   Container,
-  FloatingLabel,
   Form,
-  Modal,
   Row,
+  Spinner,
   Table,
 } from "react-bootstrap";
 import "./searchDriver.css";
 import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
 const SearchDrivers = () => {
-  const { driverData, loading } = useContext();
+  const { driverData, loading, getDrivers } = useContext();
 
+  useEffect(() => {
+    getDrivers();
+  }, []);
   const [drivers, setDrivers] = useState([]);
 
   useEffect(() => {
@@ -55,7 +57,7 @@ const SearchDrivers = () => {
     setFilter({ driverId: "", status: "" });
   };
   return (
-    <div>
+    <>
       <Container>
         <h3 className="mt-5 mb-3">Search Drivers</h3>
         <hr></hr>
@@ -104,11 +106,10 @@ const SearchDrivers = () => {
           </Button>
         </Form>
       </Container>
-
-      <Container fluid>
+      <Container>
         <h3>Search Results ({drivers.length})</h3>
 
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -122,38 +123,55 @@ const SearchDrivers = () => {
             </tr>
           </thead>
           <tbody>
-            {drivers.map((driver) => (
+            {loading && (
               <tr>
-                <td>
-                  <Link to={`/driver/${driver._id}`}>{driver._id}</Link>
+                <td
+                  colSpan={8}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
-                <td>
-                  {driver.firstName} {driver.lastName}
-                </td>
-                <td>{driver.primaryPhoneNumber}</td>
-                <td>{driver.email}</td>
-                <td>
-                  {driver.address}, {driver.city}, {driver.zip}
-                </td>
-                <td>{driver.hireDate}</td>
-                <td>{driver.terminationDate}</td>
-                <td>{driver.status}</td>
               </tr>
-            ))}
-            {drivers.length < 1 && (
-              <td
-                colSpan={8}
-                style={{
-                  textAlign: "center",
-                }}
-              >
-                No Data Found
-              </td>
+            )}
+            {!loading &&
+              drivers.map((driver, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={`/driver/${driver._id}`}>{driver._id}</Link>
+                  </td>
+                  <td>
+                    {driver.firstName} {driver.lastName}
+                  </td>
+                  <td>{driver.primaryPhoneNumber}</td>
+                  <td>{driver.email}</td>
+                  <td>
+                    {driver.address}, {driver.city}, {driver.zip}
+                  </td>
+                  <td>{driver.hireDate}</td>
+                  <td>{driver.terminationDate}</td>
+                  <td>{driver.status}</td>
+                </tr>
+              ))}
+            {!loading && drivers.length < 1 && (
+              <tr>
+                <td
+                  colSpan={8}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  No Data Found
+                </td>
+              </tr>
             )}
           </tbody>
         </Table>
       </Container>
-    </div>
+    </>
   );
 };
 

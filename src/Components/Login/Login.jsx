@@ -1,31 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
   Col,
   Container,
   Form,
-  InputGroup,
+  Navbar,
   Row,
 } from "react-bootstrap";
 import "./login.css";
 import useContext from "../Hooks/useContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { authSignin, loading } = useContext();
+  const { authSignin, loading, auth } = useContext();
+
+  //navigate
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      setTimeout(() => {
+        navigate("/");
+      }, 300);
+    }
+  }, [auth.isAuthenticated]);
+
   const [validated, setValidated] = useState(false);
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
     if (form.checkValidity() === false) {
-      event.stopPropagation();
+      e.stopPropagation();
+      setValidated(true);
+      return;
     }
-    setValidated(true);
     authSignin(formValues);
   };
 
@@ -36,11 +50,28 @@ const Login = () => {
     });
   };
   return (
-    <div>
+    <>
+      <Navbar>
+        <Container>
+          <Navbar.Brand>Logo here</Navbar.Brand>
+        </Container>
+      </Navbar>
       <Container>
         <Row>
-          <Col sm={4}></Col>
-          <Col sm={4}>
+          <Col
+            sm={10}
+            md={6}
+            lg={5}
+            xl={4}
+            xxl={4}
+            style={{
+              display: "flex",
+              minHeight: "90vh",
+              margin: "0 auto",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <Card className="text-center mt-3">
               <Card.Header>
                 <h1>Logo</h1>
@@ -68,6 +99,7 @@ const Login = () => {
                           placeholder="Email Address"
                           name="email"
                           onChange={onChange}
+                          value={formValues.email}
                         />
                       </Form.Group>
                     </Row>
@@ -75,7 +107,7 @@ const Login = () => {
                       <Form.Group
                         as={Col}
                         md="12"
-                        controlId="validationCustom01"
+                        controlId="validationCustom02"
                       >
                         <Form.Label className="float-start">
                           Password
@@ -86,6 +118,7 @@ const Login = () => {
                           placeholder="Password"
                           name="password"
                           onChange={onChange}
+                          value={formValues.password}
                         />
                       </Form.Group>
                     </Row>
@@ -97,10 +130,9 @@ const Login = () => {
               </Card.Body>
             </Card>
           </Col>
-          <Col sm={4}></Col>
         </Row>
       </Container>
-    </div>
+    </>
   );
 };
 

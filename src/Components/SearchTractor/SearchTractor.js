@@ -4,18 +4,19 @@ import {
   Col,
   Container,
   Form,
-  InputGroup,
   Row,
+  Spinner,
   Table,
 } from "react-bootstrap";
 import "./searchTractor.css";
-import DayPickerInput from "react-day-picker/DayPickerInput";
-import "react-day-picker/lib/style.css";
 import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
 
 const SearchTractor = () => {
-  const { tractorData, loading } = useContext();
+  const { tractorData, loading, getTractors } = useContext();
+  useEffect(() => {
+    getTractors();
+  }, []);
   const [tractors, setTractors] = useState([]);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const SearchTractor = () => {
   };
 
   return (
-    <div>
+    <>
       <Container>
         <h3 className="mt-5 mb-3">Search Tractors</h3>
         <hr></hr>
@@ -95,11 +96,11 @@ const SearchTractor = () => {
         </Form>
       </Container>
 
-      <Container fluid>
+      <Container>
         <h3 className="mt-5 mb-3">Search Results ({tractorData.length})</h3>
         <hr></hr>
 
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -113,35 +114,52 @@ const SearchTractor = () => {
           </thead>
 
           <tbody>
-            {tractors.map((tractor) => (
+            {loading && (
               <tr>
-                <td>
-                  <Link to={`/tractor/${tractor._id}`}>{tractor._id}</Link>
+                <td
+                  colSpan={8}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
-                <td>
-                  {tractor?.owner.firstName} {tractor?.owner.lastName}
-                </td>
-                <td>{tractor.make}</td>
-                <td>{tractor.model}</td>
-                <td>{tractor.year}</td>
-                <td>{tractor.vin}</td>
-                <td>{tractor.status}</td>
               </tr>
-            ))}
-            {tractors.length < 1 && (
-              <td
-                colSpan={8}
-                style={{
-                  textAlign: "center",
-                }}
-              >
-                No Data Found
-              </td>
+            )}
+            {!loading &&
+              tractors.map((tractor, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={`/tractor/${tractor._id}`}>{tractor._id}</Link>
+                  </td>
+                  <td>
+                    {tractor.owner?.firstName} {tractor.owner?.lastName}
+                  </td>
+                  <td>{tractor.make}</td>
+                  <td>{tractor.model}</td>
+                  <td>{tractor.year}</td>
+                  <td>{tractor.vin}</td>
+                  <td>{tractor.status}</td>
+                </tr>
+              ))}
+            {!loading && tractors.length < 1 && (
+              <tr>
+                <td
+                  colSpan={8}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  No Data Found
+                </td>
+              </tr>
             )}
           </tbody>
         </Table>
       </Container>
-    </div>
+    </>
   );
 };
 

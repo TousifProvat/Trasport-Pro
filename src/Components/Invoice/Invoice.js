@@ -1,113 +1,163 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Col,
   Container,
   Form,
-  Modal,
   Nav,
   Navbar,
-  OverlayTrigger,
   Row,
+  Spinner,
   Table,
-  Tooltip,
 } from "react-bootstrap";
-import InvoiceModal from "../InvoiceModal/InvoiceModal";
+import UpdateInvoiceModal from "./UpdateInvoiceModal";
+import useContext from "../Hooks/useContext";
 
 const Invoice = () => {
-  const [lgShow, setLgShow] = useState(false);
+  const { invoice, loading, getInvoices } = useContext();
 
-  // const handleLargeModalShow = () => {
-  //   setLgShow(true);
-  // }
+  useEffect(() => {
+    getInvoices();
+  }, []);
+
+  const [invoices, setInvoices] = useState([]);
+  const [filter, setFilter] = useState({
+    status: "",
+  });
+
+  const onChange = (e) => {
+    setFilter({ ...filter, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    setInvoices(invoice);
+  }, [invoice]);
+
+  const [show, setShow] = useState(false);
+  const [invoiceId, setInvoiceId] = useState(null);
+
+  const openInvoice = (id) => {
+    setInvoiceId(id);
+    setShow(true);
+  };
+  //filter
+  const onFilter = () => {
+    let newInvoices = invoice;
+    if (filter.status !== "") {
+      newInvoices = invoice.filter(
+        (invoice) => invoice.status === filter.status
+      );
+    }
+
+    setInvoices(newInvoices);
+  };
+
+  const onReset = () => {
+    setInvoices(invoice);
+    setFilter({ status: "" });
+  };
+
   return (
-    <div>
+    <>
+      <UpdateInvoiceModal
+        visible={show}
+        setVisible={setShow}
+        invoice={invoiceId}
+      />
       <Container>
         <Navbar bg="" expand="lg" className="mt-5">
           <Container>
-            <Navbar.Brand>
-              <h1>Invoice</h1>
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                {/* <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#link">Link</Nav.Link> */}
-              </Nav>
-            </Navbar.Collapse>
+            <Navbar.Brand>Invoices</Navbar.Brand>
           </Container>
         </Navbar>
         <hr></hr>
-        <Row>
-          <Col sm={6}>
-            <Form.Label>Invoice Status</Form.Label>
-            <Form.Select aria-label="Default select example">
-              <option>Select Invoice Status</option>
-              <option value="Paid">Paid</option>
-              <option value="Unpaid">Unpaid</option>
-            </Form.Select>
-          </Col>
-          <Col sm={6}>
-            <Form.Label>BOL</Form.Label>
-            <Form.Check
-              required
-              feedback="You must agree before submitting."
-              feedbackType="invalid"
-            />
-          </Col>
-        </Row>
-        <Table striped bordered hover className="mt-5">
+        <Form>
+          <Row className="mb-3">
+            <Col sm={6}>
+              <Form.Label>Invoice Status</Form.Label>
+              <Form.Select
+                name="status"
+                onChange={onChange}
+                value={filter.status}
+              >
+                <option>Select Invoice Status</option>
+                <option value="paid">Paid</option>
+                <option value="unpaid">Unpaid</option>
+              </Form.Select>
+            </Col>
+          </Row>
+          <Button variant="outline-primary" className="mb-5" onClick={onFilter}>
+            Filter
+          </Button>
+          <Button
+            variant="outline-danger"
+            className="mb-5 ms-3"
+            onClick={onReset}
+          >
+            Reset
+          </Button>
+        </Form>
+      </Container>
+      <Container>
+        <h3>Search Results ({invoices.length})</h3>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>Load No.</th>
               <th>Invoice No.</th>
               <th>Customers</th>
               <th>Load Rate</th>
+              <th>Others</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>01</td>
-              <td>0001</td>
-              <td>Tousif</td>
-              <td>200</td>
-              <td>Unpaid</td>
-              <td>
-                <OverlayTrigger
-                  overlay={<Tooltip id="tooltip-disabled">Edit</Tooltip>}
+            {loading && (
+              <tr>
+                <td colSpan={7} style={{ textAlign: "center" }}>
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                </td>
+              </tr>
+            )}
+            {!loading &&
+              invoices.map((invoice, index) => (
+                <tr key={index}>
+                  <td>{invoice.load?.loadNumber}</td>
+                  <td>{invoice.invoiceNumber}</td>
+                  <td>{invoice.customer.name}</td>
+                  <td>{invoice.amount}</td>
+                  <td>
+                    {invoice.other.reduce(function (res, item) {
+                      return Number(res) + Number(item.price);
+                    }, 0)}
+                  </td>
+                  <td>{invoice.status}</td>
+                  <td>
+                    <Button onClick={() => openInvoice(invoice._id)}>
+                      Edit
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            {!loading && invoices.length < 1 && (
+              <tr>
+                <td
+                  colSpan={10}
+                  style={{
+                    textAlign: "center",
+                  }}
                 >
-                  <span className="d-inline-block">
-                    <Button
-                      variant="outline-success"
-                      onClick={() => setLgShow(true)}
-                    >
-                      <i className="fa-solid fa-pen-to-square"></i>
-                    </Button>{" "}
-                    <Modal
-                      size="lg"
-                      show={lgShow}
-                      onHide={() => setLgShow(false)}
-                      aria-labelledby="example-modal-sizes-title-lg"
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title id="example-modal-sizes-title-lg">
-                          Invoice
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <InvoiceModal></InvoiceModal>
-                      </Modal.Body>
-                    </Modal>
-                  </span>
-                </OverlayTrigger>
-              </td>
-            </tr>
+                  No Data Found
+                </td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </Container>
-    </div>
+    </>
   );
 };
 

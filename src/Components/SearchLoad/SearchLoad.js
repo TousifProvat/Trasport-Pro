@@ -8,12 +8,18 @@ import {
   Nav,
   Navbar,
   Row,
+  Spinner,
   Table,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import useContext from "../Hooks/useContext";
 
 const SearchLoad = () => {
-  const { load, loading } = useContext();
+  const { load, loading, getLoads } = useContext();
+
+  useEffect(() => {
+    getLoads();
+  }, []);
 
   const [loads, setLoads] = useState([]);
 
@@ -21,116 +27,152 @@ const SearchLoad = () => {
     setLoads(load);
   }, [load]);
 
-  const [status, setStatus] = useState("");
-
-  const handleFilter = () => {
-    let newLoads;
-    if (status === "") {
-      return;
-    }
-    newLoads = load.filter((load) => load.status === status);
-    setLoads(newLoads);
-  };
-
+  const [filter, setFilter] = useState({
+    status: "",
+    loadId: "",
+  });
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleFilter();
-  };
-
-  const handleReset = (e) => {
-    setLoads(load);
-    setStatus("");
   };
 
   const onChange = (e) => {
-    setStatus(e.target.value);
+    setFilter({ ...filter, [e.target.name]: e.target.value });
   };
 
+  //filter
+  const onFilter = () => {
+    let newLoads = load;
+    if (filter.status !== "") {
+      newLoads = load.filter((load) => load.status === filter.status);
+    }
+    if (filter.loadId !== "") {
+      newLoads = newLoads.filter((load) => load._id === filter.loadId);
+    }
+
+    setLoads(newLoads);
+  };
+
+  const onReset = () => {
+    setLoads(load);
+    setFilter({ status: "", loadId: "" });
+  };
   return (
-    <div>
-      <Container fluid className="mt-5 mb-3">
-        <h2>Search Loads And Dispatches</h2>
+    <>
+      <Container className="mt-5 mb-3">
+        <h4>Search Load and Dispatches</h4>
         <hr></hr>
-        <Navbar bg="light" expand="lg">
-          <Container fluid>
-            <Navbar.Brand href="#home">Search Loads</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="ms-auto">
-                <Button variant="outline-primary">Print Results</Button>{" "}
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-        <Table striped bordered hover>
+        <Form onSubmit={handleSubmit}>
+          <Row className="mb-4">
+            <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+              <Form.Label>Load/Dispatch ID</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Load/Dispatch ID Number"
+                name="loadId"
+                onChange={onChange}
+                value={filter.loadId}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom01">
+              <Form.Label>Status</Form.Label>
+              <Form.Select
+                name="status"
+                onChange={onChange}
+                value={filter.status}
+              >
+                <option value="">Select Status</option>
+                <option value="planned">Planned</option>
+                <option value="dispatched">Dispatched</option>
+                <option value="picked">Picked</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+              </Form.Select>
+            </Form.Group>
+          </Row>
+          <Button
+            variant="outline-primary"
+            type="submit"
+            className="mb-5"
+            onClick={onFilter}
+          >
+            Filter
+          </Button>
+          <Button
+            variant="outline-danger"
+            className="mb-5 ms-3"
+            onClick={onReset}
+          >
+            Reset
+          </Button>
+        </Form>
+      </Container>
+      <Container>
+        <h3>Search Results ({loads.length})</h3>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
-              <th>Load</th>
-              <th>Dispatch Status</th>
-              <th>Bill To</th>
-              <th>Shipper</th>
-              <th>Origin</th>
-              <th>Consignee</th>
-              <th>Destination</th>
-              <th>BOL</th>
-              <th>Terminal</th>
-              <th>Drivers</th>
-              <th>Order Taken</th>
+              <th>ID</th>
+              <th>Load Number</th>
+              <th>Customer</th>
               <th>Pickup Date</th>
               <th>Delivery Date</th>
-              <th>Billing Date</th>
-              <th>Total Bill</th>
-              <th>Date Created</th>
-              <th>BOL Date</th>
+              <th>Pickup City</th>
+              <th>Pickup City</th>
+              <th>Tractor ID</th>
+              <th>Driver</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1001</td>
-              <td>Dispatched</td>
-              <td>sass</td>
-              <td>sass</td>
-              <td>stre, Al</td>
-              <td>sass</td>
-              <td>stre, Al</td>
-              <td></td>
-              <td>EG</td>
-              <td>Jhone Clerk</td>
-              <td>abcd</td>
-              <td>4/25/2022</td>
-              <td>4/25/2022</td>
-              <td></td>
-              <td>171.76</td>
-              <td>4/25/2022</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Current</td>
-
-              <td colSpan={13}></td>
-              <td>171.76</td>
-              <td colSpan={2}></td>
-            </tr>
-            <tr>
-              <td>Page</td>
-
-              <td colSpan={13}></td>
-              <td></td>
-              <td colSpan={2}></td>
-            </tr>
+            {loading && (
+              <tr>
+                <td
+                  colSpan={10}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                </td>
+              </tr>
+            )}
+            {!loading &&
+              loads.map((load, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={`/load/${load._id}`}>{load._id}</Link>
+                  </td>
+                  <td>{load.loadNumber}</td>
+                  <td>{load.customer?.name}</td>
+                  <td>{load.pickupDate}</td>
+                  <td>{load.deliveryDate}</td>
+                  <td>{load.pickupCity}</td>
+                  <td>{load.deliveryCity}</td>
+                  <td>{load.tractor?._id}</td>
+                  <td>
+                    {load.driver?.firstName} {load.driver?.lastName}
+                  </td>
+                  <td>{load.status}</td>
+                </tr>
+              ))}
+            {!loading && loads.length < 1 && (
+              <tr>
+                <td
+                  colSpan={11}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  No Data Found
+                </td>
+              </tr>
+            )}
           </tbody>
-          <thead>
-            <tr>
-              <td>Total</td>
-
-              <td colSpan={13}></td>
-              <td>171.76</td>
-              <td colSpan={2}></td>
-            </tr>
-          </thead>
         </Table>
       </Container>
-    </div>
+    </>
   );
 };
 
