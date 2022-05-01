@@ -48,7 +48,7 @@ const SiteSettings = () => {
   };
   return (
     <div>
-      <Container fluid>
+      <Container>
         <Navbar bg="" expand="lg">
           <Container>
             <Navbar.Brand href="#home" className="mt-5">

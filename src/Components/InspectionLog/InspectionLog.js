@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Container,
-  Navbar,
-  OverlayTrigger,
-  Table,
-  Tooltip,
-} from "react-bootstrap";
+import { Button, Container, Navbar, Spinner, Table } from "react-bootstrap";
 import useContext from "../Hooks/useContext";
 import InspectionModal from "./InspectionModal";
 
@@ -46,8 +39,8 @@ const InspectionLog = () => {
         </Navbar>
         <hr></hr>
       </Container>
-      <Container fluid>
-        <Table striped bordered hover>
+      <Container>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>Date</th>
@@ -60,36 +53,46 @@ const InspectionLog = () => {
             </tr>
           </thead>
           <tbody>
-            {inspection.map((inspection, index) => (
-              <tr key={index}>
-                <td>{inspection.inspectionDate}</td>
-                <td>{inspection.equipmentType}</td>
-                <td>
-                  {inspection.equipmentType === "Tractor"
-                    ? inspection.tractor?._id
-                    : inspection.trailer?._id}
-                </td>
-                <td>{inspection.inspectionType}</td>
-                <td>{inspection.nextInspectionDate}</td>
-                <td>{inspection.result}</td>
-                <td>
-                  <Button
-                    className="m-2"
-                    variant="outline-primary"
-                    onClick={() => showUpdateModal(inspection._id)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="outline-danger"
-                    onClick={() => removeInspection(inspection._id)}
-                  >
-                    Delete
-                  </Button>{" "}
+            {loading && (
+              <tr>
+                <td colSpan={10} style={{ textAlign: "center" }}>
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
               </tr>
-            ))}
-            {inspection.length < 1 && (
+            )}
+            {!loading &&
+              inspection.map((inspection, index) => (
+                <tr key={index}>
+                  <td>{inspection.inspectionDate}</td>
+                  <td>{inspection.equipmentType}</td>
+                  <td>
+                    {inspection.equipmentType === "Tractor"
+                      ? inspection.tractor?._id
+                      : inspection.trailer?._id}
+                  </td>
+                  <td>{inspection.inspectionType}</td>
+                  <td>{inspection.nextInspectionDate}</td>
+                  <td>{inspection.result}</td>
+                  <td>
+                    <Button
+                      className="m-2"
+                      variant="outline-primary"
+                      onClick={() => showUpdateModal(inspection._id)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outline-danger"
+                      onClick={() => removeInspection(inspection._id)}
+                    >
+                      Delete
+                    </Button>{" "}
+                  </td>
+                </tr>
+              ))}
+            {!loading && inspection.length < 1 && (
               <tr>
                 <td
                   colSpan={8}

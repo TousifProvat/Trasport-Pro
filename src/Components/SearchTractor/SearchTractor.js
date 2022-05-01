@@ -44,7 +44,7 @@ const SearchTractor = () => {
   };
 
   return (
-    <div>
+    <>
       <Container>
         <h3 className="mt-5 mb-3">Search Tractors</h3>
         <hr></hr>
@@ -85,11 +85,11 @@ const SearchTractor = () => {
         </Form>
       </Container>
 
-      <Container fluid>
+      <Container>
         <h3 className="mt-5 mb-3">Search Results ({tractorData.length})</h3>
         <hr></hr>
 
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -103,22 +103,37 @@ const SearchTractor = () => {
           </thead>
 
           <tbody>
-            {tractors.map((tractor, index) => (
-              <tr key={index}>
-                <td>
-                  <Link to={`/tractor/${tractor._id}`}>{tractor._id}</Link>
+            {loading && (
+              <tr>
+                <td
+                  colSpan={8}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
-                <td>
-                  {tractor.owner?.firstName} {tractor.owner?.lastName}
-                </td>
-                <td>{tractor.make}</td>
-                <td>{tractor.model}</td>
-                <td>{tractor.year}</td>
-                <td>{tractor.vin}</td>
-                <td>{tractor.status}</td>
               </tr>
-            ))}
-            {tractors.length < 1 && (
+            )}
+            {!loading &&
+              tractors.map((tractor, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={`/tractor/${tractor._id}`}>{tractor._id}</Link>
+                  </td>
+                  <td>
+                    {tractor.owner?.firstName} {tractor.owner?.lastName}
+                  </td>
+                  <td>{tractor.make}</td>
+                  <td>{tractor.model}</td>
+                  <td>{tractor.year}</td>
+                  <td>{tractor.vin}</td>
+                  <td>{tractor.status}</td>
+                </tr>
+              ))}
+            {!loading && tractors.length < 1 && (
               <tr>
                 <td
                   colSpan={8}
@@ -133,7 +148,7 @@ const SearchTractor = () => {
           </tbody>
         </Table>
       </Container>
-    </div>
+    </>
   );
 };
 

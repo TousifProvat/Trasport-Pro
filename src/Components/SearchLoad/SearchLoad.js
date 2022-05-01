@@ -52,7 +52,7 @@ const SearchLoad = () => {
     setFilter({ status: "", loadId: "" });
   };
   return (
-    <div>
+    <>
       <Container className="mt-5 mb-3">
         <h4>Search Load and Dispatches</h4>
         <hr></hr>
@@ -101,9 +101,9 @@ const SearchLoad = () => {
           </Button>
         </Form>
       </Container>
-      <Container fluid>
+      <Container>
         <h3>Search Results ({loads.length})</h3>
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -152,7 +152,7 @@ const SearchLoad = () => {
           </tbody>
         </Table>
       </Container>
-    </div>
+    </>
   );
 };
 

@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Button, Container, Nav, Navbar, Table } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  Nav,
+  Navbar,
+  Spinner,
+  Table,
+} from "react-bootstrap";
 import useContext from "../Hooks/useContext";
 import "./userManagement.css";
 import UserManagementModal from "./UserManagementModal";
@@ -16,7 +23,7 @@ const UserManagement = () => {
     setUpdateModal(true);
   };
   return (
-    <div>
+    <>
       <UserManagementModal
         visible={addModal}
         setVisible={setAddModal}
@@ -40,7 +47,7 @@ const UserManagement = () => {
         <hr></hr>
       </Container>
       <Container>
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>Full Name</th>
@@ -51,32 +58,47 @@ const UserManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {user.map((user, index) => (
-              <tr key={index}>
-                <td>
-                  {user.firstName} {user.lastName}
-                </td>
-                <td>{user.phoneNumber}</td>
-                <td>{user.email}</td>
-                <td>{user.suspended && "Suspended"}</td>
-                <td>
-                  <Button
-                    variant="outline-primary"
-                    className="m-2"
-                    onClick={() => showUpdateModal(user._id)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="outline-danger"
-                    onClick={() => removeUser(user._id)}
-                  >
-                    Delete
-                  </Button>
+            {loading && (
+              <tr>
+                <td
+                  colSpan={5}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
               </tr>
-            ))}
-            {user.length < 1 && (
+            )}
+            {!loading &&
+              user.map((user, index) => (
+                <tr key={index}>
+                  <td>
+                    {user.firstName} {user.lastName}
+                  </td>
+                  <td>{user.phoneNumber}</td>
+                  <td>{user.email}</td>
+                  <td>{user.suspended && "Suspended"}</td>
+                  <td>
+                    <Button
+                      variant="outline-primary"
+                      className="m-2"
+                      onClick={() => showUpdateModal(user._id)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outline-danger"
+                      onClick={() => removeUser(user._id)}
+                    >
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            {!loading && user.length < 1 ? (
               <tr>
                 <td
                   colSpan={5}
@@ -87,11 +109,13 @@ const UserManagement = () => {
                   No Data Found
                 </td>
               </tr>
+            ) : (
+              ""
             )}
           </tbody>
         </Table>
       </Container>
-    </div>
+    </>
   );
 };
 

@@ -6,6 +6,7 @@ import {
   Form,
   InputGroup,
   Row,
+  Spinner,
   Table,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -51,7 +52,7 @@ const SearchOwner = () => {
   };
 
   return (
-    <div>
+    <>
       <Container className="mt-5 mb-3">
         <h4>Search Owner</h4>
         <hr></hr>
@@ -97,9 +98,9 @@ const SearchOwner = () => {
           </Button>
         </Form>
       </Container>
-      <Container fluid className="search-result ">
+      <Container className="search-result ">
         <h3>Search Results ({owners.length})</h3>
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -113,23 +114,38 @@ const SearchOwner = () => {
             </tr>
           </thead>
           <tbody>
-            {owners.map((owner, index) => (
-              <tr key={index}>
-                <td>
-                  <Link to={`/owner/${owner._id}`}>{owner._id}</Link>
+            {loading && (
+              <tr>
+                <td
+                  colSpan={8}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
-                <td>
-                  {owner.firstName} {owner.lastName}
-                </td>
-                <td>{owner.status}</td>
-                <td>{owner.company}</td>
-                <td>{owner.primaryPhoneNumber}</td>
-                <td>{owner.secondaryPhoneNumber}</td>
-                <td>{owner.city}</td>
-                <td>{owner.state}</td>
               </tr>
-            ))}
-            {owners.length < 1 && (
+            )}
+            {!loading &&
+              owners.map((owner, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={`/owner/${owner._id}`}>{owner._id}</Link>
+                  </td>
+                  <td>
+                    {owner.firstName} {owner.lastName}
+                  </td>
+                  <td>{owner.status}</td>
+                  <td>{owner.company}</td>
+                  <td>{owner.primaryPhoneNumber}</td>
+                  <td>{owner.secondaryPhoneNumber}</td>
+                  <td>{owner.city}</td>
+                  <td>{owner.state}</td>
+                </tr>
+              ))}
+            {!loading && owners.length < 1 && (
               <tr>
                 <td
                   colSpan={8}
@@ -144,7 +160,7 @@ const SearchOwner = () => {
           </tbody>
         </Table>
       </Container>
-    </div>
+    </>
   );
 };
 

@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Button, Container, Nav, Navbar, Table } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  Nav,
+  Navbar,
+  Spinner,
+  Table,
+} from "react-bootstrap";
 import useContext from "../Hooks/useContext";
 import AccidentModal from "./AccidentModal";
 
@@ -23,7 +30,7 @@ const AccidentLog = () => {
         action="update"
         Id={accidentId}
       />
-      <Container fluid>
+      <Container>
         <Navbar bg="" expand="lg">
           <Container>
             <Navbar.Brand>Accident Log</Navbar.Brand>
@@ -40,7 +47,7 @@ const AccidentLog = () => {
           </Container>
         </Navbar>
         <hr></hr>
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>Date</th>
@@ -54,36 +61,48 @@ const AccidentLog = () => {
             </tr>
           </thead>
           <tbody>
-            {incident.map((incident, index) => (
-              <tr key={index}>
-                <td>{incident.incidentDate}</td>
-                <td>{incident.tractor}</td>
-                <td>{incident.driver}</td>
-                <td>{incident.incidentTime}</td>
-                <td>
-                  {incident.street}, {incident.city}, {incident.state}
-                </td>
-                <td>{incident.fatalities}</td>
-                <td>{incident.injuries}</td>
-                <td>
-                  <Button
-                    className="m-1"
-                    variant="outline-primary"
-                    onClick={() => showUpdateModal(incident._id)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="outline-danger"
-                    className="m-1"
-                    onClick={() => removeIncident(incident._id)}
-                  >
-                    Delete
-                  </Button>{" "}
+            {loading && (
+              <tr>
+                <td colSpan={10} style={{ textAlign: "center" }}>
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
               </tr>
-            ))}
-            {incident.length < 1 && (
+            )}
+            {!loading &&
+              incident.map((incident, index) => (
+                <tr key={index}>
+                  <td>{incident.incidentDate}</td>
+                  <td>{incident.tractor}</td>
+                  <td>
+                    {incident.driver?.firstName} {incident.driver?.lastName}
+                  </td>
+                  <td>{incident.incidentTime}</td>
+                  <td>
+                    {incident.street}, {incident.city}, {incident.state}
+                  </td>
+                  <td>{incident.fatalities}</td>
+                  <td>{incident.injuries}</td>
+                  <td>
+                    <Button
+                      className="m-1"
+                      variant="outline-primary"
+                      onClick={() => showUpdateModal(incident._id)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outline-danger"
+                      className="m-1"
+                      onClick={() => removeIncident(incident._id)}
+                    >
+                      Delete
+                    </Button>{" "}
+                  </td>
+                </tr>
+              ))}
+            {!loading && incident.length < 1 && (
               <tr
                 style={{
                   textAlign: "center",

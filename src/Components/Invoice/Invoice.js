@@ -7,13 +7,14 @@ import {
   Nav,
   Navbar,
   Row,
+  Spinner,
   Table,
 } from "react-bootstrap";
 import UpdateInvoiceModal from "./UpdateInvoiceModal";
 import useContext from "../Hooks/useContext";
 
 const Invoice = () => {
-  const { invoice } = useContext();
+  const { invoice, loading } = useContext();
 
   const [invoices, setInvoices] = useState([]);
   const [filter, setFilter] = useState({
@@ -53,7 +54,7 @@ const Invoice = () => {
   };
 
   return (
-    <div>
+    <>
       <UpdateInvoiceModal
         visible={show}
         setVisible={setShow}
@@ -95,7 +96,7 @@ const Invoice = () => {
       </Container>
       <Container>
         <h3>Search Results ({invoices.length})</h3>
-        <Table striped bordered hover className="mt-5">
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>Load No.</th>
@@ -108,24 +109,36 @@ const Invoice = () => {
             </tr>
           </thead>
           <tbody>
-            {invoices.map((invoice, index) => (
-              <tr key={index}>
-                <td>{invoice.load?.loadNumber}</td>
-                <td>{invoice.invoiceNumber}</td>
-                <td>{invoice.customer.name}</td>
-                <td>{invoice.amount}</td>
-                <td>
-                  {invoice.other.reduce(function (res, item) {
-                    return Number(res) + Number(item.price);
-                  }, 0)}
-                </td>
-                <td>{invoice.status}</td>
-                <td>
-                  <Button onClick={() => openInvoice(invoice._id)}>Edit</Button>
+            {loading && (
+              <tr>
+                <td colSpan={7} style={{ textAlign: "center" }}>
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
               </tr>
-            ))}
-            {invoices.length < 1 && (
+            )}
+            {!loading &&
+              invoices.map((invoice, index) => (
+                <tr key={index}>
+                  <td>{invoice.load?.loadNumber}</td>
+                  <td>{invoice.invoiceNumber}</td>
+                  <td>{invoice.customer.name}</td>
+                  <td>{invoice.amount}</td>
+                  <td>
+                    {invoice.other.reduce(function (res, item) {
+                      return Number(res) + Number(item.price);
+                    }, 0)}
+                  </td>
+                  <td>{invoice.status}</td>
+                  <td>
+                    <Button onClick={() => openInvoice(invoice._id)}>
+                      Edit
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            {!loading && invoices.length < 1 && (
               <tr>
                 <td
                   colSpan={10}
@@ -140,7 +153,7 @@ const Invoice = () => {
           </tbody>
         </Table>
       </Container>
-    </div>
+    </>
   );
 };
 

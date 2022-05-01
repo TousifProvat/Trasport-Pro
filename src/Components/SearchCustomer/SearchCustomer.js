@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Row,
+  Spinner,
+  Table,
+} from "react-bootstrap";
 import "./searchCustomer.css";
 import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
@@ -29,13 +37,6 @@ const SearchCustomer = () => {
   };
 
   const [allValues, setAllValues] = useState(initValue);
-
-  const changeHandler = (e) => {
-    setAllValues({
-      ...allValues,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const { customerData, loading } = useContext();
   const [customers, setCustomers] = useState([]);
@@ -76,7 +77,7 @@ const SearchCustomer = () => {
   };
 
   return (
-    <div>
+    <>
       <Container>
         <h3 className="mt-5 mb-3">Search Customers</h3>
         <hr></hr>
@@ -102,11 +103,10 @@ const SearchCustomer = () => {
           </Button>
         </Form>
       </Container>
-
-      <Container fluid>
+      <Container>
         <h3 className="mt-5">Search Results ({customers.length})</h3>
         <hr></hr>
-        <Table striped bordered hover className="mt-3 mb-5">
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -118,22 +118,37 @@ const SearchCustomer = () => {
             </tr>
           </thead>
           <tbody>
-            {customerData.map((customer, index) => (
-              <tr key={index}>
-                <td>
-                  <Link to={`/customer/${customer._id}`}>{customer._id}</Link>
+            {loading && (
+              <tr>
+                <td
+                  colSpan={5}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
-                <td>{customer.name}</td>
-                <td>{customer.phoneNumber}</td>
-                <td>{customer.email}</td>
-                <td>
-                  {customer.street},{customer.city},{customer.state},
-                  {customer.zip}
-                </td>
-                <td>{customer.fax}</td>
               </tr>
-            ))}
-            {customerData.length < 1 && (
+            )}
+            {!loading &&
+              customerData.map((customer, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={`/customer/${customer._id}`}>{customer._id}</Link>
+                  </td>
+                  <td>{customer.name}</td>
+                  <td>{customer.phoneNumber}</td>
+                  <td>{customer.email}</td>
+                  <td>
+                    {customer.street},{customer.city},{customer.state},
+                    {customer.zip}
+                  </td>
+                  <td>{customer.fax}</td>
+                </tr>
+              ))}
+            {!loading && customerData.length < 1 && (
               <tr>
                 <td colSpan={10}>No Data Found</td>
               </tr>
@@ -141,7 +156,7 @@ const SearchCustomer = () => {
           </tbody>
         </Table>
       </Container>
-    </div>
+    </>
   );
 };
 

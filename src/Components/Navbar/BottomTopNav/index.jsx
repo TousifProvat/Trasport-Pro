@@ -1,13 +1,11 @@
 import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import "./navbar2.css";
 const Navbar2 = () => {
   return (
     <div>
       <Navbar bg="light" expand="lg">
-        <Container fluid>
-          {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
+        <Container>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">

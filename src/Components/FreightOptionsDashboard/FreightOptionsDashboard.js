@@ -5,6 +5,7 @@ import {
   Dropdown,
   Modal,
   Navbar,
+  Spinner,
   Table,
 } from "react-bootstrap";
 import "./freightOptionsDashboard.css";
@@ -13,7 +14,7 @@ import InvoiceModal from "../InvoiceModal";
 import LoadStatusModal from "./LoadStatusModal";
 import { Link } from "react-router-dom";
 const FreightOptionsDashboard = () => {
-  const { load, driverData } = useContext();
+  const { loading, load, driverData } = useContext();
 
   //load status modal
   const [loadStatusModal, setLoadStatusModal] = useState(false);
@@ -58,7 +59,7 @@ const FreightOptionsDashboard = () => {
   };
 
   return (
-    <>
+    <Container>
       <InvoiceModal
         visible={invoiceModal}
         setVisible={setInvoiceModal}
@@ -94,11 +95,10 @@ const FreightOptionsDashboard = () => {
             <Navbar.Brand>
               Available Loads <Badge>{load.length}</Badge>
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
           </Container>
         </Navbar>
 
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -115,47 +115,62 @@ const FreightOptionsDashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {load.map((load, index) => (
-              <tr key={index}>
-                <td>
-                  <Link to={`/load/${load._id}`}>{load._id}</Link>
-                </td>
-                <td>{load.loadNumber}</td>
-                <td>{load.customer.name}</td>
-                <td>{load.pickupDate}</td>
-                <td>{load.deliveryDate}</td>
-                <td>{load.pickupCity}</td>
-                <td>{load.deliveryCity}</td>
-                <td>{load.tractor?._id}</td>
-                <td>
-                  {load.driver?.firstName} {load.driver?.lastName}
-                </td>
-                <td>{load.status}</td>
-                <td>
-                  <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                      Manage
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item
-                        onClick={() => invoiceLoad(load._id, load.invoice)}
-                      >
-                        {load.invoice ? "Update Invoice" : "Invoice"}
-                      </Dropdown.Item>
-                      {load.status !== "cancelled" && (
-                        <Dropdown.Item onClick={() => dispatchLoad(load._id)}>
-                          {load.status !== "dispatched"
-                            ? "Dispatch"
-                            : "Update Dispatch"}
-                        </Dropdown.Item>
-                      )}
-                    </Dropdown.Menu>
-                  </Dropdown>
+            {loading && (
+              <tr>
+                <td
+                  colSpan={11}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
               </tr>
-            ))}
-            {load.length < 1 && (
+            )}
+            {!loading &&
+              load.map((load, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={`/load/${load._id}`}>{load._id}</Link>
+                  </td>
+                  <td>{load.loadNumber}</td>
+                  <td>{load.customer.name}</td>
+                  <td>{load.pickupDate}</td>
+                  <td>{load.deliveryDate}</td>
+                  <td>{load.pickupCity}</td>
+                  <td>{load.deliveryCity}</td>
+                  <td>{load.tractor?._id}</td>
+                  <td>
+                    {load.driver?.firstName} {load.driver?.lastName}
+                  </td>
+                  <td>{load.status}</td>
+                  <td>
+                    <Dropdown>
+                      <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        Manage
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        <Dropdown.Item
+                          onClick={() => invoiceLoad(load._id, load.invoice)}
+                        >
+                          {load.invoice ? "Update Invoice" : "Invoice"}
+                        </Dropdown.Item>
+                        {load.status !== "cancelled" && (
+                          <Dropdown.Item onClick={() => dispatchLoad(load._id)}>
+                            {load.status !== "dispatched"
+                              ? "Dispatch"
+                              : "Update Dispatch"}
+                          </Dropdown.Item>
+                        )}
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </td>
+                </tr>
+              ))}
+            {!loading && load.length < 1 && (
               <tr>
                 <td
                   colSpan={11}
@@ -181,10 +196,9 @@ const FreightOptionsDashboard = () => {
                 {activeDrivers.length}
               </Badge>
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
           </Container>
         </Navbar>
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -198,25 +212,40 @@ const FreightOptionsDashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {activeDrivers.map((driver, index) => (
-              <tr key={index}>
-                <td>
-                  <Link to={`/driver/${driver._id}`}>{driver._id}</Link>
+            {loading && (
+              <tr>
+                <td
+                  colSpan={11}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
-                <td>
-                  {driver.firstName} {driver.lastName}
-                </td>
-                <td>{driver.primaryPhoneNumber}</td>
-                <td>{driver.email}</td>
-                <td>
-                  {driver.address}, {driver.city}, {driver.zip}
-                </td>
-                <td>{driver.hireDate}</td>
-                <td>{driver.terminationDate}</td>
-                <td>{driver.status}</td>
               </tr>
-            ))}
-            {activeDrivers.length < 1 && (
+            )}
+            {!loading &&
+              activeDrivers.map((driver, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={`/driver/${driver._id}`}>{driver._id}</Link>
+                  </td>
+                  <td>
+                    {driver.firstName} {driver.lastName}
+                  </td>
+                  <td>{driver.primaryPhoneNumber}</td>
+                  <td>{driver.email}</td>
+                  <td>
+                    {driver.address}, {driver.city}, {driver.zip}
+                  </td>
+                  <td>{driver.hireDate}</td>
+                  <td>{driver.terminationDate}</td>
+                  <td>{driver.status}</td>
+                </tr>
+              ))}
+            {!loading && activeDrivers.length < 1 && (
               <tr>
                 <td
                   colSpan={8}
@@ -240,11 +269,10 @@ const FreightOptionsDashboard = () => {
             <Navbar.Brand>
               Planned Loads <Badge bg="yellow">{plannedLoads.length}</Badge>
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
           </Container>
         </Navbar>
 
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -261,47 +289,62 @@ const FreightOptionsDashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {plannedLoads.map((load, index) => (
-              <tr key={index}>
-                <td>
-                  <Link to={`/load/${load._id}`}>{load._id}</Link>
-                </td>
-                <td>{load.loadNumber}</td>
-                <td>{load.customer.name}</td>
-                <td>{load.pickupDate}</td>
-                <td>{load.deliveryDate}</td>
-                <td>{load.pickupCity}</td>
-                <td>{load.deliveryCity}</td>
-                <td>{load.tractor?._id}</td>
-                <td>
-                  {load.driver?.firstName} {load.driver?.lastName}
-                </td>
-                <td>{load.status}</td>
-                <td>
-                  <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                      Manage
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item
-                        onClick={() => invoiceLoad(load._id, load.invoice)}
-                      >
-                        {load.invoice ? "Update Invoice" : "Invoice"}
-                      </Dropdown.Item>
-                      {load.status !== "cancelled" && (
-                        <Dropdown.Item onClick={() => dispatchLoad(load._id)}>
-                          {load.status !== "dispatched"
-                            ? "Dispatch"
-                            : "Update Dispatch"}
-                        </Dropdown.Item>
-                      )}
-                    </Dropdown.Menu>
-                  </Dropdown>
+            {loading && (
+              <tr>
+                <td
+                  colSpan={11}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
               </tr>
-            ))}
-            {plannedLoads.length < 1 && (
+            )}
+            {!loading &&
+              plannedLoads.map((load, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={`/load/${load._id}`}>{load._id}</Link>
+                  </td>
+                  <td>{load.loadNumber}</td>
+                  <td>{load.customer.name}</td>
+                  <td>{load.pickupDate}</td>
+                  <td>{load.deliveryDate}</td>
+                  <td>{load.pickupCity}</td>
+                  <td>{load.deliveryCity}</td>
+                  <td>{load.tractor?._id}</td>
+                  <td>
+                    {load.driver?.firstName} {load.driver?.lastName}
+                  </td>
+                  <td>{load.status}</td>
+                  <td>
+                    <Dropdown>
+                      <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        Manage
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        <Dropdown.Item
+                          onClick={() => invoiceLoad(load._id, load.invoice)}
+                        >
+                          {load.invoice ? "Update Invoice" : "Invoice"}
+                        </Dropdown.Item>
+                        {load.status !== "cancelled" && (
+                          <Dropdown.Item onClick={() => dispatchLoad(load._id)}>
+                            {load.status !== "dispatched"
+                              ? "Dispatch"
+                              : "Update Dispatch"}
+                          </Dropdown.Item>
+                        )}
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </td>
+                </tr>
+              ))}
+            {!loading && plannedLoads.length < 1 && (
               <tr>
                 <td
                   colSpan={11}
@@ -324,11 +367,10 @@ const FreightOptionsDashboard = () => {
             <Navbar.Brand>
               Cancelled Loads <Badge bg="danger">{cancelledLoads.length}</Badge>
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
           </Container>
         </Navbar>
 
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -345,47 +387,62 @@ const FreightOptionsDashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {cancelledLoads.map((load, index) => (
-              <tr key={index}>
-                <td>
-                  <Link to={`/load/${load._id}`}>{load._id}</Link>
-                </td>
-                <td>{load.loadNumber}</td>
-                <td>{load.customer.name}</td>
-                <td>{load.pickupDate}</td>
-                <td>{load.deliveryDate}</td>
-                <td>{load.pickupCity}</td>
-                <td>{load.deliveryCity}</td>
-                <td>{load.tractor?._id}</td>
-                <td>
-                  {load.driver?.firstName} {load.driver?.lastName}
-                </td>
-                <td>{load.status}</td>
-                <td>
-                  <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                      Manage
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item
-                        onClick={() => invoiceLoad(load._id, load.invoice)}
-                      >
-                        {load.invoice ? "Update Invoice" : "Invoice"}
-                      </Dropdown.Item>
-                      {load.status !== "cancelled" && (
-                        <Dropdown.Item onClick={() => dispatchLoad(load._id)}>
-                          {load.status !== "dispatched"
-                            ? "Dispatch"
-                            : "Update Dispatch"}
-                        </Dropdown.Item>
-                      )}
-                    </Dropdown.Menu>
-                  </Dropdown>
+            {loading && (
+              <tr>
+                <td
+                  colSpan={11}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
               </tr>
-            ))}
-            {cancelledLoads.length < 1 && (
+            )}
+            {!loading &&
+              cancelledLoads.map((load, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={`/load/${load._id}`}>{load._id}</Link>
+                  </td>
+                  <td>{load.loadNumber}</td>
+                  <td>{load.customer.name}</td>
+                  <td>{load.pickupDate}</td>
+                  <td>{load.deliveryDate}</td>
+                  <td>{load.pickupCity}</td>
+                  <td>{load.deliveryCity}</td>
+                  <td>{load.tractor?._id}</td>
+                  <td>
+                    {load.driver?.firstName} {load.driver?.lastName}
+                  </td>
+                  <td>{load.status}</td>
+                  <td>
+                    <Dropdown>
+                      <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        Manage
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        <Dropdown.Item
+                          onClick={() => invoiceLoad(load._id, load.invoice)}
+                        >
+                          {load.invoice ? "Update Invoice" : "Invoice"}
+                        </Dropdown.Item>
+                        {load.status !== "cancelled" && (
+                          <Dropdown.Item onClick={() => dispatchLoad(load._id)}>
+                            {load.status !== "dispatched"
+                              ? "Dispatch"
+                              : "Update Dispatch"}
+                          </Dropdown.Item>
+                        )}
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </td>
+                </tr>
+              ))}
+            {!loading && cancelledLoads.length < 1 && (
               <tr>
                 <td
                   colSpan={11}
@@ -400,7 +457,7 @@ const FreightOptionsDashboard = () => {
           </tbody>
         </Table>
       </div>
-    </>
+    </Container>
   );
 };
 

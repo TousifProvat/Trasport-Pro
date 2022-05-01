@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Row,
+  Spinner,
+  Table,
+} from "react-bootstrap";
 import "./searchTrailer.css";
 import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
@@ -44,7 +52,7 @@ const SearchTrailer = () => {
   };
 
   return (
-    <div className="pb-3">
+    <>
       <Container>
         <h3 className="mt-5 mb-3">Search Trailers</h3>
         <hr></hr>
@@ -86,11 +94,11 @@ const SearchTrailer = () => {
         </Form>
       </Container>
 
-      <Container fluid>
+      <Container>
         <h3 className="mt-5 mb-3">Search Results ({trailers.length})</h3>
         <hr></hr>
 
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -106,24 +114,39 @@ const SearchTrailer = () => {
           </thead>
 
           <tbody>
-            {trailers.map((trailer) => (
+            {loading && (
               <tr>
-                <td>
-                  <Link to={`/trailer/${trailer._id}`}>{trailer._id}</Link>
+                <td
+                  colSpan={8}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
-                <td>
-                  {trailer.owner?.firstName} {trailer.owner?.lastName}
-                </td>
-                <td>{trailer.make}</td>
-                <td>{trailer.model}</td>
-                <td>{trailer.vin}</td>
-                <td>{trailer.tagNumber}</td>
-                <td>{trailer.onBoardingDate}</td>
-                <td>{trailer.terminationDate}</td>
-                <td>{trailer.status}</td>
               </tr>
-            ))}
-            {trailers.length < 1 && (
+            )}
+            {!loading &&
+              trailers.map((trailer) => (
+                <tr>
+                  <td>
+                    <Link to={`/trailer/${trailer._id}`}>{trailer._id}</Link>
+                  </td>
+                  <td>
+                    {trailer.owner?.firstName} {trailer.owner?.lastName}
+                  </td>
+                  <td>{trailer.make}</td>
+                  <td>{trailer.model}</td>
+                  <td>{trailer.vin}</td>
+                  <td>{trailer.tagNumber}</td>
+                  <td>{trailer.onBoardingDate}</td>
+                  <td>{trailer.terminationDate}</td>
+                  <td>{trailer.status}</td>
+                </tr>
+              ))}
+            {!loading && trailers.length < 1 && (
               <tr>
                 <td
                   colSpan={8}
@@ -138,7 +161,7 @@ const SearchTrailer = () => {
           </tbody>
         </Table>
       </Container>
-    </div>
+    </>
   );
 };
 
