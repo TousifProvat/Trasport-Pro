@@ -626,8 +626,8 @@ const TractorSummary = () => {
                 <td>
                   {driver.firstName} {driver.lastName}
                 </td>
-                <td>{driver.ownerAssigningDate}</td>
-                <td>{driver.ownerComments}</td>
+                <td>{driver.tractorAssigningDate}</td>
+                <td>{driver.tractorComments}</td>
                 <td>
                   <Button
                     variant="outline-danger"

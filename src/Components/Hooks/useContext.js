@@ -81,6 +81,17 @@ const useContext = () => {
   //driver
   const [driverData, setDriverData] = useState([]);
 
+  const updateDriver = async (driverId, values) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.put(`/driver/${driverId}`, values);
+      setLoading(false);
+      notification.success({ message: data.message });
+    } catch (err) {
+      setLoading(false);
+      notification.error({ message: err.response.data.message });
+    }
+  };
   const assignDriverToOwner = async (driverId, values) => {
     try {
       setLoading(true);
@@ -134,6 +145,38 @@ const useContext = () => {
       setLoading(true);
       const res = await axios.put(
         `/driver/toggle-tractor/${driverId}?action=unassign`,
+        values
+      );
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const assignDriverToTrailer = async (driverId, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(
+        `/driver/toggle-trailer/${driverId}?action=assign`,
+        values
+      );
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const unassignDriverFromTrailer = async (driverId, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(
+        `/driver/toggle-trailer/${driverId}?action=unassign`,
         values
       );
       notification.success({ message: res.data.message });
@@ -688,10 +731,13 @@ const useContext = () => {
     // driver
     driverData,
     addDriver,
+    updateDriver,
     assignDriverToOwner,
     unassignDriverFromOwner,
     assignDriverToTractor,
     unassignDriverFromTractor,
+    assignDriverToTrailer,
+    unassignDriverFromTrailer,
     // tractor
     tractorData,
     addTractor,

@@ -5,14 +5,11 @@ import {
   Container,
   Form,
   InputGroup,
-  Modal,
   Navbar,
-  OverlayTrigger,
   Row,
   Table,
-  Tooltip,
 } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useContext from "../Hooks/useContext";
 import axios from "../../utils/axios";
 import "./ownerSummary.css";

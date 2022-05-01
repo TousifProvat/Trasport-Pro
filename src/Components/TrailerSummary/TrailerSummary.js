@@ -15,10 +15,10 @@ import { Link, useParams } from "react-router-dom";
 import axios from "../../utils/axios";
 import { notification } from "antd";
 import useContext from "../Hooks/useContext";
+import AssignDriverModal from "./AssignDriverModal";
 
 const TrailerSummary = () => {
-  const { ownerData, eobr } = useContext();
-  const [enable, setEnable] = useState(true);
+  const { ownerData, eobr, unassignDriverFromTrailer } = useContext();
   const { trailerId } = useParams();
 
   const initValue = {
@@ -56,12 +56,38 @@ const TrailerSummary = () => {
     comments: "",
   };
 
-  const handleEnable = (enable) => {
-    setEnable(false);
-  };
+  const [allValues, setAllValues] = useState(initValue);
+  const [drivers, setDrivers] = useState([]);
+  useEffect(() => {
+    const fetchTrailerSummary = async () => {
+      try {
+        setLoading(true);
+        const { data } = await axios.get(`/trailer/summary/${trailerId}`);
+        setAllValues(data.trailer);
+        setDrivers(data.assignedDrivers);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+        console.log({ err });
+      }
+    };
+    fetchTrailerSummary();
+  }, [trailerId]);
 
-  const [allValues, setAllValues] = useState({});
   const [validated, setValidated] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleUpdate = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.put(`/trailer/${trailerId}`, allValues);
+      setLoading(false);
+      notification.success({ message: data.message });
+    } catch (err) {
+      setLoading(false);
+      notification.error({ message: err.response.data.message });
+    }
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -70,9 +96,8 @@ const TrailerSummary = () => {
       setValidated(true);
       return;
     }
-    //addTrailers();
+    handleUpdate();
   };
-
 
   const changeHandler = (e) => {
     setAllValues({
@@ -81,66 +106,27 @@ const TrailerSummary = () => {
     });
   };
 
-
-  const handleUpdate = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.put(
-        `/trailer/${trailerId}`,
-        allValues
-      );
-      setEnable(true);
-      setLoading(false);
-      notification.success({ message: data.message });
-      console.log(allValues);
-    } catch (err) {
-      setLoading(false);
-      notification.error({ message: err.response.data.message });
-    } 
-  };
-
-  const [summaryData, setSummaryData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [smShow, setSmShow] = useState(false);
-  
-
-  useEffect(() => {
-    const fetchTrailerSummary = async () => {
-      try {
-        setLoading(true);
-        const { data } = await axios.get(`/trailer/summary/${trailerId}`);
-        setSummaryData(data.trailerInformation);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-        console.log(err);
-      }
-    };
-    fetchTrailerSummary();
-  }, [trailerId]);
-
-  console.log(summaryData);
-
-  const current = new Date();
-  const date = `${current.getDate()}/${
-    current.getMonth() + 1
-  }/${current.getFullYear()}`;
-
+  //assign/unassign driver
   const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const handleDeleteDriver = (event) => {
-    window.confirm("Are you sure you want to delete this driver?");
+  const unassignDriver = (driverId, index) => {
+    unassignDriverFromTrailer(driverId);
+    setDrivers([
+      ...drivers.slice(0, index),
+      ...drivers.slice(index + 1, drivers.length),
+    ]);
   };
 
   return (
     <div>
       <Container>
-        <h3 className="mt-5 mb-3">Trailer Summary</h3>
-        <hr></hr>
-        <Button variant="outline-primary" className="mb-3">Update Information</Button>{" "}
+        <Navbar bg="light" expand="lg" className="mt-5">
+          <Container>
+            <Navbar.Brand>
+              <h4>Trailer Information</h4>
+              <hr></hr>
+            </Navbar.Brand>
+          </Container>
+        </Navbar>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom01">
@@ -349,8 +335,10 @@ const TrailerSummary = () => {
                 value={allValues.eobrType}
               >
                 <option value="">Select EOBR Type</option>
-                {eobr.map((eobr) => (
-                  <option value={eobr._id}>{eobr.name}</option>
+                {eobr.map((eobr, index) => (
+                  <option value={eobr._id} key={index}>
+                    {eobr.name}
+                  </option>
                 ))}
               </Form.Select>
             </Form.Group>
@@ -469,7 +457,7 @@ const TrailerSummary = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Last Service Date</Form.Label>
               <Form.Control
-                type="text"
+                type="date"
                 name="lastServiceDate"
                 onChange={changeHandler}
                 placeholder="Last Service Date"
@@ -479,7 +467,7 @@ const TrailerSummary = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Next Service Date</Form.Label>
               <Form.Control
-                type="text"
+                type="date"
                 name="nextServiceDate"
                 onChange={changeHandler}
                 placeholder="Next Service Date"
@@ -489,7 +477,7 @@ const TrailerSummary = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Maintenance Date</Form.Label>
               <Form.Control
-                type="text"
+                type="date"
                 name="maintenanceDate"
                 onChange={changeHandler}
                 placeholder="Maintenance Date"
@@ -512,16 +500,63 @@ const TrailerSummary = () => {
             </Form.Group>
           </Row>
           <Button type="submit" variant="outline-primary" className="mb-5 me-3">
-            Save
-          </Button>
-          <Button
-            variant="outline-danger"
-            className="mb-5"
-            href="/search-trailer"
-          >
-            Cancel
+            Update
           </Button>
         </Form>
+      </Container>
+      <Container>
+        <AssignDriverModal
+          visible={show}
+          setVisible={setShow}
+          trailer={trailerId}
+        />
+        <Navbar bg="light" expand="lg" className="mt-5">
+          <Container>
+            <Navbar.Brand href="#home">
+              <h1>Assigned Drivers</h1>
+            </Navbar.Brand>
+
+            <Button variant="outline-primary" onClick={() => setShow(true)}>
+              <i className="fa-solid fa-plus"></i>
+            </Button>
+          </Container>
+        </Navbar>
+        <Table striped bordered hover className="mb-5">
+          <thead>
+            <tr>
+              <th>Driver</th>
+              <th>Date Assigned </th>
+              <th>Comments (Internal)</th>
+              <th>Manage</th>
+            </tr>
+          </thead>
+          <tbody>
+            {drivers.map((driver, index) => (
+              <tr key={index}>
+                <td>
+                  {driver.firstName} {driver.lastName}
+                </td>
+                <td>{driver.trailerAssigningDate}</td>
+                <td>{driver.trailerComments}</td>
+                <td>
+                  <Button
+                    variant="outline-danger"
+                    onClick={() => unassignDriver(driver._id, index)}
+                  >
+                    <i className="fa-solid fa-scissors"></i>{" "}
+                  </Button>
+                </td>
+              </tr>
+            ))}
+            {drivers.length < 1 && (
+              <tr>
+                <td colSpan={5} style={{ textAlign: "center" }}>
+                  No Driver Assigned
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
       </Container>
     </div>
   );

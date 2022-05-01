@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
 import "./searchTractor.css";
-import "react-day-picker/lib/style.css";
 import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
 

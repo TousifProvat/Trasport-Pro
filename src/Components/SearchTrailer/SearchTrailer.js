@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
 import "./searchTrailer.css";
-import DayPickerInput from "react-day-picker/DayPickerInput";
-import "react-day-picker/lib/style.css";
 import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
 
@@ -114,7 +112,7 @@ const SearchTrailer = () => {
                   <Link to={`/trailer/${trailer._id}`}>{trailer._id}</Link>
                 </td>
                 <td>
-                  {trailer.owner.firstName} {trailer.owner.lastName}
+                  {trailer.owner?.firstName} {trailer.owner?.lastName}
                 </td>
                 <td>{trailer.make}</td>
                 <td>{trailer.model}</td>
