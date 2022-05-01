@@ -13,9 +13,9 @@ const Navbar2 = () => {
                 <NavDropdown.Item href="/freight-options-dashboard">
                   Freight Options Dashboard
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
+                {/* <NavDropdown.Item href="#action/3.2">
                   Load management Dashboard
-                </NavDropdown.Item>
+                </NavDropdown.Item> */}
                 <NavDropdown.Item href="/add-new-load">
                   Add New Load
                 </NavDropdown.Item>
@@ -82,11 +82,11 @@ const Navbar2 = () => {
                 </NavDropdown.Item>
               </NavDropdown>
 
-              <NavDropdown title="Accounting" id="basic-nav-dropdown">
+              {/* <NavDropdown title="Accounting" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/settlements">
                   Settlements
                 </NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown> */}
               <Nav.Link href="maintenance">Maintenance </Nav.Link>
               <Nav.Link href="inspection">Inspection </Nav.Link>
               <NavDropdown
