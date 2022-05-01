@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Container,
@@ -11,7 +11,11 @@ import useContext from "../Hooks/useContext";
 import AccidentModal from "./AccidentModal";
 
 const AccidentLog = () => {
-  const { loading, incident, removeIncident } = useContext();
+  const { loading, incident, removeIncident, getIncidents } = useContext();
+
+  useEffect(() => {
+    getIncidents();
+  }, []);
 
   const [accidentId, setAccidentId] = useState(null);
   const [addModal, setAddModal] = useState(false);

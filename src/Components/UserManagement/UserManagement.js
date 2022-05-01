@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Container,
@@ -12,8 +12,10 @@ import "./userManagement.css";
 import UserManagementModal from "./UserManagementModal";
 
 const UserManagement = () => {
-  const { loading, user, removeUser } = useContext();
-
+  const { loading, user, removeUser, getUsers } = useContext();
+  useEffect(() => {
+    getUsers();
+  }, []);
   const [userId, setUserId] = useState(null);
   const [addModal, setAddModal] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
@@ -98,7 +100,7 @@ const UserManagement = () => {
                   </td>
                 </tr>
               ))}
-            {!loading && user.length < 1 ? (
+            {!loading && user.length < 1 && (
               <tr>
                 <td
                   colSpan={5}
@@ -109,8 +111,6 @@ const UserManagement = () => {
                   No Data Found
                 </td>
               </tr>
-            ) : (
-              ""
             )}
           </tbody>
         </Table>

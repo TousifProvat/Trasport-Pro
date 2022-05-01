@@ -13,7 +13,12 @@ import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
 
 const SearchTrailer = () => {
-  const { trailerData, loading } = useContext();
+  const { trailerData, loading, getTrailers } = useContext();
+
+  useEffect(() => {
+    getTrailers();
+  }, []);
+
   const [trailers, setTrailers] = useState([]);
 
   useEffect(() => {

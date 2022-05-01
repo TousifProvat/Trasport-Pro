@@ -3,9 +3,7 @@ import {
   Button,
   Col,
   Container,
-  FloatingLabel,
   Form,
-  Modal,
   Row,
   Spinner,
   Table,
@@ -14,8 +12,11 @@ import "./searchDriver.css";
 import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
 const SearchDrivers = () => {
-  const { driverData, loading } = useContext();
+  const { driverData, loading, getDrivers } = useContext();
 
+  useEffect(() => {
+    getDrivers();
+  }, []);
   const [drivers, setDrivers] = useState([]);
 
   useEffect(() => {

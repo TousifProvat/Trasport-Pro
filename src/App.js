@@ -30,6 +30,8 @@ import AccidentLog from "./Components/AccidentLog/AccidentLog";
 import Invoice from "./Components/Invoice/Invoice";
 import PrivateRoute from "./Components/PrivateRoute";
 import CustomerSummary from "./Components/CustomerSummary/CustomerSummary";
+import useContext from "./Components/Hooks/useContext";
+import { useEffect } from "react";
 
 function App() {
   return (

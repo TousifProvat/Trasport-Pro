@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container, Navbar, Spinner, Table } from "react-bootstrap";
 import useContext from "../Hooks/useContext";
 import MaintenanceModal from "./MaintenanceModal";
 
 const MaintenanceLog = () => {
-  const { maintenance, loading, removeMaintenance } = useContext();
+  const { maintenance, loading, removeMaintenance, getMaintenance } =
+    useContext();
+
+  useEffect(() => {
+    getMaintenance();
+  }, []);
 
   const [maintenanceId, setMaintenanceId] = useState(null);
   const [addModal, setAddModal] = useState(false);

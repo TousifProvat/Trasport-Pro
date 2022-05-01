@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -14,8 +14,12 @@ import {
 import useContext from "../Hooks/useContext";
 
 const BillingDashboard = () => {
-  const { billing } = useContext();
-  const { loadStats, invoiceStats, revenueStats, loading } = billing;
+  const { billing, getBilling, loading } = useContext();
+  const { loadStats, invoiceStats, revenueStats } = billing;
+
+  useEffect(() => {
+    getBilling();
+  }, []);
 
   return (
     <Container>
@@ -35,8 +39,8 @@ const BillingDashboard = () => {
                 <th>Count</th>
               </tr>
             </thead>
-            <tbody>
-              {loading && (
+            {loading && (
+              <tbody>
                 <tr>
                   <td colSpan={2} style={{ textAlign: "center" }}>
                     <Spinner animation="border" variant="primary">
@@ -44,33 +48,32 @@ const BillingDashboard = () => {
                     </Spinner>
                   </td>
                 </tr>
-              )}
-              {!loading && (
-                <>
-                  {" "}
-                  <tr>
-                    <td>Total</td>
-                    <td>{loadStats.total}</td>
-                  </tr>
-                  <tr>
-                    <td>Planned</td>
-                    <td>{loadStats.planned}</td>
-                  </tr>
-                  <tr>
-                    <td>Dispatched</td>
-                    <td>{loadStats.dispatched}</td>
-                  </tr>
-                  <tr>
-                    <td>Delivered</td>
-                    <td>{loadStats.delivered}</td>
-                  </tr>
-                  <tr>
-                    <td>Cancelled</td>
-                    <td>{loadStats.cancelled}</td>
-                  </tr>
-                </>
-              )}
-            </tbody>
+              </tbody>
+            )}
+            {!loading && (
+              <tbody>
+                <tr>
+                  <td>Total</td>
+                  <td>{loadStats.total}</td>
+                </tr>
+                <tr>
+                  <td>Planned</td>
+                  <td>{loadStats.planned}</td>
+                </tr>
+                <tr>
+                  <td>Dispatched</td>
+                  <td>{loadStats.dispatched}</td>
+                </tr>
+                <tr>
+                  <td>Delivered</td>
+                  <td>{loadStats.delivered}</td>
+                </tr>
+                <tr>
+                  <td>Cancelled</td>
+                  <td>{loadStats.cancelled}</td>
+                </tr>
+              </tbody>
+            )}
           </Table>
         </Col>
         <Col sm={4}>

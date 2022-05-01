@@ -14,7 +14,11 @@ import InvoiceModal from "../InvoiceModal";
 import LoadStatusModal from "./LoadStatusModal";
 import { Link } from "react-router-dom";
 const FreightOptionsDashboard = () => {
-  const { loading, load, driverData } = useContext();
+  const { loading, load, driverData, getLoads } = useContext();
+
+  useEffect(() => {
+    getLoads();
+  }, []);
 
   //load status modal
   const [loadStatusModal, setLoadStatusModal] = useState(false);

@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container, Navbar, Spinner, Table } from "react-bootstrap";
 import useContext from "../Hooks/useContext";
 import InspectionModal from "./InspectionModal";
 
 const InspectionLog = () => {
-  const { inspection, loading, removeInspection } = useContext();
+  const { inspection, loading, removeInspection, getInspection } = useContext();
+
+  useEffect(() => {
+    getInspection();
+  }, []);
 
   const [inspectionId, setInspectionId] = useState(null);
   const [addModal, setAddModal] = useState(false);

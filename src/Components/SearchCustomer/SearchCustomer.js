@@ -121,7 +121,7 @@ const SearchCustomer = () => {
             {loading && (
               <tr>
                 <td
-                  colSpan={5}
+                  colSpan={6}
                   style={{
                     textAlign: "center",
                   }}

@@ -14,7 +14,12 @@ import useContext from "../Hooks/useContext";
 import "./searchOwner.css";
 
 const SearchOwner = () => {
-  const { ownerData, loading } = useContext();
+  const { ownerData, loading, getOwners } = useContext();
+
+  useEffect(() => {
+    getOwners();
+  }, []);
+
   const [owners, setOwners] = useState([]);
 
   useEffect(() => {

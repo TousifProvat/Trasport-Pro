@@ -14,7 +14,11 @@ import UpdateInvoiceModal from "./UpdateInvoiceModal";
 import useContext from "../Hooks/useContext";
 
 const Invoice = () => {
-  const { invoice, loading } = useContext();
+  const { invoice, loading, getInvoices } = useContext();
+
+  useEffect(() => {
+    getInvoices();
+  }, []);
 
   const [invoices, setInvoices] = useState([]);
   const [filter, setFilter] = useState({

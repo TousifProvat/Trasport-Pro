@@ -8,13 +8,18 @@ import {
   Nav,
   Navbar,
   Row,
+  Spinner,
   Table,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useContext from "../Hooks/useContext";
 
 const SearchLoad = () => {
-  const { load, loading } = useContext();
+  const { load, loading, getLoads } = useContext();
+
+  useEffect(() => {
+    getLoads();
+  }, []);
 
   const [loads, setLoads] = useState([]);
 
@@ -119,25 +124,40 @@ const SearchLoad = () => {
             </tr>
           </thead>
           <tbody>
-            {loads.map((load, index) => (
-              <tr key={index}>
-                <td>
-                  <Link to={`/load/${load._id}`}>{load._id}</Link>
+            {loading && (
+              <tr>
+                <td
+                  colSpan={10}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
-                <td>{load.loadNumber}</td>
-                <td>{load.customer?.name}</td>
-                <td>{load.pickupDate}</td>
-                <td>{load.deliveryDate}</td>
-                <td>{load.pickupCity}</td>
-                <td>{load.deliveryCity}</td>
-                <td>{load.tractor?._id}</td>
-                <td>
-                  {load.driver?.firstName} {load.driver?.lastName}
-                </td>
-                <td>{load.status}</td>
               </tr>
-            ))}
-            {loads.length < 1 && (
+            )}
+            {!loading &&
+              loads.map((load, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={`/load/${load._id}`}>{load._id}</Link>
+                  </td>
+                  <td>{load.loadNumber}</td>
+                  <td>{load.customer?.name}</td>
+                  <td>{load.pickupDate}</td>
+                  <td>{load.deliveryDate}</td>
+                  <td>{load.pickupCity}</td>
+                  <td>{load.deliveryCity}</td>
+                  <td>{load.tractor?._id}</td>
+                  <td>
+                    {load.driver?.firstName} {load.driver?.lastName}
+                  </td>
+                  <td>{load.status}</td>
+                </tr>
+              ))}
+            {!loading && loads.length < 1 && (
               <tr>
                 <td
                   colSpan={11}

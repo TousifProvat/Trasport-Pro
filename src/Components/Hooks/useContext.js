@@ -235,18 +235,19 @@ const useContext = () => {
   const isUserAutheticated = () => {
     let token = localStorage.getItem("transport-token");
     let user = localStorage.getItem("transport-user");
-
     if (token && user) {
       setAuth({
         ...auth,
         isAuthenticated: true,
         user: JSON.parse(user),
+        token: token,
       });
     } else {
       setAuth({
         ...auth,
         isAuthenticated: false,
         user: {},
+        token: "",
       });
     }
   };
@@ -701,35 +702,29 @@ const useContext = () => {
       });
     }
   };
-  //call
+
   useEffect(() => {
-    // use every call in one use effect until they have different dependencies
     isUserAutheticated();
+  }, []);
+
+  useEffect(() => {
     if (auth.isAuthenticated) {
       getSiteSettings();
-      getLoads();
-      getOwners();
-      getCustomers();
-      getDrivers();
-      getTractors();
-      getTrailers();
-      getBilling();
-      getCommodities();
       getEobr();
-      getMaintenance();
-      getInspection();
-      getUsers();
-      getIncidents();
-      getInvoices();
+      getCommodities();
     }
   }, [auth.isAuthenticated]);
 
   return {
+    //settings
+    getSiteSettings,
     //load
     load,
     addLoad,
+    getLoads,
     // driver
     driverData,
+    getDrivers,
     addDriver,
     updateDriver,
     assignDriverToOwner,
@@ -740,35 +735,46 @@ const useContext = () => {
     unassignDriverFromTrailer,
     // tractor
     tractorData,
+    getTractors,
     addTractor,
     //trailer
     trailerData,
+    getTrailers,
     // customer
     customerData,
+    getCustomers,
     // owner
     ownerData,
+    getOwners,
     updateOwner,
     addOwner,
     // billing
     billing,
+    getBilling,
     // auth
     auth,
+    isUserAutheticated,
     authSignin,
     authSignOut,
     //commodity
     commodity,
+    getCommodities,
     //eobr
     eobr,
+    getEobr,
     // maintenance
     maintenance,
     addMaintenance,
     updateMaintenance,
     removeMaintenance,
+    getMaintenance,
+
     // maintenance
     inspection,
     addInspection,
     updateInspection,
     removeInspection,
+    getInspection,
     //settings
     settings,
     updateSettings,
@@ -777,15 +783,18 @@ const useContext = () => {
     addUser,
     updateUser,
     removeUser,
+    getUsers,
     // incident
     incident,
     addIncident,
     updateIncident,
     removeIncident,
+    getIncidents,
     //invoice
     invoice,
     addInvoice,
     updateInvoice,
+    getInvoices,
     // loading state
     loading,
   };

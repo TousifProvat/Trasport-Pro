@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Row,
+  Spinner,
+  Table,
+} from "react-bootstrap";
 import "./searchTractor.css";
 import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
 
 const SearchTractor = () => {
-  const { tractorData, loading } = useContext();
+  const { tractorData, loading, getTractors } = useContext();
+  useEffect(() => {
+    getTractors();
+  }, []);
   const [tractors, setTractors] = useState([]);
 
   useEffect(() => {
