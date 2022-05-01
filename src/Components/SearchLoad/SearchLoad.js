@@ -125,14 +125,14 @@ const SearchLoad = () => {
                   <Link to={`/load/${load._id}`}>{load._id}</Link>
                 </td>
                 <td>{load.loadNumber}</td>
-                <td>{load.customer.name}</td>
+                <td>{load.customer?.name}</td>
                 <td>{load.pickupDate}</td>
                 <td>{load.deliveryDate}</td>
                 <td>{load.pickupCity}</td>
                 <td>{load.deliveryCity}</td>
-                <td>{load.tractor._id}</td>
+                <td>{load.tractor?._id}</td>
                 <td>
-                  {load.driver.firstName} {load.driver.lastName}
+                  {load.driver?.firstName} {load.driver?.lastName}
                 </td>
                 <td>{load.status}</td>
               </tr>
