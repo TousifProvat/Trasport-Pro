@@ -11,9 +11,11 @@ import {
   Navbar,
   Row,
 } from "react-bootstrap";
-import useContext from "../Hooks/useContext";
+import { useDispatch, useSelector } from "react-redux";
+import { updateSiteSettings } from "../../features/siteSettings/action";
+
 const SiteSettings = () => {
-  const { settings, loading, updateSettings } = useContext();
+  const settings = useSelector((state) => state.settings);
   const [allValues, setAllValues] = useState({
     _id: "",
     name: "",
@@ -24,7 +26,7 @@ const SiteSettings = () => {
   });
 
   useEffect(() => {
-    setAllValues(settings);
+    setAllValues(settings.settings);
   }, [settings]);
 
   const onChange = (e) => {
@@ -36,6 +38,8 @@ const SiteSettings = () => {
 
   const [validated, setValidated] = useState(false);
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -44,7 +48,7 @@ const SiteSettings = () => {
       setValidated(true);
       return;
     }
-    updateSettings(allValues._id, allValues);
+    dispatch(updateSiteSettings(allValues._id, allValues));
   };
   return (
     <div>
@@ -122,6 +126,7 @@ const SiteSettings = () => {
                   type="submit"
                   variant="outline-primary"
                   className="mt-5 mb-5"
+                  disabled={settings.loading}
                 >
                   Update
                 </Button>

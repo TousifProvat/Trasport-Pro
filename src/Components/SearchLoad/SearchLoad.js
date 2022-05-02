@@ -4,21 +4,20 @@ import {
   Col,
   Container,
   Form,
-  InputGroup,
-  Nav,
-  Navbar,
   Row,
   Spinner,
   Table,
 } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import useContext from "../Hooks/useContext";
+import { fetchLoads } from "../../features/load/action";
 
 const SearchLoad = () => {
-  const { load, loading, getLoads } = useContext();
+  const { loads: load, loading } = useSelector((state) => state.load);
 
+  const dispatch = useDispatch();
   useEffect(() => {
-    getLoads();
+    dispatch(fetchLoads());
   }, []);
 
   const [loads, setLoads] = useState([]);

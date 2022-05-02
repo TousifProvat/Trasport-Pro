@@ -10,18 +10,15 @@ import {
   Row,
 } from "react-bootstrap";
 import "./addNewLoad.css";
-import useContext from "../../Hooks/useContext";
 import axios from "../../../utils/axios";
 import { notification } from "antd";
+import { useSelector } from "react-redux";
 
 const AddNewLoad = () => {
-  const { auth, commodity, customerData, getCustomers, user, getUsers } =
-    useContext();
-
-  useEffect(() => {
-    getUsers();
-    getCustomers();
-  }, []);
+  const { auth } = useSelector((state) => state.auth);
+  const { users } = useSelector((state) => state.user);
+  const { commodities } = useSelector((state) => state.commodity);
+  const { customers } = useSelector((state) => state.customer);
 
   useEffect(() => {
     setAllValues({
@@ -146,7 +143,7 @@ const AddNewLoad = () => {
               value={allValues.customer}
             >
               <option value="">Select Customer</option>
-              {customerData.map((customer, index) => (
+              {customers.map((customer, index) => (
                 <option value={customer._id} key={index}>
                   {customer.name} - {customer.email}
                 </option>
@@ -338,7 +335,7 @@ const AddNewLoad = () => {
             <Form.Label>Commodity Type</Form.Label>
             <Form.Select required name="commodityType" onChange={onChange}>
               <option value="">Select Type</option>
-              {commodity.map((commodity, index) => (
+              {commodities.map((commodity, index) => (
                 <option value={commodity._id} key={index}>
                   {commodity.name}
                 </option>
@@ -365,7 +362,7 @@ const AddNewLoad = () => {
               onChange={onChange}
               value={allValues.loadEnteredBy}
             >
-              {user.map((user, index) => (
+              {users.map((user, index) => (
                 <option key={index} value={user._id}>
                   {user.firstName} {user.lastName}
                 </option>

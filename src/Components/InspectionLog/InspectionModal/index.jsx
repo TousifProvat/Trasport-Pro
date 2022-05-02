@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Button, Col, Form, Modal, Row, Spinner } from "react-bootstrap";
 import { message } from "antd";
 import axios from "../../../utils/axios";
 import useContext from "../../Hooks/useContext";
 
 const InspectionModal = (props) => {
-  const { tractorData, trailerData, getTractors, getTrailers } = useContext();
+  const { trailers } = useSelector((state) => state.trailer);
+  const { tractors } = useSelector((state) => state.tractor);
+
   const { visible, setVisible, Id, action, addInspection, updateInspection } =
     props;
-
-  useEffect(() => {
-    getTrailers();
-    getTractors();
-  }, []);
 
   const [loading, setLoading] = useState(false);
   const [allValues, setAllValues] = useState({
@@ -138,12 +136,12 @@ const InspectionModal = (props) => {
                 >
                   <option value="">Select {allValues.equipmentType}</option>
                   {allValues.equipmentType === "Trailer"
-                    ? trailerData.map((trailer, index) => (
+                    ? trailers.map((trailer, index) => (
                         <option value={trailer._id} key={index}>
                           {trailer.id}
                         </option>
                       ))
-                    : tractorData.map((tractor, index) => (
+                    : tractors.map((tractor, index) => (
                         <option value={tractor._id} key={index}>
                           {tractor.id}
                         </option>

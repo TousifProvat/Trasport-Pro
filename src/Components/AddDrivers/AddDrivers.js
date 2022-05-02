@@ -1,12 +1,13 @@
 import { notification } from "antd";
 import React, { useState } from "react";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import axios from "../../utils/axios";
 import useContext from "../Hooks/useContext";
 import "./addDrivers.css";
 
 const AddDrivers = () => {
-  const { eobr } = useContext();
+  const { eobrs } = useSelector((state) => state.eobr);
   const initValue = {
     driverNumber: 1,
     status: "Pending Hire",
@@ -425,7 +426,7 @@ const AddDrivers = () => {
                 value={allValues.eobrType}
               >
                 <option value="">Select EOBR Type</option>
-                {eobr.map((eobr, index) => (
+                {eobrs.map((eobr, index) => (
                   <option value={eobr._id} key={index}>
                     {eobr.name}
                   </option>

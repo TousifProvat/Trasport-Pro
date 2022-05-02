@@ -7,13 +7,16 @@ import {
   Form,
   Navbar,
   Row,
+  Spinner,
 } from "react-bootstrap";
 import "./login.css";
 import useContext from "../Hooks/useContext";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authSignin } from "../../features/auth/action";
 
 const Login = () => {
-  const { authSignin, loading, auth } = useContext();
+  const { auth, loading } = useSelector((state) => state.auth);
 
   //navigate
   const navigate = useNavigate();
@@ -32,6 +35,8 @@ const Login = () => {
     password: "",
   });
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -40,7 +45,7 @@ const Login = () => {
       setValidated(true);
       return;
     }
-    authSignin(formValues);
+    dispatch(authSignin(formValues));
   };
 
   const onChange = (e) => {
@@ -77,7 +82,13 @@ const Login = () => {
                 <h1>Logo</h1>
               </Card.Header>
               <Card.Body>
-                {loading && <h2>Loading Component here...</h2>}
+                {loading && (
+                  <div>
+                    <Spinner animation="border" variant="primary">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </div>
+                )}
                 {!loading && (
                   <Form
                     noValidate

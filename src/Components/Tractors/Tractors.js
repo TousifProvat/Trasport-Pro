@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import "./tractors.css";
-import useContext from "../Hooks/useContext";
 import { notification } from "antd";
 import axios from "../../utils/axios";
+import { useSelector } from "react-redux";
 
 const Tractors = () => {
-  const { ownerData, getOwners, eobr, getEobr } = useContext();
-
-  useEffect(() => {
-    getOwners();
-    getEobr();
-  }, []);
+  const { eobrs } = useSelector((state) => state.eobr);
+  const { owners } = useSelector((state) => state.owner);
 
   const initValue = {
     id: "",
@@ -172,7 +168,7 @@ const Tractors = () => {
                 value={allValues.owner}
               >
                 <option value="">Select Owner</option>
-                {ownerData.map((owner, index) => (
+                {owners.map((owner, index) => (
                   <option value={owner._id} key={index}>
                     {owner.firstName} {owner.lastName}-{owner.email}
                   </option>
@@ -440,7 +436,7 @@ const Tractors = () => {
                 value={allValues.eobrType}
               >
                 <option value="">Select EOBR Type ID</option>
-                {eobr.map((eobr, index) => (
+                {eobrs.map((eobr, index) => (
                   <option value={eobr._id} key={index}>
                     {eobr.name}
                   </option>

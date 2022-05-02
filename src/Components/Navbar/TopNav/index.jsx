@@ -1,20 +1,34 @@
 import React, { useState } from "react";
-import { Button, Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import useContext from "../../Hooks/useContext";
-import { ReactComponent as Avatar } from "../../../assets/avatar.svg";
+import {
+  Button,
+  Container,
+  Nav,
+  Navbar,
+  Offcanvas,
+  Spinner,
+} from "react-bootstrap";
 import "./navbar1.css";
+//
+import { authSignOut } from "../../../features/auth/action";
+//
+import { ReactComponent as Avatar } from "../../../assets/avatar.svg";
+
+//
 const Navbar1 = () => {
-  const { settings, authSignOut, auth } = useContext();
+  const { settings } = useSelector((state) => state.settings);
+  const { auth, loading } = useSelector((state) => state.auth);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const onSignOut = () => {
     navigate("/login");
-    authSignOut();
+    dispatch(authSignOut());
     setShow(false);
   };
 
@@ -27,7 +41,15 @@ const Navbar1 = () => {
 
         <div>
           <Nav className="navbar-1">
-            <h4 className="navbar-1-title text-nowrap">{settings.name}</h4>
+            <h4 className="navbar-1-title text-nowrap">
+              {loading ? (
+                <div>
+                  <Spinner animation="border" variant="primary"></Spinner>
+                </div>
+              ) : (
+                settings.name
+              )}
+            </h4>
           </Nav>
         </div>
         <div className="navLinks-shortLinks">

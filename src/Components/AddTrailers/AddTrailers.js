@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { notification } from "antd";
 import axios from "../../utils/axios";
-import useContext from "../Hooks/useContext";
 import "./addTrailers.css";
+import { useSelector } from "react-redux";
 const AddTrailers = () => {
-  const { ownerData, getOwners, eobr, getEobr } = useContext();
-  useEffect(() => {
-    getOwners();
-    getEobr();
-  }, []);
+  const { owners } = useSelector((state) => state.owner);
+  const { eobrs } = useSelector((state) => state.eobr);
   const initValue = {
     id: "",
     status: "Active",
@@ -140,7 +137,7 @@ const AddTrailers = () => {
                 value={allValues.owner}
               >
                 <option value=""> Select Owner </option>
-                {ownerData.map((owner, index) => (
+                {owners.map((owner, index) => (
                   <option value={owner._id} key={index}>
                     {owner.firstName} {owner.lastName}-{owner.email}
                   </option>
@@ -300,7 +297,7 @@ const AddTrailers = () => {
                 value={allValues.eobrType}
               >
                 <option value="">Select EOBR Type</option>
-                {eobr.map((eobr, index) => (
+                {eobrs.map((eobr, index) => (
                   <option value={eobr._id} key={index}>
                     {eobr.name}
                   </option>

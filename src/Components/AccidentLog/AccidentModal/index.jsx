@@ -3,16 +3,14 @@ import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { message } from "antd";
 import axios from "../../../utils/axios";
 import useContext from "../../Hooks/useContext";
+import { useSelector } from "react-redux";
 
 const AccidentModal = (props) => {
-  const { tractorData, getTractors, driverData, getDrivers } = useContext();
+  const { tractors } = useSelector((state) => state.tractor);
+  const { drivers } = useSelector((state) => state.driver);
+
   const { visible, setVisible, Id, action, addIncident, updateIncident } =
     props;
-
-  useEffect(() => {
-    getTractors();
-    getDrivers();
-  }, []);
 
   const [loading, setLoading] = useState(false);
   const [allValues, setAllValues] = useState({
@@ -101,7 +99,7 @@ const AccidentModal = (props) => {
                 onChange={onChange}
               >
                 <option value="">Select Tractor</option>
-                {tractorData.map((tractor, index) => (
+                {tractors.map((tractor, index) => (
                   <option value={tractor._id} key={index}>
                     {tractor.id}
                   </option>
@@ -199,7 +197,7 @@ const AccidentModal = (props) => {
                 onChange={onChange}
               >
                 <option value="">Select Driver</option>
-                {driverData.map((driver, index) => (
+                {drivers.map((driver, index) => (
                   <option value={driver._id} key={index}>
                     {driver.firstName} {driver.lastName}-{driver.email}
                   </option>
@@ -245,7 +243,6 @@ const AccidentModal = (props) => {
                 as="textarea"
                 placeholder="Notes"
                 name="notes"
-                defaultValue={allValues.notes}
                 value={allValues.notes}
                 onChange={onChange}
               />

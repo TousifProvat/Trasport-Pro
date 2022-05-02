@@ -1,5 +1,6 @@
-import { message } from "antd";
+import { message, notification } from "antd";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Button,
   Col,
@@ -12,13 +13,43 @@ import {
   Table,
 } from "react-bootstrap";
 import axios from "../../utils/axios";
-import useContext from "../Hooks/useContext";
 
 const InvoiceModal = (props) => {
-  const { settings, addInvoice, updateInvoice } = useContext();
+  const { settings } = useSelector((state) => state.settings);
   const { visible, setVisible, Id, invoice } = props;
 
   const [loading, setLoading] = useState(false);
+
+  //actions
+  const addInvoice = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post(`/invoice`, values);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const updateInvoice = async (id, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/invoice/${id}`, values);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  //
+
   const [customer, setCustomer] = useState({});
 
   const [allValues, setAllValues] = useState({
@@ -268,10 +299,19 @@ const InvoiceModal = (props) => {
               <span>{allValues.amount + allValues.other}$</span>
             </Col>
           </Row>
-          <Button type="submit" variant="outline-primary" className="m-2">
+          <Button
+            disabled={loading}
+            type="submit"
+            variant="outline-primary"
+            className="m-2"
+          >
             Save
           </Button>
-          <Button variant="outline-danger" onClick={() => setVisible(false)}>
+          <Button
+            disabled={loading}
+            variant="outline-danger"
+            onClick={() => setVisible(false)}
+          >
             Cancel
           </Button>
         </Form>

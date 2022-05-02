@@ -2,20 +2,16 @@ import { Button, Col, Form, Modal, Row, Spinner } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import { message } from "antd";
 import axios from "../../../utils/axios";
-import useContext from "../../Hooks/useContext";
+import { useSelector } from "react-redux";
 
 const MaintenanceModal = (props) => {
-  const { getTractors, getTrailers, tractorData, trailerData } = useContext();
+  const { tractors } = useSelector((state) => state.tractor);
+  const { trailers } = useSelector((state) => state.trailer);
+
   const { visible, setVisible, Id, action, addMaintenance, updateMaintenance } =
     props;
 
-  useEffect(() => {
-    getTractors();
-    getTrailers();
-  }, []);
-
-  const [loading, setLoading] = useState(false);
-  const [allValues, setAllValues] = useState({
+  const initValue = {
     equipmentType: "Tractor",
     tractor: "",
     trailer: "",
@@ -25,7 +21,10 @@ const MaintenanceModal = (props) => {
     nextMaintenanceDate: "",
     receipt: "",
     comments: "",
-  });
+  };
+  const [allValues, setAllValues] = useState(initValue);
+
+  const [loading, setLoading] = useState(false);
 
   const getMaintenanceById = async (Id) => {
     try {
@@ -69,6 +68,8 @@ const MaintenanceModal = (props) => {
     addMaintenance(allValues);
     setTimeout(() => {
       setVisible(false);
+      setValidated(false);
+      setAllValues(initValue);
     }, 300);
   };
   const handleSubmit = (e) => {
@@ -134,12 +135,12 @@ const MaintenanceModal = (props) => {
                 >
                   <option value="">Select {allValues.equipmentType}</option>
                   {allValues.equipmentType === "Trailer"
-                    ? trailerData.map((trailer, index) => (
+                    ? trailers.map((trailer, index) => (
                         <option value={trailer._id} key={index}>
                           {trailer.id}
                         </option>
                       ))
-                    : tractorData.map((tractor, index) => (
+                    : tractors.map((tractor, index) => (
                         <option value={tractor._id} key={index}>
                           {tractor.id}
                         </option>

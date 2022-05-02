@@ -30,10 +30,43 @@ import AccidentLog from "./Components/AccidentLog/AccidentLog";
 import Invoice from "./Components/Invoice/Invoice";
 import PrivateRoute from "./Components/PrivateRoute";
 import CustomerSummary from "./Components/CustomerSummary/CustomerSummary";
-import useContext from "./Components/Hooks/useContext";
+//
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+//actions
+import { fetchSettings } from "./features/siteSettings/action";
+import { isUserAutheticated } from "./features/auth/action";
+import { fetchTrailers } from "./features/trailer/action";
+import { fetchTractors } from "./features/tractor/action";
+import { fetchDrivers } from "./features/driver/action";
+import { fetchUsers } from "./features/user/action";
+import { fetchCommodities } from "./features/commodity/action";
+import { fetchCustomer } from "./features/customer/action";
+import { fetchEobrs } from "./features/eobr/action";
+import { fetchOwners } from "./features/owner/action";
 
 function App() {
+  const dispatch = useDispatch();
+  const { auth } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(isUserAutheticated());
+  }, []);
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      dispatch(fetchEobrs());
+      dispatch(fetchSettings());
+      dispatch(fetchCommodities());
+      dispatch(fetchOwners());
+      dispatch(fetchCustomer());
+      dispatch(fetchTrailers());
+      dispatch(fetchTractors());
+      dispatch(fetchDrivers());
+      dispatch(fetchUsers());
+    }
+  }, [auth.isAuthenticated]);
+
   return (
     <>
       <BrowserRouter>
