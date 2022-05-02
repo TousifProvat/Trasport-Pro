@@ -10,6 +10,7 @@ import {
   Spinner,
   Table,
 } from "react-bootstrap";
+import { message } from "antd";
 import UpdateInvoiceModal from "./UpdateInvoiceModal";
 import axios from "../../utils/axios";
 
@@ -77,6 +78,7 @@ const Invoice = () => {
         visible={show}
         setVisible={setShow}
         invoice={invoiceId}
+        setInvoice={setInvoiceId}
         getInvoices={getInvoices}
       />
       <Container>
