@@ -9,15 +9,20 @@ import {
   Table,
 } from "react-bootstrap";
 import "./freightOptionsDashboard.css";
-import useContext from "../Hooks/useContext";
 import InvoiceModal from "../InvoiceModal";
 import LoadStatusModal from "./LoadStatusModal";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLoads } from "../../features/load/action";
+import { fetchDrivers } from "../../features/driver/action";
 const FreightOptionsDashboard = () => {
-  const { loading, load, driverData, getLoads } = useContext();
+  const { loading, loads } = useSelector((state) => state.load);
+  const { drivers } = useSelector((state) => state.driver);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getLoads();
+    dispatch(fetchLoads());
   }, []);
 
   //load status modal
@@ -32,25 +37,25 @@ const FreightOptionsDashboard = () => {
   const [plannedLoads, setPlannedLoads] = useState([]);
 
   useEffect(() => {
-    const pl = load.filter((load) => load.status === "planned");
+    const pl = loads.filter((load) => load.status === "planned");
     setPlannedLoads(pl);
-  }, [load]);
+  }, [loads]);
   //
   //cancelled loads
   const [cancelledLoads, setCancelledLoads] = useState([]);
 
   useEffect(() => {
-    const cl = load.filter((load) => load.status === "cancelled");
+    const cl = loads.filter((load) => load.status === "cancelled");
     setCancelledLoads(cl);
-  }, [load]);
+  }, [loads]);
   //
 
   //active drivers
   const [activeDrivers, setActiveDrivers] = useState([]);
   useEffect(() => {
-    const ad = driverData.filter((driver) => driver.status === "Active");
+    const ad = drivers.filter((driver) => driver.status === "Active");
     setActiveDrivers(ad);
-  }, [driverData]);
+  }, [drivers]);
   //
 
   const [invoiceModal, setInvoiceModal] = useState(false);
@@ -93,16 +98,16 @@ const FreightOptionsDashboard = () => {
       </div>
       <hr></hr>
 
-      <div className="availableLoads">
+      <div>
         <Navbar bg="light" expand="lg">
           <Container fluid>
             <Navbar.Brand>
-              Available Loads <Badge>{load.length}</Badge>
+              Available Loads <Badge>{loads.length}</Badge>
             </Navbar.Brand>
           </Container>
         </Navbar>
 
-        <Table striped bordered hover responsive>
+        <Table striped bordered hover responsive="lg">
           <thead>
             <tr>
               <th>ID</th>
@@ -134,8 +139,18 @@ const FreightOptionsDashboard = () => {
               </tr>
             )}
             {!loading &&
-              load.map((load, index) => (
-                <tr key={index}>
+              loads.map((load, index) => (
+                <tr
+                  key={index}
+                  style={{
+                    background: `rgba(
+                      ${load.color},
+                      ${load.color},
+                      ${load.color},
+                      ${0.5}
+                    )`,
+                  }}
+                >
                   <td>
                     <Link to={`/load/${load._id}`}>{load._id}</Link>
                   </td>
@@ -174,7 +189,7 @@ const FreightOptionsDashboard = () => {
                   </td>
                 </tr>
               ))}
-            {!loading && load.length < 1 && (
+            {!loading && loads.length < 1 && (
               <tr>
                 <td
                   colSpan={11}
@@ -191,9 +206,10 @@ const FreightOptionsDashboard = () => {
       </div>
 
       {/* active driver */}
-      <div className="activeDrivers">
+
+      <div>
         <Navbar bg="light" expand="lg">
-          <Container fluid>
+          <Container>
             <Navbar.Brand>
               Active Drivers
               <Badge bg="warning" text="dark" className="ms-3">
@@ -202,7 +218,7 @@ const FreightOptionsDashboard = () => {
             </Navbar.Brand>
           </Container>
         </Navbar>
-        <Table striped bordered hover responsive>
+        <Table striped bordered hover responsive="lg">
           <thead>
             <tr>
               <th>ID</th>
@@ -271,12 +287,12 @@ const FreightOptionsDashboard = () => {
         <Navbar bg="light" expand="lg">
           <Container fluid>
             <Navbar.Brand>
-              Planned Loads <Badge bg="yellow">{plannedLoads.length}</Badge>
+              Planned Loads <Badge bg="success">{plannedLoads.length}</Badge>
             </Navbar.Brand>
           </Container>
         </Navbar>
 
-        <Table striped bordered hover responsive>
+        <Table striped bordered hover responsive="lg">
           <thead>
             <tr>
               <th>ID</th>
@@ -374,7 +390,7 @@ const FreightOptionsDashboard = () => {
           </Container>
         </Navbar>
 
-        <Table striped bordered hover responsive>
+        <Table striped bordered hover responsive="lg">
           <thead>
             <tr>
               <th>ID</th>

@@ -1,11 +1,81 @@
+import { notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { Button, Container, Navbar, Spinner, Table } from "react-bootstrap";
+import axios from "../../utils/axios";
 import useContext from "../Hooks/useContext";
 import MaintenanceModal from "./MaintenanceModal";
 
 const MaintenanceLog = () => {
-  const { maintenance, loading, removeMaintenance, getMaintenance } =
-    useContext();
+  const [loading, setLoading] = useState(false);
+  const [maintenance, setMaintenance] = useState([]);
+
+  const getMaintenance = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/maintenance");
+      setMaintenance(data.maintenances);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
+
+  const addMaintenance = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post(`/maintenance`, values);
+
+      notification.success({ message: res.data.message });
+      getMaintenance();
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+
+  const updateMaintenance = async (id, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/maintenance/${id}`, values);
+      notification.success({ message: res.data.message });
+
+      const index = maintenance.findIndex((obj) => obj._id === id);
+      let arr = maintenance;
+      arr[index] = values;
+      setMaintenance(arr);
+
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+
+  const removeMaintenance = async (id) => {
+    try {
+      setLoading(true);
+      const res = await axios.delete(`/maintenance/${id}`);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+      const newMaintenance = maintenance.filter(
+        (maintenance) => maintenance._id !== id
+      );
+      setMaintenance(newMaintenance);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
 
   useEffect(() => {
     getMaintenance();
@@ -26,12 +96,14 @@ const MaintenanceLog = () => {
         visible={addModal}
         setVisible={setAddModal}
         action="add"
+        addMaintenance={addMaintenance}
       />
       <MaintenanceModal
         visible={updateModal}
         setVisible={setUpdateModal}
         action="update"
         Id={maintenanceId}
+        updateMaintenance={updateMaintenance}
       />
       <Container>
         <Navbar bg="" expand="lg" className="mt-5">

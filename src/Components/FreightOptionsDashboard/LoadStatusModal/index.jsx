@@ -3,11 +3,16 @@ import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { message, notification } from "antd";
 import useContext from "../../Hooks/useContext";
 import axios from "../../../utils/axios";
+import { useSelector } from "react-redux";
 const LoadStatusModal = (props) => {
-  const { driverData, tractorData, trailerData, user, auth } = useContext();
+  const { drivers } = useSelector((state) => state.driver);
+  const { tractors } = useSelector((state) => state.tractor);
+  const { trailers } = useSelector((state) => state.trailer);
+  const { auth } = useSelector((state) => state.auth);
+  const { users } = useSelector((state) => state.user);
+
   const { visible, setVisible, Id, action } = props;
 
-  const [validated, setValidated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [allValues, setAllValues] = useState({
     _id: "",
@@ -18,6 +23,7 @@ const LoadStatusModal = (props) => {
     trailer: "",
     loadBy: "",
   });
+  const [validated, setValidated] = useState(false);
 
   const getLoadById = async (Id) => {
     try {
@@ -29,7 +35,7 @@ const LoadStatusModal = (props) => {
         driver: data.load.driver ? data.load.driver : "",
         tractor: data.load.tractor ? data.load.tractor : "",
         trailer: data.load.trailer ? data.load.trailer : "",
-        loadBy: data.load.loadBy ? data.load.loadBy : auth.user._id,
+        loadBy: data.load.loadBy ? data.load.loadEnteredBy : auth.user._id,
         dispatcher: data.load.dispatcher ? data.load.dispatcher : auth.user._id,
       });
       setLoading(false);
@@ -51,7 +57,7 @@ const LoadStatusModal = (props) => {
   const dispatch = async () => {
     try {
       setLoading(true);
-      const res = await axios.put(`/load/${Id}`, {
+      await axios.put(`/load/${Id}`, {
         ...allValues,
         status: "dispatched",
       });
@@ -64,7 +70,7 @@ const LoadStatusModal = (props) => {
   const updateDispatch = async () => {
     try {
       setLoading(true);
-      const res = await axios.put(`/load/${Id}`, allValues);
+      await axios.put(`/load/${Id}`, allValues);
       setLoading(false);
       notification.success({ message: "Dispatch Updated Successfully!" });
     } catch (err) {
@@ -145,7 +151,7 @@ const LoadStatusModal = (props) => {
                 disabled={allValues.status !== "planned"}
               >
                 <option value="">Select User</option>
-                {user.map((user, index) => (
+                {users.map((user, index) => (
                   <option value={user._id} key={index}>
                     {user.firstName} {user.lastName}
                   </option>
@@ -162,7 +168,7 @@ const LoadStatusModal = (props) => {
                 disabled={allValues.status !== "planned"}
               >
                 <option value="">Select User</option>
-                {user.map((user, index) => (
+                {users.map((user, index) => (
                   <option key={index} value={user._id}>
                     {user.firstName} {user.lastName}
                   </option>
@@ -174,6 +180,7 @@ const LoadStatusModal = (props) => {
             <Col sm={6}>
               <Form.Label>Driver</Form.Label>
               <Form.Select
+                required
                 aria-label="Default select example"
                 name="driver"
                 onChange={onChange}
@@ -181,7 +188,7 @@ const LoadStatusModal = (props) => {
                 disabled={allValues.status !== "planned"}
               >
                 <option value="">Select Driver</option>
-                {driverData.map((driver, index) => (
+                {drivers.map((driver, index) => (
                   <option value={driver._id} key={index}>
                     {driver.firstName} - {driver.email}
                   </option>
@@ -198,7 +205,7 @@ const LoadStatusModal = (props) => {
                 disabled={allValues.status !== "planned"}
               >
                 <option value="">Select Tractor</option>
-                {tractorData.map((tractor, index) => (
+                {tractors.map((tractor, index) => (
                   <option value={tractor._id} key={index}>
                     {tractor.id}
                   </option>
@@ -217,7 +224,7 @@ const LoadStatusModal = (props) => {
                 disabled={allValues.status !== "planned"}
               >
                 <option value="">Select Trailer</option>
-                {trailerData.map((trailer, index) => (
+                {trailers.map((trailer, index) => (
                   <option value={trailer._id} key={index}>
                     {trailer.id}
                   </option>
@@ -230,10 +237,16 @@ const LoadStatusModal = (props) => {
             variant="outline-danger"
             className="mt-5 mb-5 m-2"
             onClick={() => setVisible(false)}
+            disabled={loading}
           >
             cancel
           </Button>
-          <Button type="submit" variant="outline-primary" className="mt-5 mb-5">
+          <Button
+            disabled={loading}
+            type="submit"
+            variant="outline-primary"
+            className="mt-5 mb-5"
+          >
             {allValues.status !== "dispatched" ? "Dispatch" : "Update"}
           </Button>
         </Form>

@@ -1,12 +1,19 @@
-import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { Button, Col, Form, Modal, Row, Spinner } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import { message, notification } from "antd";
 import axios from "../../../utils/axios";
-import useContext from "../../Hooks/useContext";
 
 const UserManagementModal = (props) => {
-  const { addUser, updateUser } = useContext();
-  const { visible, setVisible, Id, action } = props;
+  const {
+    visible,
+    setVisible,
+    Id,
+    setId,
+    action,
+    addUser,
+    updateUser,
+    getUsers,
+  } = props;
 
   const [loading, setLoading] = useState(false);
   const [allValues, setAllValues] = useState({
@@ -86,6 +93,7 @@ const UserManagementModal = (props) => {
 
   const toggleSuspendUser = async () => {
     try {
+      setLoading(true);
       await axios.put(`/user/${Id}`, {
         suspended: allValues.suspended ? false : true,
       });
@@ -94,7 +102,10 @@ const UserManagementModal = (props) => {
           ? "User suspension removed"
           : "User suspended",
       });
+      setLoading(false);
       setVisible(false);
+      getUsers();
+      setId(null);
     } catch (err) {
       console.log({ err });
       notification.error({ message: err.response.data.message });
@@ -107,143 +118,160 @@ const UserManagementModal = (props) => {
         <Modal.Title id="example-modal-sizes-title-lg">User Record</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
-          <Row>
-            <Col>
-              <Form.Label>First name</Form.Label>
-              <Form.Control
-                required
-                name="firstName"
-                onChange={onChange}
-                type="text"
-                placeholder="First name"
-                value={allValues.firstName}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Middle name</Form.Label>
-              <Form.Control
-                name="middleName"
-                onChange={onChange}
-                type="text"
-                placeholder="Middle name"
-                value={allValues.middleName}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Last name</Form.Label>
-              <Form.Control
-                required
-                name="lastName"
-                onChange={onChange}
-                type="text"
-                placeholder="Last name"
-                value={allValues.lastName}
-              />
-            </Col>
-          </Row>
-          <Row className="mt-3">
-            <Col>
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control
-                required
-                name="phoneNumber"
-                onChange={onChange}
-                type="text"
-                placeholder="Phone Number"
-                value={allValues.phoneNumber}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                required
-                name="email"
-                onChange={onChange}
-                type="email"
-                placeholder="Email"
-                value={allValues.email}
-              />
-            </Col>
-            <Col>
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                required
-                name="password"
-                onChange={onChange}
-                type="password"
-                placeholder="Password"
-                value={allValues.password}
-              />
-            </Col>
-          </Row>
-          <h3 className="mt-3 mb-1">Permissions</h3>
-          <Row className="mt-3">
-            <Col>
-              <Form.Check
-                name="accounting"
-                onChange={onChange}
-                label="Accounting"
-                checked={allValues.accounting}
-              />
-            </Col>
-            <Col>
-              <Form.Check
-                name="billing"
-                onChange={onChange}
-                label="Billing"
-                checked={allValues.billing}
-              />
-            </Col>
-            <Col>
-              <Form.Check
-                name="systemAdmin"
-                onChange={onChange}
-                label="System Admin"
-                checked={allValues.systemAdmin}
-              />
-            </Col>
-          </Row>
-          <Row className="mt-3">
-            <Col>
-              <Form.Check
-                name="settlements"
-                onChange={onChange}
-                label="Settlement"
-                checked={allValues.settlements}
-              />
-            </Col>
-            <Col>
-              <Form.Check
-                name="freightOperation"
-                onChange={onChange}
-                label="Freight Operations"
-                checked={allValues.freightOperation}
-              />
-            </Col>
-            <Col></Col>
-          </Row>
-
-          <Button type="submit" variant="outline-primary" className="mt-3 m-2">
-            {action === "add" ? "Save" : "Update"}
-          </Button>
-          {action === "update" && (
-            <Button
-              variant="outline-danger"
-              className="mt-3 m-2"
-              onClick={toggleSuspendUser}
-            >
-              {allValues.suspended ? "Unsuspend" : "Suspend"}
-            </Button>
-          )}
-          <Button
-            variant="danger"
-            className="mt-3 m-2"
-            onClick={() => setVisible(false)}
+        {loading && (
+          <div
+            style={{
+              textAlign: "center",
+            }}
           >
-            Cancel
-          </Button>
-        </Form>
+            <Spinner animation="border" variant="primary">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        )}
+        {!loading && (
+          <Form noValidate validated={validated} onSubmit={handleSubmit}>
+            <Row>
+              <Col>
+                <Form.Label>First name</Form.Label>
+                <Form.Control
+                  required
+                  name="firstName"
+                  onChange={onChange}
+                  type="text"
+                  placeholder="First name"
+                  value={allValues.firstName}
+                />
+              </Col>
+              <Col>
+                <Form.Label>Middle name</Form.Label>
+                <Form.Control
+                  name="middleName"
+                  onChange={onChange}
+                  type="text"
+                  placeholder="Middle name"
+                  value={allValues.middleName}
+                />
+              </Col>
+              <Col>
+                <Form.Label>Last name</Form.Label>
+                <Form.Control
+                  required
+                  name="lastName"
+                  onChange={onChange}
+                  type="text"
+                  placeholder="Last name"
+                  value={allValues.lastName}
+                />
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col>
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control
+                  required
+                  name="phoneNumber"
+                  onChange={onChange}
+                  type="text"
+                  placeholder="Phone Number"
+                  value={allValues.phoneNumber}
+                />
+              </Col>
+              <Col>
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  required
+                  name="email"
+                  onChange={onChange}
+                  type="email"
+                  placeholder="Email"
+                  value={allValues.email}
+                />
+              </Col>
+              <Col>
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  required
+                  name="password"
+                  onChange={onChange}
+                  type="password"
+                  placeholder="Password"
+                  value={allValues.password}
+                />
+              </Col>
+            </Row>
+            <h3 className="mt-3 mb-1">Permissions</h3>
+            <Row className="mt-3">
+              <Col>
+                <Form.Check
+                  name="accounting"
+                  onChange={onChange}
+                  label="Accounting"
+                  checked={allValues.accounting}
+                />
+              </Col>
+              <Col>
+                <Form.Check
+                  name="billing"
+                  onChange={onChange}
+                  label="Billing"
+                  checked={allValues.billing}
+                />
+              </Col>
+              <Col>
+                <Form.Check
+                  name="systemAdmin"
+                  onChange={onChange}
+                  label="System Admin"
+                  checked={allValues.systemAdmin}
+                />
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col>
+                <Form.Check
+                  name="settlements"
+                  onChange={onChange}
+                  label="Settlement"
+                  checked={allValues.settlements}
+                />
+              </Col>
+              <Col>
+                <Form.Check
+                  name="freightOperation"
+                  onChange={onChange}
+                  label="Freight Operations"
+                  checked={allValues.freightOperation}
+                />
+              </Col>
+              <Col></Col>
+            </Row>
+
+            <Button
+              type="submit"
+              variant="outline-primary"
+              className="mt-3 m-2"
+            >
+              {action === "add" ? "Save" : "Update"}
+            </Button>
+            {action === "update" && (
+              <Button
+                variant="outline-danger"
+                className="mt-3 m-2"
+                onClick={toggleSuspendUser}
+              >
+                {allValues.suspended ? "Unsuspend" : "Suspend"}
+              </Button>
+            )}
+            <Button
+              variant="danger"
+              className="mt-3 m-2"
+              onClick={() => setVisible(false)}
+            >
+              Cancel
+            </Button>
+          </Form>
+        )}
       </Modal.Body>
     </Modal>
   );

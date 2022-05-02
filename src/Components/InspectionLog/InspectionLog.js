@@ -1,10 +1,76 @@
+import { message, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import { Button, Container, Navbar, Spinner, Table } from "react-bootstrap";
-import useContext from "../Hooks/useContext";
+import axios from "../../utils/axios";
 import InspectionModal from "./InspectionModal";
 
 const InspectionLog = () => {
-  const { inspection, loading, removeInspection, getInspection } = useContext();
+  const [inspection, setInspection] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getInspection = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/inspection");
+      setInspection(data.inspections);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
+  const updateInspection = async (id, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/inspection/${id}`, values);
+      notification.success({ message: res.data.message });
+      //
+      const index = inspection.findIndex((obj) => obj._id === id);
+      let arr = inspection;
+      arr[index] = values;
+      setInspection(arr);
+      //
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const addInspection = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post(`/inspection`, values);
+      notification.success({ message: res.data.message });
+      getInspection();
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const removeInspection = async (id) => {
+    try {
+      setLoading(true);
+      const res = await axios.delete(`/inspection/${id}`);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+      const newInspection = inspection.filter(
+        (inspection) => inspection._id !== id
+      );
+      setInspection(newInspection);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
 
   useEffect(() => {
     getInspection();
@@ -25,12 +91,14 @@ const InspectionLog = () => {
         visible={addModal}
         setVisible={setAddModal}
         action="add"
+        addInspection={addInspection}
       />
       <InspectionModal
         visible={updateModal}
         setVisible={setUpdateModal}
         action="update"
         Id={inspectionId}
+        updateInspection={updateInspection}
       />
       <Container>
         <Navbar bg="" expand="lg" className="mt-5">

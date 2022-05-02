@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 import useContext from "../../Hooks/useContext";
 
 const AssignDriverModal = (props) => {
-  const { driverData, assignDriverToOwner } = useContext();
+  const { driverData, getDrivers, assignDriverToOwner } = useContext();
+
+  useEffect(() => {
+    getDrivers();
+  }, []);
 
   const [drivers, setDrivers] = useState([]);
 
@@ -15,7 +19,7 @@ const AssignDriverModal = (props) => {
     setDrivers(availableDrivers);
   }, [driverData]);
 
-  const { visible, setVisible, owner } = props;
+  const { visible, setVisible, owner, getSummary } = props;
   const [allValues, setAllValues] = useState({
     driverId: "",
     dateAssigned: "",
@@ -44,6 +48,7 @@ const AssignDriverModal = (props) => {
     });
     setTimeout(() => {
       setVisible(false);
+      getSummary();
     }, 300);
   };
   return (

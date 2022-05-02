@@ -65,6 +65,32 @@ const OwnerSummary = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const fetchOwnerSummary = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`/owner/summary/${ownerId}`);
+
+      setAllValues({
+        ...data.owner,
+        billName: data.owner.billing.name,
+        billAddress: data.owner.billing.address,
+        billCity: data.owner.billing.city,
+        billZip: data.owner.billing.zip,
+        billEmail: data.owner.billing.email,
+        billState: data.owner.billing.state,
+        billPrimaryPhoneNumber: data.owner.billing.primaryPhoneNumber,
+        billSecondaryPhoneNumber: data.owner.billing.secondaryPhoneNumber,
+        billFaxNumber: data.owner.billing.faxPhoneNumber,
+        billSSN: data.owner.billing.SSN,
+        billHardCopy: data.owner.billing.hardCopy,
+        billSoftCopy: data.owner.billing.softCopy,
+      });
+      setDrivers(data.assignedDrivers);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     const fetchOwnerSummary = async () => {
@@ -477,6 +503,7 @@ const OwnerSummary = () => {
           visible={show}
           setVisible={setShow}
           owner={ownerId}
+          getSummary={fetchOwnerSummary}
         />
         <Navbar bg="light" expand="lg" className="mt-5">
           <Container>

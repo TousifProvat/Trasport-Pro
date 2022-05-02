@@ -11,39 +11,29 @@ import {
 import "./searchCustomer.css";
 import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
+import axios from "../../utils/axios";
+import { message } from "antd";
 
 const SearchCustomer = () => {
-  const initValue = {
-    name: "",
-    phoneNumber: "",
-    fax: "",
-    email: "",
-    street: "",
-    city: "",
-    state: "",
-    zip: "",
-    billName: "",
-    billAddress: "",
-    billZip: "",
-    billCity: "",
-    billState: "",
-    billPrimaryPhoneNumber: "",
-    billSecondaryPhoneNumber: "",
-    billFaxNumber: "",
-    billHardCopy: false,
-    billSoftCopy: false,
-    billEmail: "",
-    billSSN: "",
+  const [customers, setCustomers] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getCustomers = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/customer");
+      setCustomers(data.customers);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
   };
 
-  const [allValues, setAllValues] = useState(initValue);
-
-  const { customerData, loading } = useContext();
-  const [customers, setCustomers] = useState([]);
-
   useEffect(() => {
-    setCustomers(customerData);
-  }, [customerData]);
+    getCustomers();
+  }, []);
 
   //filter
   const [filter, setFilter] = useState({
@@ -56,9 +46,9 @@ const SearchCustomer = () => {
   };
 
   const onFilter = (e) => {
-    let newCustomers = customerData;
+    let newCustomers = customers;
     if (filter.status !== "") {
-      newCustomers = customerData.filter(
+      newCustomers = customers.filter(
         (customer) => customer.status === filter.status
       );
     }
@@ -72,7 +62,7 @@ const SearchCustomer = () => {
   };
 
   const onReset = () => {
-    setCustomers(customerData);
+    getCustomers();
     setFilter({ status: "", customerId: "" });
   };
 
@@ -133,7 +123,7 @@ const SearchCustomer = () => {
               </tr>
             )}
             {!loading &&
-              customerData.map((customer, index) => (
+              customers.map((customer, index) => (
                 <tr key={index}>
                   <td>
                     <Link to={`/customer/${customer._id}`}>{customer._id}</Link>
@@ -148,9 +138,16 @@ const SearchCustomer = () => {
                   <td>{customer.fax}</td>
                 </tr>
               ))}
-            {!loading && customerData.length < 1 && (
+            {!loading && customers.length < 1 && (
               <tr>
-                <td colSpan={10}>No Data Found</td>
+                <td
+                  colSpan={10}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  No Data Found
+                </td>
               </tr>
             )}
           </tbody>

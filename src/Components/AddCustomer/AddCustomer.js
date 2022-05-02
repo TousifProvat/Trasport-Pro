@@ -29,7 +29,14 @@ const AddCustomer = () => {
   };
   const [allValues, setAllValues] = useState(initValue);
 
-  const changeHandler = (e) => {
+  const onChange = (e) => {
+    if (e.target.type === "checkbox") {
+      setAllValues({
+        ...allValues,
+        [e.target.name]: allValues[e.target.name] ? false : true,
+      });
+      return;
+    }
     setAllValues({
       ...allValues,
       [e.target.name]: e.target.value,
@@ -49,7 +56,7 @@ const AddCustomer = () => {
         setTimeout(() => {
           setValidated(false);
           setAllValues(initValue);
-        }, 1000);
+        }, 300);
       }
       setLoading(false);
     } catch (err) {
@@ -73,7 +80,6 @@ const AddCustomer = () => {
     setAllValues({
       ...allValues,
       billName: allValues.name,
-      billAddress: allValues.address,
       billCity: allValues.city,
       billZip: allValues.zip,
       billEmail: allValues.email,
@@ -96,7 +102,7 @@ const AddCustomer = () => {
                 type="text"
                 placeholder="Customer Name"
                 name="name"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.name}
               />
             </Form.Group>
@@ -107,7 +113,7 @@ const AddCustomer = () => {
                 type="text"
                 placeholder="Phone Number"
                 name="phoneNumber"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.phoneNumber}
               />
             </Form.Group>
@@ -118,7 +124,7 @@ const AddCustomer = () => {
                 type="text"
                 placeholder="Fax Number"
                 name="fax"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.fax}
               />
             </Form.Group>
@@ -131,7 +137,7 @@ const AddCustomer = () => {
                 type="email"
                 placeholder="Email"
                 name="email"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.email}
               />
             </Form.Group>
@@ -142,7 +148,7 @@ const AddCustomer = () => {
                 type="text"
                 placeholder="Street"
                 name="street"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.street}
               />
             </Form.Group>
@@ -153,7 +159,7 @@ const AddCustomer = () => {
                 type="text"
                 placeholder="City"
                 name="city"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.city}
               />
             </Form.Group>
@@ -164,7 +170,7 @@ const AddCustomer = () => {
               <Form.Select
                 required
                 name="state"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.state}
               >
                 <option value="">Select State</option>
@@ -182,7 +188,7 @@ const AddCustomer = () => {
                 type="text"
                 placeholder="Zip Code"
                 name="zip"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.zip}
               />
             </Form.Group>
@@ -203,7 +209,7 @@ const AddCustomer = () => {
                 type="text"
                 placeholder="Bill Name"
                 name="billName"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.billName}
               />
             </Form.Group>
@@ -214,7 +220,7 @@ const AddCustomer = () => {
                 type="text"
                 placeholder="Address"
                 name="billAddress"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.billAddress}
               />
             </Form.Group>
@@ -226,7 +232,7 @@ const AddCustomer = () => {
                   type="text"
                   placeholder="Zip"
                   name="billZip"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.billZip}
                 />
               </InputGroup>
@@ -240,7 +246,7 @@ const AddCustomer = () => {
                 placeholder="City"
                 required
                 name="billCity"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.billCity}
               />
             </Form.Group>
@@ -250,7 +256,7 @@ const AddCustomer = () => {
                 required
                 aria-label="Default select example"
                 name="billState"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.billState}
               >
                 <option value="">Select State</option>
@@ -268,7 +274,7 @@ const AddCustomer = () => {
                 type="text"
                 placeholder="Phone Number"
                 name="billPrimaryPhoneNumber"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.billPrimaryPhoneNumber}
               />
             </Form.Group>
@@ -280,7 +286,7 @@ const AddCustomer = () => {
                 type="text"
                 placeholder="Alt Phone Number"
                 name="billSecondaryPhoneNumber"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.billSecondaryPhoneNumber}
               />
             </Form.Group>
@@ -290,7 +296,7 @@ const AddCustomer = () => {
                 type="text"
                 placeholder="Fax Phone Number"
                 name="billFaxNumber"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.billFaxNumber}
               />
             </Form.Group>
@@ -301,7 +307,7 @@ const AddCustomer = () => {
                 type="email"
                 placeholder="Email"
                 name="billEmail"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.billEmail}
               />
             </Form.Group>
@@ -311,26 +317,16 @@ const AddCustomer = () => {
               <Form.Check
                 label="Hard Copy"
                 name="billHardCopy"
-                onChange={(e) =>
-                  setAllValues({
-                    ...allValues,
-                    billHardCopy: Boolean(e.target.value),
-                  })
-                }
-                value={allValues.billHardCopy}
+                onChange={onChange}
+                checked={allValues.billHardCopy}
               />
             </Form.Group>
             <Form.Group as={Col} md="4">
               <Form.Check
                 label="Soft Copy"
                 name="billSoftCopy"
-                onChange={(e) =>
-                  setAllValues({
-                    ...allValues,
-                    billSoftCopy: Boolean(e.target.value),
-                  })
-                }
-                value={allValues.billSoftCopy}
+                onChange={onChange}
+                checked={allValues.billSoftCopy}
               />
             </Form.Group>
           </Row>
@@ -342,12 +338,17 @@ const AddCustomer = () => {
                 placeholder="Federal ID"
                 required
                 name="billSSN"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.billSSN}
               />
             </Form.Group>
           </Row>
-          <Button type="submit" className="mb-5 me-3" variant="outline-primary">
+          <Button
+            type="submit"
+            className="mb-5 me-3"
+            variant="outline-primary"
+            disabled={loading}
+          >
             Save
           </Button>
           <Button
@@ -355,6 +356,7 @@ const AddCustomer = () => {
             variant="outline-danger"
             className="mb-5"
             href="/search-customer"
+            disabled={loading}
           >
             Cancel
           </Button>

@@ -1,30 +1,40 @@
+import { message } from "antd";
+import axios from "../../utils/axios";
 import React, { useEffect, useState } from "react";
 import {
   Button,
   Col,
   Container,
   Form,
-  InputGroup,
   Row,
   Spinner,
   Table,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import useContext from "../Hooks/useContext";
 import "./searchOwner.css";
 
 const SearchOwner = () => {
-  const { ownerData, loading, getOwners } = useContext();
+  const [allOwners, setAllOwners] = useState([]);
+  const [owners, setOwners] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getOwners = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/owner");
+      setOwners(data.owners);
+      setAllOwners(data.owners);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
 
   useEffect(() => {
     getOwners();
   }, []);
-
-  const [owners, setOwners] = useState([]);
-
-  useEffect(() => {
-    setOwners(ownerData);
-  }, [ownerData]);
 
   const [filter, setFilter] = useState({
     status: "",
@@ -40,9 +50,9 @@ const SearchOwner = () => {
 
   //filter
   const onFilter = () => {
-    let newOwners = ownerData;
+    let newOwners = allOwners;
     if (filter.status !== "") {
-      newOwners = ownerData.filter((owner) => owner.status === filter.status);
+      newOwners = newOwners.filter((owner) => owner.status === filter.status);
     }
     if (filter.ownerId !== "") {
       newOwners = newOwners.filter((owner) => owner._id === filter.ownerId);
@@ -52,7 +62,7 @@ const SearchOwner = () => {
   };
 
   const onReset = () => {
-    setOwners(ownerData);
+    setOwners(allOwners);
     setFilter({ status: "", ownerId: "" });
   };
 

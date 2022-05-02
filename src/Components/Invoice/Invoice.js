@@ -11,10 +11,24 @@ import {
   Table,
 } from "react-bootstrap";
 import UpdateInvoiceModal from "./UpdateInvoiceModal";
-import useContext from "../Hooks/useContext";
+import axios from "../../utils/axios";
 
 const Invoice = () => {
-  const { invoice, loading, getInvoices } = useContext();
+  const [invoice, setInvoice] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getInvoices = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/invoice");
+      setInvoice(data.invoices);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
 
   useEffect(() => {
     getInvoices();
@@ -63,6 +77,7 @@ const Invoice = () => {
         visible={show}
         setVisible={setShow}
         invoice={invoiceId}
+        getInvoices={getInvoices}
       />
       <Container>
         <Navbar bg="" expand="lg" className="mt-5">

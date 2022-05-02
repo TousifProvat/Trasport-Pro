@@ -197,7 +197,6 @@ const useContext = () => {
 
   //billing
   const [billing, setBilling] = useState({
-    loading: false,
     loadStats: {
       total: 0,
       planned: 0,
@@ -293,6 +292,7 @@ const useContext = () => {
       const res = await axios.post(`/maintenance`, values);
 
       notification.success({ message: res.data.message });
+
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -302,23 +302,7 @@ const useContext = () => {
       });
     }
   };
-  const removeMaintenance = async (id) => {
-    try {
-      setLoading(true);
-      const res = await axios.delete(`/maintenance/${id}`);
-      notification.success({ message: res.data.message });
-      setLoading(false);
-      const newMaintenance = maintenance.filter(
-        (maintenance) => maintenance._id !== id
-      );
-      setMaintenance(newMaintenance);
-    } catch (err) {
-      setLoading(false);
-      notification.error({
-        message: err.response.data.message,
-      });
-    }
-  };
+
   //inspection
   const [inspection, setInspection] = useState([]);
   const getInspection = async () => {
@@ -403,8 +387,7 @@ const useContext = () => {
       setLoading(true);
       const res = await axios.put(`/company/${id}`, values);
       notification.success({ message: res.data.message });
-      console.log(values);
-      setSettings({ ...values });
+      setSettings(values);
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -703,101 +686,7 @@ const useContext = () => {
     }
   };
 
-  useEffect(() => {
-    isUserAutheticated();
-  }, []);
-
-  useEffect(() => {
-    if (auth.isAuthenticated) {
-      getSiteSettings();
-      getEobr();
-      getCommodities();
-    }
-  }, [auth.isAuthenticated]);
-
-  return {
-    //settings
-    getSiteSettings,
-    //load
-    load,
-    addLoad,
-    getLoads,
-    // driver
-    driverData,
-    getDrivers,
-    addDriver,
-    updateDriver,
-    assignDriverToOwner,
-    unassignDriverFromOwner,
-    assignDriverToTractor,
-    unassignDriverFromTractor,
-    assignDriverToTrailer,
-    unassignDriverFromTrailer,
-    // tractor
-    tractorData,
-    getTractors,
-    addTractor,
-    //trailer
-    trailerData,
-    getTrailers,
-    // customer
-    customerData,
-    getCustomers,
-    // owner
-    ownerData,
-    getOwners,
-    updateOwner,
-    addOwner,
-    // billing
-    billing,
-    getBilling,
-    // auth
-    auth,
-    isUserAutheticated,
-    authSignin,
-    authSignOut,
-    //commodity
-    commodity,
-    getCommodities,
-    //eobr
-    eobr,
-    getEobr,
-    // maintenance
-    maintenance,
-    addMaintenance,
-    updateMaintenance,
-    removeMaintenance,
-    getMaintenance,
-
-    // maintenance
-    inspection,
-    addInspection,
-    updateInspection,
-    removeInspection,
-    getInspection,
-    //settings
-    settings,
-    updateSettings,
-    //user
-    user,
-    addUser,
-    updateUser,
-    removeUser,
-    getUsers,
-    // incident
-    incident,
-    addIncident,
-    updateIncident,
-    removeIncident,
-    getIncidents,
-    //invoice
-    invoice,
-    addInvoice,
-    updateInvoice,
-    getInvoices,
-    // loading state
-    loading,
-  };
+  return;
 };
 
 export default useContext;

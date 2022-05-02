@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { message, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -11,15 +11,30 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import axios from "../../../utils/axios";
-import useContext from "../../Hooks/useContext";
 
 const InvoiceModal = (props) => {
-  const { settings, updateInvoice } = useContext();
-  const { visible, setVisible, invoice } = props;
+  const { settings } = useSelector((state) => state.settings);
+
+  const { visible, setVisible, invoice, getInvoices } = props;
 
   const [loading, setLoading] = useState(false);
   const [customer, setCustomer] = useState({});
+
+  const updateInvoice = async (id, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/invoice/${id}`, values);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
 
   const [allValues, setAllValues] = useState({
     customer: "",
@@ -114,6 +129,7 @@ const InvoiceModal = (props) => {
     updateInvoice(invoice, { ...allValues, other: others });
     setTimeout(() => {
       setVisible(false);
+      getInvoices();
     }, 300);
   };
 
@@ -126,6 +142,7 @@ const InvoiceModal = (props) => {
     });
     setTimeout(() => {
       setVisible(false);
+      getInvoices();
     }, 300);
   };
   const markUnpaid = () => {
@@ -137,6 +154,7 @@ const InvoiceModal = (props) => {
     });
     setTimeout(() => {
       setVisible(false);
+      getInvoices();
     }, 300);
   };
 

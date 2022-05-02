@@ -11,15 +11,42 @@ import {
   Spinner,
   Table,
 } from "react-bootstrap";
+import axios from "../../utils/axios";
 import useContext from "../Hooks/useContext";
 
 const BillingDashboard = () => {
-  const { billing, getBilling, loading } = useContext();
-  const { loadStats, invoiceStats, revenueStats } = billing;
+  const [billing, setBilling] = useState({
+    loadStats: {
+      total: 0,
+      planned: 0,
+      dispatched: 0,
+      delivered: 0,
+      cancelled: 0,
+    },
+    revenueStats: { revenue: 0, paid: 0, unpaid: 0 },
+    invoiceStats: { notInvoicedLoads: 0, loadsInvoiced: 0, paidLoads: 0 },
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const getBilling = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/billing");
+      setBilling(data);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
 
   useEffect(() => {
     getBilling();
   }, []);
+
+  const { loadStats, invoiceStats, revenueStats } = billing;
 
   return (
     <Container>
