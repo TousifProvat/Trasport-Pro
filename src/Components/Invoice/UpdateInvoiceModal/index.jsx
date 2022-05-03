@@ -9,6 +9,7 @@ import {
   Nav,
   Navbar,
   Row,
+  Spinner,
   Table,
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
@@ -17,7 +18,7 @@ import axios from "../../../utils/axios";
 const InvoiceModal = (props) => {
   const { settings } = useSelector((state) => state.settings);
 
-  const { visible, setVisible, invoice, getInvoices } = props;
+  const { visible, setVisible, invoice, setInvoice, getInvoices } = props;
 
   const [loading, setLoading] = useState(false);
   const [customer, setCustomer] = useState({});
@@ -27,7 +28,10 @@ const InvoiceModal = (props) => {
       setLoading(true);
       const res = await axios.put(`/invoice/${id}`, values);
       notification.success({ message: res.data.message });
+      getInvoices();
       setLoading(false);
+      setInvoice(null);
+      setVisible(false);
     } catch (err) {
       setLoading(false);
       notification.error({
@@ -127,10 +131,6 @@ const InvoiceModal = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     updateInvoice(invoice, { ...allValues, other: others });
-    setTimeout(() => {
-      setVisible(false);
-      getInvoices();
-    }, 300);
   };
 
   const markPaid = () => {
@@ -140,10 +140,6 @@ const InvoiceModal = (props) => {
       other: others,
       status: "paid",
     });
-    setTimeout(() => {
-      setVisible(false);
-      getInvoices();
-    }, 300);
   };
   const markUnpaid = () => {
     updateInvoice(invoice, {
@@ -152,10 +148,6 @@ const InvoiceModal = (props) => {
       other: others,
       status: "unpaid",
     });
-    setTimeout(() => {
-      setVisible(false);
-      getInvoices();
-    }, 300);
   };
 
   return (
@@ -164,185 +156,198 @@ const InvoiceModal = (props) => {
         <Modal.Title id="example-modal-sizes-title-lg">Invoice</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={handleSubmit}>
-          <Row>
-            <Col sm={6}>
-              <h4>LOGO HERE</h4>
-            </Col>
-            <Col sm={6}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "end",
-                }}
-              >
-                <h4>
-                  <b>{settings.name}</b>
-                </h4>
-                <p>
-                  {settings.street}, {settings.city}, {settings.state}
-                </p>
-                <p>{settings.zip}</p>
-              </div>
-            </Col>
-          </Row>
-          <hr></hr>
-          <Row>
-            <Col sm={6}>
-              <h5>Bill To :</h5>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "start",
-                }}
-              >
-                <h4>
-                  <b>{customer.name}</b>
-                </h4>
-                <p>
-                  {customer.street}, {customer.city}, {customer.state}
-                </p>
-                <p>{customer.zip}</p>
-              </div>
-            </Col>
-            <Col sm={6}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "end",
-                }}
-              >
-                <p>
-                  Invoice No:{" "}
-                  <span>
-                    <b>#{allValues.invoiceNumber}</b>
-                  </span>
-                </p>
-                <p>
-                  Invoice Date:
-                  <span>
-                    <b> #{allValues.invoiceDate}</b>
-                  </span>
-                </p>
-                <p>
-                  Invoice Status:
-                  <span>
-                    <b> {allValues.status}</b>
-                  </span>
-                </p>
-                <p>
-                  Load ID:
-                  <span>
-                    <b> {allValues.load}</b>
-                  </span>
-                </p>
-              </div>
-            </Col>
-          </Row>
-          <hr></hr>
-          <Row className="mb-2">
-            <Col sm={12}>
-              <Form.Label>Notes: </Form.Label>
-              <Form.Control
-                as="textarea"
-                placeholder="Note"
-                rows={3}
-                name="notes"
-                value={allValues.notes}
-                onChange={onChange}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Navbar bg="light" expand="lg">
-                <Container>
-                  <Navbar.Brand>Other Charges</Navbar.Brand>
-                  <Nav className="ms-auto">
-                    <Button variant="outline-primary" onClick={addCharge}>
-                      <i className="fa-solid fa-plus"></i>
-                    </Button>
-                  </Nav>
-                </Container>
-              </Navbar>
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Charges</th>
-                    <th>Amount</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {others.map((other, index) => (
-                    <tr key={index}>
-                      <td>
-                        <Form.Control
-                          type="text"
-                          placeholder="Name of the charge"
-                          name="name"
-                          value={other.name}
-                          onChange={(e) => otherChargeChange(e, index)}
-                        />
-                      </td>
-                      <td>
-                        <Form.Control
-                          type="number"
-                          name="price"
-                          value={other.price}
-                          onChange={(e) => otherChargeChange(e, index)}
-                        />
-                      </td>
-                      <td>
-                        <Button onClick={() => removeCharge(index)}>
-                          Remove
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </Col>
-          </Row>
-          <hr></hr>
-          <Row>
-            <Col
-              sm={12}
-              style={{
-                textAlign: "right",
-              }}
-            >
-              <strong>Load Charge: </strong>
-              <span>{allValues.amount}$</span>
-              <br></br>
-              <strong>Other's Charge: </strong>
-              <span>{allValues.other}$</span>
-              <br></br>
-              <strong>Total: </strong>
-              <span>{allValues.amount + allValues.other}$</span>
-            </Col>
-          </Row>
-          <Button type="submit" variant="outline-primary">
-            Save
-          </Button>
-          <Button
-            variant="outline-danger"
-            onClick={() => setVisible(false)}
-            className="m-2"
+        {loading && (
+          <div
+            style={{
+              textAlign: "center",
+            }}
           >
-            Cancel
-          </Button>
-          {allValues.status === "paid" ? (
-            <Button onClick={markUnpaid} variant="danger">
-              Mark as Unpaid
+            <Spinner animation="border" variant="primary">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        )}
+        {!loading && (
+          <Form onSubmit={handleSubmit}>
+            <Row>
+              <Col sm={6}>
+                <h4>LOGO HERE</h4>
+              </Col>
+              <Col sm={6}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "end",
+                  }}
+                >
+                  <h4>
+                    <b>{settings.name}</b>
+                  </h4>
+                  <p>
+                    {settings.street}, {settings.city}, {settings.state}
+                  </p>
+                  <p>{settings.zip}</p>
+                </div>
+              </Col>
+            </Row>
+            <hr></hr>
+            <Row>
+              <Col sm={6}>
+                <h5>Bill To :</h5>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                  }}
+                >
+                  <h4>
+                    <b>{customer.name}</b>
+                  </h4>
+                  <p>
+                    {customer.street}, {customer.city}, {customer.state}
+                  </p>
+                  <p>{customer.zip}</p>
+                </div>
+              </Col>
+              <Col sm={6}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "end",
+                  }}
+                >
+                  <p>
+                    Invoice No:{" "}
+                    <span>
+                      <b>#{allValues.invoiceNumber}</b>
+                    </span>
+                  </p>
+                  <p>
+                    Invoice Date:
+                    <span>
+                      <b> #{allValues.invoiceDate}</b>
+                    </span>
+                  </p>
+                  <p>
+                    Invoice Status:
+                    <span>
+                      <b> {allValues.status}</b>
+                    </span>
+                  </p>
+                  <p>
+                    Load ID:
+                    <span>
+                      <b> {allValues.load}</b>
+                    </span>
+                  </p>
+                </div>
+              </Col>
+            </Row>
+            <hr></hr>
+            <Row className="mb-2">
+              <Col sm={12}>
+                <Form.Label>Notes: </Form.Label>
+                <Form.Control
+                  as="textarea"
+                  placeholder="Note"
+                  rows={3}
+                  name="notes"
+                  value={allValues.notes}
+                  onChange={onChange}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Navbar bg="light" expand="lg">
+                  <Container>
+                    <Navbar.Brand>Other Charges</Navbar.Brand>
+                    <Nav className="ms-auto">
+                      <Button variant="outline-primary" onClick={addCharge}>
+                        <i className="fa-solid fa-plus"></i>
+                      </Button>
+                    </Nav>
+                  </Container>
+                </Navbar>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Charges</th>
+                      <th>Amount</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {others.map((other, index) => (
+                      <tr key={index}>
+                        <td>
+                          <Form.Control
+                            type="text"
+                            placeholder="Name of the charge"
+                            name="name"
+                            value={other.name}
+                            onChange={(e) => otherChargeChange(e, index)}
+                          />
+                        </td>
+                        <td>
+                          <Form.Control
+                            type="number"
+                            name="price"
+                            value={other.price}
+                            onChange={(e) => otherChargeChange(e, index)}
+                          />
+                        </td>
+                        <td>
+                          <Button onClick={() => removeCharge(index)}>
+                            Remove
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </Col>
+            </Row>
+            <hr></hr>
+            <Row>
+              <Col
+                sm={12}
+                style={{
+                  textAlign: "right",
+                }}
+              >
+                <strong>Load Charge: </strong>
+                <span>{allValues.amount}$</span>
+                <br></br>
+                <strong>Other's Charge: </strong>
+                <span>{allValues.other}$</span>
+                <br></br>
+                <strong>Total: </strong>
+                <span>{allValues.amount + allValues.other}$</span>
+              </Col>
+            </Row>
+            <Button type="submit" variant="outline-primary">
+              Save
             </Button>
-          ) : (
-            <Button onClick={markPaid}>Mark as Paid</Button>
-          )}
-        </Form>
+            <Button
+              variant="outline-danger"
+              onClick={() => setVisible(false)}
+              className="m-2"
+            >
+              Cancel
+            </Button>
+            {allValues.status === "paid" ? (
+              <Button onClick={markUnpaid} variant="danger">
+                Mark as Unpaid
+              </Button>
+            ) : (
+              <Button onClick={markPaid}>Mark as Paid</Button>
+            )}
+          </Form>
+        )}
       </Modal.Body>
     </Modal>
   );
