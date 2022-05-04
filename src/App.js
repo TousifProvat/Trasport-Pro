@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import FreightOptionsDashboard from "./Components/FreightOptionsDashboard/FreightOptionsDashboard";
+import LoadSummary from "./Components/loadSummary";
 import AddNewLoad from "./Components/FreightOptionsDashboard/AddNewLoad/AddNewLoad";
 import AddOwner from "./Components/AddOwner/AddOwner";
 import SearchOwner from "./Components/SearchOwner/SearchOwner";
@@ -79,6 +80,7 @@ function App() {
               element={<FreightOptionsDashboard />}
             />
             <Route path="add-new-load" element={<AddNewLoad />} />
+            <Route path="/load/:loadId" element={<LoadSummary />} />
             <Route path="add-owner" element={<AddOwner />} />
             <Route path="search-owner" element={<SearchOwner />} />
             <Route path="add-driver" element={<AddDrivers />} />

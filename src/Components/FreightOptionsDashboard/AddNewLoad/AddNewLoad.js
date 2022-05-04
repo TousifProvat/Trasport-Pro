@@ -87,13 +87,11 @@ const AddNewLoad = () => {
 
   return (
     <Container>
-      <Navbar>
-        <Container>
-          <Navbar.Brand>
-            <h3 className="mt-5">New Load</h3>
-          </Navbar.Brand>
-        </Container>
-      </Navbar>
+      <Row className="mt-5">
+        <Navbar.Brand>
+          <h3>New Load</h3>
+        </Navbar.Brand>
+      </Row>
       <hr></hr>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Row>
@@ -141,12 +139,14 @@ const AddNewLoad = () => {
             </Form.Select>
           </Col>
         </Row>
-        <Row className="mt-5">
+        <Row>
           {/* pickup location */}
           <Col sm={6}>
-            <Container>
-              <Navbar.Brand>Pickup Location</Navbar.Brand>
-            </Container>
+            <Row className="mt-5">
+              <Container>
+                <Navbar.Brand>Pickup Location</Navbar.Brand>
+              </Container>
+            </Row>
             <hr></hr>
             <Row className="mt-3">
               <Col>
@@ -197,9 +197,11 @@ const AddNewLoad = () => {
             </Row>
           </Col>
           <Col sm={6}>
-            <Container>
-              <Navbar.Brand>Delivery Location</Navbar.Brand>
-            </Container>
+            <Row className="mt-5">
+              <Container>
+                <Navbar.Brand>Delivery Location</Navbar.Brand>
+              </Container>
+            </Row>
             <hr></hr>
             <Row className="mt-3">
               <Col>
@@ -252,13 +254,11 @@ const AddNewLoad = () => {
         </Row>
         {/* load Information */}
         <Row className="mt-5">
-          <Col sm={12}>
-            <Container>
-              <Navbar.Brand>Load Information</Navbar.Brand>
-            </Container>
-            <hr></hr>
-          </Col>
+          <Container>
+            <Navbar.Brand>Load Information</Navbar.Brand>
+          </Container>
         </Row>
+        <hr></hr>
         <Row className="mt-3">
           <Col sm={6}>
             <Form.Label>Load Number</Form.Label>
