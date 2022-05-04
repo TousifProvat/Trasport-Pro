@@ -57,18 +57,16 @@ const SiteSettings = () => {
   return (
     <div>
       <Container>
-        <Navbar bg="" expand="lg">
+        <Row className="mt-5">
           <Container>
-            <Navbar.Brand href="#home" className="mt-5">
-              Site Settings
-            </Navbar.Brand>
+            <Navbar.Brand>Site Settings</Navbar.Brand>
           </Container>
-        </Navbar>
+        </Row>
         <hr></hr>
         <div>
-          <Form noValidate validated={validated} onSubmit={handleSubmit}>
-            {loading && <Loader />}
-            {!loading && (
+          {loading && <Loader />}
+          {!loading && (
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
               <Row>
                 <Col sm={4}></Col>
                 <Col sm={4} className="mt-5">
@@ -125,21 +123,21 @@ const SiteSettings = () => {
                   </InputGroup>
                 </Col>
               </Row>
-            )}
-            <Row>
-              <Col sm={4}></Col>
-              <Col sm={4}>
-                <Button
-                  type="submit"
-                  variant="outline-primary"
-                  className="mt-5 mb-5"
-                  disabled={loading}
-                >
-                  Update
-                </Button>
-              </Col>
-            </Row>
-          </Form>
+              <Row>
+                <Col sm={4}></Col>
+                <Col sm={4}>
+                  <Button
+                    type="submit"
+                    variant="outline-primary"
+                    className="mt-5 mb-5"
+                    disabled={loading}
+                  >
+                    Update
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          )}
         </div>
       </Container>
     </div>
