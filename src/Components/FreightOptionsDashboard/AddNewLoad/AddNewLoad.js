@@ -1,34 +1,17 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Col,
-  Container,
-  FloatingLabel,
-  Form,
-  Nav,
-  Navbar,
-  Row,
-} from "react-bootstrap";
-import "./addNewLoad.css";
-import axios from "../../../utils/axios";
-import { notification } from "antd";
 import { useSelector } from "react-redux";
-
+import axios from "../../../utils/axios";
+//
+import { Button, Col, Container, Form, Navbar, Row } from "react-bootstrap";
+import { notification } from "antd";
+//css
+import "./addNewLoad.css";
 const AddNewLoad = () => {
+  //state
   const { auth } = useSelector((state) => state.auth);
   const { users } = useSelector((state) => state.user);
   const { commodities } = useSelector((state) => state.commodity);
   const { customers } = useSelector((state) => state.customer);
-
-  useEffect(() => {
-    setAllValues({
-      ...allValues,
-      loadEnteredBy: auth.user._id,
-    });
-  }, [auth.user]);
-
-  const colors = ["#fff", "#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-
   const initValue = {
     // NumberOfLoads: 1,
     loadNumber: 1,
@@ -55,16 +38,26 @@ const AddNewLoad = () => {
   };
   const [allValues, setAllValues] = useState(initValue);
   const [loading, setLoading] = useState(false);
+  const [validated, setValidated] = useState(false);
+  const colors = ["#fff", "#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+
+  //hooks
+  useEffect(() => {
+    setAllValues({
+      ...allValues,
+      loadEnteredBy: auth.user._id,
+    });
+  }, [auth.user]);
+
+  //func
   const addLoad = async (values) => {
     try {
       setLoading(true);
       const res = await axios.post("/load", values);
       if (res.status === 201) {
         notification.success({ message: res.data.message });
-        setTimeout(() => {
-          setValidated(false);
-          setAllValues(initValue);
-        }, 300);
+        setValidated(false);
+        setAllValues(initValue);
       }
       setLoading(false);
     } catch (err) {
@@ -74,8 +67,6 @@ const AddNewLoad = () => {
       });
     }
   };
-
-  const [validated, setValidated] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -87,7 +78,6 @@ const AddNewLoad = () => {
 
     addLoad(allValues);
   };
-
   const onChange = (e) => {
     setAllValues({
       ...allValues,
@@ -97,10 +87,10 @@ const AddNewLoad = () => {
 
   return (
     <Container>
-      <Navbar bg="" expand="lg">
+      <Navbar>
         <Container>
           <Navbar.Brand>
-            <h3 className="mt-5 mb-3">New Load</h3>
+            <h3 className="mt-5">New Load</h3>
           </Navbar.Brand>
         </Container>
       </Navbar>
@@ -151,115 +141,122 @@ const AddNewLoad = () => {
             </Form.Select>
           </Col>
         </Row>
-        <Row className="mt-3">
+        <Row className="mt-5">
+          {/* pickup location */}
           <Col sm={6}>
-            <Navbar bg="light" expand="lg">
-              <Container>
-                <Navbar.Brand href="#home">Pickup Location</Navbar.Brand>
-              </Container>
-            </Navbar>
+            <Container>
+              <Navbar.Brand>Pickup Location</Navbar.Brand>
+            </Container>
+            <hr></hr>
+            <Row className="mt-3">
+              <Col>
+                <Form.Label>Address</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Address"
+                  name="pickupAddress"
+                  onChange={onChange}
+                />
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col>
+                <Form.Label>State</Form.Label>
+                <Form.Select required name="pickupState" onChange={onChange}>
+                  <option value="">Select State</option>
+                  <option value="Alabama">Alabama</option>
+                  <option value="Alaska">Alaska</option>
+                  <option value="Canada">Canada</option>
+                </Form.Select>
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col>
+                <Form.Label>City</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="City Name"
+                  name="pickupCity"
+                  onChange={onChange}
+                />
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col>
+                <Form.Label>Zip</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Zip Code"
+                  name="pickupZip"
+                  onChange={onChange}
+                />
+              </Col>
+            </Row>
           </Col>
           <Col sm={6}>
-            <Navbar bg="light" expand="lg">
-              <Container>
-                <Navbar.Brand href="#home">Delivery Location</Navbar.Brand>
-              </Container>
-            </Navbar>
+            <Container>
+              <Navbar.Brand>Delivery Location</Navbar.Brand>
+            </Container>
+            <hr></hr>
+            <Row className="mt-3">
+              <Col>
+                <Form.Label>Address</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Address"
+                  name="deliveryAddress"
+                  onChange={onChange}
+                />
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col>
+                <Form.Label>State</Form.Label>
+                <Form.Select required name="deliveryState" onChange={onChange}>
+                  <option value="">Select State</option>
+                  <option value="Alabama">Alabama</option>
+                  <option value="Alaska">Alaska</option>
+                  <option value="Canada">Canada</option>
+                </Form.Select>
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col>
+                <Form.Label>City</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Zip Code"
+                  name="deliveryCity"
+                  onChange={onChange}
+                />
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col>
+                <Form.Label>Zip</Form.Label>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="City Name"
+                  name="deliveryZip"
+                  onChange={onChange}
+                />
+              </Col>
+            </Row>
           </Col>
         </Row>
-        <Row className="mt-3">
-          <Col sm={6}>
-            <Form.Label>Address</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="Address"
-              name="pickupAddress"
-              onChange={onChange}
-            />
-          </Col>
-          <Col sm={6}>
-            <Form.Label>Address</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="Address"
-              name="deliveryAddress"
-              onChange={onChange}
-            />
-          </Col>
-        </Row>
-        <Row className="mt-3">
-          <Col sm={6}>
-            <Form.Label>State</Form.Label>
-            <Form.Select required name="pickupState" onChange={onChange}>
-              <option value="">Select State</option>
-              <option value="Alabama">Alabama</option>
-              <option value="Alaska">Alaska</option>
-              <option value="Canada">Canada</option>
-            </Form.Select>
-          </Col>
-          <Col sm={6}>
-            <Form.Label>State</Form.Label>
-            <Form.Select required name="deliveryState" onChange={onChange}>
-              <option value="">Select State</option>
-              <option value="Alabama">Alabama</option>
-              <option value="Alaska">Alaska</option>
-              <option value="Canada">Canada</option>
-            </Form.Select>
-          </Col>
-        </Row>
-        <Row className="mt-3">
-          <Col sm={6}>
-            <Form.Label>City</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="City Name"
-              name="pickupCity"
-              onChange={onChange}
-            />
-          </Col>
-          <Col sm={6}>
-            <Form.Label>City</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="Zip Code"
-              name="deliveryCity"
-              onChange={onChange}
-            />
-          </Col>
-        </Row>
-        <Row className="mt-3">
-          <Col sm={6}>
-            <Form.Label>Zip</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="Zip Code"
-              name="pickupZip"
-              onChange={onChange}
-            />
-          </Col>
-          <Col sm={6}>
-            <Form.Label>Zip</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="City Name"
-              name="deliveryZip"
-              onChange={onChange}
-            />
-          </Col>
-        </Row>
-        <Row className="mt-3">
+        {/* load Information */}
+        <Row className="mt-5">
           <Col sm={12}>
-            <Navbar bg="light" expand="lg">
-              <Container>
-                <Navbar.Brand>Load Information</Navbar.Brand>
-              </Container>
-            </Navbar>
+            <Container>
+              <Navbar.Brand>Load Information</Navbar.Brand>
+            </Container>
+            <hr></hr>
           </Col>
         </Row>
         <Row className="mt-3">
