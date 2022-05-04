@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import "./navbar2.css";
-const Navbar2 = () => {
+const BottomTopNav = () => {
   return (
     <div>
       <Navbar bg="light" expand="lg">
@@ -16,13 +16,14 @@ const Navbar2 = () => {
                 {/* <NavDropdown.Item href="#action/3.2">
                   Load management Dashboard
                 </NavDropdown.Item> */}
-                <NavDropdown.Item href="/add-new-load">
-                  Add New Load
-                </NavDropdown.Item>
-
-                <NavDropdown.Item href="/search-load">
-                  Search Load
-                </NavDropdown.Item>
+                <NavDropdown title="Load">
+                  <NavDropdown.Item href="/add-new-load">
+                    Add New Load
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/search-load">
+                    Search Load
+                  </NavDropdown.Item>
+                </NavDropdown>
               </NavDropdown>
 
               <NavDropdown title="Drivers / Equip" id="basic-nav-dropdown">
@@ -119,4 +120,4 @@ const Navbar2 = () => {
   );
 };
 
-export default Navbar2;
+export default BottomTopNav;

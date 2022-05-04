@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Col,
-  Container,
-  Form,
-  Row,
-  Spinner,
-  Table,
-} from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
 import { message } from "antd";
 import "./searchTrailer.css";
 import { Link } from "react-router-dom";
 import axios from "../../utils/axios";
+import Loader from "../Loader";
 
 const SearchTrailer = () => {
   const [allTrailer, setAllTrailer] = useState([]);
@@ -130,23 +123,10 @@ const SearchTrailer = () => {
           </thead>
 
           <tbody>
-            {loading && (
-              <tr>
-                <td
-                  colSpan={8}
-                  style={{
-                    textAlign: "center",
-                  }}
-                >
-                  <Spinner animation="border" variant="primary">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </td>
-              </tr>
-            )}
+            {loading && <Loader type="table" />}
             {!loading &&
-              trailers.map((trailer) => (
-                <tr>
+              trailers.map((trailer, index) => (
+                <tr key={index}>
                   <td>
                     <Link to={`/trailer/${trailer._id}`}>{trailer._id}</Link>
                   </td>
@@ -165,7 +145,7 @@ const SearchTrailer = () => {
             {!loading && trailers.length < 1 && (
               <tr>
                 <td
-                  colSpan={8}
+                  colSpan={10}
                   style={{
                     textAlign: "center",
                   }}

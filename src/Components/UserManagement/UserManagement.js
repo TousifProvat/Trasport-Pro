@@ -6,9 +6,18 @@ import "./userManagement.css";
 import UserManagementModal from "./UserManagementModal";
 
 const UserManagement = () => {
+  //state
   const [user, setUser] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [addModal, setAddModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
 
+  //hooks
+  useEffect(() => {
+    getUsers();
+  }, []);
+  //funcs
   const getUsers = async () => {
     try {
       setLoading(true);
@@ -19,38 +28,6 @@ const UserManagement = () => {
       setLoading(false);
       message.error(err.response.data.message);
       console.log({ err });
-    }
-  };
-  const updateUser = async (id, values) => {
-    try {
-      setLoading(true);
-      const res = await axios.put(`/user/${id}`, values);
-      notification.success({ message: res.data.message });
-      const index = user.findIndex((obj) => obj._id === id);
-      let arr = user;
-      arr[index] = values;
-      setUser(arr);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      notification.error({
-        message: err.response.data.message,
-      });
-    }
-  };
-  const addUser = async (values) => {
-    try {
-      setLoading(true);
-      const res = await axios.post(`/user`, values);
-      notification.success({ message: res.data.message });
-      getUsers();
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-      setLoading(false);
-      notification.error({
-        message: err.response.data.message,
-      });
     }
   };
   const removeUser = async (id) => {
@@ -69,24 +46,19 @@ const UserManagement = () => {
     }
   };
 
-  useEffect(() => {
-    getUsers();
-  }, []);
-  const [userId, setUserId] = useState(null);
-  const [addModal, setAddModal] = useState(false);
-  const [updateModal, setUpdateModal] = useState(false);
-
   const showUpdateModal = (id) => {
     setUserId(id);
     setUpdateModal(true);
   };
+
   return (
     <>
       <UserManagementModal
         visible={addModal}
         setVisible={setAddModal}
         action="add"
-        addUser={addUser}
+        setId={setUserId}
+        getUsers={getUsers}
       />
       <UserManagementModal
         visible={updateModal}
@@ -94,7 +66,6 @@ const UserManagement = () => {
         action="update"
         Id={userId}
         setId={setUserId}
-        updateUser={updateUser}
         getUsers={getUsers}
       />
       <Container>

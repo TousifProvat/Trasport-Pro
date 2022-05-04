@@ -93,7 +93,7 @@ const SearchTractor = () => {
                 onChange={onChange}
                 value={filter.status}
               >
-                <option>Select Status</option>
+                <option value="">Select Status</option>
                 <option value="Active">Active</option>
                 <option value="Hold-Safely">Hold-Safely</option>
                 <option value="Hold-Shop">Hold-Shop</option>
