@@ -16,13 +16,14 @@ const BottomTopNav = () => {
                 {/* <NavDropdown.Item href="#action/3.2">
                   Load management Dashboard
                 </NavDropdown.Item> */}
-                <NavDropdown.Item href="/add-new-load">
-                  Add New Load
-                </NavDropdown.Item>
-
-                <NavDropdown.Item href="/search-load">
-                  Search Load
-                </NavDropdown.Item>
+                <NavDropdown title="Load">
+                  <NavDropdown.Item href="/add-new-load">
+                    Add New Load
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/search-load">
+                    Search Load
+                  </NavDropdown.Item>
+                </NavDropdown>
               </NavDropdown>
 
               <NavDropdown title="Drivers / Equip" id="basic-nav-dropdown">
