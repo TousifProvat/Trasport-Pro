@@ -13,7 +13,7 @@ const ownerSlice = createSlice({
       state.loading = payload;
     },
     setOwners: (state, { payload }) => {
-      state.loads = payload;
+      state.owners = payload;
     },
   },
 });

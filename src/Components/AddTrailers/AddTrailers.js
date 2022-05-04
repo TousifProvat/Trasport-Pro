@@ -184,6 +184,7 @@ const AddTrailers = () => {
               <Form.Label>Year</Form.Label>
               <Form.Control
                 required
+                type="number"
                 placeholder="Year"
                 name="year"
                 onChange={onChange}

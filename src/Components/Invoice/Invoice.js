@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
+import axios from "../../utils/axios";
+//
 import {
   Button,
   Col,
   Container,
   Form,
-  Nav,
   Navbar,
   Row,
   Spinner,
   Table,
 } from "react-bootstrap";
 import { message } from "antd";
+//
 import UpdateInvoiceModal from "./UpdateInvoiceModal";
-import axios from "../../utils/axios";
 
 const Invoice = () => {
   const [invoice, setInvoice] = useState([]);
@@ -144,7 +145,7 @@ const Invoice = () => {
                 <tr key={index}>
                   <td>{invoice.load?.loadNumber}</td>
                   <td>{invoice.invoiceNumber}</td>
-                  <td>{invoice.customer.name}</td>
+                  <td>{invoice.customer?.name}</td>
                   <td>{invoice.amount}</td>
                   <td>
                     {invoice.other.reduce(function (res, item) {

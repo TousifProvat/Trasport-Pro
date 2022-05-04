@@ -1,31 +1,29 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  Button,
-  Container,
-  Nav,
-  Navbar,
-  Offcanvas,
-  Spinner,
-} from "react-bootstrap";
-import "./navbar1.css";
 //
-import { authSignOut } from "../../../features/auth/action";
+import { Button, Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 //
+import Loader from "../../Loader";
+//assets
 import { ReactComponent as Avatar } from "../../../assets/avatar.svg";
+//actions
+import { authSignOut } from "../../../features/auth/action";
+//css
+import "./navbar1.css";
 
-//
-const Navbar1 = () => {
-  const { settings } = useSelector((state) => state.settings);
-  const { auth, loading } = useSelector((state) => state.auth);
+const TopNav = () => {
+  //state
+  const { settings, loading } = useSelector((state) => state.settings);
+  const { auth } = useSelector((state) => state.auth);
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+  //hooks
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  //func
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const onSignOut = () => {
     navigate("/login");
     dispatch(authSignOut());
@@ -42,13 +40,7 @@ const Navbar1 = () => {
         <div>
           <Nav className="navbar-1">
             <h4 className="navbar-1-title text-nowrap">
-              {loading ? (
-                <div>
-                  <Spinner animation="border" variant="primary"></Spinner>
-                </div>
-              ) : (
-                settings.name
-              )}
+              {loading ? <Loader /> : settings.name}
             </h4>
           </Nav>
         </div>
@@ -89,4 +81,4 @@ const Navbar1 = () => {
   );
 };
 
-export default Navbar1;
+export default TopNav;

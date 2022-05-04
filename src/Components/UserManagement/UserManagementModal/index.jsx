@@ -10,18 +10,18 @@ const UserManagementModal = (props) => {
     Id,
     setId,
     action,
-    addUser,
-    updateUser,
+
     getUsers,
   } = props;
 
-  const [loading, setLoading] = useState(false);
-  const [allValues, setAllValues] = useState({
+  //state
+  const initVal = {
     firstName: "",
     middleName: "",
     lastName: "",
     phoneNumber: "",
     email: "",
+    newPassword: "",
     password: "",
     suspended: false,
     accounting: false,
@@ -29,13 +29,32 @@ const UserManagementModal = (props) => {
     systemAdmin: true,
     settlements: false,
     freightOperation: false,
-  });
+  };
+  const [allValues, setAllValues] = useState(initVal);
+  const [loading, setLoading] = useState(false);
+  const [validated, setValidated] = useState(false);
 
+  //hooks
+  useEffect(() => {
+    if (Id) {
+      getUserById(Id);
+    }
+  }, [Id]);
+
+  //funcs
+
+  const reset = () => {
+    setVisible(false);
+    setValidated(false);
+    setAllValues(initVal);
+    setId(null);
+    getUsers();
+  };
   const getUserById = async (Id) => {
     try {
       setLoading(true);
       const { data } = await axios.get(`/user/${Id}`);
-      setAllValues({ ...data.user });
+      setAllValues({ ...data.user, newPassword: "" });
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -43,13 +62,6 @@ const UserManagementModal = (props) => {
       console.log({ err });
     }
   };
-
-  useEffect(() => {
-    if (Id) {
-      getUserById(Id);
-    }
-  }, [Id]);
-
   const onChange = (e) => {
     if (e.target.type === "checkbox") {
       setAllValues({
@@ -64,21 +76,36 @@ const UserManagementModal = (props) => {
       [e.target.name]: e.target.value,
     });
   };
-
-  const [validated, setValidated] = useState(false);
-
-  const onUpdate = () => {
-    updateUser(Id, allValues);
-    setTimeout(() => {
-      setVisible(false);
-    }, 300);
+  const onUpdate = async (id, values) => {
+    try {
+      setLoading(true);
+      values.password = allValues.newPassword;
+      const res = await axios.put(`/user/${id}`, values);
+      notification.success({ message: res.data.message });
+      reset();
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
   };
-
-  const onSave = () => {
-    addUser(allValues);
-    setTimeout(() => {
-      setVisible(false);
-    }, 300);
+  const onSave = async (values) => {
+    try {
+      setLoading(true);
+      values.newPassword = undefined;
+      const res = await axios.post(`/user`, values);
+      notification.success({ message: res.data.message });
+      reset();
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -88,9 +115,8 @@ const UserManagementModal = (props) => {
       setValidated(true);
       return;
     }
-    action === "add" ? onSave() : onUpdate();
+    action === "add" ? onSave(allValues) : onUpdate(Id, allValues);
   };
-
   const toggleSuspendUser = async () => {
     try {
       setLoading(true);
@@ -102,10 +128,8 @@ const UserManagementModal = (props) => {
           ? "User suspension removed"
           : "User suspended",
       });
+      reset();
       setLoading(false);
-      setVisible(false);
-      getUsers();
-      setId(null);
     } catch (err) {
       console.log({ err });
       notification.error({ message: err.response.data.message });
@@ -189,15 +213,29 @@ const UserManagementModal = (props) => {
                 />
               </Col>
               <Col>
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  required
-                  name="password"
-                  onChange={onChange}
-                  type="password"
-                  placeholder="Password"
-                  value={allValues.password}
-                />
+                <Form.Label>
+                  {action === "add" ? "Password" : "New Password"}
+                </Form.Label>
+
+                {action !== "add" ? (
+                  <Form.Control
+                    required
+                    name="newPassword"
+                    onChange={onChange}
+                    type="password"
+                    placeholder="New Password"
+                    value={allValues.newPassword}
+                  />
+                ) : (
+                  <Form.Control
+                    required
+                    name="password"
+                    onChange={onChange}
+                    type="password"
+                    placeholder="Password"
+                    value={allValues.password}
+                  />
+                )}
               </Col>
             </Row>
             <h3 className="mt-3 mb-1">Permissions</h3>

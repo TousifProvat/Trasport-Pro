@@ -1,13 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import useContext from "../../Hooks/useContext";
+import axios from "../../../utils/axios";
+//
+import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { notification } from "antd";
+//actions
+import { fetchDrivers } from "../../../features/driver/action";
 
 const AssignDriverModal = (props) => {
-  const { driverData, assignDriverToTrailer } = useContext();
-
+  const { visible, setVisible, trailer, fetchSummary } = props;
+  //state
+  const { drivers: driverData } = useSelector((state) => state.driver);
   const [drivers, setDrivers] = useState([]);
+  const initVal = {
+    driverId: "",
+    dateAssigned: "",
+    comments: "",
+  };
+  const [allValues, setAllValues] = useState(initVal);
+  const [validated, setValidated] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  //hooks
+  const dispatch = useDispatch();
   useEffect(() => {
     let availableDrivers = driverData.filter(
       (driver) => driver.trailer === undefined || driver.trailer === null
@@ -15,19 +31,36 @@ const AssignDriverModal = (props) => {
     setDrivers(availableDrivers);
   }, [driverData]);
 
-  const { visible, setVisible, trailer } = props;
-  const [allValues, setAllValues] = useState({
-    driverId: "",
-    dateAssigned: "",
-    comments: "",
-  });
+  //funcs
   const onChange = (e) => {
     setAllValues({
       ...allValues,
       [e.target.name]: e.target.value,
     });
   };
-  const [validated, setValidated] = useState(false);
+  const reset = () => {
+    fetchSummary();
+    setVisible(false);
+    setValidated(false);
+    setAllValues(initVal);
+    dispatch(fetchDrivers());
+  };
+
+  const assignDriver = async (driverId, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(
+        `/driver/toggle-trailer/${driverId}?action=assign`,
+        values
+      );
+      notification.success({ message: res.data.message });
+      reset();
+      setLoading(false);
+    } catch (err) {
+      console.log({ err });
+      notification.error({ message: err.response.data.message });
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,14 +70,11 @@ const AssignDriverModal = (props) => {
       setValidated(true);
       return;
     }
-    assignDriverToTrailer(allValues.driverId, {
+    assignDriver(allValues.driverId, {
       ...allValues,
       id: trailer,
       driverId: undefined,
     });
-    setTimeout(() => {
-      setVisible(false);
-    }, 300);
   };
   return (
     <Modal
@@ -100,7 +130,6 @@ const AssignDriverModal = (props) => {
             <Form.Group as={Col} md="12" controlId="validationCustom01">
               <Form.Label>Comment (Internal)</Form.Label>
               <Form.Control
-                required
                 as="textarea"
                 placeholder="Comment (Internal)"
                 name="comments"
@@ -110,13 +139,14 @@ const AssignDriverModal = (props) => {
             </Form.Group>
           </Row>
 
-          <Button variant="outline-primary" type="submit">
+          <Button variant="outline-primary" type="submit" disabled={loading}>
             Save
           </Button>
           <Button
             variant="outline-danger"
             onClick={() => setVisible(false)}
             className="m-2"
+            disabled={loading}
           >
             Close
           </Button>
