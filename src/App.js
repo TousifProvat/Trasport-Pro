@@ -45,6 +45,7 @@ import { fetchCommodities } from "./features/commodity/action";
 import { fetchCustomer } from "./features/customer/action";
 import { fetchEobrs } from "./features/eobr/action";
 import { fetchOwners } from "./features/owner/action";
+import SafetyCompliance from "./Components/SafetyCompliance/SafetyCompliance";
 
 function App() {
   const dispatch = useDispatch();
@@ -106,6 +107,7 @@ function App() {
             <Route path="inspection" element={<InspectionLog />} />
             <Route path="maintenance" element={<MaintenanceLog />} />
             <Route path="accident-log" element={<AccidentLog />} />
+            <Route path="safety-compliance" element={<SafetyCompliance />} />
             <Route
               path="terminal-manage-dashboard"
               element={<TerminalManagerDashboard />}
