@@ -233,7 +233,7 @@ const SafetyCompliance = () => {
       <Row>
         <h2 className="text-center mt-5 mb-3">Accounting</h2>
         <hr></hr>
-        <Col lg={4} md={6} sm={6} xl={{ order: 12 }}>
+        <Col lg={4} md={6} sm={6}>
           <strong>Revenue(Load Rate)</strong>
           <Card bg="primary" style={{ width: "100%" }} className="mb-2 mt-3">
             <Card.Body>
@@ -242,16 +242,16 @@ const SafetyCompliance = () => {
           </Card>
         </Col>
         <Col lg={4} md={6} sm={6}>
-          <strong>Factory Fee(QP)</strong>
-          <Card bg="primary" style={{ width: "100%" }} className="mb-2 mt-3">
+          <strong>Fuel Charge</strong>
+          <Card bg="secondary" style={{ width: "100%" }} className="mb-2 mt-3">
             <Card.Body>
               <Card.Title className="text-center">160.00</Card.Title>
             </Card.Body>
           </Card>
         </Col>
         <Col lg={4} md={6} sm={6}>
-          <strong>Carrier Commission</strong>
-          <Card bg="primary" style={{ width: "100%" }} className="mb-2 mt-3">
+          <strong>Paid Invoices</strong>
+          <Card bg="success" style={{ width: "100%" }} className="mb-2 mt-3">
             <Card.Body>
               <Card.Title className="text-center">0.00</Card.Title>
             </Card.Body>
@@ -259,9 +259,9 @@ const SafetyCompliance = () => {
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col lg={4} md={6} sm={6} xl={{ order: 12 }}>
-          <strong>Fuel Charge</strong>
-          <Card bg="secondary" style={{ width: "100%" }} className="mb-2 mt-3">
+        <Col lg={4} md={6} sm={6}>
+          <strong>Factory Fee(QP)</strong>
+          <Card bg="primary" style={{ width: "100%" }} className="mb-2 mt-3">
             <Card.Body>
               <Card.Title className="text-center">0.00</Card.Title>
             </Card.Body>
@@ -276,8 +276,8 @@ const SafetyCompliance = () => {
           </Card>
         </Col>
         <Col lg={4} md={6} sm={6}>
-          <strong>Truck Settlement</strong>
-          <Card bg="secondary" style={{ width: "100%" }} className="mb-2 mt-3">
+          <strong>Unpaid Invoices</strong>
+          <Card bg="danger" style={{ width: "100%" }} className="mb-2 mt-3">
             <Card.Body>
               <Card.Title className="text-center">160.00</Card.Title>
             </Card.Body>
@@ -285,24 +285,23 @@ const SafetyCompliance = () => {
         </Col>
       </Row>
       <Row className="mt-3 mb-5">
-        <Col lg={4} md={6} sm={6} xl={{ order: 12 }}>
-          <strong>paid Invoices</strong>
-          <Card bg="success" style={{ width: "100%" }} className="mb-2 mt-3">
+        <Col lg={4} md={6} sm={6}>
+          <strong>Carrier Commission</strong>
+          <Card bg="primary" style={{ width: "100%" }} className="mb-2 mt-3">
             <Card.Body>
               <Card.Title className="text-center">40.00</Card.Title>
             </Card.Body>
           </Card>
         </Col>
         <Col lg={4} md={6} sm={6}>
-          <strong>Unpaid Invoices</strong>
-          <Card bg="danger" style={{ width: "100%" }} className="mb-2 mt-3">
+          <strong>Truck Settlement</strong>
+          <Card bg="secondary" style={{ width: "100%" }} className="mb-2 mt-3">
             <Card.Body>
               <Card.Title className="text-center">155.00</Card.Title>
             </Card.Body>
           </Card>
         </Col>
-        <Col lg={4} md={6} sm={6}>
-        </Col>
+        <Col lg={4} md={6} sm={6}></Col>
       </Row>
     </Container>
   );
