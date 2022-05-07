@@ -26,6 +26,11 @@ const BillingDashboard = () => {
     },
     revenueStats: { revenue: 0, paid: 0, unpaid: 0 },
     invoiceStats: { notInvoicedLoads: 0, loadsInvoiced: 0, paidLoads: 0 },
+    medicalStats: [0, 0, 0],
+    plateStats: [0, 0, 0],
+    revenueStats: [0, 0, 0],
+    tractorStats: [0, 0, 0],
+    trailerStats: [0, 0, 0],
   });
 
   const [loading, setLoading] = useState(false);

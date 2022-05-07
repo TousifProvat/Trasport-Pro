@@ -31,6 +31,8 @@ import AccidentLog from "./Components/AccidentLog/AccidentLog";
 import Invoice from "./Components/Invoice/Invoice";
 import PrivateRoute from "./Components/PrivateRoute";
 import CustomerSummary from "./Components/CustomerSummary/CustomerSummary";
+import Dashboard from "./Components/Dashboard";
+
 //
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,7 +47,6 @@ import { fetchCommodities } from "./features/commodity/action";
 import { fetchCustomer } from "./features/customer/action";
 import { fetchEobrs } from "./features/eobr/action";
 import { fetchOwners } from "./features/owner/action";
-import SafetyCompliance from "./Components/SafetyCompliance/SafetyCompliance";
 
 function App() {
   const dispatch = useDispatch();
@@ -75,7 +76,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<PrivateRoute />}>
-            <Route index element={<FreightOptionsDashboard />} />
+            <Route index element={<Dashboard />} />
             <Route
               path="freight-options-dashboard"
               element={<FreightOptionsDashboard />}
@@ -107,7 +108,6 @@ function App() {
             <Route path="inspection" element={<InspectionLog />} />
             <Route path="maintenance" element={<MaintenanceLog />} />
             <Route path="accident-log" element={<AccidentLog />} />
-            <Route path="safety-compliance" element={<SafetyCompliance />} />
             <Route
               path="terminal-manage-dashboard"
               element={<TerminalManagerDashboard />}
