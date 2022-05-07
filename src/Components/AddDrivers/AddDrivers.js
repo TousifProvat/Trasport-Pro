@@ -335,9 +335,8 @@ const AddDrivers = () => {
               <Form.Label>CDL Number</Form.Label>
               <Form.Control
                 required
-                type="text"
+                type="number"
                 placeholder="CDL Number"
-                aria-describedby="inputGroupPrepend"
                 onChange={onChange}
                 name="cdlNumber"
                 value={allValues.cdlNumber}
@@ -396,7 +395,7 @@ const AddDrivers = () => {
               />
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <Form.Label>Certificate Expiry Date</Form.Label>
+              <Form.Label>Medical Certificate Expiry Date</Form.Label>
               <Form.Control
                 type="date"
                 placeholder="Certificate Expiry Date"
