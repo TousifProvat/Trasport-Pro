@@ -7,8 +7,9 @@ import { message } from "antd";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 //
+import Loader from "../Loader";
+//
 import "./dashboard.css";
-
 //
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -200,29 +201,40 @@ const Dashboard = () => {
               <Row>
                 <Col lg={4} md={6} sm={6}>
                   <h6 className="mt-5 text-center">Trailer Inspection</h6>
-                  <Pie
-                    data={trailerInspection}
-                    className="pie-chart"
-                    options={options}
-                  />
+                  {loading && <Loader />}
+                  {!loading && (
+                    <Pie
+                      data={trailerInspection}
+                      className="pie-chart"
+                      options={options}
+                    />
+                  )}
                 </Col>
                 <Col lg={4} md={6} sm={6}>
                   <h6 className="mt-5 text-center">Tractor Inspection</h6>
-                  <Pie data={tractorInspection} options={options} />
+                  {loading && <Loader />}
+                  {!loading && (
+                    <Pie data={tractorInspection} options={options} />
+                  )}
                 </Col>
                 <Col lg={4} md={6} sm={6}>
                   <h6 className="mt-5 text-center">Driver Licenses(CDL)</h6>
-                  <Pie data={driverLicenseStats} options={options} />
+                  {loading && <Loader />}
+                  {!loading && (
+                    <Pie data={driverLicenseStats} options={options} />
+                  )}
                 </Col>
               </Row>
               <Row>
                 <Col lg={4} md={6} sm={6}>
                   <h6 className="mt-5 text-center">Medical Certificate</h6>
-                  <Pie data={medicalStats} options={options} />
+                  {loading && <Loader />}
+                  {!loading && <Pie data={medicalStats} options={options} />}
                 </Col>
                 <Col lg={4} md={6} sm={6}>
                   <h6 className="mt-5 text-center">Plate Registration</h6>
-                  <Pie data={plateStats} options={options} />
+                  {loading && <Loader />}
+                  {!loading && <Pie data={plateStats} options={options} />}
                 </Col>
               </Row>
             </Card.Body>
