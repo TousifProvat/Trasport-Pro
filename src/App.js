@@ -47,6 +47,7 @@ import { fetchCommodities } from "./features/commodity/action";
 import { fetchCustomer } from "./features/customer/action";
 import { fetchEobrs } from "./features/eobr/action";
 import { fetchOwners } from "./features/owner/action";
+import DispatchDashboard from "./pages/DispatchDashboard";
 
 function App() {
   const dispatch = useDispatch();
@@ -76,7 +77,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<PrivateRoute />}>
-            <Route index element={<Dashboard />} />
+            <Route index element={<DispatchDashboard />} />
             <Route
               path="freight-options-dashboard"
               element={<FreightOptionsDashboard />}
