@@ -120,7 +120,7 @@ const PieStatics = () => {
         content: "{value}",
         style: {
           textAlign: "center",
-          fontSize: 14,
+          fontSize: 0,
         },
       },
       interactions: [
