@@ -11,6 +11,7 @@
 # production
 /build
 .env
+public/__redirects
 
 # misc
 .DS_Store
