@@ -1,18 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
+import { message } from "antd";
 import "./searchTrailer.css";
-import DayPickerInput from "react-day-picker/DayPickerInput";
-import "react-day-picker/lib/style.css";
-import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
+import axios from "../../utils/axios";
+import Loader from "../Loader";
 
 const SearchTrailer = () => {
-  const { trailerData, loading } = useContext();
+  const [allTrailer, setAllTrailer] = useState([]);
   const [trailers, setTrailers] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getTrailers = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/trailer");
+      setTrailers(data.trailers);
+      setAllTrailer(data.trailers);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
 
   useEffect(() => {
-    setTrailers(trailerData);
-  }, [trailerData]);
+    getTrailers();
+  }, []);
 
   //filter
   const [filter, setFilter] = useState({
@@ -25,9 +40,9 @@ const SearchTrailer = () => {
   };
 
   const onFilter = (e) => {
-    let newTrailers = trailerData;
+    let newTrailers = allTrailer;
     if (filter.status !== "") {
-      newTrailers = trailerData.filter(
+      newTrailers = newTrailers.filter(
         (trailer) => trailer.status === filter.status
       );
     }
@@ -41,12 +56,12 @@ const SearchTrailer = () => {
   };
 
   const onReset = () => {
-    setTrailers(trailerData);
+    setTrailers(allTrailer);
     setFilter({ status: "", trailerId: "" });
   };
 
   return (
-    <div className="pb-3">
+    <>
       <Container>
         <h3 className="mt-5 mb-3">Search Trailers</h3>
         <hr></hr>
@@ -88,11 +103,11 @@ const SearchTrailer = () => {
         </Form>
       </Container>
 
-      <Container fluid>
+      <Container>
         <h3 className="mt-5 mb-3">Search Results ({trailers.length})</h3>
         <hr></hr>
 
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -108,37 +123,41 @@ const SearchTrailer = () => {
           </thead>
 
           <tbody>
-            {trailers.map((trailer) => (
+            {loading && <Loader type="table" />}
+            {!loading &&
+              trailers.map((trailer, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={`/trailer/${trailer._id}`}>{trailer._id}</Link>
+                  </td>
+                  <td>
+                    {trailer.owner?.firstName} {trailer.owner?.lastName}
+                  </td>
+                  <td>{trailer.make}</td>
+                  <td>{trailer.model}</td>
+                  <td>{trailer.vin}</td>
+                  <td>{trailer.tagNumber}</td>
+                  <td>{trailer.onBoardingDate}</td>
+                  <td>{trailer.terminationDate}</td>
+                  <td>{trailer.status}</td>
+                </tr>
+              ))}
+            {!loading && trailers.length < 1 && (
               <tr>
-                <td>
-                  <Link to={`/trailer/${trailer._id}`}>{trailer._id}</Link>
+                <td
+                  colSpan={10}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  No Data Found
                 </td>
-                <td>
-                  {trailer.owner.firstName} {trailer.owner.lastName}
-                </td>
-                <td>{trailer.make}</td>
-                <td>{trailer.model}</td>
-                <td>{trailer.vin}</td>
-                <td>{trailer.tagNumber}</td>
-                <td>{trailer.onBoardingDate}</td>
-                <td>{trailer.terminationDate}</td>
-                <td>{trailer.status}</td>
               </tr>
-            ))}
-            {trailers.length < 1 && (
-              <td
-                colSpan={8}
-                style={{
-                  textAlign: "center",
-                }}
-              >
-                No Data Found
-              </td>
             )}
           </tbody>
         </Table>
       </Container>
-    </div>
+    </>
   );
 };
 

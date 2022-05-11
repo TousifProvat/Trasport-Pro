@@ -1,330 +1,188 @@
-import React, { useState } from "react";
+import { message, notification } from "antd";
+import React, { useEffect, useState } from "react";
 import {
   Button,
-  Col,
   Container,
-  Form,
-  InputGroup,
-  Modal,
   Nav,
   Navbar,
-  OverlayTrigger,
-  Row,
+  Spinner,
   Table,
-  Tooltip,
 } from "react-bootstrap";
+import axios from "../../utils/axios";
+import AccidentModal from "./AccidentModal";
 
 const AccidentLog = () => {
-  const [lgShow, setLgShow] = useState(false);
-  const handleClose = () => setLgShow(false);
+  const [incident, setIncident] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const [allValues, setAllValues] = useState({
-    tractor: "",
-    incidentDate: "",
-    incidentTime: "",
-    damagedArea: "",
-    street: "",
-    city: "",
-    state: "",
-    zip: "",
-    driver: "",
-    fatalities: "",
-    injuries: "",
-    notes: "",
-    accidentDocument: "",
-  });
-
-  const changeHandler = (e) => {
-    setAllValues({
-      ...allValues,
-      [e.target.name]: e.target.value,
-    });
+  const getIncidents = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/incident");
+      setIncident(data.incidents);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
+  const updateIncident = async (id, values) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/incident/${id}`, values);
+      notification.success({ message: res.data.message });
+      const index = incident.findIndex((obj) => obj._id === id);
+      let arr = incident;
+      arr[index] = values;
+      setIncident(arr);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const addIncident = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post(`/incident`, values);
+      notification.success({ message: res.data.message });
+      getIncidents();
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const removeIncident = async (id) => {
+    try {
+      setLoading(true);
+      const res = await axios.delete(`/incident/${id}`);
+      notification.success({ message: res.data.message });
+      setLoading(false);
+      const newIncidents = incident.filter((incident) => incident._id !== id);
+      setIncident(newIncidents);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
   };
 
-  const [validated, setValidated] = useState(false);
+  useEffect(() => {
+    getIncidents();
+  }, []);
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+  const [accidentId, setAccidentId] = useState(null);
+  const [addModal, setAddModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
 
-    setValidated(true);
-    console.log(allValues);
+  const showUpdateModal = (id) => {
+    setAccidentId(id);
+    setUpdateModal(true);
   };
   return (
     <div>
+      <AccidentModal
+        visible={addModal}
+        setVisible={setAddModal}
+        action="add"
+        addIncident={addIncident}
+      />
+      <AccidentModal
+        visible={updateModal}
+        setVisible={setUpdateModal}
+        action="update"
+        Id={accidentId}
+        updateIncident={updateIncident}
+      />
       <Container>
         <Navbar bg="" expand="lg">
           <Container>
-            <Navbar.Brand>
-              <h1 className="mt-5 mb-3">Accident Log</h1>
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="ms-auto">
-                <Button
-                  variant="outline-primary"
-                  className="mt-4"
-                  onClick={() => setLgShow(true)}
-                >
-                  Add Accident Record
-                </Button>{" "}
-                <Modal
-                  size="lg"
-                  show={lgShow}
-                  onHide={() => setLgShow(false)}
-                  aria-labelledby="example-modal-sizes-title-lg"
-                >
-                  <Modal.Header closeButton>
-                    <Modal.Title id="example-modal-sizes-title-lg">
-                      Large Modal
-                    </Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <Form
-                      noValidate
-                      validated={validated}
-                      onSubmit={handleSubmit}
-                    >
-                      <Row className="mb-3">
-                        <Form.Group
-                          as={Col}
-                          md="4"
-                          controlId="validationCustom01"
-                        >
-                          <Form.Label>Tractor</Form.Label>
-                          <Form.Select
-                            aria-label="Default select example"
-                            name="tractor"
-                            value={allValues.tractor}
-                            onChange={changeHandler}
-                          >
-                            <option>Select Tractor</option>
-                            <option value="Tractor1">Tractor1</option>
-                            <option value="Tractor2">Tractor2</option>
-                            <option value="Tractor3">Tractor3</option>
-                          </Form.Select>
-                          <Form.Control.Feedback>
-                            Looks good!
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group
-                          as={Col}
-                          md="4"
-                          controlId="validationCustom02"
-                        >
-                          <Form.Label>Date Occured</Form.Label>
-                          <Form.Control
-                            required
-                            type="date"
-                            name="incidentDate"
-                            value={allValues.incidentDate}
-                            onChange={changeHandler}
-                          />
-                          <Form.Control.Feedback>
-                            Looks good!
-                          </Form.Control.Feedback>
-                        </Form.Group>
+            <Navbar.Brand>Accident Log</Navbar.Brand>
 
-                        <Form.Group
-                          as={Col}
-                          md="4"
-                          controlId="validationCustomUsername"
-                        >
-                          <Form.Label>Time</Form.Label>
-
-                          <Form.Control
-                            required
-                            type="time"
-                            name="incidentTime"
-                            value={allValues.incidentTime}
-                            onChange={changeHandler}
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            Please choose a username.
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </Row>
-                      <Row className="mb-3">
-                        <Form.Group
-                          as={Col}
-                          md="4"
-                          controlId="validationCustom03"
-                        >
-                          <Form.Label>Damage Area</Form.Label>
-                          <Form.Control
-                            type="text"
-                            placeholder="Damage Area"
-                            required
-                            name="damagedArea"
-                            value={allValues.damagedArea}
-                            onChange={changeHandler}
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            Please provide a valid city.
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group
-                          as={Col}
-                          md="4"
-                          controlId="validationCustom04"
-                        >
-                          <Form.Label>Street</Form.Label>
-                          <Form.Control
-                            type="text"
-                            placeholder="Street"
-                            required
-                            name="street"
-                            value={allValues.street}
-                            onChange={changeHandler}
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            Please provide a valid state.
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group
-                          as={Col}
-                          md="4"
-                          controlId="validationCustom05"
-                        >
-                          <Form.Label>City</Form.Label>
-                          <Form.Control
-                            type="text"
-                            placeholder="City"
-                            required
-                            name="city"
-                            value={allValues.city}
-                            onChange={changeHandler}
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            Please provide a valid zip.
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </Row>
-                      <Row className="mb-3">
-                        <Form.Group
-                          as={Col}
-                          md="4"
-                          controlId="validationCustom03"
-                        >
-                          <Form.Label>State</Form.Label>
-                          <Form.Select
-                            aria-label="Default select example"
-                            name="state"
-                            value={allValues.state}
-                            onChange={changeHandler}
-                          >
-                            <option>Open this select menu</option>
-                            <option value="Alaska">Alaska</option>
-                            <option value="Alabama">Alabama</option>
-                            <option value="Canada">Canada</option>
-                          </Form.Select>
-                          <Form.Control.Feedback type="invalid">
-                            Please provide a valid city.
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group
-                          as={Col}
-                          md="4"
-                          controlId="validationCustom04"
-                        >
-                          <Form.Label>Driver</Form.Label>
-                          <Form.Select
-                            aria-label="Default select example"
-                            name="driver"
-                            value={allValues.driver}
-                            onChange={changeHandler}
-                          >
-                            <option>Open this select menu</option>
-                            <option value="Driver1">Driver1</option>
-                            <option value="Driver2">Driver2</option>
-                            <option value="Driver3">Driver3</option>
-                          </Form.Select>
-                          <Form.Control.Feedback type="invalid">
-                            Please provide a valid state.
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group
-                          as={Col}
-                          md="4"
-                          controlId="validationCustom05"
-                        >
-                          <Form.Label>Notes</Form.Label>
-                          <Form.Control
-                            type="text"
-                            placeholder="Notes"
-                            required
-                            name="notes"
-                            value={allValues.notes}
-                            onChange={changeHandler}
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            Please provide a valid zip.
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </Row>
-                      <Button type="submit">Save</Button>{" "}
-                      <Button variant="danger" onClick={handleClose}>
-                        Cancel
-                      </Button>
-                    </Form>
-                  </Modal.Body>
-                </Modal>
-              </Nav>
-            </Navbar.Collapse>
+            <Nav className="ms-auto">
+              <Button
+                variant="outline-primary"
+                className="mt-4"
+                onClick={() => setAddModal(true)}
+              >
+                Add Accident Record
+              </Button>
+            </Nav>
           </Container>
         </Navbar>
         <hr></hr>
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>Date</th>
-              <th>Truck</th>
-              <th>Drivers</th>
-              <th>Date</th>
+              <th>Tractor ID</th>
+              <th>Driver</th>
               <th>Time</th>
-              <th>Location of A.</th>
+              <th>Location of Accident</th>
               <th>Facilities</th>
               <th>Injuries</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>12/14/2022</td>
-              <td>22</td>
-              <td>20</td>
-              <td>12/05/2022</td>
-              <td>10:28 AM</td>
-              <td>Alaska</td>
-              <td>Good</td>
-              <td>No</td>
-              <td>
-                <OverlayTrigger
-                  overlay={<Tooltip id="tooltip-disabled">Edit</Tooltip>}
-                >
-                  <span className="d-inline-block">
+            {loading && (
+              <tr>
+                <td colSpan={10} style={{ textAlign: "center" }}>
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                </td>
+              </tr>
+            )}
+            {!loading &&
+              incident.map((incident, index) => (
+                <tr key={index}>
+                  <td>{incident.incidentDate}</td>
+                  <td>{incident.tractor}</td>
+                  <td>
+                    {incident.driver?.firstName} {incident.driver?.lastName}
+                  </td>
+                  <td>{incident.incidentTime}</td>
+                  <td>
+                    {incident.street}, {incident.city}, {incident.state}
+                  </td>
+                  <td>{incident.fatalities}</td>
+                  <td>{incident.injuries}</td>
+                  <td>
                     <Button
-                      variant="outline-success"
-                      onClick={() => setLgShow(true)}
+                      className="m-1"
+                      variant="outline-primary"
+                      onClick={() => showUpdateModal(incident._id)}
                     >
-                      <i className="fa-solid fa-pen-to-square"></i>
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outline-danger"
+                      className="m-1"
+                      onClick={() => removeIncident(incident._id)}
+                    >
+                      Delete
                     </Button>{" "}
-                  </span>
-                </OverlayTrigger>{" "}
-                <OverlayTrigger
-                  overlay={<Tooltip id="tooltip-disabled">Delete</Tooltip>}
-                >
-                  <span className="d-inline-block">
-                    <Button variant="outline-danger">
-                      <i className="fa-solid fa-scissors"></i>
-                    </Button>{" "}
-                  </span>
-                </OverlayTrigger>
-              </td>
-            </tr>
+                  </td>
+                </tr>
+              ))}
+            {!loading && incident.length < 1 && (
+              <tr
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                <td colSpan={10}>No Data Found</td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </Container>

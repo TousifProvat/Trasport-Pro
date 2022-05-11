@@ -1,95 +1,134 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "../../utils/axios";
+//
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import { notification } from "antd";
-import axios from "../../utils/axios";
+//
+import Loader from "../Loader";
 
 const CustomerSummary = () => {
-    const initValue = {
-      name: "",
-      phoneNumber: "",
-      fax: "",
-      email: "",
-      street: "",
-      city: "",
-      state: "",
-      zip: "",
-      billName: "",
-      billAddress: "",
-      billZip: "",
-      billCity: "",
-      billState: "",
-      billPrimaryPhoneNumber: "",
-      billSecondaryPhoneNumber: "",
-      billFaxNumber: "",
-      billHardCopy: false,
-      billSoftCopy: false,
-      billEmail: "",
-      billSSN: "",
-    };
+  const { customerId } = useParams();
+  //state
+  const initValue = {
+    name: "",
+    phoneNumber: "",
+    fax: "",
+    email: "",
+    street: "",
+    city: "",
+    state: "",
+    zip: "",
+    billName: "",
+    billAddress: "",
+    billZip: "",
+    billCity: "",
+    billState: "",
+    billPrimaryPhoneNumber: "",
+    billSecondaryPhoneNumber: "",
+    billFaxNumber: "",
+    billHardCopy: false,
+    billSoftCopy: false,
+    billEmail: "",
+    billSSN: "",
+  };
+  const [allValues, setAllValues] = useState(initValue);
+  const [validated, setValidated] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-    const [allValues, setAllValues] = useState(initValue);
+  //hooks
+  useEffect(() => {
+    fetchCustomerSummary();
+  }, [customerId]);
 
-    const changeHandler = (e) => {
+  //funcs
+  const fetchCustomerSummary = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`/customer/summary/${customerId}`);
+      setAllValues({
+        ...data.customer,
+        billName: data.customer.billing.name,
+        billAddress: data.customer.billing.address,
+        billCity: data.customer.billing.city,
+        billZip: data.customer.billing.zip,
+        billEmail: data.customer.billing.email,
+        billState: data.customer.billing.state,
+        billPrimaryPhoneNumber: data.customer.billing.primaryPhoneNumber,
+        billSecondaryPhoneNumber: data.customer.billing.secondaryPhoneNumber,
+        billFaxNumber: data.customer.billing.faxPhoneNumber,
+        billSSN: data.customer.billing.SSN,
+        billHardCopy: data.customer.billing.hardCopy,
+        billSoftCopy: data.customer.billing.softCopy,
+      });
+      setLoading(false);
+    } catch (err) {
+      console.log({ err });
+    }
+  };
+  const onChange = (e) => {
+    if (e.target.type === "checkbox") {
       setAllValues({
         ...allValues,
-        [e.target.name]: e.target.value,
+        [e.target.name]: allValues[e.target.name] ? false : true,
       });
-    };
-
-    const [validated, setValidated] = useState(false);
-    const [loading, setLoading] = useState(false);
-
-
-    // const addCustomer = async () => {
-    //   try {
-    //     setLoading(true);
-    //     const res = await axios.post("/customer", allValues);
-
-    //     if (res.status === 201) {
-    //       notification.success({ message: res.data.message });
-    //       setTimeout(() => {
-    //         setValidated(false);
-    //         setAllValues(initValue);
-    //       }, 1000);
-    //     }
-    //     setLoading(false);
-    //   } catch (err) {
-    //     setLoading(false);
-    //     notification.error({ message: err.response.data.message });
-    //   }
-    // };
-
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      const form = e.currentTarget;
-      if (form.checkValidity() === false) {
-        e.stopPropagation();
-        setValidated(true);
-        return;
-      }
-    //   addCustomer();
-    };
-
-    const copyInfo = () => {
-      setAllValues({
+      return;
+    }
+    setAllValues({
+      ...allValues,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleUpdate = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`/customer/${customerId}`, {
         ...allValues,
-        billName: allValues.name,
-        billAddress: allValues.address,
-        billCity: allValues.city,
-        billZip: allValues.zip,
-        billEmail: allValues.email,
-        billState: allValues.state,
-        billPrimaryPhoneNumber: allValues.phoneNumber,
-        billFaxNumber: allValues.fax,
+        billing: allValues.billing._id,
       });
-    };
-    return (
-      <div>
-        <Container>
-          <h3 className="mt-5 mb-3">Customer Summary</h3>
-          <hr></hr>
-          <Button variant="outline-primary" className="mb-3">Update Information</Button>{" "}
-          <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      notification.success({ message: res.data.message });
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({
+        message: err.response.data.message,
+      });
+    }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
+    handleUpdate();
+  };
+  const copyInfo = () => {
+    setAllValues({
+      ...allValues,
+      billName: allValues.name,
+      billCity: allValues.city,
+      billZip: allValues.zip,
+      billEmail: allValues.email,
+      billState: allValues.state,
+      billPrimaryPhoneNumber: allValues.phoneNumber,
+      billFaxNumber: allValues.fax,
+    });
+  };
+  return (
+    <Container>
+      <Container>
+        <h4 className="mt-5 mb-3">Customer Summary</h4>
+        <hr></hr>
+      </Container>
+
+      <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        {loading && <Loader />}
+        {!loading && (
+          <>
+            {" "}
             <Row className="mb-3">
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <Form.Label>Name</Form.Label>
@@ -98,7 +137,7 @@ const CustomerSummary = () => {
                   type="text"
                   placeholder="Customer Name"
                   name="name"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.name}
                 />
               </Form.Group>
@@ -109,7 +148,7 @@ const CustomerSummary = () => {
                   type="text"
                   placeholder="Phone Number"
                   name="phoneNumber"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.phoneNumber}
                 />
               </Form.Group>
@@ -120,7 +159,7 @@ const CustomerSummary = () => {
                   type="text"
                   placeholder="Fax Number"
                   name="fax"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.fax}
                 />
               </Form.Group>
@@ -133,7 +172,7 @@ const CustomerSummary = () => {
                   type="email"
                   placeholder="Email"
                   name="email"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.email}
                 />
               </Form.Group>
@@ -144,7 +183,7 @@ const CustomerSummary = () => {
                   type="text"
                   placeholder="Street"
                   name="street"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.street}
                 />
               </Form.Group>
@@ -155,7 +194,7 @@ const CustomerSummary = () => {
                   type="text"
                   placeholder="City"
                   name="city"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.city}
                 />
               </Form.Group>
@@ -166,7 +205,7 @@ const CustomerSummary = () => {
                 <Form.Select
                   required
                   name="state"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.state}
                 >
                   <option value="">Select State</option>
@@ -184,19 +223,25 @@ const CustomerSummary = () => {
                   type="text"
                   placeholder="Zip Code"
                   name="zip"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.zip}
                 />
               </Form.Group>
             </Row>
-            <Row className="mb-5">
-              <h3 className="mt-5 mb-3">Billing Information</h3>
-              <hr></hr>
+          </>
+        )}
+        <Row className="mb-5">
+          <h3 className="mt-5 mb-3">Billing Information</h3>
+          <hr></hr>
 
-              <Col span={4}>
-                <Button onClick={copyInfo}>Copy Information From Above</Button>
-              </Col>
-            </Row>
+          <Col span={4}>
+            <Button onClick={copyInfo}>Copy Information From Above</Button>
+          </Col>
+        </Row>
+        {loading && <Loader />}
+        {!loading && (
+          <>
+            {" "}
             <Row className="mb-3">
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <Form.Label>Pay/Bill Name</Form.Label>
@@ -205,7 +250,7 @@ const CustomerSummary = () => {
                   type="text"
                   placeholder="Bill Name"
                   name="billName"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.billName}
                 />
               </Form.Group>
@@ -216,7 +261,7 @@ const CustomerSummary = () => {
                   type="text"
                   placeholder="Address"
                   name="billAddress"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.billAddress}
                 />
               </Form.Group>
@@ -228,7 +273,7 @@ const CustomerSummary = () => {
                     type="text"
                     placeholder="Zip"
                     name="billZip"
-                    onChange={changeHandler}
+                    onChange={onChange}
                     value={allValues.billZip}
                   />
                 </InputGroup>
@@ -242,7 +287,7 @@ const CustomerSummary = () => {
                   placeholder="City"
                   required
                   name="billCity"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.billCity}
                 />
               </Form.Group>
@@ -252,7 +297,7 @@ const CustomerSummary = () => {
                   required
                   aria-label="Default select example"
                   name="billState"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.billState}
                 >
                   <option value="">Select State</option>
@@ -270,7 +315,7 @@ const CustomerSummary = () => {
                   type="text"
                   placeholder="Phone Number"
                   name="billPrimaryPhoneNumber"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.billPrimaryPhoneNumber}
                 />
               </Form.Group>
@@ -282,7 +327,7 @@ const CustomerSummary = () => {
                   type="text"
                   placeholder="Alt Phone Number"
                   name="billSecondaryPhoneNumber"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.billSecondaryPhoneNumber}
                 />
               </Form.Group>
@@ -292,7 +337,7 @@ const CustomerSummary = () => {
                   type="text"
                   placeholder="Fax Phone Number"
                   name="billFaxNumber"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.billFaxNumber}
                 />
               </Form.Group>
@@ -303,7 +348,7 @@ const CustomerSummary = () => {
                   type="email"
                   placeholder="Email"
                   name="billEmail"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.billEmail}
                 />
               </Form.Group>
@@ -313,26 +358,16 @@ const CustomerSummary = () => {
                 <Form.Check
                   label="Hard Copy"
                   name="billHardCopy"
-                  onChange={(e) =>
-                    setAllValues({
-                      ...allValues,
-                      billHardCopy: Boolean(e.target.value),
-                    })
-                  }
-                  value={allValues.billHardCopy}
+                  onChange={onChange}
+                  checked={allValues.billHardCopy}
                 />
               </Form.Group>
               <Form.Group as={Col} md="4">
                 <Form.Check
                   label="Soft Copy"
                   name="billSoftCopy"
-                  onChange={(e) =>
-                    setAllValues({
-                      ...allValues,
-                      billSoftCopy: Boolean(e.target.value),
-                    })
-                  }
-                  value={allValues.billSoftCopy}
+                  onChange={onChange}
+                  checked={allValues.billSoftCopy}
                 />
               </Form.Group>
             </Row>
@@ -344,7 +379,7 @@ const CustomerSummary = () => {
                   placeholder="Federal ID"
                   required
                   name="billSSN"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.billSSN}
                 />
               </Form.Group>
@@ -354,20 +389,13 @@ const CustomerSummary = () => {
               className="mb-5 me-3"
               variant="outline-primary"
             >
-              Save
+              Update
             </Button>
-            <Button
-              type="reset"
-              variant="outline-danger"
-              className="mb-5"
-              href="/search-customer"
-            >
-              Cancel
-            </Button>
-          </Form>
-        </Container>
-      </div>
-    );
+          </>
+        )}
+      </Form>
+    </Container>
+  );
 };
 
 export default CustomerSummary;

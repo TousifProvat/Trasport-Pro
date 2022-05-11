@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import "./tractors.css";
-import useContext from "../Hooks/useContext";
+import { notification } from "antd";
+import axios from "../../utils/axios";
+import { useSelector } from "react-redux";
 
 const Tractors = () => {
-  const { ownerData, loading, eobr, addTractor } = useContext();
+  const { eobrs } = useSelector((state) => state.eobr);
+  const { owners } = useSelector((state) => state.owner);
 
   const initValue = {
     id: "",
@@ -47,8 +50,27 @@ const Tractors = () => {
     comments: "",
   };
   const [allValues, setAllValues] = useState(initValue);
+  const [loading, setLoading] = useState(false);
 
-  const changeHandler = (e) => {
+  const addTractor = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post("/tractor", values);
+      if (res.status === 201) {
+        notification.success({ message: res.data.message });
+        setTimeout(() => {
+          setValidated(false);
+          setAllValues(initValue);
+        }, 300);
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({ message: err.response.data.message });
+    }
+  };
+
+  const onChange = (e) => {
     setAllValues({
       ...allValues,
       [e.target.name]: e.target.value,
@@ -60,6 +82,7 @@ const Tractors = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.currentTarget;
+
     if (form.checkValidity() === false) {
       e.stopPropagation();
       setValidated(true);
@@ -67,10 +90,6 @@ const Tractors = () => {
     }
 
     addTractor(allValues);
-    setTimeout(() => {
-      setValidated(false);
-      setAllValues(initValue);
-    }, 1000);
   };
   return (
     <div>
@@ -87,7 +106,7 @@ const Tractors = () => {
                 type="text"
                 placeholder="Tractor Id"
                 name="id"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.id}
               />
             </Form.Group>
@@ -95,7 +114,7 @@ const Tractors = () => {
               <Form.Label>Axle Count</Form.Label>
               <Form.Control
                 name="axieCount"
-                onChange={changeHandler}
+                onChange={onChange}
                 type="number"
                 placeholder="Axie Count"
                 value={allValues.axieCount}
@@ -106,7 +125,7 @@ const Tractors = () => {
 
               <Form.Select
                 name="status"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.status}
               >
                 <option value="Active">Active</option>
@@ -123,7 +142,7 @@ const Tractors = () => {
                 type="number"
                 placeholder="Weight"
                 name="weight"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.weight}
               />
             </Form.Group>
@@ -134,23 +153,22 @@ const Tractors = () => {
                 type="number"
                 placeholder="Fuel Capacity"
                 name="fuelCapacity"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.fuelCapacity}
               />
             </Form.Group>
           </Row>
-
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Current Owner</Form.Label>
               <Form.Select
                 required
                 name="owner"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.owner}
               >
                 <option value="">Select Owner</option>
-                {ownerData.map((owner, index) => (
+                {owners.map((owner, index) => (
                   <option value={owner._id} key={index}>
                     {owner.firstName} {owner.lastName}-{owner.email}
                   </option>
@@ -163,7 +181,7 @@ const Tractors = () => {
                 type="text"
                 placeholder="Tag Number"
                 name="tagNumber"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.tagNumber}
               />
             </Form.Group>
@@ -172,7 +190,7 @@ const Tractors = () => {
               <Form.Select
                 aria-label="Default select example"
                 name="tagState"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.tagState}
               >
                 <option>Select Tag State</option>
@@ -184,7 +202,6 @@ const Tractors = () => {
               </Form.Select>
             </Form.Group>
           </Row>
-
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Owner Since</Form.Label>
@@ -193,7 +210,7 @@ const Tractors = () => {
                 type="date"
                 placeholder="Owner Since"
                 name="ownerSince"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.ownerSince}
               />
             </Form.Group>
@@ -203,7 +220,7 @@ const Tractors = () => {
                 type="date"
                 placeholder="Tag Expiration Date"
                 name="tagExp"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.tagExp}
               />
             </Form.Group>
@@ -214,12 +231,11 @@ const Tractors = () => {
                 type="number"
                 placeholder="Tractor Model Year"
                 name="year"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.year}
               />
             </Form.Group>
           </Row>
-
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>Make</Form.Label>
@@ -228,12 +244,11 @@ const Tractors = () => {
                 placeholder="Tractor Make"
                 required
                 name="make"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.make}
               />
             </Form.Group>
           </Row>
-
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Model</Form.Label>
@@ -241,7 +256,7 @@ const Tractors = () => {
                 type="text"
                 placeholder="Model Name"
                 name="model"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.model}
               />
             </Form.Group>
@@ -251,12 +266,11 @@ const Tractors = () => {
                 type="text"
                 placeholder="Damage Carrier"
                 name="physicalDmgInsCarrier"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.physicalDmgInsCarrier}
               />
             </Form.Group>
           </Row>
-
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Physical Damage Insurance Start Date </Form.Label>
@@ -264,7 +278,7 @@ const Tractors = () => {
                 type="date"
                 placeholder=""
                 name="physicalDmgInsStartDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.physicalDmgInsStartDate}
               />
             </Form.Group>
@@ -273,7 +287,7 @@ const Tractors = () => {
               <Form.Control
                 type="text"
                 name="group"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.group}
               />
             </Form.Group>
@@ -283,12 +297,11 @@ const Tractors = () => {
                 type="date"
                 placeholder="Expiration Date"
                 name="physicalDmgInsExpDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.physicalDmgInsExpDate}
               />
             </Form.Group>
           </Row>
-
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Color</Form.Label>
@@ -296,7 +309,7 @@ const Tractors = () => {
                 type="text"
                 placeholder="Tractor Color"
                 name="color"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.color}
               />
             </Form.Group>
@@ -307,7 +320,7 @@ const Tractors = () => {
                 type="text"
                 placeholder="Physical Damage Insurance Value"
                 name="physicalDmgInsValue"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.physicalDmgInsValue}
               />
             </Form.Group>
@@ -319,7 +332,7 @@ const Tractors = () => {
                 placeholder="VIN number"
                 required
                 name="vin"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.vin}
               />
             </Form.Group>
@@ -330,7 +343,7 @@ const Tractors = () => {
               <Form.Check
                 label="Carb Compliant"
                 name="crabCompliant"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.carbCompliant}
               />
             </Form.Group>
@@ -341,7 +354,7 @@ const Tractors = () => {
                 type="text"
                 placeholder="NTL Insurance Carrier"
                 name="ntlInsCarrier"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.ntlInsCarrier}
               />
             </Form.Group>
@@ -351,7 +364,7 @@ const Tractors = () => {
                 type="date"
                 placeholder=""
                 name="ntlInsStartDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.ntlInsStartDate}
               />
             </Form.Group>
@@ -365,7 +378,7 @@ const Tractors = () => {
                 type="date"
                 placeholder="NTL Insurance Expiration Date"
                 name="ntlInsExpDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.ntlInsExpDate}
               />
             </Form.Group>
@@ -375,143 +388,136 @@ const Tractors = () => {
                 type="text"
                 placeholder="NTL Insurance Value"
                 name="ntlInsValue"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.ntlInsValue}
               />
             </Form.Group>
           </Row>
-        </Form>
-      </Container>
-
-      <Container>
-        <h3 className="mt-5 mb-3">Safety Information</h3>
-        <hr></hr>
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <h3 className="mt-5 mb-3">Safety Information</h3>
+          <hr></hr>
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
+            <Form.Group as={Col} md="4" controlId="validationCustom101">
               <Form.Label>Last Inspection Date</Form.Label>
               <Form.Control
                 type="date"
                 placeholder="Last Inspection Date"
                 name="lastInspectionDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.lastInspectionDate}
               />
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom02">
+            <Form.Group as={Col} md="4" controlId="validationCustom102">
               <Form.Label>PrePass ID</Form.Label>
               <Form.Control
-                required
                 type="text"
                 placeholder="Pre Pass ID"
                 name="prePassId"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.prePassId}
               />
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+            <Form.Group as={Col} md="4" controlId="validationCustom103">
               <Form.Label>Last Inspection Location</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Last Inspection Location"
                 name="lastInspectionLocation"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.lastInspectionDate}
               />
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
+            <Form.Group as={Col} md="4" controlId="validationCustom104">
               <Form.Label>EOBR Type</Form.Label>
               <Form.Select
                 name="eobrType"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.eobrType}
               >
                 <option value="">Select EOBR Type ID</option>
-                {eobr.map((eobr, index) => (
+                {eobrs.map((eobr, index) => (
                   <option value={eobr._id} key={index}>
                     {eobr.name}
                   </option>
                 ))}
               </Form.Select>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
+            <Form.Group as={Col} md="4" controlId="validationCustom105">
               <Form.Label>Next Inspection Date</Form.Label>
               <Form.Control
                 type="date"
                 placeholder="Next Inspection Date"
                 name="nextInspectionDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.nextInspectionDate}
               />
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
+            <Form.Group as={Col} md="4" controlId="validationCustom106">
               <Form.Label>EOBR ID</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="EOBR ID"
-                required
                 name="eobrId"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.eobrId}
               />
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
+            <Form.Group as={Col} md="4" controlId="validationCustom107">
               <Form.Label>Last Service Date</Form.Label>
               <Form.Control
                 type="date"
                 placeholder="Last Service Date"
                 name="lastServiceDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.lastServiceDate}
               />
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
+            <Form.Group as={Col} md="4" controlId="validationCustom108">
               <Form.Label>Camera Type</Form.Label>
 
               <Form.Control
                 name="cameraType"
                 placeholder="Camera Type"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.cameraType}
               />
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
+            <Form.Group as={Col} md="4" controlId="validationCustom109">
               <Form.Label>Next Service Date</Form.Label>
               <Form.Control
                 type="date"
                 placeholder="Next Service Date"
                 name="nextServiceDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.nextServiceDate}
               />
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom03">
+            <Form.Group as={Col} md="4" controlId="validationCustom110">
               <Form.Label>Camera ID</Form.Label>
               <Form.Control
                 type="number"
                 placeholder="Camera ID"
                 name="cameraID"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.cameraId}
               />
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom04">
+            <Form.Group as={Col} md="4" controlId="validationCustom111">
               <Form.Label>Maintenance Date</Form.Label>
               <Form.Control
                 type="date"
                 placeholder="Maintenance Date"
                 name="maintenanceDate"
-                onChange={changeHandler}
+                onChange={onChange}
                 value={allValues.maintenanceDate}
               />
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom05">
+            <Form.Group as={Col} md="4" controlId="validationCustom112">
               <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlTextarea1"
@@ -521,19 +527,25 @@ const Tractors = () => {
                   as="textarea"
                   rows={3}
                   name="comments"
-                  onChange={changeHandler}
+                  onChange={onChange}
                   value={allValues.comments}
                 />
               </Form.Group>
             </Form.Group>
           </Row>
-          <Button type="submit" variant="outline-primary" className="mb-5">
+          <Button
+            type="submit"
+            variant="outline-primary"
+            className="mb-5"
+            disabled={loading}
+          >
             Save
           </Button>
           <Button
             variant="outline-danger"
             className="ms-3 mb-5"
             href="/search-tractor"
+            disabled={loading}
           >
             Cancel
           </Button>

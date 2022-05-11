@@ -4,23 +4,38 @@ import {
   Col,
   Container,
   Form,
-  InputGroup,
   Row,
+  Spinner,
   Table,
 } from "react-bootstrap";
 import "./searchTractor.css";
-import DayPickerInput from "react-day-picker/DayPickerInput";
-import "react-day-picker/lib/style.css";
 import useContext from "../Hooks/useContext";
 import { Link } from "react-router-dom";
+import axios from "../../utils/axios";
+import { message } from "antd";
 
 const SearchTractor = () => {
-  const { tractorData, loading } = useContext();
+  const [allTractors, setAllTractors] = useState([]);
   const [tractors, setTractors] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getTractors = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get("/tractor");
+      setTractors(data.tractors);
+      setAllTractors(data.tractors);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      message.error(err.response.data.message);
+      console.log({ err });
+    }
+  };
 
   useEffect(() => {
-    setTractors(tractorData);
-  }, [tractorData]);
+    getTractors();
+  }, []);
 
   //filter
   const [filter, setFilter] = useState({
@@ -33,9 +48,9 @@ const SearchTractor = () => {
   };
 
   const onFilter = () => {
-    let newTractors = tractorData;
+    let newTractors = allTractors;
     if (filter.status !== "") {
-      newTractors = tractorData.filter(
+      newTractors = newTractors.filter(
         (tractor) => tractor.status === filter.status
       );
     }
@@ -49,12 +64,12 @@ const SearchTractor = () => {
   };
 
   const onReset = () => {
-    setTractors(tractorData);
+    setTractors(allTractors);
     setFilter({ status: "", tractorId: "" });
   };
 
   return (
-    <div>
+    <>
       <Container>
         <h3 className="mt-5 mb-3">Search Tractors</h3>
         <hr></hr>
@@ -78,7 +93,7 @@ const SearchTractor = () => {
                 onChange={onChange}
                 value={filter.status}
               >
-                <option>Select Status</option>
+                <option value="">Select Status</option>
                 <option value="Active">Active</option>
                 <option value="Hold-Safely">Hold-Safely</option>
                 <option value="Hold-Shop">Hold-Shop</option>
@@ -95,11 +110,11 @@ const SearchTractor = () => {
         </Form>
       </Container>
 
-      <Container fluid>
-        <h3 className="mt-5 mb-3">Search Results ({tractorData.length})</h3>
+      <Container>
+        <h3 className="mt-5 mb-3">Search Results ({tractors.length})</h3>
         <hr></hr>
 
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>ID</th>
@@ -113,35 +128,52 @@ const SearchTractor = () => {
           </thead>
 
           <tbody>
-            {tractors.map((tractor) => (
+            {loading && (
               <tr>
-                <td>
-                  <Link to={`/tractor/${tractor._id}`}>{tractor._id}</Link>
+                <td
+                  colSpan={8}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <Spinner animation="border" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
                 </td>
-                <td>
-                  {tractor?.owner.firstName} {tractor?.owner.lastName}
-                </td>
-                <td>{tractor.make}</td>
-                <td>{tractor.model}</td>
-                <td>{tractor.year}</td>
-                <td>{tractor.vin}</td>
-                <td>{tractor.status}</td>
               </tr>
-            ))}
-            {tractors.length < 1 && (
-              <td
-                colSpan={8}
-                style={{
-                  textAlign: "center",
-                }}
-              >
-                No Data Found
-              </td>
+            )}
+            {!loading &&
+              tractors.map((tractor, index) => (
+                <tr key={index}>
+                  <td>
+                    <Link to={`/tractor/${tractor._id}`}>{tractor._id}</Link>
+                  </td>
+                  <td>
+                    {tractor.owner?.firstName} {tractor.owner?.lastName}
+                  </td>
+                  <td>{tractor.make}</td>
+                  <td>{tractor.model}</td>
+                  <td>{tractor.year}</td>
+                  <td>{tractor.vin}</td>
+                  <td>{tractor.status}</td>
+                </tr>
+              ))}
+            {!loading && tractors.length < 1 && (
+              <tr>
+                <td
+                  colSpan={8}
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  No Data Found
+                </td>
+              </tr>
             )}
           </tbody>
         </Table>
       </Container>
-    </div>
+    </>
   );
 };
 

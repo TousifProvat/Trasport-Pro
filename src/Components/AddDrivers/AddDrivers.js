@@ -1,10 +1,13 @@
+import { notification } from "antd";
 import React, { useState } from "react";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import axios from "../../utils/axios";
 import useContext from "../Hooks/useContext";
 import "./addDrivers.css";
 
 const AddDrivers = () => {
-  const { loading, addDriver } = useContext();
+  const { eobrs } = useSelector((state) => state.eobr);
   const initValue = {
     driverNumber: 1,
     status: "Pending Hire",
@@ -45,8 +48,27 @@ const AddDrivers = () => {
   };
 
   const [allValues, setAllValues] = useState(initValue);
+  const [loading, setLoading] = useState(false);
 
-  const changeHandler = (e) => {
+  const addDriver = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post("/driver", values);
+      if (res.status === 201) {
+        notification.success({ message: res.data.message });
+        setTimeout(() => {
+          setValidated(false);
+          setAllValues(initValue);
+        }, 300);
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({ message: err.response.data.message });
+    }
+  };
+
+  const onChange = (e) => {
     setAllValues({
       ...allValues,
       [e.target.name]: e.target.value,
@@ -65,10 +87,6 @@ const AddDrivers = () => {
       return;
     }
     addDriver(allValues);
-    setTimeout(() => {
-      setValidated(false);
-      setAllValues(initValue);
-    }, 1000);
   };
 
   return (
@@ -85,7 +103,7 @@ const AddDrivers = () => {
                 required
                 type="number"
                 placeholder="Driver Number"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="driverNumber"
                 value={allValues.driverNumber}
               />
@@ -94,7 +112,7 @@ const AddDrivers = () => {
               <Form.Label>Status</Form.Label>
               <Form.Select
                 required
-                onChange={changeHandler}
+                onChange={onChange}
                 name="status"
                 value={allValues.status}
               >
@@ -112,7 +130,7 @@ const AddDrivers = () => {
                 required
                 type="text"
                 placeholder="Email"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="email"
                 value={allValues.email}
               />
@@ -126,7 +144,7 @@ const AddDrivers = () => {
                 type="text"
                 placeholder="First Name"
                 aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="firstName"
                 value={allValues.firstName}
               />
@@ -137,7 +155,7 @@ const AddDrivers = () => {
                 type="text"
                 placeholder="Middle Name"
                 aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="middleName"
                 value={allValues.middleName}
               />
@@ -149,7 +167,7 @@ const AddDrivers = () => {
                 type="text"
                 placeholder="Last Name"
                 aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="lastName"
                 value={allValues.lastName}
               />
@@ -160,7 +178,7 @@ const AddDrivers = () => {
               <Form.Label>Salutation</Form.Label>
               <Form.Select
                 aria-label=""
-                onChange={changeHandler}
+                onChange={onChange}
                 name="salutation"
                 value={allValues.salutation}
               >
@@ -180,7 +198,7 @@ const AddDrivers = () => {
                 required
                 type="date"
                 placeholder="Hire Date"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="hireDate"
                 value={allValues.hireDate}
               />
@@ -188,9 +206,10 @@ const AddDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustomUsername">
               <Form.Label>Termination Date</Form.Label>
               <Form.Control
+                required
                 type="date"
                 placeholder="Termination Date"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="terminationDate"
                 value={allValues.terminationDate}
               />
@@ -203,7 +222,7 @@ const AddDrivers = () => {
                 required
                 type="text"
                 placeholder="Address Name"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="address"
                 value={allValues.address}
               />
@@ -214,7 +233,7 @@ const AddDrivers = () => {
                 required
                 type="text"
                 placeholder="Zip Code"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="zip"
                 value={allValues.zip}
               />
@@ -225,7 +244,7 @@ const AddDrivers = () => {
                 required
                 type="text"
                 placeholder="City Name"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="city"
                 value={allValues.city}
               />
@@ -236,7 +255,7 @@ const AddDrivers = () => {
               <Form.Label>State</Form.Label>
               <Form.Select
                 required
-                onChange={changeHandler}
+                onChange={onChange}
                 name="state"
                 value={allValues.state}
               >
@@ -254,7 +273,7 @@ const AddDrivers = () => {
                 required
                 type="date"
                 placeholder="City Name"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="birthDate"
                 value={allValues.birthDate}
               />
@@ -265,7 +284,7 @@ const AddDrivers = () => {
                 required
                 type="text"
                 placeholder="SSN Number"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="SSN"
                 value={allValues.SSN}
               />
@@ -278,7 +297,7 @@ const AddDrivers = () => {
                 required
                 type="text"
                 placeholder="Phone Number"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="primaryPhoneNumber"
                 value={allValues.primaryPhoneNumber}
               />
@@ -289,7 +308,7 @@ const AddDrivers = () => {
                 type="text"
                 placeholder="Alt Phone Number"
                 aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="secondaryPhoneNumber"
                 value={allValues.secondaryPhoneNumber}
               />
@@ -302,7 +321,7 @@ const AddDrivers = () => {
               <Form.Control
                 type="text"
                 placeholder="Fax Number"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="faxPhoneNumber"
                 value={allValues.faxPhoneNumber}
               />
@@ -316,10 +335,9 @@ const AddDrivers = () => {
               <Form.Label>CDL Number</Form.Label>
               <Form.Control
                 required
-                type="text"
+                type="number"
                 placeholder="CDL Number"
-                aria-describedby="inputGroupPrepend"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="cdlNumber"
                 value={allValues.cdlNumber}
               />
@@ -327,7 +345,7 @@ const AddDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom04">
               <Form.Label>CDL State</Form.Label>
               <Form.Select
-                onChange={changeHandler}
+                onChange={onChange}
                 name="cdlState"
                 value={allValues.cdlState}
               >
@@ -347,7 +365,7 @@ const AddDrivers = () => {
               <Form.Control
                 type="date"
                 placeholder="CDL Expire Date"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="cdlExpDate"
                 value={allValues.cdlExpDate}
               />
@@ -356,11 +374,7 @@ const AddDrivers = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Gender</Form.Label>
-              <Form.Select
-                onChange={changeHandler}
-                name="sex"
-                value={allValues.sex}
-              >
+              <Form.Select onChange={onChange} name="sex" value={allValues.sex}>
                 <option>Select Gender</option>
                 <option value="M">Male</option>
                 <option value="F">Female</option>
@@ -375,17 +389,17 @@ const AddDrivers = () => {
               <Form.Control
                 type="date"
                 placeholder="Medical Test Date"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="medicalTestDate"
                 value={allValues.medicalTestDate}
               />
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
-              <Form.Label>Certificate Expiry Date</Form.Label>
+              <Form.Label>Medical Certificate Expiry Date</Form.Label>
               <Form.Control
                 type="date"
                 placeholder="Certificate Expiry Date"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="certificateExpiryDate"
                 value={allValues.certificateExpiryDate}
               />
@@ -397,7 +411,7 @@ const AddDrivers = () => {
               <Form.Control
                 type="text"
                 placeholder="CB Handle"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="cbHandle"
                 value={allValues.cbHandle}
               />
@@ -406,15 +420,16 @@ const AddDrivers = () => {
               <Form.Label>EOBR Type</Form.Label>
               <Form.Select
                 aria-label=""
-                onChange={changeHandler}
+                onChange={onChange}
                 name="eobrType"
                 value={allValues.eobrType}
               >
                 <option value="">Select EOBR Type</option>
-                <option value="Geotab">Geotab</option>
-                <option value="Keep Truncking">Keep Truncking</option>
-                <option value="M2M In Motion">M2M In Motion</option>
-                <option value="People Net">People Net</option>
+                {eobrs.map((eobr, index) => (
+                  <option value={eobr._id} key={index}>
+                    {eobr.name}
+                  </option>
+                ))}
               </Form.Select>
             </Form.Group>
             <Form.Group as={Col} md="4" controlId="validationCustom05">
@@ -422,7 +437,7 @@ const AddDrivers = () => {
               <Form.Control
                 type="text"
                 placeholder="EOBR ID"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="eobrId"
                 value={allValues.eobrId}
               />
@@ -434,7 +449,7 @@ const AddDrivers = () => {
               <Form.Control
                 type="date"
                 placeholder="Drug Test Date"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="drugTestDate"
                 value={allValues.drugTestDate}
               />
@@ -442,7 +457,7 @@ const AddDrivers = () => {
             <Form.Group as={Col} md="4" controlId="validationCustom03">
               <Form.Label>Test Result</Form.Label>
               <Form.Select
-                onChange={changeHandler}
+                onChange={onChange}
                 name="testResult"
                 value={allValues.testResult}
               >
@@ -455,19 +470,25 @@ const AddDrivers = () => {
               <Form.Control
                 type="date"
                 placeholder="MVR Run Date"
-                onChange={changeHandler}
+                onChange={onChange}
                 name="mvrRunDate"
                 value={allValues.mvrRunDate}
               />
             </Form.Group>
           </Row>
-          <Button type="submit" variant="outline-primary" className="mb-5">
+          <Button
+            type="submit"
+            variant="outline-primary"
+            className="mb-5"
+            disabled={loading}
+          >
             Save
           </Button>
           <Button
             variant="outline-danger"
             className="ms-3 mb-5"
             href="search-driver"
+            disabled={loading}
           >
             Cancel
           </Button>

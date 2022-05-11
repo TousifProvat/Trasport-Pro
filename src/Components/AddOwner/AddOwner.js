@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import "./addOwner.css";
 import useContext from "../Hooks/useContext";
+import axios from "../../utils/axios";
+import { notification } from "antd";
 
 const AddOwner = () => {
-  const { addOwner, loading } = useContext();
-
   const initValue = {
     status: "active",
     firstName: "",
@@ -37,6 +37,25 @@ const AddOwner = () => {
   };
 
   const [allValues, setAllValues] = useState(initValue);
+  const [loading, setLoading] = useState(false);
+
+  const addOwner = async (values) => {
+    try {
+      setLoading(true);
+      const res = await axios.post("/owner", values);
+      if (res.status === 201) {
+        notification.success({ message: res.data.message });
+        setTimeout(() => {
+          setValidated(false);
+          setAllValues(initValue);
+        }, 300);
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      notification.error({ message: err.response.data.message });
+    }
+  };
 
   const onChange = (e) => {
     setAllValues({ ...allValues, [e.target.name]: e.target.value });
@@ -46,7 +65,6 @@ const AddOwner = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(allValues);
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.stopPropagation();
@@ -55,10 +73,6 @@ const AddOwner = () => {
     }
 
     addOwner(allValues);
-    setTimeout(() => {
-      setValidated(false);
-      setAllValues(initValue);
-    }, 1000);
   };
 
   const copyInfo = () => {
@@ -227,7 +241,7 @@ const AddOwner = () => {
               <Form.Control
                 required
                 type="text"
-                placeholder="Phone NUmber"
+                placeholder="Phone Number"
                 name="primaryPhoneNumber"
                 onChange={onChange}
                 value={allValues.primaryPhoneNumber}
@@ -431,7 +445,12 @@ const AddOwner = () => {
               />
             </Form.Group>
           </Row>
-          <Button type="submit" className="mb-5 me-3" variant="outline-primary">
+          <Button
+            type="submit"
+            className="mb-5 me-3"
+            variant="outline-primary"
+            disabled={loading}
+          >
             Save
           </Button>
           <Button
@@ -439,6 +458,7 @@ const AddOwner = () => {
             variant="outline-danger"
             className="mb-5"
             href="/search-owner"
+            disabled={loading}
           >
             Cancel
           </Button>
