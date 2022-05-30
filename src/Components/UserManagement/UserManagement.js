@@ -1,9 +1,9 @@
-import { message, notification } from "antd";
-import React, { useEffect, useState } from "react";
-import { Button, Container, Navbar, Spinner, Table } from "react-bootstrap";
-import axios from "../../utils/axios";
-import "./userManagement.css";
-import UserManagementModal from "./UserManagementModal";
+import { message, notification } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Container, Navbar, Spinner, Table } from 'react-bootstrap';
+import axios from '../../utils/axios';
+import './userManagement.css';
+import UserManagementModal from './UserManagementModal';
 
 const UserManagement = () => {
   //state
@@ -21,7 +21,7 @@ const UserManagement = () => {
   const getUsers = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get("/user");
+      const { data } = await axios.get('/user');
       setUser(data.users);
       setLoading(false);
     } catch (err) {
@@ -96,7 +96,7 @@ const UserManagement = () => {
                 <td
                   colSpan={5}
                   style={{
-                    textAlign: "center",
+                    textAlign: 'center',
                   }}
                 >
                   <Spinner animation="border" variant="primary">
@@ -113,7 +113,7 @@ const UserManagement = () => {
                   </td>
                   <td>{user.phoneNumber}</td>
                   <td>{user.email}</td>
-                  <td>{user.suspended && "Suspended"}</td>
+                  <td>{user.suspended && 'Suspended'}</td>
                   <td>
                     <Button
                       variant="outline-primary"
@@ -136,7 +136,7 @@ const UserManagement = () => {
                 <td
                   colSpan={5}
                   style={{
-                    textAlign: "center",
+                    textAlign: 'center',
                   }}
                 >
                   No Data Found

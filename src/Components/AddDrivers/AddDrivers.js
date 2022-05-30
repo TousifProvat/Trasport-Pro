@@ -1,50 +1,50 @@
-import { notification } from "antd";
-import React, { useState } from "react";
-import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import axios from "../../utils/axios";
-import useContext from "../Hooks/useContext";
-import "./addDrivers.css";
+import { notification } from 'antd';
+import React, { useState } from 'react';
+import { Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import axios from '../../utils/axios';
+import useContext from '../Hooks/useContext';
+import './addDrivers.css';
 
 const AddDrivers = () => {
   const { eobrs } = useSelector((state) => state.eobr);
   const initValue = {
     driverNumber: 1,
-    status: "Pending Hire",
-    salutation: "Mr",
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    email: "",
-    address: "",
-    zip: "",
-    city: "",
-    state: "",
-    primaryPhoneNumber: "",
-    secondaryPhoneNumber: "",
-    faxPhoneNumber: "",
-    cbHandle: "",
-    eobrType: "",
-    eobrId: "",
+    status: 'Pending Hire',
+    salutation: 'Mr',
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    email: '',
+    address: '',
+    zip: '',
+    city: '',
+    state: '',
+    primaryPhoneNumber: '',
+    secondaryPhoneNumber: '',
+    faxPhoneNumber: '',
+    cbHandle: '',
+    eobrType: '',
+    eobrId: '',
     correctiveLenses: false,
     diabetes: false,
     hearingAid: false,
     highBp: false,
     sleepApnea: false,
-    birthDate: "",
-    SSN: "",
-    sex: "",
-    race: "",
-    hireDate: "",
-    terminationDate: "",
+    birthDate: '',
+    SSN: '',
+    sex: '',
+    race: '',
+    hireDate: '',
+    terminationDate: '',
     cdlNumber: 0,
-    cdlState: "",
-    cdlExpDate: "",
-    medicalTestDate: "",
-    certificateExpiryDate: "",
-    drugTestDate: "",
-    testResult: "fail",
-    mvrRunDate: "",
+    cdlState: '',
+    cdlExpDate: '',
+    medicalTestDate: '',
+    certificateExpiryDate: '',
+    drugTestDate: '',
+    testResult: 'fail',
+    mvrRunDate: '',
   };
 
   const [allValues, setAllValues] = useState(initValue);
@@ -53,7 +53,7 @@ const AddDrivers = () => {
   const addDriver = async (values) => {
     try {
       setLoading(true);
-      const res = await axios.post("/driver", values);
+      const res = await axios.post('/driver', values);
       if (res.status === 201) {
         notification.success({ message: res.data.message });
         setTimeout(() => {
@@ -116,11 +116,11 @@ const AddDrivers = () => {
                 name="status"
                 value={allValues.status}
               >
-                <option>Select Status</option>
+                <option value="">Select Status</option>
                 <option value="Pending Hire">Pending Hire</option>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
-                <option value="Declined">Declined</option>
+                <option value="Declined for work">Declined for work</option>
                 <option value="Terminated">Terminated</option>
               </Form.Select>
             </Form.Group>
